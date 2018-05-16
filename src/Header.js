@@ -7,10 +7,10 @@ class Header extends Component {
   render() {
     return (
         <div id="header">
-          <Navbar id="navBar">
+          <Navbar id="navBar" staticTop>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="#">
+                <a href="/">
                   <img src={require('./static/SmallLogo.png')} alt="logo" height="70" width="auto" id="logo"/>
                 </a>
               </Navbar.Brand>
@@ -35,7 +35,7 @@ class Header extends Component {
                 <NavItem href="#" eventKey={5}>
                   Blog
                 </NavItem>
-                <NavItem href="#" eventKey={6}>
+                <NavItem href="#" eventKey={6} id="contact">
                   Contact
                 </NavItem>
               </Nav>
