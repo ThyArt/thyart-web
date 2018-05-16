@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Header from "./Header";
-import Blog from "./Blog";
 
 import "./LandingPage.css"
 
