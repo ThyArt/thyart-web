@@ -7,7 +7,7 @@ class Header extends Component {
   render() {
     return (
         <div id="header">
-          <Navbar id="navBar" staticTop>
+          <Navbar id="navBar" fixedTop>
             <Navbar.Header>
               <Navbar.Brand>
                 <a href="/">
@@ -23,19 +23,19 @@ class Header extends Component {
                 </NavItem>
               </Nav>
               <Nav pullRight>
-                <NavItem href="#" eventKey={2}>
+                <NavItem href="#about" eventKey={2}>
                   About
                 </NavItem>
-                <NavItem href="#" eventKey={3}>
+                <NavItem href="#services" eventKey={3}>
                   Services
                 </NavItem>
-                <NavItem href="#" eventKey={4}>
+                <NavItem href="#pricing" eventKey={4}>
                   Pricing
                 </NavItem>
-                <NavItem href="#" eventKey={5}>
+                <NavItem href="#blog" eventKey={5}>
                   Blog
                 </NavItem>
-                <NavItem href="#" eventKey={6} id="contact">
+                <NavItem href="#contact" eventKey={6} id="contactButton">
                   Contact
                 </NavItem>
               </Nav>
