@@ -9,9 +9,11 @@
 
 #navBar {
     height: 100px;
+    background-color: white;
+    border: none;
 }
 
-#contact {
+#contactButton {
     background-color:#ededed;
     -moz-border-radius:15px;
     -webkit-border-radius:15px;
@@ -23,10 +25,10 @@
     padding:15px 17px;
     text-decoration:none;
 }
-#contact:hover {
+#contactButton:hover {
     background-color:#dfdfdf;
 }
-#contact:active {
+#contactButton:active {
     position:relative;
     top:1px;
 }
