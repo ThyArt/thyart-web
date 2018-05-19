@@ -3,6 +3,7 @@ import Header from "./Header";
 import About from "./About";
 
 import "./LandingPage.css"
+import ThyArtCarousel from "./ThyArtCarousel";
 
 class LandingPage extends Component {
   render() {
@@ -10,7 +11,7 @@ class LandingPage extends Component {
         <div id="landingPage">
           <Header/>
           <div id="content">
-            <div id="carousel">Carousel</div>
+            <ThyArtCarousel/>
             <About/>
             <div id="services">Services</div>
             <div id="pricing">Pricing</div>
