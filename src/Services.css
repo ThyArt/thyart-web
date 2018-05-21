@@ -1,4 +1,3 @@
-
 .servicesRight{
     float: right;
     padding-left: 5%;
@@ -16,7 +15,7 @@
 #deviceOne{
     padding-right: 25%;
     height: auto;
-    width: 42%;
+    width: 50%;
 }
 
 #deviceTwo{
@@ -28,6 +27,20 @@
 #deviceThree{
     padding-right: 15%;
     height: auto;
-    width: 50%;
+    width: 55%;
 }
 
+#macbook, #ipad {
+    border: 1px solid black;
+    margin-bottom: 0;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    background-color: #DDDEDE;
+}
+
+#iphone {
+    padding-top: 10%;
+    padding-bottom: 10%;
+    margin-bottom: 0;
+    background-color: #F4F5F7;
+}

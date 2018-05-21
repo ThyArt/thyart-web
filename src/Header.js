@@ -10,7 +10,7 @@ class Header extends Component {
           <Navbar id="navBar" fixedTop>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/">
+                <a href="#carousel">
                   <img src={require('./static/SmallLogo.png')} alt="logo" height="70" width="auto" id="logo"/>
                 </a>
               </Navbar.Brand>
@@ -18,7 +18,7 @@ class Header extends Component {
             </Navbar.Header>
             <Navbar.Collapse id="links">
               <Nav>
-                <NavItem href="/" eventKey={1} id="name">
+                <NavItem href="#carousel" eventKey={1} id="name">
                   ThyArt
                 </NavItem>
               </Nav>
