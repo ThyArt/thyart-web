@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Carousel } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class ThyArtCarousel extends Component {
     constructor(props, context) {
@@ -33,7 +34,9 @@ class ThyArtCarousel extends Component {
                     <img width="100%"  src={require('./static/carousel.png')} alt="carousel"/>
                     <Carousel.Caption>
                         <h3>Thy Art</h3>
-                        <p>The easy dasboard for your gallery</p>
+                        <p>The <b>easy</b> dashboard for <b>your</b> gallery</p>
+                        <Button>SIGNUP FOR FREE</Button>
+                        <p></p>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>

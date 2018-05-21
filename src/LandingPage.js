@@ -5,6 +5,8 @@ import ThyArtCarousel from "./ThyArtCarousel";
 import Contact from "./Contact.js"
 
 import "./LandingPage.css"
+import ThyArtCarousel from "./ThyArtCarousel";
+import ThyArtServices from "./ThyArtServices";
 
 class LandingPage extends Component {
   render() {
@@ -14,10 +16,7 @@ class LandingPage extends Component {
           <div id="content">
             <ThyArtCarousel/>
             <About/>
-            <div id="services">Services</div>
-{/*
-            TODO:
-
+            <ThyArtServices/>
             <div id="pricing">Pricing</div>
             <div id="blog">Blog</div>
 */}
