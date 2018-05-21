@@ -30,7 +30,7 @@ class ThyArtCarousel extends Component {
                 onSelect={this.handleSelect}
             >
                 <Carousel.Item>
-                    <img width="100%"  src="/carousel.png" />
+                    <img width="100%"  src={require('./static/carousel.png')} alt="carousel"/>
                     <Carousel.Caption>
                         <h3>Thy Art</h3>
                         <p>The easy dasboard for your gallery</p>

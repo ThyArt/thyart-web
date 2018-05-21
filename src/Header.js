@@ -18,7 +18,7 @@ class Header extends Component {
             </Navbar.Header>
             <Navbar.Collapse id="links">
               <Nav>
-                <NavItem href="#" eventKey={1} id="name">
+                <NavItem href="/" eventKey={1} id="name">
                   ThyArt
                 </NavItem>
               </Nav>
