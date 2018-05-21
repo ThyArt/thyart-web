@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import About from "./About";
+import ThyArtCarousel from "./ThyArtCarousel";
+import Contact from "./Contact.js"
 
 import "./LandingPage.css"
-import ThyArtCarousel from "./ThyArtCarousel";
 
 class LandingPage extends Component {
   render() {
@@ -20,7 +21,7 @@ class LandingPage extends Component {
             <div id="pricing">Pricing</div>
             <div id="blog">Blog</div>
 */}
-            <div id="contact">Contact</div>
+            <Contact/>
           </div>
         </div>
     );
