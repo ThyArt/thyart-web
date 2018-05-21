@@ -14,8 +14,12 @@ class LandingPage extends Component {
             <ThyArtCarousel/>
             <About/>
             <div id="services">Services</div>
+{/*
+            TODO:
+
             <div id="pricing">Pricing</div>
             <div id="blog">Blog</div>
+*/}
             <div id="contact">Contact</div>
           </div>
         </div>

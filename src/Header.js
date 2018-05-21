@@ -29,12 +29,16 @@ class Header extends Component {
                 <NavItem href="#services" eventKey={3}>
                   Services
                 </NavItem>
+{/*
+                TODO:
+
                 <NavItem href="#pricing" eventKey={4}>
                   Pricing
                 </NavItem>
                 <NavItem href="#blog" eventKey={5}>
                   Blog
                 </NavItem>
+*/}
                 <NavItem href="#contact" eventKey={6} id="contactButton">
                   Contact
                 </NavItem>
