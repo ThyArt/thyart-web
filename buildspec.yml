@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - yarn install
+      - yarn test --coverage --maxWorkers 2
+
+artifacts:
+  files:
+    - node_modules/**/*
+    - public/**/*
+    - src/**/*
+    - package.json
+    - yarn.lock
