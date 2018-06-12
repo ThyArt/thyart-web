@@ -1,0 +1,43 @@
+#about {
+    background-color: #F4F5F7;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+.aboutLogo {
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.aboutText {
+    font-size: 26px;
+}
+
+.aboutDesc {
+    margin-top: 10%;
+    margin-bottom: 30%;
+}
+
+.aboutCol {
+    background-color: white;
+    padding: 0;
+    margin: 10% 30px;
+    border-radius: 2%;
+}
+
+#aboutContainer {
+    text-align: center;
+}
+
+.quotation {
+    font-size: 30px;
+    padding-bottom: 10%;
+}
+
+.quote {
+    color: #4A4A4A;
+}
+
+.author {
+    color: #9B9B9B;
+}
