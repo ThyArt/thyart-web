@@ -5,11 +5,14 @@ phases:
     commands:
       - yarn install
       - yarn test --coverage --maxWorkers 2
+      - yarn build
+      - cp -rf build/* ./
 
 artifacts:
   files:
-    - node_modules/**/*
-    - public/**/*
-    - src/**/*
-    - package.json
-    - yarn.lock
+    - static/**/*
+    - asset-manifest.json
+    - favicon.ico
+    - index.html
+    - manifest.json
+    - service-worker.js
