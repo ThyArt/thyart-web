@@ -6,6 +6,7 @@ import Contact from "./Contact.js"
 
 import "./LandingPage.css"
 import Services from "./Services";
+import SignIn from "./components/SignIn";
 
 class LandingPage extends Component {
   render() {
@@ -16,7 +17,8 @@ class LandingPage extends Component {
             <ThyArtCarousel/>
             <About/>
             <Services/>
-{/*
+
+              {/*
             TODO:
 
             <div id="pricing">Pricing</div>

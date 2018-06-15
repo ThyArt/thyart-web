@@ -17,6 +17,7 @@ class FormEmail extends Component {
 
     getValidationState() {
         let email = this.state.value;
+        if (email == '') return null;
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if ( re.test(email) ) {
@@ -36,7 +37,7 @@ class FormEmail extends Component {
         return (
             <form>
                 <FormGroup
-                    controlId="formBasicText"
+                    controlId="formValidationNull"
                     validationState={this.getValidationState()}
                 >
                     <ControlLabel>Enter your email</ControlLabel>

@@ -4,7 +4,9 @@ import { Modal } from 'react-bootstrap'
 import FormEmail from "./Form";
 import FormPass from "./FormPass";
 
-class SignUp extends Component{
+import './SignIn.css'
+
+class SignIn extends Component {
     constructor(props, context) {
         super(props, context);
 
@@ -12,8 +14,6 @@ class SignUp extends Component{
         this.handleClose = this.handleClose.bind(this);
 
         this.state = {
-            firstName: '',
-            name: '',
             email: '',
             password: '',
             show: false
@@ -39,25 +39,25 @@ class SignUp extends Component{
         this.setState({ show: true });
     }
 
+
     render() {
         return (
             <div>
                 <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
-                    Sign Up
+                    Sign In
                 </Button>
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Sign Up</Modal.Title>
+                        <Modal.Title>Sign In</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <FormEmail/>
 
                         <FormPass/>
-                        <FormPass/>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={this.handleClose}>Sign Up</Button>
+                        <Button onClick={this.handleClose}>Sign In</Button>
                     </Modal.Footer>
                 </Modal>
             </div>
@@ -65,6 +65,4 @@ class SignUp extends Component{
     }
 }
 
-
-
-export default SignUp;
+export default SignIn;

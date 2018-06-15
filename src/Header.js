@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {Nav, Navbar, NavItem} from "react-bootstrap";
 
 import './Header.css'
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 class Header extends Component {
   render() {
@@ -41,6 +43,12 @@ class Header extends Component {
 */}
                 <NavItem href="#contact" eventKey={6} id="contactButton">
                   Contact
+                </NavItem>
+                <NavItem>
+                  <SignIn/>
+                </NavItem>
+                <NavItem>
+                  <SignUp/>
                 </NavItem>
               </Nav>
             </Navbar.Collapse>

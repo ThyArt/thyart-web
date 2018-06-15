@@ -3,7 +3,7 @@ import { Carousel } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
 import "./Carousel.css"
-import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
 
 class ThyArtCarousel extends Component {
   constructor(props, context) {
@@ -40,7 +40,6 @@ class ThyArtCarousel extends Component {
             <Carousel.Caption>
               <h3>Thy Art</h3>
               <p>The <b>easy</b> dashboard for <b>your</b> gallery</p>
-              <SignUp/>
               <br/>
             </Carousel.Caption>
           </Carousel.Item>

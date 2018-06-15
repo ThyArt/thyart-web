@@ -17,6 +17,7 @@ class FormPass extends Component {
 
     getValidationState() {
         let password = this.state.value;
+        if (password == '') return null;
         let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         let mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
         if(strongRegex.test(password)) {
