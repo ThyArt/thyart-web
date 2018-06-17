@@ -13,7 +13,7 @@ class Contact extends Component {
               bsSize="large"
               href="mailto:contact@thyart.net"
           >
-            Sign up
+            Email us !
           </Button>
         </div>
     );

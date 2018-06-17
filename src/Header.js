@@ -44,11 +44,11 @@ class Header extends Component {
                 <NavItem href="#contact" eventKey={6} id="contactButton">
                   Contact
                 </NavItem>
-                <NavItem>
-                  <SignIn/>
+                <NavItem href="#signin" eventKey={7}>
+                  Sign In
                 </NavItem>
-                <NavItem>
-                  <SignUp/>
+                <NavItem href="#signup" eventKey={8}>
+                  Sign Up
                 </NavItem>
               </Nav>
             </Navbar.Collapse>

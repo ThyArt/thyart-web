@@ -11,7 +11,8 @@ class FormPass extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         this.state = {
-            value: ''
+            value: '',
+            label: ''
         };
     }
 
@@ -43,7 +44,9 @@ class FormPass extends Component {
                     controlId="formBasicText"
                     validationState={this.getValidationState()}
                 >
-                    <ControlLabel>Enter a password</ControlLabel>
+                    <ControlLabel>
+                        {this.props.label}
+                    </ControlLabel>
                     <FormControl
                         type="password"
                         value={this.state.value}
