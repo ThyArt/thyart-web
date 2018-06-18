@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import {Nav, Navbar, NavItem} from "react-bootstrap";
-
-import './Header.css'
+import { Link } from 'react-router-dom'
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+
+import './Header.css'
 
 class Header extends Component {
   render() {
@@ -45,10 +46,14 @@ class Header extends Component {
                   Contact
                 </NavItem>
                 <NavItem href="#signin" eventKey={7}>
-                  Sign In
+                  <Link to="/signin">
+                    Sign In
+                  </Link>
                 </NavItem>
                 <NavItem href="#signup" eventKey={8}>
-                  Sign Up
+                  <Link to="/signup">
+                    Sign Up
+                  </Link>
                 </NavItem>
               </Nav>
             </Navbar.Collapse>
