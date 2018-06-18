@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {Nav, Navbar, NavItem} from "react-bootstrap";
 import { Link } from 'react-router-dom'
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
 
 import './Header.css'
 

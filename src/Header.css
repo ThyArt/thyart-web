@@ -13,23 +13,3 @@
     border: none;
     border-bottom: 2px solid #777777;
 }
-
-#contactButton {
-    background-color:#ededed;
-    -moz-border-radius:15px;
-    -webkit-border-radius:15px;
-    border-radius:15px;
-    border:2px solid #dcdcdc;
-    display:inline-block;
-    cursor:pointer;
-    color: #777777;
-    padding:15px 17px;
-    text-decoration:none;
-}
-#contactButton:hover {
-    background-color:#dfdfdf;
-}
-#contactButton:active {
-    position:relative;
-    top:1px;
-}

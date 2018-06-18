@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import { Button } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import "./Contact.css"
 
@@ -8,13 +9,11 @@ class Contact extends Component {
     return (
         <div id="contact">
           <p>Ready to give your workflow a boost?</p>
-          <Button
-              bsStyle="primary"
-              bsSize="large"
-              href="mailto:contact@thyart.net"
-          >
-            Email us !
-          </Button>
+          <Link to="/signup">
+            <Button bsStyle="primary" bsSize="large">
+              Sign Up!
+            </Button>
+          </Link>
         </div>
     );
   }

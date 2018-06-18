@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Carousel } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 
 import "./Carousel.css"
-import SignIn from "./components/SignIn";
 
 class ThyArtCarousel extends Component {
   constructor(props, context) {

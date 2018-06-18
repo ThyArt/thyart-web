@@ -1,64 +1,55 @@
-import React, { Component } from "react";
-import { FormControl } from 'react-bootstrap'
-import { FormGroup } from 'react-bootstrap'
-import { ControlLabel } from 'react-bootstrap'
-import { HelpBlock } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap'
 
 class FormPass extends Component {
-    constructor(props, context) {
-        super(props, context);
+  constructor(props) {
+    super(props);
 
-        this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      value: '',
+      label: ''
+    };
+  }
 
-        this.state = {
-            value: '',
-            label: ''
-        };
+  getValidationState = () => {
+    let password = this.state.value;
+    let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
+    let mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+
+    if (password === '')
+      return null;
+    if (strongRegex.test(password) || mediumRegex.test(password)) {
+      return 'success';
+    } else if (password !== "") {
+      return 'warning';
+    } else {
+      return 'error'
     }
+  };
 
-    getValidationState() {
-        let password = this.state.value;
-        if (password == '') return null;
-        let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-        let mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-        if(strongRegex.test(password)) {
-            return 'success';
-        } else if(mediumRegex.test(password)) {
-            return 'success';
-        } else if(password != "") {
-            return 'warning';
-        } else {
-            return 'error'
-        }
-        return null;
-    }
+  handleChange = e => {
+    this.setState({ value: e.target.value });
+  };
 
-    handleChange(e) {
-        this.setState({ value: e.target.value });
-    }
-
-    render() {
-        return (
-            <form>
-                <FormGroup
-                    controlId="formBasicText"
-                    validationState={this.getValidationState()}
-                >
-                    <ControlLabel>
-                        {this.props.label}
-                    </ControlLabel>
-                    <FormControl
-                        type="password"
-                        value={this.state.value}
-                        placeholder="Super secret password"
-                        onChange={this.handleChange}
-                    />
-                    <FormControl.Feedback />
-                    <HelpBlock>Enter a strong password</HelpBlock>
-                </FormGroup>
-            </form>
-        );
-    }
+  render() {
+    return (
+        <form>
+          <FormGroup controlId="formBasicText" validationState={this.getValidationState()}>
+            <ControlLabel>
+              {this.props.label}
+            </ControlLabel>
+            <FormControl
+                type="password"
+                value={this.state.value}
+                placeholder="Super secret password"
+                onChange={this.handleChange}
+            />
+            <FormControl.Feedback />
+            <HelpBlock>Enter a strong password</HelpBlock>
+          </FormGroup>
+        </form>
+    );
+  }
 }
 
 export default FormPass;
