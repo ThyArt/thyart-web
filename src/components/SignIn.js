@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Button } from 'react-bootstrap'
-import FormEmail from "./Form";
+import FormEmail from "./FormEmail";
 import FormPass from "./FormPass";
 
 import './SignIn.css'
@@ -10,7 +10,7 @@ class SignIn extends Component {
     return (
         <div id="signin">
           <FormEmail/>
-          <FormPass label={"Enter a password"}/>
+          <FormPass label={'Enter a password'}/>
           <Button onClick={this.handleClose}>Sign In</Button>
         </div>
     );

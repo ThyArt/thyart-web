@@ -6,12 +6,12 @@ class FormEmail extends Component {
     super(props);
 
     this.state = {
-      value: '',
+      mail: '',
     };
   }
 
   getValidationState = () => {
-    let email = this.state.value;
+    let email = this.state.mail;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (email === '')
@@ -24,15 +24,15 @@ class FormEmail extends Component {
   };
 
   handleChange = e => {
-    this.setState({ value: e.target.value });
+    this.setState({ mail: e.target.value });
   };
 
   render() {
     return (
         <form>
-          <FormGroup controlId="formValidationNull" validationState={this.getValidationState()}>
+          <FormGroup className="formValidationNull" validationState={this.getValidationState()}>
             <ControlLabel>Enter your email</ControlLabel>
-            <FormControl type="email" value={this.state.value} placeholder="dupont@email.com"
+            <FormControl type="email" value={this.state.mail} placeholder="dupont@email.com"
                          onChange={this.handleChange}
             />
             <FormControl.Feedback />

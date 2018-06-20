@@ -34,7 +34,7 @@ class FormPass extends Component {
   render() {
     return (
         <form>
-          <FormGroup controlId="formBasicText" validationState={this.getValidationState()}>
+          <FormGroup className="formBasicText" validationState={this.getValidationState()}>
             <ControlLabel>
               {this.props.label}
             </ControlLabel>
