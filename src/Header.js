@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {Nav, Navbar, NavItem} from "react-bootstrap";
-import { Link } from 'react-router-dom'
 
 import './Header.css'
 
@@ -43,15 +42,11 @@ class Header extends Component {
                 <NavItem href="#contact" eventKey={6} id="contactButton">
                   Contact
                 </NavItem>
-                <NavItem href="#signin" eventKey={7}>
-                  <Link to="/signin">
-                    Sign In
-                  </Link>
+                <NavItem href="/signin" eventKey={7}>
+                  Sign In
                 </NavItem>
-                <NavItem href="#signup" eventKey={8}>
-                  <Link to="/signup">
-                    Sign Up
-                  </Link>
+                <NavItem href="/signup" eventKey={8}>
+                  Sign Up
                 </NavItem>
               </Nav>
             </Navbar.Collapse>
