@@ -13,7 +13,9 @@ class SignUpForm extends Component {
         this.state = {
             mailValue: '',
             passValue: '',
-            confirmValue: ''
+            confirmValue: '',
+            success: false,
+            error: null
         };
     }
 

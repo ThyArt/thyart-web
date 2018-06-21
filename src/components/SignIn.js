@@ -35,7 +35,6 @@ class SignIn extends Component {
                             </footer>
                             <h2>Sign In</h2>
                             <SignInForm/>
-                            <Button onClick={this.handleClose}>Sign In</Button>
                         </Col>
                     </Row>
                 </Grid>
