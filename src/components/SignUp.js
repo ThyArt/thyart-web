@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Alert, Button, ControlLabel, FormControl, FormGroup, HelpBlock} from 'react-bootstrap'
-import {pingAPI, registerAPI} from "./requests";
+import {registerAPI} from "./requests";
 
 class SignUp extends Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class SignUp extends Component {
     }
   }
 
-
   signup = () => {
     if (this.getValidationEmail(this.state.mail) === 'success' &&
         this.getValidationPasswd(this.state.passwd) === 'success' &&
@@ -23,13 +22,16 @@ class SignUp extends Component {
         this.state.confirmPasswd === this.state.passwd)
     {
       const tmp = { name: 'toto', email: this.state.mail, password: this.state.passwd };
-      pingAPI();
       registerAPI(tmp).then(res => {
         this.setState({ success: true, error: null });
         console.log('success: ' + res.data);
       }).catch(error => {
-        this.setState({ success: false, error: error.response.data.messages[0] });
-        console.error('error: ' + error.response.data.messages[0]);
+        if (error.response && error.response.data && error.response.data.messages) {
+          this.setState({ success: false, error: error.response.data.messages[0] });
+          console.error('error: ' + error.response.data.messages[0]);
+        } else {
+          console.error('Unknown error.');
+        }
       });
     }
   };
