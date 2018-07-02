@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import LandingPage from './LandingPage.js'
+import './css/index.css';
+import LandingPage from './containers/LandingPage.jsx'
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-import Account from './Account';
+import SignIn from "./containers/SignIn";
+import SignUp from "./containers/SignUp";
+import Account from './containers/Account';
 
 ReactDOM.render(
     <Router>

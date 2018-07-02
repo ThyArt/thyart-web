@@ -1,0 +1,24 @@
+#signin {
+    background-color: #F4F5F7;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+#footer {
+    height: 70px;
+    display: block;
+    margin: 10px;
+}
+
+#quote {
+    width: 100%;
+    height: auto;
+}
+
+#logo {
+    background-color: #F4F5F7;;
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    z-index: 1;
+}

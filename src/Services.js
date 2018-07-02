@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Jumbotron } from 'react-bootstrap';
 
-import './Services.css'
+import './css/Services.css'
 
 class Services extends Component {
   render()
