@@ -5,18 +5,22 @@
     border-bottom: 2px solid #777777;
 }
 
-#sideBar {
+
+#sideNav {
     height: 100%;
-    width: 100%;
-    background-color: dimgray;
+    width: 150px;
     border: none;
     border-bottom: 2px solid #777777;
     margin-top : 100px;
-    margin-left : -20px;
-
+    background-color: dimgray;
 
 }
 
-#nav-link {
-    color: white;
+#navText {
+    text-align : center;
+}
+
+#splitSideBar {
+    text-align : center;
+    color: #f9dcdd;
 }

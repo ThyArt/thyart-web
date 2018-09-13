@@ -3,16 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@trendmicro/react-sidenav": "^0.4.5",
     "axios": "^0.18.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
+    "react-bootstrap-sidebar": "latest",
     "react-dom": "^16.2.0",
     "react-grid-system": "^3.2.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.1",
     "spdx-correct": "^3.0.0",
-    "spdx-expression-parse": "^3.0.0",
-    "react-bootstrap-sidebar": "latest"
+    "spdx-expression-parse": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
