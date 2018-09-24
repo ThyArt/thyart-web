@@ -32,20 +32,20 @@ class Carousel extends Component {
         onSelect={this.handleSelect}
         id="carousel"
       >
-        <Carousel.Item>
+        <BaseCarousel.Item>
           <img
             width="100%"
             src={require('../static/carousel.png')}
             alt="carousel"
           />
-          <Carousel.Caption>
+          <BaseCarousel.Caption>
             <h3>Thy Art</h3>
             <p>
               The <b>easy</b> dashboard for <b>your</b> gallery
             </p>
             <br />
-          </Carousel.Caption>
-        </Carousel.Item>
+          </BaseCarousel.Caption>
+        </BaseCarousel.Item>
       </BaseCarousel>
     );
   }

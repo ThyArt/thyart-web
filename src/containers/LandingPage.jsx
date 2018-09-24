@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import About from './About';
 import Carousel from '../components/Carousel';
 import Contact from './Contact.jsx';
-import Services from '../Services';
+import Services from './Services';
 
 import '../css/LandingPage.css';
 

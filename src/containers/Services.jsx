@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Jumbotron } from 'react-bootstrap';
 
-import './css/Services.css';
+import '../css/Services.css';
 
 class Services extends Component {
   render() {
@@ -9,7 +9,7 @@ class Services extends Component {
       <div id="services">
         <Jumbotron id="macbook">
           <img
-            src={require('./static/Device_MacBook.png')}
+            src={require('../static/Device_MacBook.png')}
             alt="MacBook"
             id="deviceThree"
           />
@@ -17,7 +17,7 @@ class Services extends Component {
         </Jumbotron>
         <Jumbotron id="iphone">
           <img
-            src={require('./static/Device_Iphone.png')}
+            src={require('../static/Device_Iphone.png')}
             alt="Iphone"
             id="deviceTwo"
           />
@@ -25,7 +25,7 @@ class Services extends Component {
         </Jumbotron>
         <Jumbotron id="ipad">
           <img
-            src={require('./static/Device_iPad.png')}
+            src={require('../static/Device_iPad.png')}
             alt="Ipad"
             id="deviceOne"
           />
