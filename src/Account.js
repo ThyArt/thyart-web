@@ -1,14 +1,9 @@
 import React, {Component} from "react";
-import SideNav, { NavItem, NavText } from '@trendmicro/react-sidenav';
-import { Navbar } from "react-bootstrap";
-import BigCalendar from 'react-big-calendar'
-import moment from 'moment'
+import { Navbar, Nav, NavItem } from "react-bootstrap";
+import Scheduler from './components/account/Scheduler';
+import Profile from './components/account/Profile';
 
 import './Account.css'
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-
-// Calendar local
-const local = BigCalendar.momentLocalizer(moment);
 
 class Account extends Component {
   constructor(props) {
@@ -16,102 +11,63 @@ class Account extends Component {
 
 
     this.state = {
-      events: [
-        {
-          title: "Mon exposition",
-          allDay: true,
-          start: moment(),
-          end: moment().add(5, 'days')
-        },
-        {
-          title: "Ma deuxième exposition",
-          allDay: true,
-          start: moment().add(10, 'days'),
-          end: moment().add(13, 'days')
-        }
-
-      ],
+      selected: 1
     };
   }
 
+  handleSelect = eventKey => {
+    if (eventKey === 7) {
+    //  disconnect user
+    } else {
+      this.setState({ selected: eventKey });
+    }
+  };
+
   render() {
     return (
-      <div>
-        <div>
-          <Navbar id="navBarAccount" fixedTop>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <a>
-                  <img src={require('./static/SmallLogo.png')} alt="logo" height="100" width="auto" id="logo"/>
-                </a>
-              </Navbar.Brand>
-              <Navbar.Toggle/>
-            </Navbar.Header>
-            <NavItem>
-              <NavText>
-                <h1 style={{color: "white", textAlign :"center"}}>
-                  Ma gallerie
-                </h1>
-              </NavText>
-            </NavItem>
+        <div id='accountPage'>
 
-          </Navbar>
-        </div>
+          <div>
+            <Navbar fixedTop id='topBar'>
+              <a>
+                <img src={require('./static/SmallLogo.png')} alt="logo" height="100" id="logo"/>
+              </a>
+              <span id='title'>Ma Gallerie</span>
+            </Navbar>
+          </div>
 
-        <SideNav id="sideNav" >
-          <SideNav.Nav defaultSelected="home">
-            <NavItem eventKey="home">
-              <NavText className="navText">
-                Acceuil
-              </NavText>
-            </NavItem>
-            <NavItem eventKey="statistiques">
-              <NavText className="navText">
+          <div id='sideNav'>
+            <Nav stacked bsStyle='pills' onSelect={this.handleSelect}>
+              <NavItem  eventKey={1} className='item'>
+                Accueil
+              </NavItem>
+              <NavItem  eventKey={2} className='item'>
                 Statistiques
-              </NavText>
-            </NavItem>
-            <NavItem id="navItem" eventKey="oeuvres">
-              <NavText className="navText">
+              </NavItem>
+              <NavItem  eventKey={3} className='item'>
                 Oeuvres
-              </NavText>
-            </NavItem>
-            <NavItem eventKey="Clients">
-              <NavText className="navText">
+              </NavItem>
+              <NavItem  eventKey={4} className='item'>
                 Clients
-              </NavText>
-            </NavItem>
-            <NavItem eventKey="Facturation">
-              <NavText className="navText">
+              </NavItem>
+              <NavItem  eventKey={5} className='item'>
                 Facturation
-              </NavText>
-            </NavItem>
-            <h6 id="splitSideBar">
-              <span>______________</span>
-            </h6>
-            <NavItem eventKey="Profil">
-              <NavText className="navText">
+              </NavItem>
+              <NavItem  eventKey={6} className='item'>
                 Profil
-              </NavText>
-            </NavItem>
-            <NavItem eventKey="Deconnection">
-              <NavText className="navText">
-                Déconnection
-              </NavText>
-            </NavItem>
-          </SideNav.Nav>
-        </SideNav>
+              </NavItem>
+              <NavItem  eventKey={7}>
+                Déconnexion
+              </NavItem>
+            </Nav>
+          </div>
 
-        <div id='calendar'>
-          <BigCalendar
-              localizer={local}
-              views={['month', 'agenda']}
-              onView={() => {}}
-              events={this.state.events}
-              startAccessor="start"
-              endAccessor="end"
-          />
+          <div id='calendar'>
+            { this.state.selected === 1 ? <Scheduler/> : null }
+            { this.state.selected === 6 ? <Profile/> : null }
+          </div>
+
         </div>
-      </div>
     );
   }
 }
