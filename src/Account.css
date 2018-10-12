@@ -1,5 +1,4 @@
-@import '~react-agenda/build/styles.css';
-@import '~react-datetime/css/react-datetime.css';
+@import "../node_modules/react-big-calendar/lib/css/react-big-calendar.css";
 
 #navBarAccount {
     height: 100px;
@@ -26,4 +25,11 @@
 #splitSideBar {
     text-align : center;
     color: #f9dcdd;
+}
+
+#calendar {
+    padding-top: 200px;
+    padding-left: 150px;
+    height: 800px;
+    width: auto;
 }
