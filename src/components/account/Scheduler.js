@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import moment from "moment";
+import 'moment/locale/fr';
 import BigCalendar from "react-big-calendar";
 
+// Initialize Calendar locale to French
+moment.locale('fr');
 const local = BigCalendar.momentLocalizer(moment);
 
 class Scheduler extends Component {
@@ -27,6 +30,30 @@ class Scheduler extends Component {
     };
   }
 
+  getArrayIndex = (array, elem) => {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] === elem)
+        return (i);
+    }
+    return (null);
+  };
+
+  handleEventSelect = event => {
+    if (window.confirm('Do you really want to the event \"' + event.title + '\"?')) {
+      let eventCopy = this.state.events.slice();
+      const index = this.getArrayIndex(eventCopy, event);
+      eventCopy.splice(index);
+      this.setState({events: eventCopy});
+    }
+  };
+
+  handleEventCreate = info => {
+    const title = prompt('Title of the event?');
+    if (title) {
+      this.setState({events: [...this.state.events, {title: title, allDay: true, start: info.start, end: info.end}]});
+    }
+  };
+
   render() {
     return (
         <div>
@@ -34,6 +61,9 @@ class Scheduler extends Component {
               localizer={local}
               views={['month', 'agenda']}
               onView={() => {}}
+              onSelectEvent={this.handleEventSelect}
+              onSelectSlot={this.handleEventCreate}
+              selectable={true}
               events={this.state.events}
               startAccessor="start"
               endAccessor="end"
