@@ -2,12 +2,14 @@ import React, {Component} from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
+import { Redirect } from 'react-router-dom';
 
 import './Account.css'
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {disconnect, signInIfNeeded} from "../actions/actions";
 import Redirect from "react-router-dom/es/Redirect";
+
 
 class Account extends Component {
   constructor(props, context) {
