@@ -22,3 +22,12 @@
     left: 15px;
     z-index: 1;
 }
+
+
+#carouselSn {
+    margin-top: 100px;
+    height: auto;
+}
+#signinForm {
+    margin-top: 200px;
+}

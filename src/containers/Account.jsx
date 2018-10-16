@@ -6,7 +6,8 @@ import Profile from '../components/account/Profile';
 import './Account.css'
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {signInIfNeeded} from "../actions/actions";
+import {disconnect, signInIfNeeded} from "../actions/actions";
+import Redirect from "react-router-dom/es/Redirect";
 
 class Account extends Component {
   constructor(props, context) {
