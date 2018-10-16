@@ -4,6 +4,7 @@ export const RECEIVE_SIGN_IN = 'RECEIVE_SIGN_IN'
 export const RECEIVE_SIGN_UP = 'RECEIVE_SIGN_UP'
 export const RECEIVE_ERROR = 'RECEIVE_ERROR'
 export const REQUEST_API = 'REQUEST_API'
+export const DISCONNECT = 'DISCONNECT'
 
 const apiURL = 'http://thyart-api-dev.eu-west-1.elasticbeanstalk.com/';
 const userURL = 'api/user';
@@ -21,6 +22,11 @@ function requestApi() {
     }
 }
 
+export function disconnect(){
+ return {
+     type: DISCONNECT
+ }
+}
 function receiveSignIn(res) {
     return {
         type: RECEIVE_SIGN_IN,

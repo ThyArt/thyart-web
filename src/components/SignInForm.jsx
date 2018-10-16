@@ -107,7 +107,6 @@ class SignInForm extends Component {
                     <Redirect
                         to={{
                             pathname: '/account',
-                            state: {token: this.props.token}
                         }}
                     />
                 ) : null}

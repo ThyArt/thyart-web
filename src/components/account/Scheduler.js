@@ -39,7 +39,7 @@ class Scheduler extends Component {
   };
 
   handleEventSelect = event => {
-    if (window.confirm('Do you really want to the event \"' + event.title + '\"?')) {
+    if (window.confirm('Do you really want to the event "' + event.title + '"?')) {
       let eventCopy = this.state.events.slice();
       const index = this.getArrayIndex(eventCopy, event);
       eventCopy.splice(index);

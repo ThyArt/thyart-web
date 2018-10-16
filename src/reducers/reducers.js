@@ -3,7 +3,8 @@ import {
     RECEIVE_SIGN_IN,
     RECEIVE_SIGN_UP,
     RECEIVE_ERROR,
-REQUEST_API} from "../actions/actions";
+    REQUEST_API,
+    DISCONNECT} from "../actions/actions";
 
 const thyartApp = (state = {
                         isLogged: false,
@@ -34,6 +35,11 @@ const thyartApp = (state = {
             return Object.assign({}, state, {
                 isFetching: false,
                 error: action.error
+            });
+        case DISCONNECT:
+            return Object.assign({}, state, {
+                isLogged: false,
+                token: null
             });
         default:
             return state
