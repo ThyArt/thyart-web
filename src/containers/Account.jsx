@@ -8,8 +8,6 @@ import './Account.css'
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {disconnect, signInIfNeeded} from "../actions/actions";
-import Redirect from "react-router-dom/es/Redirect";
-
 
 class Account extends Component {
   constructor(props, context) {
