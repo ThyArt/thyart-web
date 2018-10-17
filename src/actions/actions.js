@@ -30,7 +30,7 @@ export function disconnect(){
 function receiveSignIn(res) {
     return {
         type: RECEIVE_SIGN_IN,
-        msg: res.data,
+        msg: "Connected",
         token: res.data['access_token'],
 
     }
@@ -39,7 +39,7 @@ function receiveSignIn(res) {
 function receiveSignUp(res) {
     return {
         type: RECEIVE_SIGN_UP,
-        msg: res.data,
+        msg: "Congratulation, you are registered! you can now connect to your account."
     }
 }
 
@@ -51,7 +51,7 @@ function receiveError(error) {
         error.response.data &&
         error.response.data.messages
     )
-        error_msg = 'error: ' + error.response.data.messages[0];
+        error_msg = error.response.data.messages[0];
     else
         error_msg = 'Unknown error.';
 
@@ -97,7 +97,7 @@ function fetchSignUp(username, mail, password) {
 function shouldFetchApi(state) {
     const isFetching = state.isFetching;
 
-    if (isFetching)
+    if (!isFetching)
         return true
     else
         return false

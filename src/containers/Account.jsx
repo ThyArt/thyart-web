@@ -70,13 +70,13 @@ class Account extends Component {
             { this.state.selected === 6 ? <Profile/> : null }
           </div>
 
-            {!this.props.isLogged ? (
+            {/*!this.props.isLogged ? (
                 <Redirect
                     to={{
                         pathname: '/',
                     }}
                 />
-            ) : null}
+            ) : null*/}
         </div>
     );
   }

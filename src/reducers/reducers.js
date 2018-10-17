@@ -17,24 +17,29 @@ const thyartApp = (state = {
     switch (action.type) {
         case REQUEST_API:
             return Object.assign({}, state, {
-              isFetching: true
+              isFetching: true,
+                error: null,
+                msg: null
             });
         case RECEIVE_SIGN_IN:
             return Object.assign({}, state, {
                 isFetching: false,
                 isLogged: true,
                 token: action.token,
-                msg: action.msg
+                msg: action.msg,
+                error: null
             });
         case RECEIVE_SIGN_UP:
             return Object.assign({}, state, {
                 isFetching: false,
-                msg: action.msg
+                msg: action.msg,
+                error: null
             });
         case RECEIVE_ERROR:
             return Object.assign({}, state, {
                 isFetching: false,
-                error: action.error
+                error: action.error,
+                msg: null
             });
         case DISCONNECT:
             return Object.assign({}, state, {
