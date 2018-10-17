@@ -17,7 +17,7 @@ const thyartApp = (state = {
     switch (action.type) {
         case REQUEST_API:
             return Object.assign({}, state, {
-              isFetching: true,
+                isFetching: true,
                 error: null,
                 msg: null
             });

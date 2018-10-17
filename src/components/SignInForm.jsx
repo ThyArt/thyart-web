@@ -6,6 +6,8 @@ import { FormGroup } from 'react-bootstrap';
 import { ControlLabel } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { signInIfNeeded} from "../actions/actions";
+import ReactLoading from 'react-loading';
+
 
 class SignInForm extends Component {
     constructor(props, context) {
@@ -95,7 +97,12 @@ class SignInForm extends Component {
                     />
                     <FormControl.Feedback/>
                 </FormGroup>
-                <Button onClick={this.signin}>Sign In</Button>
+                {this.props.isFetching === true ? (
+                    <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                ) : (
+                    <Button onClick={this.signin}>Sign In</Button>
+                )
+                }
 
                 {this.props.error ? (
                     <Alert bsStyle="danger">{`Error while logging in: ${

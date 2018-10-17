@@ -14,7 +14,7 @@ const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
 };
 const clientID = 1;
-const clientSecret = 'fbpB6Lmd3lcDDFKZF5VwJib2jjphjweU67YiA2NE';
+const clientSecret = 'GQCO2CBNnvPZCjTHGmXIHJp0lXG6B0n7TxvITIGj';
 
 function requestApi() {
     return {

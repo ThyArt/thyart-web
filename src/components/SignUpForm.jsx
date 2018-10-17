@@ -10,6 +10,8 @@ import {
 import { signUpIfNeeded } from "../actions/actions";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactLoading from 'react-loading';
+
 
 class SignUpForm extends Component {
     constructor(props, context) {
@@ -131,7 +133,13 @@ class SignUpForm extends Component {
                     />
                     <FormControl.Feedback/>
                 </FormGroup>
-                <Button onClick={this.signup}>Sign Up</Button>
+
+                {this.props.isFetching === true ? (
+                    <ReactLoading type={'spin'} color={'black'} height={50} width={50} />
+                ) :  (
+                    <Button onClick={this.signup}>Sign Up</Button>
+                )
+                }
 
                 {this.props.msg ? (
                     <Alert bsStyle="success">
