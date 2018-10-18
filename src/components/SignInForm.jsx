@@ -5,7 +5,7 @@ import { FormControl, Button, Alert } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { ControlLabel } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { signInIfNeeded} from "../actions/actions";
+import {forgotPwd, signInIfNeeded} from "../actions/actions";
 import ReactLoading from 'react-loading';
 
 
@@ -30,7 +30,13 @@ class SignInForm extends Component {
         ) {
             this.props.dispatch(signInIfNeeded(this.state.mailValue, this.state.passValue));
         }
-    }
+    };
+
+    forgot = () => {
+        if (this.getMailValidationState() === 'success') {
+            this.props.dispatch(forgotPwd(this.state.mailValue));
+        }
+    };
 
     getMailValidationState() {
         let email = this.state.mailValue;
@@ -103,13 +109,12 @@ class SignInForm extends Component {
                     <Button onClick={this.signin}>Sign In</Button>
                 )
                 }
-
+                <Button onClick={this.forgot}>Forgot Password</Button>
                 {this.props.error ? (
-                    <Alert bsStyle="danger">{`Error while logging in: ${
+                    <Alert bsStyle="danger">{`Error: ${
                         this.props.error
                         }`}</Alert>
                 ) : null}
-
                 {this.props.isLogged ? (
                     <Redirect
                         to={{
