@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Carousel, Grid, Col, Row, Thumbnail } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Carousel, Grid, Col, Row } from 'react-bootstrap';
 
 import '../css/SignIn.css';
 import SignInForm from '../components/SignInForm';

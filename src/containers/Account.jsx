@@ -3,11 +3,11 @@ import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import { Redirect } from 'react-router-dom';
-
-import './Account.css'
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {disconnect, signInIfNeeded} from "../actions/actions";
+import {disconnect} from "../actions/actions";
+
+import '../css/Account.css'
 
 class Account extends Component {
   constructor(props, context) {
@@ -73,7 +73,7 @@ class Account extends Component {
             {!this.props.isLogged ? (
                 <Redirect
                     to={{
-                        pathname: '/',
+                        pathname: '/signin',
                     }}
                 />
             ) : null}

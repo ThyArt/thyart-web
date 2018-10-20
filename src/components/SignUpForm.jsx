@@ -122,7 +122,7 @@ class SignUpForm extends Component {
                     <HelpBlock>Enter a strong password</HelpBlock>
                 </FormGroup>
                 <FormGroup
-                    controlId="formBasicText"
+                    controlId="formBasicText2"
                     validationState={this.getConfirmValidationState()}
                 >
                     <ControlLabel>Confirm password</ControlLabel>
