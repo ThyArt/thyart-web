@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import moment from "moment";
 import 'moment/locale/fr';
 import BigCalendar from "react-big-calendar";
+import uuidv4 from "uuid/v4";
 
 // Initialize Calendar locale to French
 moment.locale('fr');
@@ -18,13 +19,15 @@ class Scheduler extends Component {
           title: "Mon exposition",
           allDay: true,
           start: moment(),
-          end: moment().add(5, 'days')
+          end: moment().add(5, 'days'),
+          id: uuidv4()
         },
         {
           title: "Ma deuxième exposition",
           allDay: true,
           start: moment().add(10, 'days'),
-          end: moment().add(13, 'days')
+          end: moment().add(13, 'days'),
+          id: uuidv4()
         }
       ]
     };
@@ -32,7 +35,7 @@ class Scheduler extends Component {
 
   getArrayIndex = (array, elem) => {
     for (let i = 0; i < array.length; i++) {
-      if (array[i] === elem)
+      if (array[i].id === elem.id)
         return (i);
     }
     return (null);
@@ -50,7 +53,13 @@ class Scheduler extends Component {
   handleEventCreate = info => {
     const title = prompt('Title of the event?');
     if (title) {
-      this.setState({events: [...this.state.events, {title: title, allDay: true, start: info.start, end: info.end}]});
+      console.log(info);
+      this.setState({events: [...this.state.events, {title: title,
+          allDay: true,
+          start: info.start,
+          end: info.end,
+          id: uuidv4()
+        }]});
     }
   };
 
