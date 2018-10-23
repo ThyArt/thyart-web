@@ -110,6 +110,11 @@ class SignInForm extends Component {
                 )
                 }
                 <Button onClick={this.forgot}>Forgot Password</Button>
+                {this.props.msg ? (
+                    <Alert >{`${
+                        this.props.msg
+                        }`}</Alert>
+                ) : null}
                 {this.props.error ? (
                     <Alert bsStyle="danger">{`Error: ${
                         this.props.error

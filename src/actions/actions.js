@@ -47,7 +47,7 @@ function receiveSignUp(res) {
 function receivePwd(res) {
     return {
         type: RECEIVE_PWD,
-        msg: "Email sent",
+        msg: "Congratulation email sent successfully",
     }
 }
 
