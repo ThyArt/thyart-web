@@ -15,7 +15,7 @@ class Profile extends Component {
     super(props, context);
 
     this.state = {
-      tmpMail: 'mon.adresse@email.com',
+      tmpMail: '',
       newPassword1: '',
       newPassword2: '',
       mailModal: false,
