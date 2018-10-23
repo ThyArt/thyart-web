@@ -16,7 +16,7 @@ const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
 };
 const clientID = 1;
-const clientSecret = 'GQCO2CBNnvPZCjTHGmXIHJp0lXG6B0n7TxvITIGj';
+const clientSecret = 'wLp6pEPtMh023tlWQORWrKHoxT2LSkHwPRfIZWAu';
 
 function requestApi() {
     return {
@@ -53,7 +53,7 @@ function receivePwd(res) {
 
 function receiveError(error) {
 
-    var error_msg;
+    let error_msg;
     if (
         error.response &&
         error.response.data &&
@@ -71,7 +71,7 @@ function receiveError(error) {
 
 function fetchSignIn(username, password) {
     return dispatch => {
-        dispatch(requestApi)
+        dispatch(requestApi);
         const body = {
             grant_type: 'password',
             client_id: clientID,
@@ -95,7 +95,7 @@ function fetchSignUp(username, mail, password) {
         password: password
     };
     return dispatch => {
-        dispatch(requestApi)
+        dispatch(requestApi);
         return axios.post(apiURL + userURL, body, header)
             .then(res => dispatch(receiveSignUp(res)))
             .catch(error => dispatch(receiveError(error)))
@@ -118,10 +118,7 @@ function fetchForgot(mail) {
 function shouldFetchApi(state) {
     const isFetching = state.isFetching;
 
-    if (!isFetching)
-        return true;
-    else
-        return false
+    return !isFetching;
 }
 
 export function signInIfNeeded(username, password) {
