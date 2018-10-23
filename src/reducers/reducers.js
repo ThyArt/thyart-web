@@ -4,14 +4,17 @@ import {
     RECEIVE_SIGN_UP,
     RECEIVE_ERROR,
     REQUEST_API,
-    DISCONNECT} from "../actions/actions";
+    DISCONNECT,
+    RECEIVE_PWD,
+    RECEIVE_PROFILE} from "../actions/actions";
 
 const thyartApp = (state = {
                         isLogged: false,
                         isFetching: false,
                         token: null,
                         msg: null,
-                        error: null
+                        error: null,
+                        mail: null
                    },
                    action) => {
     switch (action.type) {
@@ -40,6 +43,17 @@ const thyartApp = (state = {
                 isFetching: false,
                 error: action.error,
                 msg: null
+            });
+        case RECEIVE_PROFILE:
+            return Object.assign({}, state, {
+                isFetching: false,
+                mail: action.mail
+            });
+        case RECEIVE_PWD:
+            return Object.assign({}, state, {
+                isFetching: false,
+                error: null,
+                msg: action.msg
             });
         case DISCONNECT:
             return Object.assign({}, state, {

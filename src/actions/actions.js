@@ -6,11 +6,13 @@ export const RECEIVE_ERROR = 'RECEIVE_ERROR';
 export const REQUEST_API = 'REQUEST_API';
 export const DISCONNECT = 'DISCONNECT';
 export const RECEIVE_PWD = 'RECEIVE_PWD';
+export const RECEIVE_PROFILE = 'RECEIVE_PROFILE';
 
 const apiURL = 'http://thyart-api-dev.eu-west-1.elasticbeanstalk.com/';
 const userURL = 'api/user';
 const tokenURL = 'oauth/token';
 const pwdURL = 'api/password/create';
+const profileURL = 'api/user/self';
 
 const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
@@ -32,8 +34,8 @@ export function disconnect(){
 function receiveSignIn(res) {
     return {
         type: RECEIVE_SIGN_IN,
-            msg: "Connected",
-            token: res.data['access_token'],
+        msg: "Connected",
+        token: res.data['access_token'],
     }
 }
 
@@ -48,6 +50,13 @@ function receivePwd(res) {
     return {
         type: RECEIVE_PWD,
         msg: "Congratulation email sent successfully",
+    }
+}
+
+function receiveProfile(res) {
+    return  {
+        type: RECEIVE_PROFILE,
+        mail: res.data['data']['email'],
     }
 }
 
@@ -71,7 +80,6 @@ function receiveError(error) {
 
 function fetchSignIn(username, password) {
     return dispatch => {
-        dispatch(requestApi);
         const body = {
             grant_type: 'password',
             client_id: clientID,
@@ -95,7 +103,6 @@ function fetchSignUp(username, mail, password) {
         password: password
     };
     return dispatch => {
-        dispatch(requestApi);
         return axios.post(apiURL + userURL, body, header)
             .then(res => dispatch(receiveSignUp(res)))
             .catch(error => dispatch(receiveError(error)))
@@ -108,9 +115,20 @@ function fetchForgot(mail) {
         endpoint: 'http://thyart.dev.s3-website-eu-west-1.amazonaws.com'
     };
     return dispatch => {
-        dispatch(requestApi);
         return axios.post(apiURL + pwdURL, body, header)
             .then(res => dispatch(receivePwd(res)))
+            .catch(error => dispatch(receiveError(error)))
+    }
+}
+
+function fetchProfile(token) {
+    const header_auth = {
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token }
+        };
+    return dispatch => {
+        return axios.get(apiURL + profileURL, header_auth)
+            .then(res => dispatch(receiveProfile(res)))
             .catch(error => dispatch(receiveError(error)))
     }
 }
@@ -124,6 +142,8 @@ function shouldFetchApi(state) {
 export function signInIfNeeded(username, password) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+
             return dispatch(fetchSignIn(username, password))
     }
 }
@@ -131,6 +151,8 @@ export function signInIfNeeded(username, password) {
 export function signUpIfNeeded(username, mail, password) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+
             return dispatch(fetchSignUp(username, mail, password))
     }
 }
@@ -138,6 +160,16 @@ export function signUpIfNeeded(username, mail, password) {
 export function forgotPwd(mail) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
-            return dispatch(fetchForgot(mail))
+            dispatch(requestApi());
+
+        return dispatch(fetchForgot(mail))
+    }
+}
+
+export function getProfileIfNeeded(token) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+        return dispatch(fetchProfile(token))
     }
 }

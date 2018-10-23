@@ -103,18 +103,17 @@ class SignInForm extends Component {
                     />
                     <FormControl.Feedback/>
                 </FormGroup>
-                {this.props.isFetching === true ? (
+                {this.props.isFetching ? (
                     <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
                 ) : (
                     <Button onClick={this.signin}>Sign In</Button>
                 )
                 }
-                <Button onClick={this.forgot}>Forgot Password</Button>
-                {this.props.msg ? (
-                    <Alert >{`${
-                        this.props.msg
-                        }`}</Alert>
-                ) : null}
+                {this.props.isFetching ? (
+                    <div></div>) : (
+                    <Button onClick={this.forgot}>Forgot Password</Button>
+                )
+                }
                 {this.props.error ? (
                     <Alert bsStyle="danger">{`Error: ${
                         this.props.error

@@ -134,7 +134,7 @@ class SignUpForm extends Component {
                     <FormControl.Feedback/>
                 </FormGroup>
 
-                {this.props.isFetching === true ? (
+                {this.props.isFetching ? (
                     <ReactLoading type={'spin'} color={'black'} height={50} width={50} />
                 ) :  (
                     <Button onClick={this.signup}>Sign Up</Button>

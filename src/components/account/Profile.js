@@ -2,15 +2,19 @@ import React, {Component} from 'react';
 import { PageHeader, Jumbotron, Col } from 'react-bootstrap';
 import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
+import ReactLoading from 'react-loading';
+
 
 import '../../css/Profile.css'
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {getProfileIfNeeded} from "../../actions/actions";
 
 class Profile extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      mail: 'mon.adresse@email.com',
       tmpMail: 'mon.adresse@email.com',
       newPassword1: '',
       newPassword2: '',
@@ -54,6 +58,10 @@ class Profile extends Component {
     }
   };
 
+  componentDidMount(){
+    this.props.dispatch(getProfileIfNeeded(this.props.token))
+  }
+
   checkPassword = () => {
     if (this.state.newPassword1 === this.state.newPassword2 &&
       this.state.newPassword1.length >= 6 /*&& valid password*/)
@@ -78,7 +86,12 @@ class Profile extends Component {
                   Email
                 </Col>
                 <Col sm={10}>
-                  { this.state.mail }
+                    {this.props.isFetching ? (
+                        <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                    ) : (
+                        this.props.mail
+                    )
+                    }
                   <button className='modify' onClick={this.onMailOpen}>
                     <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto" />
                     <span className='modifyText'>Modifier</span>
@@ -162,4 +175,35 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+
+Profile.propTypes = {
+    isLogged: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    token: PropTypes.string,
+    msg: PropTypes.string,
+    error: PropTypes.string,
+    mail: PropTypes.string,
+    dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+    const {
+        isLogged,
+        isFetching,
+        token,
+        msg,
+        error,
+        mail
+    } = state;
+
+    return {
+        isLogged,
+        isFetching,
+        token,
+        msg,
+        error,
+        mail
+    }
+}
+
+export default connect(mapStateToProps)(Profile);
