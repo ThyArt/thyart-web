@@ -133,6 +133,48 @@ function fetchProfile(token) {
     }
 }
 
+function modifyMail(token, mail) {
+  const header_auth = {
+    headers: { Accept: 'application/json',
+      'Content-Type': 'application/xxx-form-urlencoded',
+      Authorization: 'Bearer ' + token }
+  };
+  const body = { };
+  return dispatch => {
+    return axios.patch(apiURL + userURL + "?email="+mail, body, header_auth)
+      .then(res => dispatch(receiveProfile(res)))
+      .catch(error => dispatch(receiveError(error)))
+  }
+}
+
+function modifyPassword(token, password) {
+  const header_auth = {
+    headers: { Accept: 'application/json',
+      'Content-Type': 'application/xxx-form-urlencoded',
+      Authorization: 'Bearer ' + token }
+  };
+  const body = { };
+  return dispatch => {
+    return axios.patch(apiURL + userURL + "?password="+ password, body, header_auth)
+      .then(res => dispatch(receiveProfile(res)))
+      .catch(error => dispatch(receiveError(error)))
+  }
+}
+
+function modifyUsername(token, username) {
+  const header_auth = {
+    headers: { Accept: 'application/json',
+      'Content-Type': 'application/xxx-form-urlencoded',
+      Authorization: 'Bearer ' + token }
+  };
+  const body = { };
+  return dispatch => {
+    return axios.patch(apiURL + userURL + "?name="+ username, body, header_auth)
+      .then(res => dispatch(receiveProfile(res)))
+      .catch(error => dispatch(receiveError(error)))
+  }
+}
+
 function shouldFetchApi(state) {
     const isFetching = state.isFetching;
 
@@ -172,4 +214,28 @@ export function getProfileIfNeeded(token) {
             dispatch(requestApi());
         return dispatch(fetchProfile(token))
     }
+}
+
+export function modifyMailIfNeeded(token, mail) {
+  return (dispatch, getState) => {
+    if (shouldFetchApi(getState()))
+      dispatch(requestApi());
+    return dispatch(modifyMail(token, mail))
+  }
+}
+
+export function modifyPasswordIfNeeded(token, password) {
+  return (dispatch, getState) => {
+    if (shouldFetchApi(getState()))
+      dispatch(requestApi());
+    return dispatch(modifyPassword(token, password))
+  }
+}
+
+export function modifyUsernameIfNeeded(token, username) {
+  return (dispatch, getState) => {
+    if (shouldFetchApi(getState()))
+      dispatch(requestApi());
+    return dispatch(modifyUsername(token, username))
+  }
 }

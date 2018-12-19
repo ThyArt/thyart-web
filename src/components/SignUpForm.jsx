@@ -20,8 +20,10 @@ class SignUpForm extends Component {
         this.handlePassChange = this.handlePassChange.bind(this);
         this.handleConfirmChange = this.handleConfirmChange.bind(this);
         this.handleMailChange = this.handleMailChange.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
 
         this.state = {
+            usernameValue: '',
             mailValue: '',
             passValue: '',
             confirmValue: ''
@@ -30,13 +32,20 @@ class SignUpForm extends Component {
 
     signup = () => {
         if (
-            this.getMailValidationState() === 'success' &&
+          this.getUsernameValidationState() === 'success' &&
+          this.getMailValidationState() === 'success' &&
             this.getPassValidationState() === 'success' &&
             this.getConfirmValidationState() === 'success'
         ) {
-            this.props.dispatch(signUpIfNeeded('toto', this.state.mailValue, this.state.passValue))
+            this.props.dispatch(signUpIfNeeded(this.state.usernameValue, this.state.mailValue, this.state.passValue))
         }
     };
+
+  getUsernameValidationState() {
+    let username = this.state.usernameValue;
+    if (username === '') return null;
+    return 'success';
+  }
 
     getMailValidationState() {
         let email = this.state.mailValue;
@@ -90,9 +99,26 @@ class SignUpForm extends Component {
         this.setState({confirmValue: e.target.value});
     }
 
+    handleUsernameChange(e) {
+      this.setState({usernameValue: e.target.value})
+    }
+
     render() {
         return (
             <form>
+              <FormGroup
+                controlId="formValidationNull"
+                validationState={this.getUsernameValidationState()}
+              >
+                <ControlLabel>Enter your username</ControlLabel>
+                <FormControl
+                  type="username"
+                  value={this.state.usernameValue}
+                  placeholder="Your username"
+                  onChange={this.handleUsernameChange}
+                />
+                <FormControl.Feedback/>
+              </FormGroup>
                 <FormGroup
                     controlId="formValidationNull"
                     validationState={this.getMailValidationState()}

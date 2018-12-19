@@ -18,12 +18,14 @@
     "react-responsive-modal": "^3.4.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "reactabular-table": "^8.14.0",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "spdx-correct": "^3.0.0",
     "spdx-expression-parse": "^3.0.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "lodash": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

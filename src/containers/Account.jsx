@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
+import Clients from '../components/account/Clients';
 import { Redirect } from 'react-router-dom';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -67,16 +68,11 @@ class Account extends Component {
 
           <div id='calendar'>
             { this.state.selected === 1 ? <Scheduler/> : null }
+            { this.state.selected === 4 ? <Clients/> : null}
             { this.state.selected === 6 ? <Profile/> : null }
           </div>
 
-            {!this.props.isLogged ? (
-                <Redirect
-                    to={{
-                        pathname: '/signin',
-                    }}
-                />
-            ) : null}
+
         </div>
     );
   }
