@@ -5,6 +5,10 @@ import * as Table from 'reactabular-table';
 import uuid from 'uuid';
 
 import '../../css/Clients.css'
+import ReactLoading from "react-loading";
+import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
+import Modal from "react-responsive-modal";
+import {modifyUsernameIfNeeded} from "../../actions/actions";
 
 class Clients extends React.Component {
   constructor(props) {
@@ -18,7 +22,24 @@ class Clients extends React.Component {
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
   }
+
+    onAddOpen = () => {
+        this.setState({ addModal: true });
+    };
+
+    onAddClose = () => {
+        this.setState({newAdd: ''});
+        this.setState({ addModal: false });
+    };
+
+    checkAdd = () => {
+
+            this.setState({ AddModal: false });
+
+    };
+
   getColumns() {
+
 
     return [
       {
@@ -66,9 +87,67 @@ class Clients extends React.Component {
     return (
       <div className="clients">
         <tbody>
-        <tr>
-          <td><button type="button" className="pure-button" onClick={this.onAdd}>Ajouter un nouveau client</button></td>
-        </tr>
+        {this.props.isFetching ? (
+            <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+        ) : (
+            <Col sm={10}>
+                {this.props.add}
+                <button className='add' onClick={this.onAddOpen}>
+                    <img src={require('../../static/pencil.svg')} alt="add" height="25" width="auto" />
+                    <span className='add'>Ajouter</span>
+                </button>
+            </Col>
+        )
+        }
+
+        <Modal open={this.state.addModal} onClose={this.onAddClose} center>
+            <h2 className='title'>Ajout d'un utilisateur :</h2>
+            <Col sm={6}>
+                <h3 className="firstname">Nom :</h3>
+            </Col>
+            <Col sm={6}>
+                <FormGroup className='input' >
+                    <FormControl
+                        type="firstname"
+                       // value={}
+                        placeholder="Entrer le nom de l'utilisateur"
+                        //onChange={}
+                    />
+                    <FormControl.Feedback />
+                </FormGroup>
+            </Col>
+            <Col sm={6}>
+                <h3 className="name">Prénom :</h3>
+            </Col>
+            <Col sm={6}>
+                <FormGroup className='input' >
+                    <FormControl
+                        type="name"
+                        //value={}
+                        placeholder="Entrer le prénom de l'utilisateur"
+                        //onChange={}
+                    />
+                    <FormControl.Feedback />
+                </FormGroup>
+            </Col>
+            <Col sm={6}>
+                <h3 className="name">Mail :</h3>
+            </Col>
+            <Col sm={6}>
+                <FormGroup className='input'>
+                    <FormControl
+                        type="mail"
+                        //value={}
+                        placeholder="Entrer le mail de l'utilisateur"
+                        //onChange={}
+                    />
+                    <FormControl.Feedback />
+                </FormGroup>
+            </Col>
+            <Button bsStyle="primary" onClick={this.onAddClose} className='validate' bsSize='large'>
+                Valider
+            </Button>
+        </Modal>
         </tbody>
         <Table.Provider
           className="pure-table pure-table-bordered"
