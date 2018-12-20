@@ -4,7 +4,6 @@ import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
 import ReactLoading from 'react-loading';
 
-
 import '../../css/Profile.css'
 import PropTypes from "prop-types";
 import {connect} from "react-redux";

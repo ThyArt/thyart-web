@@ -3,6 +3,7 @@ import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import Membres from '../components/account/Membres';
+import Artwork from '../components/account/Artwork';
 import { Redirect } from 'react-router-dom';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -69,10 +70,19 @@ class Account extends Component {
           <div id='calendar'>
             { this.state.selected === 1 ? <Scheduler/> : null }
             { this.state.selected === 4 ? <Membres/> : null}
+            { this.state.selected === 3 ? <Artwork/> : null }
             { this.state.selected === 6 ? <Profile/> : null }
           </div>
 
-
+{/* TODO: REMOVE THIS BEFORE PUSH IN PROD
+            {!this.props.isLogged ? (
+                <Redirect
+                    to={{
+                        pathname: '/signin',
+                    }}
+                />
+            ) : null}
+*/}
         </div>
     );
   }
