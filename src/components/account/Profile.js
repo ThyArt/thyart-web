@@ -29,8 +29,7 @@ class Profile extends Component {
   };
 
   onMailClose = () => {
-    this.setState({tmpMail: ''});
-    this.setState({ mailModal: false });
+    this.setState({tmpMail: '', mailModal: false});
   };
 
   onPasswordOpen = () => {
@@ -38,8 +37,7 @@ class Profile extends Component {
   };
 
   onPasswordClose = () => {
-    this.setState({newPassword1: '', newPassword2: ''});
-    this.setState({ passwordModal: false });
+    this.setState({newPassword1: '', newPassword2: '', passwordModal: false });
   };
 
   onUsernameOpen = () => {
@@ -47,8 +45,7 @@ class Profile extends Component {
   };
 
   onUsernameClose = () => {
-    this.setState({newUsername: ''});
-    this.setState({ usernameModal: false });
+    this.setState({newUsername: '', usernameModal: false});
   };
 
   handleChangeMail = event => {
@@ -75,7 +72,7 @@ class Profile extends Component {
 
   getMailValidationState() {
     let email = this.state.tmpMail;
-    if (email === '') return null;
+    if (email === '') return 'error';
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
@@ -87,7 +84,7 @@ class Profile extends Component {
 
   getPassValidationState() {
     let password = this.state.newPassword1;
-    if (password === '') return null;
+    if (password === '') return 'error';
     let strongRegex = new RegExp(
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
     );
@@ -105,7 +102,7 @@ class Profile extends Component {
 
   getConfirmValidationState() {
     let password = this.state.newPassword1;
-    if (password === '') return null;
+    if (password === '') return 'error';
     if (password === this.state.newPassword2) {
       return 'success';
     } else {
@@ -114,7 +111,7 @@ class Profile extends Component {
   }
 
   checkMail = () => {
-    if (this.getMailValidationState()) {
+    if (this.getMailValidationState() === 'success') {
       this.props.dispatch(modifyMailIfNeeded(this.props.token, this.state.tmpMail));
       this.setState({mailModal: false });
 
@@ -126,7 +123,7 @@ class Profile extends Component {
   }
 
   checkPassword = () => {
-    if (this.getPassValidationState())
+    if (this.getPassValidationState() === 'success' && this.getConfirmValidationState() === 'success')
     {
       this.setState({ passwordModal: false });
       this.props.dispatch(modifyPasswordIfNeeded(this.props.token, this.state.newPassword1));
@@ -135,7 +132,7 @@ class Profile extends Component {
   };
 
   checkUsername = () => {
-    if (this.getUsernameValidationState())
+    if (this.getUsernameValidationState() === 'success')
     {
       this.setState({ usernameModal: false });
       this.props.dispatch(modifyUsernameIfNeeded(this.props.token, this.state.newUsername));
@@ -175,7 +172,7 @@ class Profile extends Component {
                   <h3 className="name">Nouveau nom d'utilisateur :</h3>
                 </Col>
                 <Col sm={6}>
-                  <FormGroup className='input'>
+                  <FormGroup className='input' validationState={this.getUsernameValidationState()}>
                     <FormControl
                       type="text"
                       value={this.props.username}

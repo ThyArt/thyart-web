@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
-import Clients from '../components/account/Clients';
+import Membres from '../components/account/Membres';
 import { Redirect } from 'react-router-dom';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -52,7 +52,7 @@ class Account extends Component {
                 Oeuvres
               </NavItem>
               <NavItem  eventKey={4} className='item'>
-                Clients
+                Membres
               </NavItem>
               <NavItem  eventKey={5} className='item'>
                 Facturation
@@ -68,7 +68,7 @@ class Account extends Component {
 
           <div id='calendar'>
             { this.state.selected === 1 ? <Scheduler/> : null }
-            { this.state.selected === 4 ? <Clients/> : null}
+            { this.state.selected === 4 ? <Membres/> : null}
             { this.state.selected === 6 ? <Profile/> : null }
           </div>
 
