@@ -131,7 +131,7 @@ class Membres extends React.Component {
           <Col sm={10}>
               {this.props.add}
               <button className='add' onClick={this.onAddOpen}>
-                  <img src={require('../../static/pencil.svg')} alt="add" height="25" width="auto" />
+                  <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" />
                   <span className='add'>Ajouter</span>
               </button>
           </Col>
