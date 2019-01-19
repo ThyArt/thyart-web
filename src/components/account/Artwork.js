@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import Gallery from 'react-photo-gallery';
 import Modal from "react-responsive-modal";
+import ImageUpload from './ImageUpload';
 import { Col, ControlLabel, FormControl, FormGroup, Button, Form, Glyphicon, DropdownButton, MenuItem } from "react-bootstrap";
 
 import '../../css/Artwork.css';
+import ToggleButton from "react-bootstrap/es/ToggleButton";
+import ButtonToolbar from "react-bootstrap/es/ButtonToolbar";
+import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
+import Row from "react-bootstrap/es/Row";
 
 class Artwork extends Component {
   constructor(props, context) {
@@ -11,7 +16,12 @@ class Artwork extends Component {
 
     this.state = {
       currentPhoto: [],
+      file: '',
       currentName: '',
+      reference: '',
+      addModal: false,
+      price:'',
+      title: '',
       detailsModal: false,
       photos: [
         {
@@ -52,10 +62,23 @@ class Artwork extends Component {
         }
       ]
     };
+
   }
 
   onNameChange = event => {
     this.setState({ currentName: event.target.value });
+  };
+
+  onAWTitle = event => {
+    this.setState({ title: event.target.value });
+  };
+
+  onPriceChange = event => {
+    this.setState({ price: event.target.value });
+  };
+
+  onReferenceChange = event => {
+    this.setState({ reference: event.target.value });
   };
 
   onDetailClose = () => {
@@ -64,6 +87,22 @@ class Artwork extends Component {
 
   handleImageClick = (event, obj) => {
     this.setState({ detailsModal: true, currentPhoto: [obj.photo], currentName: obj.photo.name });
+  };
+
+  handleAddArtworkShow = () => {
+    this.setState({addModal: true});
+  };
+
+  handleAddArtworkClose = () => {
+    this.setState({addModal: false});
+  };
+
+  myCallback = (file) => {
+    this.state.file = file;
+  };
+
+  getVerification = () => {
+   // if (this.state.file !== '' && this.state.reference !== '' && this.state.AWTitle !== '' && )
   };
 
   render() {
@@ -84,12 +123,47 @@ class Artwork extends Component {
                 <MenuItem eventKey={5}>Toutes les catégories</MenuItem>
               </DropdownButton>{' '}
 
-              <Button bsSize='large' className='complexButton'>
+              <Button bsSize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
                 <Glyphicon glyph='glyphicon glyphicon-plus'/>
-              </Button>{' '}
+              </Button>
+
             </FormGroup>
           </Form>
         </div>
+
+        <Modal open={this.state.addModal} onClose={this.handleAddArtworkClose}>
+          <h1 id='titleModal'>Ajouter une oeuvre</h1>
+          <Row>
+            <Col xs="6">
+              <ImageUpload callbackFromParent={this.myCallback}/>
+            </Col>
+            <Col xs="6">
+              <form>
+              <FormGroup controlId="formValidationSuccess1" validationState="null" className='addModal'>
+                <ControlLabel>Nom de l'oeuvre</ControlLabel>
+                <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitle}/>
+                <ControlLabel>Reference</ControlLabel>
+                <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
+                <ControlLabel>id de l'artiste</ControlLabel>
+                <FormControl type='number' value={this.state.AWTitle} onChange={this.onAWTitle}/>
+                <ControlLabel>Prix</ControlLabel>
+                <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
+
+                <ButtonToolbar>
+                  <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
+                    <ToggleButton value={1}>Exposé</ToggleButton>
+                    <ToggleButton value={2}>Stock</ToggleButton>
+                    <ToggleButton value={3}>Vendu</ToggleButton>
+                  </ToggleButtonGroup>
+                </ButtonToolbar>
+                <Button bsStyle="primary" onClick={this.getVerification} bsSize='large'>
+                  Valider
+                </Button>
+              </FormGroup>
+              </form>
+            </Col>
+          </Row>
+        </Modal>
 
         <Gallery photos={this.state.photos} direction={"column"} onClick={this.handleImageClick}/>
 

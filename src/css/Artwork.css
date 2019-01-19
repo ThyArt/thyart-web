@@ -28,6 +28,10 @@
     margin: 50px;
 }
 
+.addModal {
+    padding: 50px;
+}
+
 .confirmModal {
     position: absolute;
     right: 50px;

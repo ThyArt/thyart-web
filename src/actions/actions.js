@@ -13,6 +13,7 @@ const userURL = 'api/user';
 const tokenURL = 'oauth/token';
 const pwdURL = 'api/password/create';
 const profileURL = 'api/user/self';
+const artWorkURL = 'api/artwork';
 
 const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
@@ -169,16 +170,46 @@ function modifyUsername(token, username) {
   };
   const body = { };
   return dispatch => {
-    return axios.patch(apiURL + userURL + "?name="+ username, body, header_auth)
+    return axios.patch(apiURL + userURL, body, header_auth)
       .then(res => dispatch(receiveProfile(res)))
       .catch(error => dispatch(receiveError(error)))
   }
+}
+
+function uploadArtWork(token, file, name, price, ref, state, id) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/xxx-form-urlencoded',
+            Authorization: 'Bearer ' + token }
+    };
+    const body = {
+        name: name,
+        price: price,
+        ref: ref,
+        state: state,
+        artist_id: id
+    };
+    return dispatch => {
+
+        return axios.post(apiURL + artWorkURL, body, header_auth)
+            .then(res => dispatch(receiveProfile(res)))
+            .catch(error => dispatch(receiveError(error)))
+    }
 }
 
 function shouldFetchApi(state) {
     const isFetching = state.isFetching;
 
     return !isFetching;
+}
+
+export function upload(token, file, name, price, ref, state, id) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+
+        return dispatch(uploadArtWork(token, file, name, price, ref, state, id))
+    }
 }
 
 export function signInIfNeeded(username, password) {
