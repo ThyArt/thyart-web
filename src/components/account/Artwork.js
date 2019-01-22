@@ -9,6 +9,9 @@ import ToggleButton from "react-bootstrap/es/ToggleButton";
 import ButtonToolbar from "react-bootstrap/es/ButtonToolbar";
 import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
 import Row from "react-bootstrap/es/Row";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import {upload} from "../../actions/actions";
 
 class Artwork extends Component {
   constructor(props, context) {
@@ -21,7 +24,8 @@ class Artwork extends Component {
       reference: '',
       addModal: false,
       price:'',
-      title: '',
+      AWTitle: '',
+      AWArtist: '',
       detailsModal: false,
       photos: [
         {
@@ -69,8 +73,12 @@ class Artwork extends Component {
     this.setState({ currentName: event.target.value });
   };
 
-  onAWTitle = event => {
-    this.setState({ title: event.target.value });
+  onAWTitleChange = event => {
+    this.setState({ AWTitle: event.target.value });
+  };
+
+  onAWArtistChange = event => {
+    this.setState({ AWArtist: event.target.value });
   };
 
   onPriceChange = event => {
@@ -102,7 +110,12 @@ class Artwork extends Component {
   };
 
   getVerification = () => {
-   // if (this.state.file !== '' && this.state.reference !== '' && this.state.AWTitle !== '' && )
+    if (this.state.file !== '' && this.state.reference !== ''
+        && this.state.AWTitle !== '' && this.state.AWArtist !== ''
+        && this.state.price !== '') {
+      this.props.dispatch(upload(this.props.token, this.state.file, this.state.AWTitle,
+      this.state.price, this.state.reference, this.state.AWArtist));
+    }
   };
 
   render() {
@@ -141,11 +154,11 @@ class Artwork extends Component {
               <form>
               <FormGroup controlId="formValidationSuccess1" validationState="null" className='addModal'>
                 <ControlLabel>Nom de l'oeuvre</ControlLabel>
-                <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitle}/>
+                <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
                 <ControlLabel>Reference</ControlLabel>
                 <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
                 <ControlLabel>id de l'artiste</ControlLabel>
-                <FormControl type='number' value={this.state.AWTitle} onChange={this.onAWTitle}/>
+                <FormControl type='number' value={this.state.AWArtist} onChange={this.onAWArtistChange}/>
                 <ControlLabel>Prix</ControlLabel>
                 <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
@@ -154,6 +167,7 @@ class Artwork extends Component {
                     <ToggleButton value={1}>Exposé</ToggleButton>
                     <ToggleButton value={2}>Stock</ToggleButton>
                     <ToggleButton value={3}>Vendu</ToggleButton>
+                    <ToggleButton value={4}>En transit</ToggleButton>
                   </ToggleButtonGroup>
                 </ButtonToolbar>
                 <Button bsStyle="primary" onClick={this.getVerification} bsSize='large'>
@@ -189,5 +203,37 @@ class Artwork extends Component {
     );
   }
 }
+
+Artwork.propTypes = {
+  isLogged: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  token: PropTypes.string,
+  msg: PropTypes.string,
+  error: PropTypes.string,
+  mail: PropTypes.string,
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  const {
+    isLogged,
+    isFetching,
+    token,
+    msg,
+    error,
+    mail
+  } = state;
+
+  return {
+    isLogged,
+    isFetching,
+    token,
+    msg,
+    error,
+    mail
+  }
+}
+
+export default connect(mapStateToProps)(Artwork);
 
 export default Artwork;

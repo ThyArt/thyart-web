@@ -14,6 +14,7 @@ const tokenURL = 'oauth/token';
 const pwdURL = 'api/password/create';
 const profileURL = 'api/user/self';
 const artWorkURL = 'api/artwork';
+const artWorkAddImg = 'api/artwork/6/image';
 
 const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
@@ -179,7 +180,7 @@ function modifyUsername(token, username) {
 function uploadArtWork(token, file, name, price, ref, state, id) {
     const header_auth = {
         headers: { Accept: 'application/json',
-            'Content-Type': 'application/xxx-form-urlencoded',
+            'Content-Type': 'application/json',
             Authorization: 'Bearer ' + token }
     };
     const body = {
@@ -189,11 +190,17 @@ function uploadArtWork(token, file, name, price, ref, state, id) {
         state: state,
         artist_id: id
     };
+    const bodyImg = {
+        images: file
+    };
     return dispatch => {
 
-        return axios.post(apiURL + artWorkURL, body, header_auth)
+        axios.post(apiURL + artWorkURL, body, header_auth)
             .then(res => dispatch(receiveProfile(res)))
-            .catch(error => dispatch(receiveError(error)))
+            .catch(error => dispatch(receiveError(error)));
+        return axios.post(apiURL + artWorkAddImg, bodyImg, header_auth)
+            .then(res => dispatch(receiveProfile(res)))
+            .catch(error => dispatch(receiveError(error)));
     }
 }
 
