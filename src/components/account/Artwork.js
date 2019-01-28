@@ -11,7 +11,8 @@ import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
 import Row from "react-bootstrap/es/Row";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {createArtworkIfNeeded, uploadImageIfNeeded} from "../../actions/actions";
+import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded, upload} from "../../actions/actions";
+import {createArtworkIfNeeded} from "../../actions/actions";
 
 class Artwork extends Component {
   constructor(props, context) {
@@ -20,54 +21,35 @@ class Artwork extends Component {
     this.state = {
       currentPhoto: [],
       file: '',
-      currentName: '',
+        search: '',
       reference: '',
       addModal: false,
       price:'',
       AWTitle: '',
       AWState: 1,
       detailsModal: false,
-      photos: [
-        {
-          src: 'https://images.pexels.com/photos/821754/pexels-photo-821754.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-          name: 'Some old phones',
-          width: 4,
-          height: 3
-        },
-        {
-          src: 'https://images.pexels.com/photos/823841/pexels-photo-823841.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-          name: 'Blue light',
-          width: 5,
-          height: 3.5
-        },
-        {
-          src: 'https://images.pexels.com/photos/1484671/pexels-photo-1484671.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-          name: 'Green Leaf',
-          width: 3,
-          height: 4
-        },
-        {
-          src: 'https://images.pexels.com/photos/1647972/pexels-photo-1647972.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-          name: 'The cliff',
-          width: 3,
-          height: 4
-        },
-        {
-          src: 'https://images.pexels.com/photos/1287086/pexels-photo-1287086.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-          name: 'The enlightened forest',
-          width: 4,
-          height: 3
-        },
-        {
-          src: 'https://images.pexels.com/photos/976994/pexels-photo-976994.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-          name: 'Reflections',
-          width: 4,
-          height: 3
-        }
-      ]
+        modifMode: false
     };
-
   }
+
+  componentDidMount(){
+        this.props.dispatch(getArtWorksIfNeeded(this.props.token));
+    }
+
+    getArtWorkState = () => {
+        switch (this.state.AWState) {
+            case 1:
+                return 'exposed';
+            case 2:
+                return 'in_stock';
+            case 3:
+                return 'sold';
+            case 4:
+                return 'incoming';
+            default:
+                return 'exposed;'
+        }
+    };
 
   onNameChange = event => {
     this.setState({ currentName: event.target.value });
@@ -85,12 +67,37 @@ class Artwork extends Component {
     this.setState({ reference: event.target.value });
   };
 
+    onSearchChange = event => {
+      this.setState({ search: event.target.value });
+    };
+
+    onDetailOpen = () => {
+        this.setState({ modifMode: false});
+    };
+
+    onModifOpen = () => {
+        this.setState({
+            modifMode: !this.state.modifMode,
+            price: this.props.artwork.price,
+            AWTitle: this.props.artwork.name,
+            AWState: this.props.artwork.state
+        });
+    };
+
   onDetailClose = () => {
-    this.setState({ detailsModal: false });
+    this.setState({ detailsModal: false ,
+                  modifMode: false});
   };
 
+    onModifValidation = () => {
+        this.setState({ detailsModal: false });
+        this.props.dispatch(modifyArtWorkIfNeeded(this.props.token, this.state.AWTitle,
+                                                  this.getArtWorkState(), this.state.price, this.props.artwork.id));
+    };
+
   handleImageClick = (event, obj) => {
-    this.setState({ detailsModal: true, currentPhoto: [obj.photo], currentName: obj.photo.name });
+    this.setState({ detailsModal: true});
+      this.props.dispatch(getArtWorkIfNeeded(this.props.token, obj.photo.key));
   };
 
   handleAddArtworkShow = () => {
@@ -98,41 +105,47 @@ class Artwork extends Component {
   };
 
   handleAddArtworkClose = () => {
-    this.setState({addModal: false});
+    this.setState({
+        addModal: false,
+        price:'',
+        AWTitle: '',
+        AWState: 1
+    });
+
   };
 
   myCallback = (file) => {
     this.setState({file: file});
   };
 
+  getNewArtworkValidationState = () => {
+      if (this.state.file !== '' && this.state.reference !== ''
+          && this.state.AWTitle !== '' && this.state.price !== '')
+          return 'success';
+  };
+
   getVerification = () => {
-    if (this.state.file !== '' && this.state.reference !== ''
-        && this.state.AWTitle !== '' && this.state.price !== '') {
+    if (this.getNewArtworkValidationState() === 'success') {
       this.props.dispatch(createArtworkIfNeeded(this.state.file, this.props.token, this.state.AWTitle,
       this.state.price, this.state.reference, this.getArtWorkState()));
-      //console.log(this.props.msg);
-      //this.props.dispatch(uploadImageIfNeeded(this.state.file, this.props.token, this.props.msg))
+        this.setState({
+            addModal: false,
+            price:'',
+            AWTitle: '',
+            AWState: 1
+        });
+
     }
   };
-  
-  getArtWorkState = () => {
-    switch (this.state.AWState) {
-      case 1:
-        return 'exposed';
-      case 2:
-        return 'in_stock';
-      case 3:
-        return 'sold';
-      case 4:
-        return 'incoming';
-      default:
-        return 'exposed;'
-    }
-  };
+
 
   handleChange(e) {
     this.setState({AWState: e});
   }
+
+  searchArtworks = () => {
+    this.props.dispatch(getArtWorksIfNeeded(this.props.token, this.state.search));
+  };
 
   render() {
     return (
@@ -140,11 +153,13 @@ class Artwork extends Component {
         <div id='toolbar'>
           <Form inline>
             <FormGroup bsSize='large'>
-              <FormControl type='text' placeholder='Enter text to search...' id='searchBar'/>{' '}
+              <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
+                           placeholder='Enter text to search...' id='searchBar'/>{' '}
 
-              <Button bsStyle='primary' bsSize='large'>Search</Button>{' '}
+              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Search</Button>{' '}
 
-              <DropdownButton bsSize='large' className='complexButton' title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}>
+              <DropdownButton bsSize='large' className='complexButton'
+                              title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}>
                 <MenuItem eventKey={1}>Photographies</MenuItem>
                 <MenuItem eventKey={2}>Peintures</MenuItem>
                 <MenuItem eventKey={3}>Sculptures</MenuItem>
@@ -168,7 +183,8 @@ class Artwork extends Component {
             </Col>
             <Col xs="6">
               <form>
-              <FormGroup controlId="formValidationSuccess1" validationState="null" className='addModal'>
+              <FormGroup controlId="formValidationSuccess1" className='addModal'
+                         validationState={this.getNewArtworkValidationState()}>
                 <ControlLabel>Nom de l'oeuvre</ControlLabel>
                 <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
                 <ControlLabel>Reference</ControlLabel>
@@ -196,26 +212,89 @@ class Artwork extends Component {
             </Col>
           </Row>
         </Modal>
-
-        <Gallery photos={this.state.photos} direction={"column"} onClick={this.handleImageClick}/>
-
-        <Modal open={this.state.detailsModal} onClose={this.onDetailClose}>
+          { (this.props.artworks.length > 0) ?
+              (<Gallery photos={this.props.artworks} direction={"column"} onClick={this.handleImageClick}/>
+              ) : null
+          }
+        <Modal open={this.state.detailsModal} onClose={this.onDetailClose} onOpen={this.onDetailOpen}>
           <h1 id='titleModal'>Détails de l'oeuvre</h1>
 
           <Col sm={5} id='photoModal'>
-            <Gallery photos={this.state.currentPhoto}/>
+              { (this.props.artwork != null && this.props.artwork.images != null) ?
+                  (<img src={this.props.artwork.src}/>
+                  ): null
+              }
           </Col>
 
-          <Col sm={6}>
-            <FormGroup className='infosModal'>
-              <ControlLabel>Nom de l'oeuvre</ControlLabel>
-              <FormControl type='text' value={this.state.currentName} onChange={this.onNameChange}/>
-            </FormGroup>
-          </Col>
+              {
+                  (this.props.artwork != null) ?
+                      (
+                          <div>
+                          < Button bsStyle = "primary" onClick={this.onModifOpen} bsSize='large' className='confirmModal'>
+                              Modifier
+                          </Button>
+                          {
+                    (this.state.modifMode) ? (
+                        <div>
+                            <FormGroup controlId="formValidationSuccess1" className='addModal'
+                                       validationState={this.getNewArtworkValidationState()}>
+                                <ControlLabel>Nom de l'oeuvre</ControlLabel>
+                                <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
+                                <ControlLabel>Reference</ControlLabel>
+                                <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
+                                <ControlLabel>Prix</ControlLabel>
+                                <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
-          <Button bsStyle="primary" onClick={this.onDetailClose} bsSize='large' className='confirmModal'>
-            Valider
-          </Button>
+                                <ButtonToolbar>
+                                    <ToggleButtonGroup id={'artWorkState'}
+                                                       type="radio"
+                                                       value={this.state.AWState}
+                                                       onChange={this.handleChange}
+                                                       name="options">
+                                        <ToggleButton value={1}>Exposé</ToggleButton>
+                                        <ToggleButton value={2}>Stock</ToggleButton>
+                                        <ToggleButton value={3}>Vendu</ToggleButton>
+                                        <ToggleButton value={4}>En transit</ToggleButton>
+                                    </ToggleButtonGroup>
+                                </ButtonToolbar>
+                            </FormGroup>
+                      < Button bsStyle = "primary" onClick={this.onModifValidation} bsSize='large' className='confirmModal'>
+                  Valider
+                  </Button>
+                  </div>
+                  ) : (
+                      <div>
+                    <Row>
+                        <Col sm={2}>
+                          Titre:
+                        </Col>
+                        <Col sm={2}>
+                          {this.props.artwork.name}
+                        </Col>
+                    </Row>
+                          <Row>
+                              <Col sm={2}>
+                                  Référence:
+                              </Col>
+                              <Col sm={2}>
+                                  {this.props.artwork.reference}
+                              </Col>
+                          </Row>
+                          <Row>
+                              <Col sm={2}>
+                                  Prix:
+                              </Col>
+                              <Col sm={2}>
+                                  {this.props.artwork.price}
+                              </Col>
+                          </Row>
+                  </div>
+                  )
+                }
+                          </div>
+                ) :
+                  null
+              }
         </Modal>
       </div>
     );
@@ -228,30 +307,29 @@ Artwork.propTypes = {
   token: PropTypes.string,
   msg: PropTypes.string,
   error: PropTypes.string,
-  mail: PropTypes.string,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+    artworks: PropTypes.array,
+    artwork: PropTypes.object
 };
 
 function mapStateToProps(state) {
-  const {
+    const {
     isLogged,
     isFetching,
-    token,
     msg,
     error,
-    mail
+    artworks,
+        artwork
   } = state;
 
   return {
     isLogged,
     isFetching,
-    token,
     msg,
     error,
-    mail
+    artworks,
+      artwork
   }
 }
 
 export default connect(mapStateToProps)(Artwork);
-
-//export default Artwork;

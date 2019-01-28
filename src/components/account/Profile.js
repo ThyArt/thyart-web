@@ -7,7 +7,8 @@ import ReactLoading from 'react-loading';
 import '../../css/Profile.css'
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getProfileIfNeeded, modifyMailIfNeeded, modifyPasswordIfNeeded, modifyUsernameIfNeeded} from "../../actions/actions";
+import {getProfileIfNeeded, modifyMailIfNeeded, modifyPasswordIfNeeded, modifyFirstnameIfNeeded, modifyLastnameIfNeeded} from "../../actions/actions";
+import Row from "react-bootstrap/es/Row";
 
 class Profile extends Component {
   constructor(props, context) {
@@ -17,18 +18,25 @@ class Profile extends Component {
       tmpMail: '',
       newPassword1: '',
       newPassword2: '',
-      newUsername: '',
+      newFirstname: '',
+      newLastname: '',
       mailModal: false,
-      passwordModal: false
+      passwordModal: false,
+      firstnameModal: false,
+      lastnameModal: false
     };
   }
 
+  componentDidMount(){
+    this.props.dispatch(getProfileIfNeeded(this.props.token))
+  }
+
   onMailOpen = () => {
-    this.setState({ mailModal: true });
+    this.setState({tmpMail: this.props.mail, mailModal: true });
   };
 
   onMailClose = () => {
-    this.setState({tmpMail: '', mailModal: false});
+    this.setState({tmpMail: this.props.mail, mailModal: false});
   };
 
   onPasswordOpen = () => {
@@ -39,12 +47,20 @@ class Profile extends Component {
     this.setState({newPassword1: '', newPassword2: '', passwordModal: false });
   };
 
-  onUsernameOpen = () => {
-    this.setState({ usernameModal: true });
+  onFirstnameOpen = () => {
+    this.setState({newFirstname: this.props.firstname, firstnameModal: true });
   };
 
-  onUsernameClose = () => {
-    this.setState({newUsername: '', usernameModal: false});
+  onFirstnameClose = () => {
+    this.setState({newFirstname: this.props.firstname, firstnameModal: false});
+  };
+
+  onLastnameOpen = () => {
+    this.setState({newLastname: this.props.lastname, lastnameModal: true });
+  };
+
+  onLastnameClose = () => {
+    this.setState({newLastname: this.props.lastname, lastnameModal: false});
   };
 
   handleChangeMail = event => {
@@ -59,13 +75,23 @@ class Profile extends Component {
     this.setState({ newPassword2: event.target.value });
   };
 
-  handleChangeUsername = event => {
-    this.setState({ newUsername: event.target.value });
+  handleChangeFirstname = event => {
+    this.setState({ newFirstname: event.target.value });
   };
 
-  getUsernameValidationState() {
-    let username = this.state.newUsername;
-    if (username === '') return 'error';
+  handleChangeLastname = event => {
+    this.setState({ newLastname: event.target.value });
+  };
+
+  getFirstnameValidationState() {
+    let firstname = this.state.newFirstname;
+    if (firstname === '') return 'error';
+    return 'success';
+  }
+
+  getLastnameValidationState() {
+    let lastname = this.state.newLastname;
+    if (lastname === '') return 'error';
     return 'success';
   }
 
@@ -113,13 +139,12 @@ class Profile extends Component {
     if (this.getMailValidationState() === 'success') {
       this.props.dispatch(modifyMailIfNeeded(this.props.token, this.state.tmpMail));
       this.setState({mailModal: false });
+      this.setState({ newMail: ''});
 
     }
   };
 
-  componentDidMount(){
-    this.props.dispatch(getProfileIfNeeded(this.props.token))
-  }
+
 
   checkPassword = () => {
     if (this.getPassValidationState() === 'success' && this.getConfirmValidationState() === 'success')
@@ -130,12 +155,21 @@ class Profile extends Component {
     }
   };
 
-  checkUsername = () => {
-    if (this.getUsernameValidationState() === 'success')
+  checkFirstname = () => {
+    if (this.getFirstnameValidationState() === 'success')
     {
-      this.setState({ usernameModal: false });
-      this.props.dispatch(modifyUsernameIfNeeded(this.props.token, this.state.newUsername));
-      this.setState({ newUsername: ''});
+      this.setState({ firstnameModal: false });
+      this.props.dispatch(modifyFirstnameIfNeeded(this.props.token, this.state.newFirstname));
+      this.setState({ newFirstname: ''});
+    }
+  };
+
+  checkLastname = () => {
+    if (this.getLastnameValidationState() === 'success')
+    {
+      this.setState({ lastnameModal: false });
+      this.props.dispatch(modifyLastnameIfNeeded(this.props.token, this.state.newLastname));
+      this.setState({ newLastname: ''});
     }
   };
 
@@ -149,62 +183,131 @@ class Profile extends Component {
 
           <div className='form'>
             <div>
-              <Col sm={2}>
-                Nom
-              </Col>
-              {this.props.isFetching ? (
-                <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-              ) : (
-                <Col sm={10}>
-                  {this.props.username}
-                  <button className='modify' onClick={this.onUsernameOpen}>
-                    <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto" />
-                    <span className='modifyText'>Modifier</span>
-                  </button>
+              <Row className='info'>
+                <Col sm={2} className='field'>
+                  Prénom:
                 </Col>
-              )
-              }
+                <Col sm={2}>
+                {
+                  this.props.isFetching ? (
+                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                ) : (
+                  <div>
+                    {this.props.firstname}
 
-              <Modal open={this.state.usernameModal} onClose={this.onUsernameClose} center>
-                <h2 className="title">Changement de nom d'utilisateur :</h2>
-                <Col sm={6}>
-                  <h3 className="name">Nouveau nom d'utilisateur :</h3>
+                  </div>
+                )
+                }
+                </Col>
+                  <Col sm={2}>
+                      {
+                          !this.props.isFetching ? (
+                              <button className='modify' onClick={this.onFirstnameOpen}>
+                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                                  <span className='modifyText'>Modifier</span>
+                              </button>
+                          ) : (<div></div>)
+                      }
+                  </Col>
+
+              </Row>
+              <Modal open={this.state.firstnameModal} onClose={this.onFirstnameClose} center>
+                <h2 className="title">Changement de prénom :</h2>
+                <Col sm={6} className='field'>
+                  <h3 className="name">Nouveau prénom :</h3>
                 </Col>
                 <Col sm={6}>
-                  <FormGroup className='input' validationState={this.getUsernameValidationState()}>
+                  <FormGroup className='input' validationState={this.getFirstnameValidationState()}>
                     <FormControl
                       type="text"
-                      value={this.props.username}
-                      placeholder="Entrer le nouveau nom d'utilisateur"
-                      onChange={this.handleChangeUsername}
+                      value={this.state.newFirstname}
+                      placeholder="Entrer le nouveau prénom"
+                      onChange={this.handleChangeFirstname}
                     />
                     <FormControl.Feedback />
                   </FormGroup>
                 </Col>
-                <Button bsStyle="primary" onClick={this.checkUsername} className='validate' bsSize='large'>
+                <Button bsStyle="primary" onClick={this.checkFirstname} className='validate' bsSize='large'>
                   Valider
                 </Button>
               </Modal>
             </div>
 
             <div>
-              <Col sm={2}>
-                Adresse mail
-              </Col>
-              {this.props.isFetching ? (
-                <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-              ) : (
-                <Col sm={10}>
-                  ********
-                  {this.props.mail}
-                  <button className='modify' onClick={this.onMailOpen}>
-                    <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto" />
-                    <span className='modifyText'>Modifier</span>
-                  </button>
+              <Row className='info'>
+                <Col sm={2} className='field'>
+                  Nom:
                 </Col>
-              )
-              }
+                <Col sm={2}>
+                  {this.props.isFetching ? (
+                    <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                  ) : (
+                    <div>
+                      {this.props.lastname}
+                    </div>
+                  )
+                  }
+                </Col>
+                  <Col sm={2}>
+                      {
+                          !this.props.isFetching ? (
+                              <button className='modify' onClick={this.onLastnameOpen}>
+                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                                  <span className='modifyText'>Modifier</span>
+                              </button>
+                          ) : (<div></div>)
+                      }
+                  </Col>
+              </Row>
+              <Modal open={this.state.lastnameModal} onClose={this.onLastnameClose} center>
+                <h2 className="title">Changement de nom de famille :</h2>
+                <Col sm={6} className='field'>
+                  <h3 className="name">Nouveau nom de famille :</h3>
+                </Col>
+                <Col sm={6}>
+                  <FormGroup className='input' validationState={this.getLastnameValidationState()}>
+                    <FormControl
+                      type="text"
+                      value={this.state.newLastname}
+                      placeholder="Entrer le nouveau nom de famille"
+                      onChange={this.handleChangeLastname}
+                    />
+                    <FormControl.Feedback />
+                  </FormGroup>
+                </Col>
+                <Button bsStyle="primary" onClick={this.checkLastname} className='validate' bsSize='large'>
+                  Valider
+                </Button>
+              </Modal>
+            </div>
 
+            <div>
+              <Row className="info">
+                <Col sm={2} className='field'>
+                  Adresse mail:
+                </Col>
+                <Col sm={2}>
+                {this.props.isFetching ? (
+                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                ) : (
+                    <div>
+                      {this.props.mail}
+                    </div>
+                )
+
+                }
+                </Col>
+                  <Col sm={2}>
+                      {
+                          !this.props.isFetching ? (
+                              <button className='modify' onClick={this.onMailOpen}>
+                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                                  <span className='modifyText'>Modifier</span>
+                              </button>
+                          ) : (<div></div>)
+                      }
+                  </Col>
+              </Row>
               <Modal open={this.state.mailModal} onClose={this.onMailClose} center>
                 <h2 className="title">Changement d'adresse mail :</h2>
                 <Col sm={6}>
@@ -214,7 +317,7 @@ class Profile extends Component {
                   <FormGroup className='input' validationState={this.getMailValidationState()}>
                     <FormControl
                       type="text"
-                      value={this.props.mail}
+                      value={this.state.tmpMail}
                       placeholder="Entrer la nouvelle adresse mail"
                       onChange={this.handleChangeMail}
                     />
@@ -228,22 +331,31 @@ class Profile extends Component {
             </div>
 
             <div>
-              <Col sm={2}>
-                Mot de passe
-              </Col>
-              {this.props.isFetching ? (
-                <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-              ) : (
-                <Col sm={10}>
-                  ********
-                  {this.props.mail}
-                  <button className='modify' onClick={this.onPasswordOpen}>
-                    <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto" />
-                    <span className='modifyText'>Modifier</span>
-                  </button>
+              <Row className="info">
+                <Col sm={2} className='field'>
+                  Mot de passe:
                 </Col>
-              )
-              }
+                <Col sm={2}>
+                {this.props.isFetching ? (
+                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                ) : (
+                  <div>
+                    ******
+                  </div>
+                )
+                }
+                </Col>
+                  <Col sm={2}>
+                      {
+                          !this.props.isFetching ? (
+                              <button className='modify' onClick={this.onPasswordOpen}>
+                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                                  <span className='modifyText'>Modifier</span>
+                              </button>
+                          ) : (<div></div>)
+                      }
+                  </Col>
+              </Row>
 
               <Modal open={this.state.passwordModal} onClose={this.onPasswordClose} center>
                 <h2 className='title'>Changement de mot de passe :</h2>
@@ -302,19 +414,21 @@ function mapStateToProps(state) {
     const {
         isLogged,
         isFetching,
-        token,
         msg,
         error,
-        mail
+        mail,
+        firstname,
+        lastname
     } = state;
 
     return {
         isLogged,
         isFetching,
-        token,
         msg,
         error,
-        mail
+        mail,
+        firstname,
+        lastname
     }
 }
 

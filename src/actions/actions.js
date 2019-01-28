@@ -7,22 +7,25 @@ export const REQUEST_API = 'REQUEST_API';
 export const DISCONNECT = 'DISCONNECT';
 export const RECEIVE_PWD = 'RECEIVE_PWD';
 export const RECEIVE_PROFILE = 'RECEIVE_PROFILE';
+export const RECEIVE_ARTWORKS = 'RECEIVE_ARTWORKS';
+export const RECEIVE_ARTWORK = 'RECEIVE_ARTWORK';
 export const RECEIVE_ARTWORKCREATE = 'RECEIVE_ARTWORKCREATE';
 export const RECEIVE_ADDIMAGE = 'RECEIVE_ADDIMAGE';
 
-const apiURL = 'http://thyart-api-dev.eu-west-1.elasticbeanstalk.com/';
-const apiURLocal = 'http://localhost:80/';
+//const apiURL = 'http://thyart-api-dev.eu-west-1.elasticbeanstalk.com/';
+const apiURL = 'http://localhost:80/';
 const userURL = 'api/user';
 const tokenURL = 'oauth/token';
 const pwdURL = 'api/password/create';
 const profileURL = 'api/user/self';
 const artWorkURL = 'api/artwork';
+const artWorkImg = '/image';
 
 const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
 };
 const clientID = 2;
-const clientSecret = 'BzqoGU5N3Ue6Dsm6cSQ81SdQsY3e0B8gicbdk3dI';
+const clientSecret = 'vMJibGy1LLl1Jb2GFY1GrCewg3ggZreCoLkgGlVj';
 
 function requestApi() {
     return {
@@ -35,7 +38,9 @@ export function disconnect(){
      type: DISCONNECT
  }
 }
+
 function receiveSignIn(res) {
+    sessionStorage.setItem('token', res.data['access_token']);
     return {
         type: RECEIVE_SIGN_IN,
         msg: "Connected",
@@ -53,27 +58,58 @@ function receiveSignUp(res) {
 function receivePwd(res) {
     return {
         type: RECEIVE_PWD,
-        msg: "Congratulation email sent successfully",
+        msg: "Congratulation email sent successfully"
     }
 }
 
 function receiveProfile(res) {
     return  {
         type: RECEIVE_PROFILE,
-        mail: res.data['data']['email']
+        mail: res.data['data']['email'],
+        firstname: res.data['data']['firstname'],
+        lastname: res.data['data']['lastname']
     }
 }
 
-function receiveArtWorkCreate(res, file, token) {
-    //dispatch(uploadImage(token, file, res.data['data']['id'].toString(10)));
+function receiveArtworks(res) {
+
+    let artworks = [];
+    let src;
+
+    for (const [key, value] of Object.entries(res.data.data)) {
+        if (value.images != null && value.images[0] && value.images[0].url != null)
+            src = value.images[0].url;
+        else
+            src = '';
+        artworks.push(
+            {
+                src: src,
+                name: value.name,
+                key: value.id.toString(),
+                width: 3,
+                height: 3
+            });
+    }
+    return {
+        type: RECEIVE_ARTWORKS,
+        artworks: artworks,
+    }
+}
+
+function receiveArtwork(res) {
+    return {
+        type: RECEIVE_ARTWORK,
+        artwork: res.data.data
+    }
+}
+
+function receiveArtWorkCreate(res) {
     return {
         type: RECEIVE_ARTWORKCREATE,
-        msg: res.data['data']['id'].toString(10)
     }
 }
 
 function receiveAddImage(res) {
-    console.log('tamere');
     return {
         type: RECEIVE_ADDIMAGE,
         msg: 'Image uploaded with success.'
@@ -86,9 +122,9 @@ console.log(error);
     if (
         error.response &&
         error.response.data &&
-        error.response.data.messages
+        error.response.data.message
     )
-        error_msg = error.response.data.messages[0];
+        error_msg = error.response.data.message;
     else
         error_msg = 'Unknown error.';
 
@@ -109,21 +145,23 @@ function fetchSignIn(username, password) {
             scope: '*'
         };
 
-        return axios.post(apiURLocal + tokenURL, body, header)
+        return axios.post(apiURL + tokenURL, body, header)
             .then(res => dispatch(receiveSignIn(res)))
             .catch(error => dispatch(receiveError(error)))
     }
 }
 
-function fetchSignUp(username, mail, password) {
+function fetchSignUp(name, firstname, lastname, mail, password) {
 
     const body = {
-        name: username,
+        name: name,
+        firstname: firstname,
+        lastname: lastname,
         email: mail,
         password: password
     };
     return dispatch => {
-        return axios.post(apiURLocal + userURL, body, header)
+        return axios.post(apiURL + userURL, body, header)
             .then(res => dispatch(receiveSignUp(res)))
             .catch(error => dispatch(receiveError(error)))
     }
@@ -135,7 +173,7 @@ function fetchForgot(mail) {
         endpoint: 'http://thyart.dev.s3-website-eu-west-1.amazonaws.com'
     };
     return dispatch => {
-        return axios.post(apiURLocal + pwdURL, body, header)
+        return axios.post(apiURL + pwdURL, body, header)
             .then(res => dispatch(receivePwd(res)))
             .catch(error => dispatch(receiveError(error)))
     }
@@ -147,7 +185,7 @@ function fetchProfile(token) {
         Authorization: 'Bearer ' + token }
         };
     return dispatch => {
-        return axios.get(apiURLocal + profileURL, header_auth)
+        return axios.get(apiURL + profileURL, header_auth)
             .then(res => dispatch(receiveProfile(res)))
             .catch(error => dispatch(receiveError(error)))
     }
@@ -161,7 +199,7 @@ function modifyMail(token, mail) {
   };
   const body = { };
   return dispatch => {
-    return axios.patch(apiURLocal + userURL + "?email="+mail, body, header_auth)
+    return axios.patch(apiURL + userURL + "?email="+mail, body, header_auth)
       .then(res => dispatch(receiveProfile(res)))
       .catch(error => dispatch(receiveError(error)))
   }
@@ -175,24 +213,38 @@ function modifyPassword(token, password) {
   };
   const body = { };
   return dispatch => {
-    return axios.patch(apiURLocal + userURL + "?password="+ password, body, header_auth)
+    return axios.patch(apiURL + userURL + "?password="+ password, body, header_auth)
       .then(res => dispatch(receiveProfile(res)))
       .catch(error => dispatch(receiveError(error)))
   }
 }
 
-function modifyUsername(token, username) {
-  const header_auth = {
-    headers: { Accept: 'application/json',
-      'Content-Type': 'application/xxx-form-urlencoded',
-      Authorization: 'Bearer ' + token }
-  };
-  const body = { };
-  return dispatch => {
-    return axios.patch(apiURLocal + userURL, body, header_auth)
-      .then(res => dispatch(receiveProfile(res)))
-      .catch(error => dispatch(receiveError(error)))
-  }
+function modifyFirstname(token, firstname) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/xxx-form-urlencoded',
+            Authorization: 'Bearer ' + token }
+    };
+    const body = { };
+    return dispatch => {
+        return axios.patch(apiURL + userURL + "?firstname="+ firstname, body, header_auth)
+            .then(res => dispatch(receiveProfile(res)))
+            .catch(error => dispatch(receiveError(error)))
+    }
+}
+
+function modifyLastname(token, lastname) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/xxx-form-urlencoded',
+            Authorization: 'Bearer ' + token }
+    };
+    const body = { };
+    return dispatch => {
+        return axios.patch(apiURL + userURL + "?lastname="+ lastname, body, header_auth)
+            .then(res => dispatch(receiveProfile(res)))
+            .catch(error => dispatch(receiveError(error)))
+    }
 }
 
 function createArtWork(file, token, name, price, ref, state) {
@@ -208,9 +260,10 @@ function createArtWork(file, token, name, price, ref, state) {
         state: state
     };
     return dispatch => {
-        return axios.post(apiURLocal + artWorkURL, body, header_auth)
+        return axios.post(apiURL + artWorkURL, body, header_auth)
             .then(res => dispatch(receiveArtWorkCreate(res, file, token)))
             .then(res => dispatch(uploadImage(token, file, res)))
+            .then(dispatch(fetchArtWorks(token)))
             .catch(error => dispatch(receiveError(error)));
     }
 }
@@ -223,10 +276,59 @@ function uploadImage(token, file, res) {
     };
     let form = new FormData();
     form.append("images[]", file);
-    let url = artWorkURL + '/' +  res['msg']+ '/image';
+    let url = artWorkURL + '/' +  res['id']+ '/image';
     return dispatch => {
-        return axios.post(apiURLocal + url, form, header_auth)
+        return axios.post(apiURL + url, form, header_auth)
             .then(res => dispatch(receiveAddImage(res)))
+            .catch(error => dispatch(receiveError(error)));
+    }
+}
+
+function modifyArtWork(token, name, state, price, id) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/xxx-form-urlencoded',
+            Authorization: 'Bearer ' + token }
+    };
+
+    return dispatch => {
+        return axios.patch(apiURL + artWorkURL + '/' + id + '?name=' + name
+            + '&?state=' + state + '&?price=' + price, header_auth)
+            .then(res => dispatch(receiveArtworks(res)))
+            .catch(error => dispatch(receiveError(error)));
+    }
+}
+
+function fetchArtWork(token, id) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token }
+    };
+
+    return dispatch => {
+
+        return axios.get(apiURL + artWorkURL + '/' + id, header_auth)
+            .then(res => dispatch(receiveArtwork(res)))
+            .catch(error => dispatch(receiveError(error)));
+    }
+}
+
+function fetchArtWorks(token, name) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token }
+    };
+
+    if (name == null)
+        name = '/';
+    else
+        name = '?name=' + name;
+    return dispatch => {
+
+        return axios.get(apiURL + artWorkURL + name, header_auth)
+            .then(res => dispatch(receiveArtworks(res, name)))
             .catch(error => dispatch(receiveError(error)));
     }
 }
@@ -241,7 +343,6 @@ export function createArtworkIfNeeded(file, token, name, price, ref, state) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
             dispatch(requestApi());
-
         return dispatch(createArtWork(file, token, name, price, ref, state))
     }
 }
@@ -255,6 +356,24 @@ export function uploadImageIfNeeded(file, token, id) {
     }
 }
 
+export function getArtWorksIfNeeded(token, name) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+
+        return dispatch(fetchArtWorks(token, name))
+    }
+}
+
+export function getArtWorkIfNeeded(token, id) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+
+        return dispatch(fetchArtWork(token, id))
+    }
+}
+
 export function signInIfNeeded(username, password) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
@@ -264,12 +383,12 @@ export function signInIfNeeded(username, password) {
     }
 }
 
-export function signUpIfNeeded(username, mail, password) {
+export function signUpIfNeeded(username, firstname, lastname, mail, password) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
             dispatch(requestApi());
 
-            return dispatch(fetchSignUp(username, mail, password))
+        return dispatch(fetchSignUp(username, firstname, lastname, mail, password))
     }
 }
 
@@ -298,6 +417,14 @@ export function modifyMailIfNeeded(token, mail) {
   }
 }
 
+export function modifyArtWorkIfNeeded(token, title, state, price, id) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+        return dispatch(modifyArtWork(token, title, state, price, id))
+    }
+}
+
 export function modifyPasswordIfNeeded(token, password) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState()))
@@ -306,10 +433,18 @@ export function modifyPasswordIfNeeded(token, password) {
   }
 }
 
-export function modifyUsernameIfNeeded(token, username) {
-  return (dispatch, getState) => {
-    if (shouldFetchApi(getState()))
-      dispatch(requestApi());
-    return dispatch(modifyUsername(token, username))
-  }
+export function modifyFirstnameIfNeeded(token, firstname) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+        return dispatch(modifyFirstname(token, firstname))
+    }
+}
+
+export function modifyLastnameIfNeeded(token, lastname) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+        return dispatch(modifyLastname(token, lastname))
+    }
 }

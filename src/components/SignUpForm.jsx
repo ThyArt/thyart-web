@@ -20,10 +20,14 @@ class SignUpForm extends Component {
         this.handlePassChange = this.handlePassChange.bind(this);
         this.handleConfirmChange = this.handleConfirmChange.bind(this);
         this.handleMailChange = this.handleMailChange.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleFirstnameChange = this.handleFirstnameChange.bind(this);
+        this.handleLastnameChange = this.handleLastnameChange.bind(this);
 
         this.state = {
-            usernameValue: '',
+            nameValue: '',
+            firstnameValue: '',
+            lastnameValue: '',
             mailValue: '',
             passValue: '',
             confirmValue: ''
@@ -32,18 +36,33 @@ class SignUpForm extends Component {
 
     signup = () => {
         if (
-          this.getUsernameValidationState() === 'success' &&
+          this.getNameValidationState() === 'success' &&
+          this.getFirstnameValidationState() === 'success' &&
+          this.getLastnameValidationState() === 'success' &&
           this.getMailValidationState() === 'success' &&
             this.getPassValidationState() === 'success' &&
             this.getConfirmValidationState() === 'success'
         ) {
-            this.props.dispatch(signUpIfNeeded(this.state.usernameValue, this.state.mailValue, this.state.passValue))
+            this.props.dispatch(signUpIfNeeded(this.state.nameValue, this.state.firstnameValue, this.state.lastnameValue,
+                                                this.state.mailValue, this.state.passValue))
         }
     };
 
-  getUsernameValidationState() {
-    let username = this.state.usernameValue;
-    if (username === '') return null;
+  getNameValidationState() {
+    let name = this.state.nameValue;
+    if (name === '') return null;
+    return 'success';
+  }
+
+  getFirstnameValidationState() {
+    let firstname = this.state.firstnameValue;
+    if (firstname === '') return null;
+    return 'success';
+  }
+
+  getLastnameValidationState() {
+    let lastname = this.state.lastnameValue;
+    if (lastname === '') return null;
     return 'success';
   }
 
@@ -99,8 +118,16 @@ class SignUpForm extends Component {
         this.setState({confirmValue: e.target.value});
     }
 
-    handleUsernameChange(e) {
-      this.setState({usernameValue: e.target.value})
+  handleNameChange(e) {
+    this.setState({nameValue: e.target.value})
+  }
+
+    handleFirstnameChange(e) {
+      this.setState({firstnameValue: e.target.value})
+    }
+
+    handleLastnameChange(e) {
+      this.setState({lastnameValue: e.target.value})
     }
 
     render() {
@@ -108,14 +135,40 @@ class SignUpForm extends Component {
             <form>
               <FormGroup
                 controlId="formValidationNull"
-                validationState={this.getUsernameValidationState()}
+                validationState={this.getNameValidationState()}
               >
-                <ControlLabel>Enter your username</ControlLabel>
+                <ControlLabel>Enter an username</ControlLabel>
                 <FormControl
                   type="username"
-                  value={this.state.usernameValue}
+                  value={this.state.nameValue}
                   placeholder="Your username"
-                  onChange={this.handleUsernameChange}
+                  onChange={this.handleNameChange}
+                />
+                <FormControl.Feedback/>
+              </FormGroup>
+              <FormGroup
+                controlId="formValidationNull"
+                validationState={this.getFirstnameValidationState()}
+              >
+                <ControlLabel>Enter your first name</ControlLabel>
+                <FormControl
+                  type="username"
+                  value={this.state.firstnameValue}
+                  placeholder="Your first name"
+                  onChange={this.handleFirstnameChange}
+                />
+                <FormControl.Feedback/>
+              </FormGroup>
+              <FormGroup
+                controlId="formValidationNull"
+                validationState={this.getLastnameValidationState()}
+              >
+                <ControlLabel>Enter your last name</ControlLabel>
+                <FormControl
+                  type="username"
+                  value={this.state.lastnameValue}
+                  placeholder="Your last name"
+                  onChange={this.handleLastnameChange}
                 />
                 <FormControl.Feedback/>
               </FormGroup>
