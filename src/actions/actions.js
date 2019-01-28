@@ -64,7 +64,8 @@ function receiveProfile(res) {
     }
 }
 
-function receiveArtWorkCreate(res) {
+function receiveArtWorkCreate(res, file, token) {
+    //dispatch(uploadImage(token, file, res.data['data']['id'].toString(10)));
     return {
         type: RECEIVE_ARTWORKCREATE,
         msg: res.data['data']['id'].toString(10)
@@ -72,6 +73,7 @@ function receiveArtWorkCreate(res) {
 }
 
 function receiveAddImage(res) {
+    console.log('tamere');
     return {
         type: RECEIVE_ADDIMAGE,
         msg: 'Image uploaded with success.'
@@ -79,7 +81,7 @@ function receiveAddImage(res) {
 }
 
 function receiveError(error) {
-
+console.log(error);
     let error_msg;
     if (
         error.response &&
@@ -208,26 +210,22 @@ function createArtWork(file, token, name, price, ref, state) {
     return dispatch => {
         return axios.post(apiURLocal + artWorkURL, body, header_auth)
             .then(res => dispatch(receiveArtWorkCreate(res, file, token)))
+            .then(res => dispatch(uploadImage(token, file, res)))
             .catch(error => dispatch(receiveError(error)));
     }
 }
 
-function uploadImage(token, file, id) {
+function uploadImage(token, file, res) {
     const header_auth = {
         headers: { Accept: 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: 'Bearer ' + token }
     };
-    const body = {
-        images: file
-    };
-    console.log('hello world');
-
-    let url = artWorkURL + '/' +  id + '/image';
-    console.log(url);
-
+    let form = new FormData();
+    form.append("images[]", file);
+    let url = artWorkURL + '/' +  res['msg']+ '/image';
     return dispatch => {
-        axios.post(apiURLocal + url, body, header_auth)
+        return axios.post(apiURLocal + url, form, header_auth)
             .then(res => dispatch(receiveAddImage(res)))
             .catch(error => dispatch(receiveError(error)));
     }

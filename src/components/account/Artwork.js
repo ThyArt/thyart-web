@@ -108,10 +108,10 @@ class Artwork extends Component {
   getVerification = () => {
     if (this.state.file !== '' && this.state.reference !== ''
         && this.state.AWTitle !== '' && this.state.price !== '') {
-      let answer = this.props.dispatch(createArtworkIfNeeded(this.state.file, this.props.token, this.state.AWTitle,
+      this.props.dispatch(createArtworkIfNeeded(this.state.file, this.props.token, this.state.AWTitle,
       this.state.price, this.state.reference, this.getArtWorkState()));
-      console.log(answer);
-      //this.props.dispatch(uploadImageIfNeeded(this.state.file, this.props.token, answer.))
+      //console.log(this.props.msg);
+      //this.props.dispatch(uploadImageIfNeeded(this.state.file, this.props.token, this.props.msg))
     }
   };
   
