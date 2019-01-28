@@ -11,12 +11,12 @@ import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
 import Row from "react-bootstrap/es/Row";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {upload} from "../../actions/actions";
+import {createArtworkIfNeeded, uploadImageIfNeeded} from "../../actions/actions";
 
 class Artwork extends Component {
   constructor(props, context) {
     super(props, context);
-
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       currentPhoto: [],
       file: '',
@@ -25,7 +25,7 @@ class Artwork extends Component {
       addModal: false,
       price:'',
       AWTitle: '',
-      AWArtist: '',
+      AWState: 1,
       detailsModal: false,
       photos: [
         {
@@ -77,10 +77,6 @@ class Artwork extends Component {
     this.setState({ AWTitle: event.target.value });
   };
 
-  onAWArtistChange = event => {
-    this.setState({ AWArtist: event.target.value });
-  };
-
   onPriceChange = event => {
     this.setState({ price: event.target.value });
   };
@@ -106,17 +102,37 @@ class Artwork extends Component {
   };
 
   myCallback = (file) => {
-    this.state.file = file;
+    this.setState({file: file});
   };
 
   getVerification = () => {
     if (this.state.file !== '' && this.state.reference !== ''
-        && this.state.AWTitle !== '' && this.state.AWArtist !== ''
-        && this.state.price !== '') {
-      this.props.dispatch(upload(this.props.token, this.state.file, this.state.AWTitle,
-      this.state.price, this.state.reference, this.state.AWArtist));
+        && this.state.AWTitle !== '' && this.state.price !== '') {
+      let answer = this.props.dispatch(createArtworkIfNeeded(this.state.file, this.props.token, this.state.AWTitle,
+      this.state.price, this.state.reference, this.getArtWorkState()));
+      console.log(answer);
+      //this.props.dispatch(uploadImageIfNeeded(this.state.file, this.props.token, answer.))
     }
   };
+  
+  getArtWorkState = () => {
+    switch (this.state.AWState) {
+      case 1:
+        return 'exposed';
+      case 2:
+        return 'in_stock';
+      case 3:
+        return 'sold';
+      case 4:
+        return 'incoming';
+      default:
+        return 'exposed;'
+    }
+  };
+
+  handleChange(e) {
+    this.setState({AWState: e});
+  }
 
   render() {
     return (
@@ -144,7 +160,7 @@ class Artwork extends Component {
           </Form>
         </div>
 
-        <Modal open={this.state.addModal} onClose={this.handleAddArtworkClose}>
+        <Modal dialogClassName="addArtWork-modal" open={this.state.addModal} onClose={this.handleAddArtworkClose}>
           <h1 id='titleModal'>Ajouter une oeuvre</h1>
           <Row>
             <Col xs="6">
@@ -157,13 +173,15 @@ class Artwork extends Component {
                 <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
                 <ControlLabel>Reference</ControlLabel>
                 <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
-                <ControlLabel>id de l'artiste</ControlLabel>
-                <FormControl type='number' value={this.state.AWArtist} onChange={this.onAWArtistChange}/>
                 <ControlLabel>Prix</ControlLabel>
                 <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
                 <ButtonToolbar>
-                  <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
+                  <ToggleButtonGroup id={'artWorkState'}
+                                     type="radio"
+                                     value={this.state.AWState}
+                                     onChange={this.handleChange}
+                                     name="options">
                     <ToggleButton value={1}>Exposé</ToggleButton>
                     <ToggleButton value={2}>Stock</ToggleButton>
                     <ToggleButton value={3}>Vendu</ToggleButton>
@@ -236,4 +254,4 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps)(Artwork);
 
-export default Artwork;
+//export default Artwork;

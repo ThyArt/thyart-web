@@ -23,13 +23,16 @@
 #photoModal {
     margin: 20px;
 }
+.addArtWork-modal {
+    width: 70%;
+}
 
 .infosModal {
     margin: 50px;
 }
 
-.addModal {
-    padding: 50px;
+#artWorkState {
+    margin:20px;
 }
 
 .confirmModal {

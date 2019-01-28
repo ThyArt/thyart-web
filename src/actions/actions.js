@@ -7,20 +7,22 @@ export const REQUEST_API = 'REQUEST_API';
 export const DISCONNECT = 'DISCONNECT';
 export const RECEIVE_PWD = 'RECEIVE_PWD';
 export const RECEIVE_PROFILE = 'RECEIVE_PROFILE';
+export const RECEIVE_ARTWORKCREATE = 'RECEIVE_ARTWORKCREATE';
+export const RECEIVE_ADDIMAGE = 'RECEIVE_ADDIMAGE';
 
 const apiURL = 'http://thyart-api-dev.eu-west-1.elasticbeanstalk.com/';
+const apiURLocal = 'http://localhost:80/';
 const userURL = 'api/user';
 const tokenURL = 'oauth/token';
 const pwdURL = 'api/password/create';
 const profileURL = 'api/user/self';
 const artWorkURL = 'api/artwork';
-const artWorkAddImg = 'api/artwork/6/image';
 
 const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
 };
-const clientID = 1;
-const clientSecret = 'wLp6pEPtMh023tlWQORWrKHoxT2LSkHwPRfIZWAu';
+const clientID = 2;
+const clientSecret = 'BzqoGU5N3Ue6Dsm6cSQ81SdQsY3e0B8gicbdk3dI';
 
 function requestApi() {
     return {
@@ -58,7 +60,21 @@ function receivePwd(res) {
 function receiveProfile(res) {
     return  {
         type: RECEIVE_PROFILE,
-        mail: res.data['data']['email'],
+        mail: res.data['data']['email']
+    }
+}
+
+function receiveArtWorkCreate(res) {
+    return {
+        type: RECEIVE_ARTWORKCREATE,
+        msg: res.data['data']['id'].toString(10)
+    }
+}
+
+function receiveAddImage(res) {
+    return {
+        type: RECEIVE_ADDIMAGE,
+        msg: 'Image uploaded with success.'
     }
 }
 
@@ -91,7 +107,7 @@ function fetchSignIn(username, password) {
             scope: '*'
         };
 
-        return axios.post(apiURL + tokenURL, body, header)
+        return axios.post(apiURLocal + tokenURL, body, header)
             .then(res => dispatch(receiveSignIn(res)))
             .catch(error => dispatch(receiveError(error)))
     }
@@ -105,7 +121,7 @@ function fetchSignUp(username, mail, password) {
         password: password
     };
     return dispatch => {
-        return axios.post(apiURL + userURL, body, header)
+        return axios.post(apiURLocal + userURL, body, header)
             .then(res => dispatch(receiveSignUp(res)))
             .catch(error => dispatch(receiveError(error)))
     }
@@ -117,7 +133,7 @@ function fetchForgot(mail) {
         endpoint: 'http://thyart.dev.s3-website-eu-west-1.amazonaws.com'
     };
     return dispatch => {
-        return axios.post(apiURL + pwdURL, body, header)
+        return axios.post(apiURLocal + pwdURL, body, header)
             .then(res => dispatch(receivePwd(res)))
             .catch(error => dispatch(receiveError(error)))
     }
@@ -129,7 +145,7 @@ function fetchProfile(token) {
         Authorization: 'Bearer ' + token }
         };
     return dispatch => {
-        return axios.get(apiURL + profileURL, header_auth)
+        return axios.get(apiURLocal + profileURL, header_auth)
             .then(res => dispatch(receiveProfile(res)))
             .catch(error => dispatch(receiveError(error)))
     }
@@ -143,7 +159,7 @@ function modifyMail(token, mail) {
   };
   const body = { };
   return dispatch => {
-    return axios.patch(apiURL + userURL + "?email="+mail, body, header_auth)
+    return axios.patch(apiURLocal + userURL + "?email="+mail, body, header_auth)
       .then(res => dispatch(receiveProfile(res)))
       .catch(error => dispatch(receiveError(error)))
   }
@@ -157,7 +173,7 @@ function modifyPassword(token, password) {
   };
   const body = { };
   return dispatch => {
-    return axios.patch(apiURL + userURL + "?password="+ password, body, header_auth)
+    return axios.patch(apiURLocal + userURL + "?password="+ password, body, header_auth)
       .then(res => dispatch(receiveProfile(res)))
       .catch(error => dispatch(receiveError(error)))
   }
@@ -171,13 +187,13 @@ function modifyUsername(token, username) {
   };
   const body = { };
   return dispatch => {
-    return axios.patch(apiURL + userURL, body, header_auth)
+    return axios.patch(apiURLocal + userURL, body, header_auth)
       .then(res => dispatch(receiveProfile(res)))
       .catch(error => dispatch(receiveError(error)))
   }
 }
 
-function uploadArtWork(token, file, name, price, ref, state, id) {
+function createArtWork(file, token, name, price, ref, state) {
     const header_auth = {
         headers: { Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -187,19 +203,32 @@ function uploadArtWork(token, file, name, price, ref, state, id) {
         name: name,
         price: price,
         ref: ref,
-        state: state,
-        artist_id: id
-    };
-    const bodyImg = {
-        images: file
+        state: state
     };
     return dispatch => {
-
-        axios.post(apiURL + artWorkURL, body, header_auth)
-            .then(res => dispatch(receiveProfile(res)))
+        return axios.post(apiURLocal + artWorkURL, body, header_auth)
+            .then(res => dispatch(receiveArtWorkCreate(res, file, token)))
             .catch(error => dispatch(receiveError(error)));
-        return axios.post(apiURL + artWorkAddImg, bodyImg, header_auth)
-            .then(res => dispatch(receiveProfile(res)))
+    }
+}
+
+function uploadImage(token, file, id) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token }
+    };
+    const body = {
+        images: file
+    };
+    console.log('hello world');
+
+    let url = artWorkURL + '/' +  id + '/image';
+    console.log(url);
+
+    return dispatch => {
+        axios.post(apiURLocal + url, body, header_auth)
+            .then(res => dispatch(receiveAddImage(res)))
             .catch(error => dispatch(receiveError(error)));
     }
 }
@@ -210,12 +239,21 @@ function shouldFetchApi(state) {
     return !isFetching;
 }
 
-export function upload(token, file, name, price, ref, state, id) {
+export function createArtworkIfNeeded(file, token, name, price, ref, state) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
             dispatch(requestApi());
 
-        return dispatch(uploadArtWork(token, file, name, price, ref, state, id))
+        return dispatch(createArtWork(file, token, name, price, ref, state))
+    }
+}
+
+export function uploadImageIfNeeded(file, token, id) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+
+        return dispatch(uploadImage(file, token, id))
     }
 }
 

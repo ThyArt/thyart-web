@@ -6,7 +6,8 @@ import {
     REQUEST_API,
     DISCONNECT,
     RECEIVE_PWD,
-    RECEIVE_PROFILE} from "../actions/actions";
+    RECEIVE_PROFILE, RECEIVE_ARTWORKCREATE, RECEIVE_ADDIMAGE
+} from "../actions/actions";
 
 const thyartApp = (state = {
                         isLogged: false,
@@ -50,6 +51,18 @@ const thyartApp = (state = {
                 mail: action.mail
             });
         case RECEIVE_PWD:
+            return Object.assign({}, state, {
+                isFetching: false,
+                error: null,
+                msg: action.msg
+            });
+        case RECEIVE_ARTWORKCREATE:
+            return Object.assign({}, state,{
+                isFetching: false,
+                error:null,
+                msg: action.msg
+        });
+        case RECEIVE_ADDIMAGE:
             return Object.assign({}, state, {
                 isFetching: false,
                 error: null,
