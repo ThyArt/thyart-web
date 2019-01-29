@@ -25,7 +25,7 @@ const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
 };
 const clientID = 2;
-const clientSecret = 'vMJibGy1LLl1Jb2GFY1GrCewg3ggZreCoLkgGlVj';
+const clientSecret = 'BzqoGU5N3Ue6Dsm6cSQ81SdQsY3e0B8gicbdk3dI';
 
 function requestApi() {
     return {
@@ -87,7 +87,9 @@ function receiveArtworks(res) {
                 name: value.name,
                 key: value.id.toString(),
                 width: 3,
-                height: 3
+                height: 3,
+                price: value.price,
+                state: value.state
             });
     }
     return {
@@ -117,7 +119,6 @@ function receiveAddImage(res) {
 }
 
 function receiveError(error) {
-console.log(error);
     let error_msg;
     if (
         error.response &&
@@ -316,6 +317,21 @@ function fetchArtWork(token, id) {
     }
 }
 
+function fetchArtWorksByState(token, state) {
+    const header_auth = {
+        headers: { Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token }
+    };
+
+    state = '?state=' + state;
+    return dispatch => {
+        return axios.get(apiURL + artWorkURL + state, header_auth)
+            .then(res => dispatch(receiveArtworks(res)))
+            .catch(error => dispatch(receiveError(error)));
+    }
+}
+
 function fetchArtWorks(token, name) {
     const header_auth = {
         headers: { Accept: 'application/json',
@@ -355,6 +371,15 @@ export function uploadImageIfNeeded(file, token, id) {
             dispatch(requestApi());
 
         return dispatch(uploadImage(file, token, id))
+    }
+}
+
+export function sortByState(token, state) {
+    return (dispatch, getState) => {
+        if (shouldFetchApi(getState()))
+            dispatch(requestApi());
+
+        return dispatch(fetchArtWorksByState(token, state))
     }
 }
 

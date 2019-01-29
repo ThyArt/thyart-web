@@ -11,8 +11,8 @@ import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
 import Row from "react-bootstrap/es/Row";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded, upload} from "../../actions/actions";
-import {createArtworkIfNeeded} from "../../actions/actions";
+import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actions";
+import {createArtworkIfNeeded, sortByState} from "../../actions/actions";
 
 class Artwork extends Component {
   constructor(props, context) {
@@ -117,7 +117,6 @@ class Artwork extends Component {
         AWTitle: '',
         AWState: 1
     });
-
   };
 
   myCallback = (file) => {
@@ -153,6 +152,45 @@ class Artwork extends Component {
     this.props.dispatch(getArtWorksIfNeeded(this.props.token, this.state.search));
   };
 
+  onSelectAlert(eventKey) {
+        switch (eventKey) {
+            //a-z
+            case 1:
+                return;
+            //z-a
+            case 2:
+                return;
+            //prix croissant
+            case 3:
+                return;
+            //prix decroissant
+            case 4:
+                return;
+            //En transit
+            case 5:
+                this.props.dispatch(sortByState(this.props.token, 'incoming'));
+                return;
+            //vendu
+            case 6:
+                this.props.dispatch(sortByState(this.props.token, 'sold'));
+                return;
+            //expose
+            case 7:
+                this.props.dispatch(sortByState(this.props.token, 'exposed'));
+                return;
+            //en stock
+            case 8:
+                this.props.dispatch(sortByState(this.props.token, 'in_stock'));
+                return;
+            //all
+            case 9:
+                this.props.dispatch(getArtWorksIfNeeded(this.props.token));
+                return;
+            default:
+                return;
+        }
+  }
+
   render() {
     return (
       <div id='page'>
@@ -166,11 +204,16 @@ class Artwork extends Component {
 
               <DropdownButton bsSize='large' className='complexButton'
                               title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}>
-                <MenuItem eventKey={1}>Photographies</MenuItem>
-                <MenuItem eventKey={2}>Peintures</MenuItem>
-                <MenuItem eventKey={3}>Sculptures</MenuItem>
+                <MenuItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</MenuItem>
+                <MenuItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</MenuItem>
+                <MenuItem eventKey={3} onSelect={this.onSelectAlert}>Prix croissant</MenuItem>
+                  <MenuItem eventKey={4} onSelect={this.onSelectAlert}>Prix décroissant</MenuItem>
+                  <MenuItem eventKey={5} onSelect={this.onSelectAlert}>En transit</MenuItem>
+                  <MenuItem eventKey={6} onSelect={this.onSelectAlert}>Vendu</MenuItem>
+                  <MenuItem eventKey={7} onSelect={this.onSelectAlert}>Exposé</MenuItem>
+                  <MenuItem eventKey={8} onSelect={this.onSelectAlert}>En stock</MenuItem>
                 <MenuItem divider/>
-                <MenuItem eventKey={5}>Toutes les catégories</MenuItem>
+                <MenuItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</MenuItem>
               </DropdownButton>{' '}
 
               <Button bsSize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
