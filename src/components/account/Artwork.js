@@ -156,15 +156,34 @@ class Artwork extends Component {
         switch (eventKey) {
             //a-z
             case 1:
+                this.props.artworks.sort( function( a, b ) {
+                    a = a.name.toLowerCase();
+                    b = b.name.toLowerCase();
+
+                    return a < b ? -1 : a > b ? 1 : 0;
+                });
+                this.forceUpdate();
                 return;
             //z-a
             case 2:
+                this.props.artworks.sort( function( a, b ) {
+                    a = a.name.toLowerCase();
+                    b = b.name.toLowerCase();
+
+                    return a < b ? -1 : a > b ? 1 : 0;
+                });
+                this.props.artworks.reverse();
+                this.forceUpdate();
                 return;
             //prix croissant
             case 3:
+                this.props.artworks.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+                this.forceUpdate();
                 return;
             //prix decroissant
             case 4:
+                this.props.artworks.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                this.forceUpdate();
                 return;
             //En transit
             case 5:

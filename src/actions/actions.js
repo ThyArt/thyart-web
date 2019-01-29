@@ -108,6 +108,7 @@ function receiveArtwork(res) {
 function receiveArtWorkCreate(res) {
     return {
         type: RECEIVE_ARTWORKCREATE,
+        id: res.data['data']['id'].toString()
     }
 }
 
