@@ -30,7 +30,7 @@ class Account extends Component {
   handleSelect = eventKey => {
     if (eventKey === 7) {
         this.props.dispatch(disconnect());
-        this.setState({token: ''});
+        this.setState({token: null});
         sessionStorage.removeItem('token');
     } else {
       this.setState({ selected: eventKey });
@@ -84,7 +84,7 @@ class Account extends Component {
           </div>
 
 
-            {(this.state.token === '') ? (
+            {(this.state.token === null) ? (
                 <Redirect
                     to={{
                         pathname: '/signin',

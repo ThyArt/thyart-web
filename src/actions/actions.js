@@ -25,7 +25,7 @@ const header = {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
 };
 const clientID = 2;
-const clientSecret = 'BzqoGU5N3Ue6Dsm6cSQ81SdQsY3e0B8gicbdk3dI';
+const clientSecret = 'vMJibGy1LLl1Jb2GFY1GrCewg3ggZreCoLkgGlVj';
 
 function requestApi() {
     return {
@@ -191,6 +191,22 @@ function fetchProfile(token) {
             .then(res => dispatch(receiveProfile(res)))
             .catch(error => dispatch(receiveError(error)))
     }
+}
+
+function eraseArtwork(token, id) {
+  const header_auth = {
+    headers: { Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token }
+  };
+
+
+  return dispatch => {
+
+    return axios.delete(apiURL + artWorkURL + '/' + id, header_auth)
+      .then(dispatch(fetchArtWorks(token)))
+      .catch(error => dispatch(receiveError(error)));
+  }
 }
 
 function modifyMail(token, mail) {
@@ -475,4 +491,12 @@ export function modifyLastnameIfNeeded(token, lastname) {
             dispatch(requestApi());
         return dispatch(modifyLastname(token, lastname))
     }
+}
+
+export function eraseArtworkIfNeeded(token, id) {
+  return (dispatch, getState) => {
+    if (shouldFetchApi(getState()))
+      dispatch(requestApi());
+    return dispatch(eraseArtwork(token, id));
+  }
 }

@@ -12,7 +12,7 @@ import Row from "react-bootstrap/es/Row";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actions";
-import {createArtworkIfNeeded, sortByState} from "../../actions/actions";
+import {createArtworkIfNeeded, sortByState, eraseArtworkIfNeeded} from "../../actions/actions";
 
 class Artwork extends Component {
   constructor(props, context) {
@@ -147,6 +147,13 @@ class Artwork extends Component {
   handleChange(e) {
     this.setState({AWState: e});
   }
+
+  confirmRemove = () => {
+    this.props.dispatch(eraseArtworkIfNeeded(this.props.token, this.props.artwork.id));
+    this.setState({
+      detailsModal: false
+    });
+  };
 
   searchArtworks = () => {
     this.props.dispatch(getArtWorksIfNeeded(this.props.token, this.state.search));
@@ -295,7 +302,14 @@ class Artwork extends Component {
                       (
 
                           <div>
-                              < Button bsStyle = "primary" onClick={this.onModifOpen} bsSize='large'>
+
+                            <div
+                              className="remove"
+                              onClick={() => this.confirmRemove()} style={{ cursor: 'pointer', float: 'left'}}
+                            >
+                              <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
+                            </div>
+                            < Button bsStyle = "primary" onClick={this.onModifOpen} bsSize='large'>
                                   {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
                               </Button>
                           {
