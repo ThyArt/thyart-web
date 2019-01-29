@@ -152,7 +152,7 @@ class Artwork extends Component {
     this.props.dispatch(getArtWorksIfNeeded(this.props.token, this.state.search));
   };
 
-  onSelectAlert(eventKey) {
+  onSelectAlert = (eventKey) =>{
         switch (eventKey) {
             //a-z
             case 1:
@@ -184,12 +184,12 @@ class Artwork extends Component {
                 return;
             //all
             case 9:
-                this.props.dispatch(getArtWorksIfNeeded(this.props.token));
+                this.props.dispatch(getArtWorksIfNeeded(this.props.token, null));
                 return;
             default:
                 return;
         }
-  }
+  };
 
   render() {
     return (
