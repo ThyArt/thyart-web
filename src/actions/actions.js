@@ -284,16 +284,18 @@ function uploadImage(token, file, res) {
     }
 }
 
-function modifyArtWork(token, name, state, price, id) {
+function modifyArtWork(token, name, ref, state, price, id) {
     const header_auth = {
         headers: { Accept: 'application/json',
-            'Content-Type': 'application/xxx-form-urlencoded',
+            'Content-Type': 'application/x-www-form-urlencoded',
             Authorization: 'Bearer ' + token }
     };
 
+    const body = { };
+
     return dispatch => {
         return axios.patch(apiURL + artWorkURL + '/' + id + '?name=' + name
-            + '&?state=' + state + '&?price=' + price, header_auth)
+            + '&state=' + state + '&ref=' + ref + '&price=' + price, body, header_auth)
             .then(res => dispatch(receiveArtworks(res)))
             .catch(error => dispatch(receiveError(error)));
     }
@@ -417,11 +419,11 @@ export function modifyMailIfNeeded(token, mail) {
   }
 }
 
-export function modifyArtWorkIfNeeded(token, title, state, price, id) {
+export function modifyArtWorkIfNeeded(token, title, ref, state, price, id) {
     return (dispatch, getState) => {
         if (shouldFetchApi(getState()))
             dispatch(requestApi());
-        return dispatch(modifyArtWork(token, title, state, price, id))
+        return dispatch(modifyArtWork(token, title, ref, state, price, id));
     }
 }
 

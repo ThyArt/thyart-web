@@ -47,7 +47,7 @@ class Artwork extends Component {
             case 4:
                 return 'incoming';
             default:
-                return 'exposed;'
+                return 'exposed';
         }
     };
 
@@ -72,7 +72,9 @@ class Artwork extends Component {
     };
 
     onDetailOpen = () => {
-        this.setState({ modifMode: false});
+        this.setState({
+            modifMode: false,
+        });
     };
 
     onModifOpen = () => {
@@ -80,7 +82,8 @@ class Artwork extends Component {
             modifMode: !this.state.modifMode,
             price: this.props.artwork.price,
             AWTitle: this.props.artwork.name,
-            AWState: this.props.artwork.state
+            AWState: this.props.artwork.state,
+            reference: this.props.artwork.ref
         });
     };
 
@@ -90,8 +93,11 @@ class Artwork extends Component {
   };
 
     onModifValidation = () => {
-        this.setState({ detailsModal: false });
-        this.props.dispatch(modifyArtWorkIfNeeded(this.props.token, this.state.AWTitle,
+        this.setState({
+            detailsModal: false,
+            modifMode: false
+        });
+        this.props.dispatch(modifyArtWorkIfNeeded(this.props.token, this.state.AWTitle, this.state.reference,
                                                   this.getArtWorkState(), this.state.price, this.props.artwork.id));
     };
 
@@ -219,52 +225,59 @@ class Artwork extends Component {
         <Modal open={this.state.detailsModal} onClose={this.onDetailClose} onOpen={this.onDetailOpen}>
           <h1 id='titleModal'>Détails de l'oeuvre</h1>
 
-          <Col sm={5} id='photoModal'>
-              { (this.props.artwork != null && this.props.artwork.images != null) ?
-                  (<img src={this.props.artwork.src}/>
-                  ): null
-              }
-          </Col>
+
 
               {
+
                   (this.props.artwork != null) ?
                       (
-                          <div>
-                          < Button bsStyle = "primary" onClick={this.onModifOpen} bsSize='large' className='confirmModal'>
-                              Modifier
-                          </Button>
-                          {
-                    (this.state.modifMode) ? (
-                        <div>
-                            <FormGroup controlId="formValidationSuccess1" className='addModal'
-                                       validationState={this.getNewArtworkValidationState()}>
-                                <ControlLabel>Nom de l'oeuvre</ControlLabel>
-                                <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
-                                <ControlLabel>Reference</ControlLabel>
-                                <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
-                                <ControlLabel>Prix</ControlLabel>
-                                <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
-                                <ButtonToolbar>
-                                    <ToggleButtonGroup id={'artWorkState'}
-                                                       type="radio"
-                                                       value={this.state.AWState}
-                                                       onChange={this.handleChange}
-                                                       name="options">
-                                        <ToggleButton value={1}>Exposé</ToggleButton>
-                                        <ToggleButton value={2}>Stock</ToggleButton>
-                                        <ToggleButton value={3}>Vendu</ToggleButton>
-                                        <ToggleButton value={4}>En transit</ToggleButton>
-                                    </ToggleButtonGroup>
-                                </ButtonToolbar>
-                            </FormGroup>
-                      < Button bsStyle = "primary" onClick={this.onModifValidation} bsSize='large' className='confirmModal'>
-                  Valider
-                  </Button>
-                  </div>
+                          <div>
+                              < Button bsStyle = "primary" onClick={this.onModifOpen} bsSize='large'>
+                                  {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
+                              </Button>
+                          {
+
+
+                            (this.state.modifMode) ? (
+                                <div>
+                                    <FormGroup controlId="formValidationSuccess1" className='addModal'
+                                               validationState={this.getNewArtworkValidationState()}>
+                                        <ControlLabel>Nom de l'oeuvre</ControlLabel>
+                                        <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
+                                        <ControlLabel>Reference</ControlLabel>
+                                        <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
+                                        <ControlLabel>Prix</ControlLabel>
+                                        <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
+
+                                        <ButtonToolbar>
+                                            <ToggleButtonGroup id={'artWorkState'}
+                                                               type="radio"
+                                                               value={this.state.AWState}
+                                                               onChange={this.handleChange}
+                                                               name="options">
+                                                <ToggleButton value={1}>Exposé</ToggleButton>
+                                                <ToggleButton value={2}>Stock</ToggleButton>
+                                                <ToggleButton value={3}>Vendu</ToggleButton>
+                                                <ToggleButton value={4}>En transit</ToggleButton>
+                                            </ToggleButtonGroup>
+                                        </ButtonToolbar>
+                                    </FormGroup>
+                                    < Button bsStyle = "primary" onClick={this.onModifValidation} bsSize='large' className='confirmModal'>
+                                    Valider
+                                    </Button>
+                                </div>
                   ) : (
                       <div>
                     <Row>
+                        <Col sm={5} id='photoModal'>
+                            { (this.props.artwork != null && this.props.artwork.images != null) ?
+                                (<img src={this.props.artwork.src}/>
+                                ): null
+                            }
+                        </Col>
+                    </Row>
+                          <Row>
                         <Col sm={2}>
                           Titre:
                         </Col>
@@ -277,7 +290,7 @@ class Artwork extends Component {
                                   Référence:
                               </Col>
                               <Col sm={2}>
-                                  {this.props.artwork.reference}
+                                  {this.props.artwork.ref}
                               </Col>
                           </Row>
                           <Row>
@@ -288,10 +301,18 @@ class Artwork extends Component {
                                   {this.props.artwork.price}
                               </Col>
                           </Row>
+                          <Row>
+                              <Col sm={2}>
+                                  État:
+                              </Col>
+                              <Col sm={2}>
+                                  {this.props.artwork.state}
+                              </Col>
+                          </Row>
                   </div>
                   )
                 }
-                          </div>
+                </div>
                 ) :
                   null
               }
