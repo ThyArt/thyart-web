@@ -8,9 +8,8 @@ import '../../css/Membres.css'
 import ReactLoading from "react-loading";
 import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
 import Modal from "react-responsive-modal";
-import {modifyUsernameIfNeeded} from "../../actions/actions";
 
-class Members extends React.Component {
+class Members extends Component {
   constructor(props) {
     super(props);
 
@@ -35,8 +34,6 @@ class Members extends React.Component {
   onAddClose = () => {
     this.setState({newName: '', addModal: false});
   };
-
-
 
   onRemoveClose = () => {
     this.setState({newName: '', removeModal: false});
@@ -79,8 +76,6 @@ class Members extends React.Component {
   }
 
   getColumns() {
-
-
     return [
       {
         property: 'name',

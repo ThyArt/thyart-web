@@ -7,13 +7,13 @@ import Artwork from '../components/account/Artwork';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import { disconnect } from "../actions/actions";
+import { disconnect} from "../actions/actionsAuth";
 
 import '../css/Account.css'
 
 class Account extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     let token = sessionStorage.getItem('token');
 
     this.state = {
@@ -25,6 +25,8 @@ class Account extends Component {
   componentDidMount(){
     let token = sessionStorage.getItem('token');
     this.setState({token: token})
+    if (token === null)
+      this.props.dispatch(disconnect());
   }
 
   handleSelect = eventKey => {
@@ -84,7 +86,7 @@ class Account extends Component {
           </div>
 
 
-            {(this.state.token === null) ? (
+            {(this.state.isLogged === false) ? (
                 <Redirect
                     to={{
                         pathname: '/signin',
@@ -98,27 +100,17 @@ class Account extends Component {
 }
 
 Account.propTypes = {
-    isLogged: PropTypes.bool.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    token: PropTypes.string,
-    msg: PropTypes.string,
-    error: PropTypes.string,
-    dispatch: PropTypes.func.isRequired
+  isLogged: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     const {
         isLogged,
-        isFetching,
-        msg,
-        error
-    } = state;
+    } = state.authentication;
 
     return {
         isLogged,
-        isFetching,
-        msg,
-        error
     }
 }
 

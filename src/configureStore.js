@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import thyartApp  from "./reducers/reducers";
+import thyartApp  from "./reducers";
 
-const loggerMiddleware = createLogger()
+const loggerMiddleware = createLogger();
 
 export default function configureStore(preloadedState) {
     return createStore(

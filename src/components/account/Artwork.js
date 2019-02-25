@@ -11,8 +11,8 @@ import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
 import Row from "react-bootstrap/es/Row";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actions";
-import {createArtworkIfNeeded, sortByState, eraseArtworkIfNeeded} from "../../actions/actions";
+import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actionsArtwork";
+import {createArtworkIfNeeded, sortArtworkByState, eraseArtworkIfNeeded} from "../../actions/actionsArtwork";
 
 class Artwork extends Component {
   constructor(props, context) {
@@ -21,14 +21,14 @@ class Artwork extends Component {
     this.state = {
       currentPhoto: [],
       file: '',
-        search: '',
+      search: '',
       reference: '',
       addModal: false,
       price:'',
       AWTitle: '',
       AWState: 1,
       detailsModal: false,
-        modifMode: false
+      modifMode: false
     };
   }
 
@@ -98,12 +98,12 @@ class Artwork extends Component {
             modifMode: false
         });
         this.props.dispatch(modifyArtWorkIfNeeded(this.props.token, this.state.AWTitle, this.state.reference,
-                                                  this.getArtWorkState(), this.state.price, this.props.artwork.id));
+                              this.getArtWorkState(), this.state.price, this.props.artwork.id));
     };
 
   handleImageClick = (event, obj) => {
     this.setState({ detailsModal: true});
-      this.props.dispatch(getArtWorkIfNeeded(this.props.token, obj.photo.key));
+     getArtWorkIfNeeded(this.props.token, obj.photo.key);
   };
 
   handleAddArtworkShow = () => {
@@ -132,7 +132,7 @@ class Artwork extends Component {
   getVerification = () => {
     if (this.getNewArtworkValidationState() === 'success') {
       this.props.dispatch(createArtworkIfNeeded(this.state.file, this.props.token, this.state.AWTitle,
-      this.state.price, this.state.reference, this.getArtWorkState()));
+                                                this.state.price, this.state.reference, this.getArtWorkState()));
         this.setState({
             addModal: false,
             price:'',
@@ -142,7 +142,6 @@ class Artwork extends Component {
 
     }
   };
-
 
   handleChange(e) {
     this.setState({AWState: e});
@@ -194,19 +193,19 @@ class Artwork extends Component {
                 return;
             //En transit
             case 5:
-                this.props.dispatch(sortByState(this.props.token, 'incoming'));
+                this.props.dispatch(sortArtworkByState(this.props.token, 'incoming'));
                 return;
             //vendu
             case 6:
-                this.props.dispatch(sortByState(this.props.token, 'sold'));
+                this.props.dispatch(sortArtworkByState(this.props.token, 'sold'));
                 return;
             //expose
             case 7:
-                this.props.dispatch(sortByState(this.props.token, 'exposed'));
+                this.props.dispatch(sortArtworkByState(this.props.token, 'exposed'));
                 return;
             //en stock
             case 8:
-                this.props.dispatch(sortByState(this.props.token, 'in_stock'));
+                this.props.dispatch(sortArtworkByState(this.props.token, 'in_stock'));
                 return;
             //all
             case 9:
@@ -293,14 +292,9 @@ class Artwork extends Component {
           }
         <Modal open={this.state.detailsModal} onClose={this.onDetailClose} onOpen={this.onDetailOpen}>
           <h1 id='titleModal'>Détails de l'oeuvre</h1>
-
-
-
               {
-
                   (this.props.artwork != null) ?
                       (
-
                           <div>
 
                             <div
@@ -313,8 +307,6 @@ class Artwork extends Component {
                                   {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
                               </Button>
                           {
-
-
                             (this.state.modifMode) ? (
                                 <div>
                                     <FormGroup controlId="formValidationSuccess1" className='addModal'
@@ -348,7 +340,7 @@ class Artwork extends Component {
                     <Row>
                         <Col sm={5} id='photoModal'>
                             { (this.props.artwork != null && this.props.artwork.images != null) ?
-                                (<img src={this.props.artwork.src}/>
+                                (<img src={this.props.artwork.src} alt=''/>
                                 ): null
                             }
                         </Col>
@@ -404,28 +396,26 @@ Artwork.propTypes = {
   token: PropTypes.string,
   msg: PropTypes.string,
   error: PropTypes.string,
-  dispatch: PropTypes.func.isRequired,
-    artworks: PropTypes.array,
-    artwork: PropTypes.object
+  artworks: PropTypes.array,
+  artwork: PropTypes.object,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     const {
-    isLogged,
-    isFetching,
-    msg,
-    error,
-    artworks,
-        artwork
-  } = state;
-
-  return {
-    isLogged,
     isFetching,
     msg,
     error,
     artworks,
       artwork
+  } = state.artworks;
+
+  return {
+    isFetching,
+    msg,
+    error,
+    artworks,
+    artwork
   }
 }
 
