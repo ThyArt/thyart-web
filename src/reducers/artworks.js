@@ -49,7 +49,7 @@ function artworks (state = initialState, action)
     case RECEIVE_ARTWORKCREATE:
       return Object.assign({}, state,{
         isFetching: false,
-        artistId: action.artistId,
+        artistId: action.id,
         error: null
       });
     case RECEIVE_ADDIMAGE:

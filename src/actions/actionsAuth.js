@@ -22,7 +22,7 @@ function requestAuth() {
   }
 }
 
-function receiveAuthError(error) {
+function receiveSignInError(error) {
   let error_msg;
   if (
     error.response &&
@@ -30,6 +30,23 @@ function receiveAuthError(error) {
     error.response.data.message
   )
     error_msg = error.response.data.message;
+  else
+    error_msg = 'Unknown error.';
+
+  return {
+    type: RECEIVE_AUTH_ERROR,
+    error: error_msg
+  }
+}
+
+function receiveSignUpError(error) {
+  let error_msg;
+  if (
+    error.response &&
+    error.response.data &&
+    error.response.data.messages
+  )
+    error_msg = error.response.data.messages[0];
   else
     error_msg = 'Unknown error.';
 
@@ -75,7 +92,7 @@ function fetchSignIn(username, password) {
 
     return axios.post(apiURL + tokenURL, body, header)
       .then(res => dispatch(receiveSignIn(res)))
-      .catch(error => dispatch(receiveAuthError(error)))
+      .catch(error => dispatch(receiveSignInError(error)))
   }
 }
 
@@ -91,7 +108,7 @@ function fetchSignUp(name, firstname, lastname, mail, password) {
   return dispatch => {
     return axios.post(apiURL + userURL, body, header)
       .then(res => dispatch(receiveSignUp(res)))
-      .catch(error => dispatch(receiveAuthError(error)))
+      .catch(error => dispatch(receiveSignUpError(error)))
   }
 }
 
@@ -103,7 +120,7 @@ function fetchForgot(mail) {
   return dispatch => {
     return axios.post(apiURL + pwdURL, body, header)
       .then(res => dispatch(receivePwd(res)))
-      .catch(error => dispatch(receiveAuthError(error)))
+      .catch(error => dispatch(receiveSignInError(error)))
   }
 }
 

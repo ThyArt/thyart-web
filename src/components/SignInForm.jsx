@@ -131,8 +131,8 @@ class SignInForm extends Component {
 }
 
 SignInForm.propTypes = {
-  isLogged: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isLogged: PropTypes.bool,
+  isFetching: PropTypes.bool,
   token: PropTypes.string,
   msg: PropTypes.string,
   error: PropTypes.string,

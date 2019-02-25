@@ -61,9 +61,7 @@ function receiveArtworks(res) {
   }
   return {
     type: RECEIVE_ARTWORKS,
-    artworks: artworks,
-    artistId: res['id']
-  }
+    artworks: artworks}
 }
 
 function receiveArtwork(res) {
@@ -270,4 +268,3 @@ export function eraseArtworkIfNeeded(token, id) {
     }
   }
 }
-

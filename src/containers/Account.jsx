@@ -86,7 +86,7 @@ class Account extends Component {
           </div>
 
 
-            {(this.state.isLogged === false) ? (
+            {(this.props.isLogged === false) ? (
                 <Redirect
                     to={{
                         pathname: '/signin',
@@ -110,7 +110,7 @@ function mapStateToProps(state) {
     } = state.authentication;
 
     return {
-        isLogged,
+        isLogged
     }
 }
 

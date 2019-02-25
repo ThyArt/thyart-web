@@ -103,7 +103,7 @@ class Artwork extends Component {
 
   handleImageClick = (event, obj) => {
     this.setState({ detailsModal: true});
-     getArtWorkIfNeeded(this.props.token, obj.photo.key);
+     this.props.dispatch(getArtWorkIfNeeded(this.props.token, obj.photo.key));
   };
 
   handleAddArtworkShow = () => {
@@ -286,7 +286,7 @@ class Artwork extends Component {
             </Col>
           </Row>
         </Modal>
-          { (this.props.artworks.length > 0) ?
+          { (this.props.artworks && this.props.artworks.length > 0) ?
               (<Gallery photos={this.props.artworks} direction={"column"} onClick={this.handleImageClick}/>
               ) : null
           }
