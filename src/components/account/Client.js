@@ -23,6 +23,8 @@ class Client extends React.Component {
             newName: '',
             newFamily: '',
             newMail: '',
+            newAdresse:'',
+            newTelephone:'',
         };
 
         this.onAdd = this.onAdd.bind(this);
@@ -45,6 +47,14 @@ class Client extends React.Component {
 
     handleChangeMail = event => {
         this.setState({ newMail: event.target.value });
+    };
+
+    handleChangeAdresse = event => {
+        this.setState({ newAdresse: event.target.value });
+    };
+
+    handleChangeTelephone = event => {
+        this.setState({ newTelephone: event.target.value });
     };
 
     handleChangeName = event => {
@@ -73,6 +83,18 @@ class Client extends React.Component {
         let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if (re.test(email)) {
+            return 'success';
+        } else {
+            return 'error';
+        }
+    }
+
+    getNumberValidationState() {
+        let number = this.state.newTelephone;
+        if (number === '') return 'error';
+        let re = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
+
+        if (re.test(number)) {
             return 'success';
         } else {
             return 'error';
@@ -183,6 +205,34 @@ class Client extends React.Component {
                             <FormControl.Feedback />
                         </FormGroup>
                     </Col>
+                    <Col sm={6}>
+                        <h3 className="name">Adresse :</h3>
+                    </Col>
+                    <Col sm={6}>
+                        <FormGroup className='input'>
+                            <FormControl
+                                type="adresse"
+                                value={this.props.newAdresse}
+                                placeholder="Entrer l'adresse du client"
+                                onChange={this.handleChangeAdresse}
+                            />
+                            <FormControl.Feedback />
+                        </FormGroup>
+                    </Col>
+                    <Col sm={6}>
+                        <h3 className="name">Téléphone :</h3>
+                    </Col>
+                    <Col sm={6}>
+                        <FormGroup className='input' validationState={this.getNumberValidationState()}>
+                            <FormControl
+                                type="Phone number"
+                                value={this.props.newTelephone}
+                                placeholder="Entrer le numéro du client"
+                                onChange={this.handleChangeTelephone}
+                            />
+                            <FormControl.Feedback />
+                        </FormGroup>
+                    </Col>
                     <Button bsStyle="primary" onClick={this.onAdd} className='validate' bsSize='large'>
                         Valider
                     </Button>
@@ -209,7 +259,7 @@ class Client extends React.Component {
     }
     onAdd(e) {
         if (this.getNameValidationState() === 'success' && this.getMailValidationState() === 'success'
-            && this.getFamilyValidationState() === 'success') {
+            && this.getFamilyValidationState() === 'success' && this.getNumberValidationState() === 'success') {
             e.preventDefault();
 
             const rows = cloneDeep(this.state.rows);
@@ -218,7 +268,9 @@ class Client extends React.Component {
                 id: uuid.v4(),
                 name: this.state.newName,
                 family: this.state.newFamily,
-                mail: this.state.newMail
+                mail: this.state.newMail,
+                adresse: this.state.newAdresse,
+                number: this.state.newTelephone
             });
 
             this.setState({rows, addModal: false});
