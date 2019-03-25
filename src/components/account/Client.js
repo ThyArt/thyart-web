@@ -6,7 +6,7 @@ import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import {modifyUsernameIfNeeded} from "../../actions/actions";
 
-import '../../css/Membres.css'
+import '../../css/Membres.css';
 
 class Client extends React.Component {
   constructor(props) {
