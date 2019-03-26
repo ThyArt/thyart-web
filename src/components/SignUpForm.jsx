@@ -7,11 +7,10 @@ import {
   ControlLabel,
   HelpBlock
 } from 'react-bootstrap';
-import { signUpIfNeeded } from "../actions/actions";
+import { signUpIfNeeded } from "../actions/actionsAuth";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
-
 
 class SignUpForm extends Component {
     constructor(props, context) {
@@ -44,7 +43,7 @@ class SignUpForm extends Component {
             this.getConfirmValidationState() === 'success'
         ) {
             this.props.dispatch(signUpIfNeeded(this.state.nameValue, this.state.firstnameValue, this.state.lastnameValue,
-                                                this.state.mailValue, this.state.passValue))
+                                                this.state.mailValue, this.state.passValue));
         }
     };
 
@@ -237,8 +236,8 @@ class SignUpForm extends Component {
 }
 
 SignUpForm.propTypes = {
-    isLogged: PropTypes.bool.isRequired,
-    isFetching: PropTypes.bool.isRequired,
+    isLogged: PropTypes.bool,
+    isFetching: PropTypes.bool,
     token: PropTypes.string,
     msg: PropTypes.string,
     error: PropTypes.string,
@@ -252,7 +251,7 @@ function mapStateToProps(state) {
         token,
         msg,
         error
-    } = state;
+    } = state.authentication;
 
     return {
         isLogged,
@@ -262,4 +261,5 @@ function mapStateToProps(state) {
         error
     }
 }
+
 export default connect(mapStateToProps)(SignUpForm);

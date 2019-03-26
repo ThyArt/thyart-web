@@ -7,7 +7,11 @@ import ReactLoading from 'react-loading';
 import '../../css/Profile.css'
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getProfileIfNeeded, modifyMailIfNeeded, modifyPasswordIfNeeded, modifyFirstnameIfNeeded, modifyLastnameIfNeeded} from "../../actions/actions";
+import {getProfileIfNeeded,
+  modifyMailIfNeeded,
+  modifyPasswordIfNeeded,
+  modifyFirstnameIfNeeded,
+  modifyLastnameIfNeeded} from "../../actions/actionsProfile";
 import Row from "react-bootstrap/es/Row";
 
 class Profile extends Component {
@@ -144,8 +148,6 @@ class Profile extends Component {
     }
   };
 
-
-
   checkPassword = () => {
     if (this.getPassValidationState() === 'success' && this.getConfirmValidationState() === 'success')
     {
@@ -206,7 +208,7 @@ class Profile extends Component {
                                   <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
                                   <span className='modifyText'>Modifier</span>
                               </button>
-                          ) : (<div></div>)
+                          ) : (<div/>)
                       }
                   </Col>
 
@@ -255,7 +257,7 @@ class Profile extends Component {
                                   <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
                                   <span className='modifyText'>Modifier</span>
                               </button>
-                          ) : (<div></div>)
+                          ) : (<div/>)
                       }
                   </Col>
               </Row>
@@ -304,7 +306,7 @@ class Profile extends Component {
                                   <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
                                   <span className='modifyText'>Modifier</span>
                               </button>
-                          ) : (<div></div>)
+                          ) : (<div/>)
                       }
                   </Col>
               </Row>
@@ -352,7 +354,7 @@ class Profile extends Component {
                                   <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
                                   <span className='modifyText'>Modifier</span>
                               </button>
-                          ) : (<div></div>)
+                          ) : (<div/>)
                       }
                   </Col>
               </Row>
@@ -407,22 +409,22 @@ Profile.propTypes = {
     msg: PropTypes.string,
     error: PropTypes.string,
     mail: PropTypes.string,
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
     dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     const {
-        isLogged,
         isFetching,
         msg,
         error,
         mail,
         firstname,
         lastname
-    } = state;
+    } = state.profile;
 
     return {
-        isLogged,
         isFetching,
         msg,
         error,
