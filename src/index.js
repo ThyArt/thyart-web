@@ -11,6 +11,7 @@ import NotFound from './containers/404';
 import { Provider } from 'react-redux'
 import configureStore from "./configureStore";
 
+require('dotenv').config();
 const store = configureStore();
 
 ReactDOM.render(
