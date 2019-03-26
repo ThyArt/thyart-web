@@ -95,7 +95,6 @@ function eraseArtwork(token, id) {
   return dispatch => {
 
     return axios.delete(apiURL + artWorkURL + '/' + id, header_auth)
-      .then(dispatch(fetchArtWorks(token)))
       .catch(error => dispatch(receiveArtworksError(error)));
   }
 }
@@ -189,7 +188,7 @@ function fetchArtWorks(token, name) {
       Authorization: 'Bearer ' + token }
   };
 
-  if (name == null)
+  if (name == null || name.replace(/\s/g, '').length === 0)
     name = '/';
   else
     name = '?name=' + name;
@@ -264,7 +263,9 @@ export function eraseArtworkIfNeeded(token, id) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
-      return dispatch(eraseArtwork(token, id));
+      return dispatch(eraseArtwork(token, id)).then(() => {
+        return dispatch(fetchArtWorks(token))
+      })
     }
   }
 }
