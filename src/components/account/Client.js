@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import { cloneDeep, findIndex } from 'lodash';
+import { cloneDeep } from 'lodash';
 import * as Table from 'reactabular-table';
 import uuid from 'uuid';
 import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
 import Modal from "react-responsive-modal";
-import {modifyUsernameIfNeeded} from "../../actions/actions";
 
 import '../../css/Membres.css';
 
-class Client extends React.Component {
+class Client extends Component {
   constructor(props) {
     super(props);
 
@@ -16,16 +15,17 @@ class Client extends React.Component {
       rows: [], // initial rows
       columns: this.getColumns(), // initial columns
       addModal: false,
-      removeModal: false,
+      detailsModal: false,
       newName: '',
       newFamily: '',
       newMail: '',
       newAddress:'',
       newTelephone:'',
+      currentClient: []
     };
 
     this.onAdd = this.onAdd.bind(this);
-    this.onRemove = this.onRemove.bind(this);
+    this.openDetails = this.openDetails.bind(this);
   }
 
   onAddOpen = () => {
@@ -36,10 +36,8 @@ class Client extends React.Component {
     this.setState({ newName: '', addModal: false });
   };
 
-
-
-  onRemoveClose = () => {
-    this.setState({ newName: '', removeModal: false });
+  onDetailsClose = () => {
+    this.setState({ detailsModal: false });
   };
 
   handleChangeMail = event => {
@@ -132,6 +130,9 @@ class Client extends React.Component {
         }
       },
       {
+        header: {
+          label: 'Details'
+        },
         props: {
           style: {
             width: 50
@@ -142,10 +143,10 @@ class Client extends React.Component {
             (value, { rowData }) => (
               <div>
                 <div
-                  className="remove"
-                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: 'pointer', float: 'left'}}
+                  className="open"
+                  onClick={() => this.openDetails(rowData)} style={{ cursor: 'pointer', float: 'left'}}
                 >
-                  <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
+                  <img src={require('../../static/external-link.svg')} alt="modify" height="30" width="auto" />
                 </div>
               </div>)]
         }
@@ -166,7 +167,6 @@ class Client extends React.Component {
             <span className='add'>Ajouter</span>
           </button>
         </Col>
-
 
 
         <Modal open={this.state.addModal} onClose={this.onAddClose} center>
@@ -246,11 +246,20 @@ class Client extends React.Component {
           </Button>
         </Modal>
 
-        <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
-          <h2 className='title'>Voulez-vous supprimer ce client?</h2>
-
-          <Button bsStyle="primary" onClick={this.onRemove} className='validate' bsSize='large'>
-            Supprimer
+        <Modal open={this.state.detailsModal} onClose={this.onDetailsClose} center>
+          <h2 className='title'>Détails du client</h2>
+          <Col sm={6} className="name">Nom :</Col>
+          <Col sm={6} className="name">{this.state.currentClient['family']}</Col>
+          <Col sm={6} className="name">Prénom :</Col>
+          <Col sm={6} className="name">{this.state.currentClient['name']}</Col>
+          <Col sm={6} className="name">Mail :</Col>
+          <Col sm={6} className="name">{this.state.currentClient['mail']}</Col>
+          <Col sm={6} className="name">Adresse :</Col>
+          <Col sm={6} className="name">{this.state.currentClient['address']}</Col>
+          <Col sm={6} className="name">Téléphone :</Col>
+          <Col sm={6} className="name">{this.state.currentClient['number']}</Col>
+          <Button bsStyle="primary" className='validate' bsSize='large' onClick={this.openInTab}>
+            Plus de détails
           </Button>
         </Modal>
 
@@ -260,15 +269,10 @@ class Client extends React.Component {
           columns={columns}
         >
           <Table.Header />
-          <Table.Body rows={rows} rowKey="id" onRow={this.onClientClick} />
+          <Table.Body rows={rows} rowKey="id" />
         </Table.Provider>
       </div>
     );
-  }
-  onClientClick(row, { rowIndex, rowKey }) {
-    return {
-      onClick: () => console.log('clicked on:', row, rowIndex, rowKey)
-    };
   }
   onAdd(e) {
     if (this.getNameValidationState() === 'success' && this.getMailValidationState() === 'success'
@@ -282,7 +286,7 @@ class Client extends React.Component {
         name: this.state.newName,
         family: this.state.newFamily,
         mail: this.state.newMail,
-        adresse: this.state.newAddress,
+        address: this.state.newAddress,
         number: this.state.newTelephone
       });
 
@@ -290,20 +294,12 @@ class Client extends React.Component {
     }
   }
 
-  confirmRemove(id) {
-    this.setState({ idToRemove: id , removeModal: true});
-
+  openDetails(rowData) {
+    this.setState({ detailsModal: true, currentClient: rowData });
   }
 
-  onRemove() {
-    const rows = cloneDeep(this.state.rows);
-    const id = this.state.idToRemove;
-    const idx = findIndex(rows, { id });
-
-    // this could go through flux etc.
-    rows.splice(idx, 1);
-
-    this.setState({ rows, removeModal: false });
+  openInTab = () => {
+    window.open('localhost:3000/client', "_blank")
   }
 }
 
