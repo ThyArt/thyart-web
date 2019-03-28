@@ -4,6 +4,7 @@ import * as Table from 'reactabular-table';
 import uuid from 'uuid';
 import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
 import Modal from "react-responsive-modal";
+import {Redirect} from 'react-router-dom';
 
 import '../../css/Membres.css';
 
@@ -17,6 +18,7 @@ class Client extends Component {
       addModal: false,
       detailsModal: false,
       removeModal: false,
+      clientRedirect: false,
       newName: '',
       newFamily: '',
       newMail: '',
@@ -185,6 +187,8 @@ class Client extends Component {
 
     return (
       <div className="clients">
+        { this.state.clientRedirect ? <Redirect to={{ pathname: "/client", state: {...this.state.currentClient} }}/> : null }
+
         <tbody>
 
         <Col sm={10}>
@@ -336,7 +340,7 @@ class Client extends Component {
   };
 
   openInTab = () => {
-    window.open('localhost:3000/client', "_blank")
+    this.setState({ clientRedirect: true });
   };
 
   confirmRemove(id) {
