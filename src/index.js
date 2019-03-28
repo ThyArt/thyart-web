@@ -8,6 +8,7 @@ import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import Account from './containers/Account';
 import NotFound from './containers/404';
+import ClientDetails from './containers/ClientDetails';
 import { Provider } from 'react-redux'
 import configureStore from "./configureStore";
 
@@ -22,6 +23,7 @@ ReactDOM.render(
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/account" component={Account} />
+              <Route exact path="/client" component={ClientDetails} />
               <Route component={NotFound} />
             </Switch>
           </Router>
