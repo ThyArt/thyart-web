@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, findIndex } from 'lodash';
 import * as Table from 'reactabular-table';
 import uuid from 'uuid';
 import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
@@ -16,6 +16,7 @@ class Client extends Component {
       columns: this.getColumns(), // initial columns
       addModal: false,
       detailsModal: false,
+      removeModal: false,
       newName: '',
       newFamily: '',
       newMail: '',
@@ -26,6 +27,7 @@ class Client extends Component {
 
     this.onAdd = this.onAdd.bind(this);
     this.openDetails = this.openDetails.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
 
   onAddOpen = () => {
@@ -34,6 +36,10 @@ class Client extends Component {
 
   onAddClose = () => {
     this.setState({ newName: '', addModal: false });
+  };
+
+  onRemoveClose = () => {
+    this.setState({ newName: '', removeModal: false });
   };
 
   onDetailsClose = () => {
@@ -64,13 +70,13 @@ class Client extends Component {
     let name = this.state.newName;
     if (name === '') return 'error';
     return 'success';
-  }
+  };
 
   getFamilyValidationState() {
     let family = this.state.newFamily;
     if (family === '') return 'error';
     return 'success';
-  }
+  };
 
   getMailValidationState() {
     let email = this.state.newMail;
@@ -82,7 +88,7 @@ class Client extends Component {
     } else {
       return 'error';
     }
-  }
+  };
 
   getAddressValidationState() {
     let address = this.state.newAddress;
@@ -94,8 +100,7 @@ class Client extends Component {
     } else {
       return 'error';
     }
-
-  }
+  };
 
   getNumberValidationState() {
     let number = this.state.newTelephone;
@@ -107,7 +112,7 @@ class Client extends Component {
     } else {
       return 'error';
     }
-  }
+  };
 
   getColumns() {
     return [
@@ -147,6 +152,28 @@ class Client extends Component {
                   onClick={() => this.openDetails(rowData)} style={{ cursor: 'pointer', float: 'left'}}
                 >
                   <img src={require('../../static/external-link.svg')} alt="modify" height="30" width="auto" />
+                </div>
+              </div>)]
+        }
+      },
+      {
+        header: {
+          label: 'Supprimer'
+        },
+        props: {
+          style: {
+            width: 50
+          }
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) => (
+              <div>
+                <div
+                  className="remove"
+                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: 'pointer', float: 'left'}}
+                >
+                  <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
                 </div>
               </div>)]
         }
@@ -263,6 +290,15 @@ class Client extends Component {
           </Button>
         </Modal>
 
+        <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
+          <h2 className='title'>Voulez-vous supprimer ce client?</h2>
+
+          <Button bsStyle="primary" onClick={this.onRemove} className='validate' bsSize='large'>
+            Supprimer
+          </Button>
+        </Modal>
+
+
         </tbody>
         <Table.Provider
           className="pure-table pure-table-bordered"
@@ -274,6 +310,7 @@ class Client extends Component {
       </div>
     );
   }
+
   onAdd(e) {
     if (this.getNameValidationState() === 'success' && this.getMailValidationState() === 'success'
       && this.getFamilyValidationState() === 'success' && this.getNumberValidationState() === 'success') {
@@ -292,15 +329,30 @@ class Client extends Component {
 
       this.setState({ rows, addModal: false, newName: '', newFamily: '', newMail: '', newAddress:'', newTelephone:'' });
     }
-  }
+  };
 
   openDetails(rowData) {
     this.setState({ detailsModal: true, currentClient: rowData });
-  }
+  };
 
   openInTab = () => {
     window.open('localhost:3000/client', "_blank")
-  }
+  };
+
+  confirmRemove(id) {
+    this.setState({ idToRemove: id , removeModal: true});
+  };
+
+  onRemove() {
+    const rows = cloneDeep(this.state.rows);
+    const id = this.state.idToRemove;
+    const idx = findIndex(rows, { id });
+
+    // this could go through flux etc.
+    rows.splice(idx, 1);
+
+    this.setState({ rows, removeModal: false });
+  };
 }
 
 export default Client;
