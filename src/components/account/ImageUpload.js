@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Image from "react-bootstrap/es/Image";
+import {Image} from "react-bootstrap";
 
 export default class ImageUpload extends Component {
     constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import App from '../App';
+import NotFound from '../containers/404';
 import { shallow } from 'enzyme';
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  shallow(<NotFound />);
 });

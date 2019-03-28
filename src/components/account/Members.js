@@ -9,7 +9,7 @@ import ReactLoading from "react-loading";
 import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
 import Modal from "react-responsive-modal";
 
-class Members extends Component {
+export class Members extends Component {
   constructor(props) {
     super(props);
 

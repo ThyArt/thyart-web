@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { PageHeader, Jumbotron, Col } from 'react-bootstrap';
+import { PageHeader, Jumbotron, Col, Row } from 'react-bootstrap';
 import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
 import ReactLoading from 'react-loading';
@@ -12,9 +12,8 @@ import {getProfileIfNeeded,
   modifyPasswordIfNeeded,
   modifyFirstnameIfNeeded,
   modifyLastnameIfNeeded} from "../../actions/actionsProfile";
-import Row from "react-bootstrap/es/Row";
 
-class Profile extends Component {
+export class Profile extends Component {
   constructor(props, context) {
     super(props, context);
 

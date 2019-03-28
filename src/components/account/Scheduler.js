@@ -8,7 +8,7 @@ import uuidv4 from "uuid/v4";
 moment.locale('fr');
 const local = BigCalendar.momentLocalizer(moment);
 
-class Scheduler extends Component {
+export class Scheduler extends Component {
   constructor(props) {
     super(props);
 

@@ -11,7 +11,6 @@ export const initialState = [
   {
     isLogged: false,
     isFetching: false,
-    token: null,
     msg: null,
     error: null
   }
@@ -36,7 +35,6 @@ function authentication (state = initialState, action)
       return Object.assign({}, state, {
         isFetching: false,
         isLogged: true,
-        token: action.token,
         msg: action.msg,
         error: null
       });
@@ -54,8 +52,7 @@ function authentication (state = initialState, action)
       });
     case DISCONNECT:
       return Object.assign({}, state, {
-        isLogged: false,
-        token: null
+        isLogged: false
       });
     default:
       return state

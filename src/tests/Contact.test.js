@@ -1,7 +1,7 @@
 import React from 'react';
-import App from '../App';
 import { shallow } from 'enzyme';
+import Contact from "../containers/Contact";
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  shallow(<Contact />);
 });

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { FormControl, Button, Alert } from 'react-bootstrap';
-import { FormGroup } from 'react-bootstrap';
-import { ControlLabel } from 'react-bootstrap';
+import { FormControl,
+  Button,
+  Alert,
+  FormGroup,
+  ControlLabel} from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import {fetchForgotIfNeeded, signInIfNeeded} from "../actions/actionsAuth";
 import ReactLoading from 'react-loading';
 
-class SignInForm extends Component {
+export class SignInForm extends Component {
   constructor(props) {
     super(props);
 
@@ -133,7 +135,6 @@ class SignInForm extends Component {
 SignInForm.propTypes = {
   isLogged: PropTypes.bool,
   isFetching: PropTypes.bool,
-  token: PropTypes.string,
   msg: PropTypes.string,
   error: PropTypes.string,
   dispatch: PropTypes.func.isRequired
@@ -143,7 +144,6 @@ function mapStateToProps(state) {
   const {
     isLogged,
     isFetching,
-    token,
     msg,
     error
   } = state.authentication;
@@ -151,7 +151,6 @@ function mapStateToProps(state) {
   return {
     isLogged,
     isFetching,
-    token,
     msg,
     error
   }

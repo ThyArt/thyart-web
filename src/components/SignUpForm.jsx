@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
 
-class SignUpForm extends Component {
+export class SignUpForm extends Component {
     constructor(props, context) {
         super(props, context);
 

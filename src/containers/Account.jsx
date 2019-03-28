@@ -11,7 +11,7 @@ import { disconnect} from "../actions/actionsAuth";
 
 import '../css/Account.css'
 
-class Account extends Component {
+export class Account extends Component {
   constructor(props) {
     super(props);
     let token = sessionStorage.getItem('token');

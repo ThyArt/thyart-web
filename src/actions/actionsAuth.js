@@ -60,8 +60,7 @@ function receiveSignIn(res) {
   sessionStorage.setItem('token', res.data['access_token']);
   return {
     type: RECEIVE_SIGN_IN,
-    msg: "Connected",
-    token: res.data['access_token'],
+    msg: "Connected"
   }
 }
 

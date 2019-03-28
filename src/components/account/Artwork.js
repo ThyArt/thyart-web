@@ -2,19 +2,27 @@ import React, { Component } from "react";
 import Gallery from 'react-photo-gallery';
 import Modal from "react-responsive-modal";
 import ImageUpload from './ImageUpload';
-import { Col, ControlLabel, FormControl, FormGroup, Button, Form, Glyphicon, DropdownButton, MenuItem } from "react-bootstrap";
+import {Col,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Button,
+  Form,
+  Glyphicon,
+  DropdownButton,
+  MenuItem,
+  Row,
+  ToggleButton,
+  ButtonToolbar,
+  ToggleButtonGroup} from "react-bootstrap";
 
 import '../../css/Artwork.css';
-import ToggleButton from "react-bootstrap/es/ToggleButton";
-import ButtonToolbar from "react-bootstrap/es/ButtonToolbar";
-import ToggleButtonGroup from "react-bootstrap/es/ToggleButtonGroup";
-import Row from "react-bootstrap/es/Row";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actionsArtwork";
 import {createArtworkIfNeeded, sortArtworkByState, eraseArtworkIfNeeded} from "../../actions/actionsArtwork";
 
-class Artwork extends Component {
+export class Artwork extends Component {
   constructor(props, context) {
     super(props, context);
     this.handleChange = this.handleChange.bind(this);
@@ -252,10 +260,10 @@ class Artwork extends Component {
         <Modal dialogClassName="addArtWork-modal" open={this.state.addModal} onClose={this.handleAddArtworkClose}>
           <h1 id='titleModal'>Ajouter une oeuvre</h1>
           <Row>
-            <Col xs="6">
+            <Col xs={6}>
               <ImageUpload callbackFromParent={this.myCallback}/>
             </Col>
-            <Col xs="6">
+            <Col xs={6}>
               <form>
               <FormGroup controlId="formValidationSuccess1" className='addModal'
                          validationState={this.getNewArtworkValidationState()}>

@@ -1,7 +1,7 @@
 import React from 'react';
-import App from '../App';
 import { shallow } from 'enzyme';
+import {Scheduler} from "../components/account/Scheduler";
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  shallow(<Scheduler />);
 });
