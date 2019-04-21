@@ -5,6 +5,7 @@ import Profile from '../components/account/Profile';
 import Members from '../components/account/Members';
 import Artwork from '../components/account/Artwork';
 import Client from '../components/account/Client';
+import Facturation from '../components/account/Facturation';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -86,6 +87,7 @@ class Account extends Component {
             { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
             { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
             { this.state.selected === 8 ? <Client token={this.state.token}/> : null }
+            { this.state.selected === 5 ? <Facturation token={this.state.token}/> : null }
           </div>
 
 
