@@ -16,7 +16,7 @@ class Billings extends Component {
             columns: this.getColumns(), // initial columns
             removeModal: false,
             detailsRedirect: false,
-            infos: {},
+            infos: false,
             currentClient: []
         };
 
@@ -34,7 +34,7 @@ class Billings extends Component {
     };
 
     openNewBilling() {
-        this.setState({ infos: {}, detailsRedirect: true });
+        this.setState({ infos: false, detailsRedirect: true });
     }
 
     confirmRemove(id) {
@@ -124,7 +124,7 @@ class Billings extends Component {
             <div className="clients">
                 <tbody>
 
-                { this.state.detailsRedirect ? <Redirect to={{ pathname: "/billing", state: {...this.state.infos} }}/> : null }
+                { this.state.detailsRedirect ? <Redirect to={{ pathname: "/billing", state: { infos: this.state.infos} }}/> : null }
 
                 <Col sm={10}>
                     {this.props.add}

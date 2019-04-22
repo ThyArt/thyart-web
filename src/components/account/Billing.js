@@ -17,6 +17,30 @@ class Billing extends Component {
     };
   }
 
+  handleFName = event => {
+    this.setState({ fName: event.target.value });
+  };
+
+  handleLName = event => {
+    this.setState({ lName: event.target.value });
+  };
+
+  handleAddress = event => {
+    this.setState({ address: event.target.value });
+  };
+
+  handleMail = event => {
+    this.setState({ mail: event.target.value });
+  };
+
+  handlePhone = event => {
+    this.setState({ phone: event.target.value });
+  };
+
+  handleArtwork = event => {
+    this.setState({ artworkName: event.target.value });
+  };
+
   editable() {
     return (
       <div>
@@ -28,12 +52,12 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Prénom :</h3>
             </Col>
             <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this}>
+              <FormGroup className='billingJumbotronInput' validationState={null}>
                 <FormControl
                   type="name"
                   value={this.state.fName}
                   placeholder="Entrer le prénom du client"
-                  onChange={this}
+                  onChange={this.handleFName}
                 />
                 <FormControl.Feedback />
               </FormGroup>
@@ -43,12 +67,12 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Nom :</h3>
             </Col>
             <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this}>
+              <FormGroup className='billingJumbotronInput' validationState={null}>
                 <FormControl
                   type="name"
                   value={this.state.lName}
                   placeholder="Entrer le nom du client"
-                  onChange={this}
+                  onChange={this.handleLName}
                 />
                 <FormControl.Feedback />
               </FormGroup>
@@ -58,12 +82,12 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Adresse :</h3>
             </Col>
             <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this}>
+              <FormGroup className='billingJumbotronInput' validationState={null}>
                 <FormControl
                   type="name"
                   value={this.state.address}
                   placeholder="Entrer l'adresse du client"
-                  onChange={this}
+                  onChange={this.handleAddress}
                 />
                 <FormControl.Feedback />
               </FormGroup>
@@ -73,12 +97,12 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Mail :</h3>
             </Col>
             <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this}>
+              <FormGroup className='billingJumbotronInput' validationState={null}>
                 <FormControl
                   type="name"
                   value={this.state.mail}
                   placeholder="Entrer l'adresse mail du client"
-                  onChange={this}
+                  onChange={this.handleMail}
                 />
                 <FormControl.Feedback />
               </FormGroup>
@@ -88,12 +112,12 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Téléphone :</h3>
             </Col>
             <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this}>
+              <FormGroup className='billingJumbotronInput' validationState={null}>
                 <FormControl
                   type="name"
                   value={this.state.phone}
                   placeholder="Entrer le numéro de téléphone du client"
-                  onChange={this}
+                  onChange={this.handlePhone}
                 />
                 <FormControl.Feedback />
               </FormGroup>
@@ -109,18 +133,22 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Nom de l'oeuvre :</h3>
             </Col>
             <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this}>
+              <FormGroup className='billingJumbotronInput' validationState={null}>
                 <FormControl
                   type="name"
                   value={this.state.artworkName}
                   placeholder="Entrer le nom de l'oeuvre"
-                  onChange={this}
+                  onChange={this.handleArtwork}
                 />
                 <FormControl.Feedback />
               </FormGroup>
             </Col>
           </div>
         </Jumbotron>
+
+        <div id="billingConfirm">
+          <Button bsStyle="primary" id="billingConfirmButton" bsSize="lg">Créer la facture</Button>
+        </div>
       </div>
     );
   };
@@ -194,6 +222,8 @@ class Billing extends Component {
   };
 
   render() {
+    console.log(this.props.location.state.infos);
+
     return (
       <div>
         <div>
@@ -209,7 +239,7 @@ class Billing extends Component {
           <Button bsStyle="primary" id="billingBackButton" href="/account">Retour à mon profil</Button>
         </div>
 
-        {this.props.location.state.infos ? this.editable() : this.nonEditable()}
+        {this.props.location.state.infos ? this.nonEditable() : this.editable()}
 
       </div>
     );
