@@ -20,6 +20,7 @@ class Billings extends Component {
             currentClient: []
         };
 
+        this.openNewBilling = this.openNewBilling.bind(this);
         this.openDetails = this.openDetails.bind(this);
         this.onRemove = this.onRemove.bind(this);
     }
@@ -31,6 +32,10 @@ class Billings extends Component {
     openDetails(rowData) {
         this.setState({ infos: rowData, detailsRedirect: true });
     };
+
+    openNewBilling() {
+        this.setState({ infos: {}, detailsRedirect: true });
+    }
 
     confirmRemove(id) {
         this.setState({ idToRemove: id , removeModal: true});
@@ -123,7 +128,7 @@ class Billings extends Component {
 
                 <Col sm={10}>
                     {this.props.add}
-                    <button className='add' onClick={this.openDetails}>
+                    <button className='add' onClick={this.openNewBilling}>
                         <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" />
                         <span className='add'>Ajouter</span>
                     </button>
