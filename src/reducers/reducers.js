@@ -10,7 +10,12 @@ import {
     RECEIVE_ARTWORKCREATE,
     RECEIVE_ADDIMAGE,
     RECEIVE_ARTWORKS,
-    RECEIVE_ARTWORK} from "../actions/actions";
+    RECEIVE_ARTWORK,
+    DELETE_BILLING,
+    ADD_BILLING, SET_CURRENT_BILLING
+} from "../actions/actions";
+import { cloneDeep, findIndex } from "lodash";
+import uuid from "uuid";
 
 function thyartApp (state = {
                         isLogged: false,
@@ -23,7 +28,10 @@ function thyartApp (state = {
                         firstname: null,
                         lastname: null,
                         artworks: [],
-                        artwork: null
+                        artwork: null,
+                        billings: [],
+                        billingTable: [],
+                        currentBilling: null
                    },
                    action)
 {
@@ -93,6 +101,54 @@ function thyartApp (state = {
             return Object.assign({}, state, {
                 isLogged: false,
                 token: null
+            });
+        case DELETE_BILLING:
+            let rows = cloneDeep(state.billings);
+            let rows2 = cloneDeep(state.billingTable);
+            let id = action.id;
+            let idx = findIndex(rows, { id });
+
+            // this could go through flux etc.
+            rows.splice(idx, 1);
+            idx = findIndex(rows2, { id });
+            rows2.splice(idx, 1);
+            return Object.assign({}, state, {
+                billings: rows,
+                billingTable: rows2
+            });
+        case ADD_BILLING:
+            rows = cloneDeep(state.billings);
+            rows2 = cloneDeep(state.billingTable);
+            id = uuid.v4(),
+
+            rows.unshift({
+            id: id,
+            fName: action.billing.fName,
+            lName: action.billing.lName,
+            mail: action.billing.mail,
+            address: action.billing.address,
+            phone: action.billing.phone,
+            artworkName: action.billing.artworkName
+        });
+            rows2.unshift({
+                id: id,
+                name: action.billing.lName,
+                family: action.billing.fName,
+                mail: action.billing.mail
+            });
+
+            return Object.assign({}, state, {
+                billings: rows,
+                billingTable: rows2
+            });
+        case SET_CURRENT_BILLING:
+            rows = cloneDeep(state.billings);
+            id = action.id;
+            idx = findIndex(rows, {id});
+            let currentBilling = rows[idx];
+            console.log(currentBilling);
+            return Object.assign({}, state, {
+                currentBilling: currentBilling
             });
         default:
             return state

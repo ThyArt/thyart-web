@@ -11,6 +11,9 @@ export const RECEIVE_ARTWORKS = 'RECEIVE_ARTWORKS';
 export const RECEIVE_ARTWORK = 'RECEIVE_ARTWORK';
 export const RECEIVE_ARTWORKCREATE = 'RECEIVE_ARTWORKCREATE';
 export const RECEIVE_ADDIMAGE = 'RECEIVE_ADDIMAGE';
+export const ADD_BILLING = 'ADD_BILLING';
+export const DELETE_BILLING = 'DELETE_BILLING';
+export const SET_CURRENT_BILLING = 'SET_CURRENT_BILLING';
 
 //const apiURL = 'http://thyart-api-dev.eu-west-1.elasticbeanstalk.com/';
 const apiURL = 'http://localhost:80/';
@@ -26,6 +29,8 @@ const header = {
 };
 const clientID = 2;
 const clientSecret = 'vMJibGy1LLl1Jb2GFY1GrCewg3ggZreCoLkgGlVj';
+
+
 
 function requestApi() {
     return {
@@ -500,3 +505,18 @@ export function eraseArtworkIfNeeded(token, id) {
     return dispatch(eraseArtwork(token, id));
   }
 }
+
+export const addBilling = billing => ({
+    type: ADD_BILLING,
+    billing: billing
+})
+
+export const deleteBilling = id => ({
+    type: DELETE_BILLING,
+    id: id
+})
+
+export const setCurrentBilling = id => ({
+    type: SET_CURRENT_BILLING,
+    id: id
+})

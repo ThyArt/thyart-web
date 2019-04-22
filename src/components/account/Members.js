@@ -37,7 +37,6 @@ class Members extends React.Component {
   };
 
 
-
   onRemoveClose = () => {
     this.setState({newName: '', removeModal: false});
   };

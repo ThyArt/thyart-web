@@ -416,7 +416,7 @@ function mapStateToProps(state) {
     msg,
     error,
     artworks,
-        artwork
+      artwork
   } = state;
 
   return {
@@ -425,7 +425,7 @@ function mapStateToProps(state) {
     msg,
     error,
     artworks,
-      artwork
+    artwork
   }
 }
 
