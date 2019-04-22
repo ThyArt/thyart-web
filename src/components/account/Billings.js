@@ -54,21 +54,21 @@ class Billings extends Component {
     getColumns() {
         return [
             {
-                property: 'name',
+                property: 'name', // TODO !!!!
                 header: {
-                    label: 'Prénom'
+                    label: 'Client'
                 }
             },
             {
-                property: 'family',
+                property: 'mail',  // TODO !!!!
                 header: {
-                    label: 'Nom de famille'
+                    label: 'Nom de l\'oeuvre'
                 }
             },
             {
-                property: 'mail',
+                property: 'mail',  // TODO !!!!
                 header: {
-                    label: 'Adresse Mail'
+                    label: 'Date'
                 }
             },
             {
