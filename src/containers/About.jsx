@@ -18,11 +18,10 @@ class About extends Component {
                 className="aboutLogo"
               />
               <br />
-              <strong className="aboutText">Manage</strong>
+              <strong className="aboutText">Gestion</strong>
               <br />
               <p className="aboutDesc">
-                Manage your activity, from the reception of an artwork to the
-                facturation.
+                Gérez votre activité, de la réception d'une oeuvre à la facturation.
               </p>
             </Col>
             <Col className="aboutCol">
@@ -34,11 +33,10 @@ class About extends Component {
                 className="aboutLogo"
               />
               <br />
-              <strong className="aboutText">Track</strong>
+              <strong className="aboutText">Suivi</strong>
               <br />
               <p className="aboutDesc">
-                Track artworks with a QR code and our app to know exactly the
-                status of your collection.
+                Suivez les oeuvres grâce au code QR avec notre application pour savoir exactement le statut de votre collection.
               </p>
             </Col>
             <Col className="aboutCol">
@@ -50,11 +48,10 @@ class About extends Component {
                 className="aboutLogo"
               />
               <br />
-              <strong className="aboutText">Communicate</strong>
+              <strong className="aboutText">Relation</strong>
               <br />
               <p className="aboutDesc">
-                Keep in touch with your artists and customer in one easy
-                platform.
+                Restez en contact avec les artistes et vos clients à travers notre plateforme.
               </p>
             </Col>
           </Row>

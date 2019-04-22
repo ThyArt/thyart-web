@@ -8,11 +8,11 @@ class Contact extends Component {
   render() {
     return (
       <div id="contact">
-        <p>Ready to give your workflow a boost?</p>
+        <p>Prêt à accélérer votre activité ?</p>
         <BrowserRouter>
           <Link to="/signup">
             <Button bsStyle="primary" bsSize="large">
-              Sign Up!
+              Inscrivez vous
             </Button>
           </Link>
         </BrowserRouter>

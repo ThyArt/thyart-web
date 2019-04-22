@@ -41,7 +41,7 @@ class Carousel extends Component {
           <BaseCarousel.Caption>
             <h3>Thy Art</h3>
             <p>
-              The <b>easy</b> dashboard for <b>your</b> gallery
+              Le Tableau de bord pour votre galerie.
             </p>
             <br />
           </BaseCarousel.Caption>

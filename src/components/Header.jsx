@@ -24,7 +24,7 @@ class Header extends Component {
                         </Nav>
                         <Nav pullRight>
                             <NavItem href="/#about" eventKey={2}>
-                                About
+                                A propos
                             </NavItem>
                             <NavItem href="/#services" eventKey={3}>
                                 Services
@@ -33,10 +33,10 @@ class Header extends Component {
                                 Contact
                             </NavItem>
                             <NavItem href="/signin" eventKey={7}>
-                                Sign In
+                                Connection
                             </NavItem>
                             <NavItem href="/signup" eventKey={8}>
-                                Sign Up
+                                Inscription
                             </NavItem>
                         </Nav>
                     </Navbar.Collapse>
