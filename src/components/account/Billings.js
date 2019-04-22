@@ -7,7 +7,7 @@ import {Redirect} from 'react-router-dom';
 
 import '../../css/Membres.css';
 
-class Client extends Component {
+class Billings extends Component {
     constructor(props) {
         super(props);
 
@@ -15,23 +15,35 @@ class Client extends Component {
             rows: [], // initial rows
             columns: this.getColumns(), // initial columns
             removeModal: false,
-            clientRedirect: false,
-            addDetailsRedirect: false,
+            detailsRedirect: false,
             infos: {},
             currentClient: []
         };
 
-        this.onAdd = this.onAdd.bind(this);
         this.openDetails = this.openDetails.bind(this);
         this.onRemove = this.onRemove.bind(this);
     }
 
-    onAddOpen = () => {
-        this.setState({ infos: {}, addDetailsRedirect: true });
-    };
-
     onRemoveClose = () => {
         this.setState({ newName: '', removeModal: false });
+    };
+
+    openDetails(rowData) {
+        this.setState({ infos: rowData, detailsRedirect: true });
+    };
+
+    confirmRemove(id) {
+        this.setState({ idToRemove: id , removeModal: true});
+    };
+
+    onRemove() {
+        const rows = cloneDeep(this.state.rows);
+        const id = this.state.idToRemove;
+        const idx = findIndex(rows, { id });
+
+        rows.splice(idx, 1);
+
+        this.setState({ rows, removeModal: false });
     };
 
     getColumns() {
@@ -105,15 +117,13 @@ class Client extends Component {
 
         return (
             <div className="clients">
-                { this.state.clientRedirect ? <Redirect to={{ pathname: "/client", state: {...this.state.currentClient} }}/> : null }
-
                 <tbody>
 
-                { this.state.addDetailsRedirect ? <Redirect to={{ pathname: "/billing", state: {...this.state.infos} }}/> : null }
+                { this.state.detailsRedirect ? <Redirect to={{ pathname: "/billing", state: {...this.state.infos} }}/> : null }
 
                 <Col sm={10}>
                     {this.props.add}
-                    <button className='add' onClick={this.onAddOpen}>
+                    <button className='add' onClick={this.openDetails}>
                         <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" />
                         <span className='add'>Ajouter</span>
                     </button>
@@ -140,28 +150,6 @@ class Client extends Component {
         );
     }
 
-    onAdd(e) {
-    //    TODO: Add row once billing is saved
-    };
-
-    openDetails(rowData) {
-        this.setState({ infos: rowData, addDetailsRedirect: true });
-    };
-
-    confirmRemove(id) {
-        this.setState({ idToRemove: id , removeModal: true});
-    };
-
-    onRemove() {
-        const rows = cloneDeep(this.state.rows);
-        const id = this.state.idToRemove;
-        const idx = findIndex(rows, { id });
-
-        // this could go through flux etc.
-        rows.splice(idx, 1);
-
-        this.setState({ rows, removeModal: false });
-    };
 }
 
-export default Client;
+export default Billings;
