@@ -34,7 +34,7 @@ class Billings extends Component {
             this.setState({modif: false, table: false, });
         else
             this.setState({modif: false, table: true });
-    }
+    };
 
 
     render() {
