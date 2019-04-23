@@ -8,14 +8,10 @@ class Header extends Component {
         return (
             <div id="header">
                 <Navbar id="navBar" fixedTop>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <a href="/#carousel">
-                                <img src={require('../static/SmallLogo.png')} alt="logo"  id="logo"/>
-                            </a>
+                        <Navbar.Brand href="/#carousel">
+                            <img src={require('../static/SmallLogo.png')} alt="logo"  id="logo"/>
                         </Navbar.Brand>
                         <Navbar.Toggle/>
-                    </Navbar.Header>
                     <Navbar.Collapse id="links">
                         <Nav>
                             <NavItem href="/#carousel" eventKey={1} id="name">
