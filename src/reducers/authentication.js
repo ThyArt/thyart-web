@@ -1,10 +1,10 @@
 import {
   DISCONNECT,
-  RECEIVE_PWD,
-  RECEIVE_SIGN_IN,
-  RECEIVE_SIGN_UP,
-  REQUEST_AUTH,
-  RECEIVE_AUTH_ERROR
+    RECEIVE_PWD,
+    RECEIVE_SIGN_IN,
+    RECEIVE_SIGN_UP,
+    REQUEST_AUTH,
+    RECEIVE_AUTH_ERROR
 } from "../constants/constantsAction";
 
 export const initialState = [

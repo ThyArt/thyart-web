@@ -5,7 +5,6 @@ import Modal from "react-responsive-modal";
 import {Redirect} from 'react-router-dom';
 
 import '../../css/Membres.css';
-import { deleteBilling, getArtWorksIfNeeded } from "../../actions/actions";
 import PropTypes from "prop-types";
 import BillingTable from "./BillingTable";
 import Billing from "./Billing";

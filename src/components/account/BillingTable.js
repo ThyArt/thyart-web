@@ -3,11 +3,10 @@ import { cloneDeep, findIndex } from 'lodash';
 import * as Table from 'reactabular-table';
 import {Button, Col} from "react-bootstrap";
 import Modal from "react-responsive-modal";
-import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import '../../css/Membres.css';
-import { deleteBilling, getArtWorksIfNeeded, setCurrentBilling } from "../../actions/actions";
+import { deleteBilling, setCurrentBilling } from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
 import uuid from "uuid";
 

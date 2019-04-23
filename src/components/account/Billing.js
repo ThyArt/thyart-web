@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button, Jumbotron, Col, FormControl, FormGroup } from "react-bootstrap";
 
 import "../../css/Billing.css";
-import { addBilling, signInIfNeeded } from "../../actions/actions";
+import { addBilling } from "../../actions/actionsBillings";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { findIndex } from "lodash";
@@ -109,8 +109,8 @@ class Billing extends Component {
       this. getNumberValidationState() === 'success'
     ) {
       this.props.dispatch(addBilling({fName: this.state.fName, lName: this.state.lName,
-        mail: this.state.mail, address: this.state.address ,
-        phone: this.state.phone, artworkName: this.state.artworkName}));
+                                      mail: this.state.mail, address: this.state.address ,
+                                      phone: this.state.phone, artworkName: this.state.artworkName}));
       this.props.onClick();
     }
   };
