@@ -15,7 +15,8 @@ class Billings extends Component {
         super(props);
 
         this.state = {
-            table: true
+            table: true,
+            modif: true
         };
 
         this.onSwitch = this.onSwitch.bind(this);
@@ -23,10 +24,18 @@ class Billings extends Component {
 
     onSwitch = () => {
         if (this.state.table)
-            this.setState({ table: false });
+            this.setState({ modif: true, table: false });
         else
-            this.setState({ table: true });
+            this.setState({ modif: true, table: true });
     };
+
+    onSwitchNew = () => {
+        if (this.state.table)
+            this.setState({modif: false, table: false, });
+        else
+            this.setState({modif: false, table: true });
+    }
+
 
     render() {
 
@@ -40,14 +49,14 @@ class Billings extends Component {
                         <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"/>
                         <span className='add'>Ajouter</span>
                     </button>
-                    <BillingTable onClick={this.onSwitch}/>
+                    <BillingTable onClick={this.onSwitchNew}/>
                 </div>
                 :
                 <div>
                     <button onClick={this.onSwitch}>
                         <span className='add'>Retour</span>
                     </button>
-                    <Billing modif={true} onClick={this.onSwitch}/>
+                    <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>
                 </div>
               }
 

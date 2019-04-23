@@ -298,7 +298,7 @@ class Billing extends Component {
     return (
       <div>
 
-        {!this.props.currentBilling ? this.editable() : this.nonEditable()}
+        {this.props.modif ? this.editable() : this.nonEditable()}
 
       </div>
     );
