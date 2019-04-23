@@ -226,15 +226,6 @@ class Billing extends Component {
   };
 
   nonEditable() {
-    //TODO: Remove following
-   /* this.state.fName = "Maxence";
-    this.state.lName = "TISSERANT";
-    this.state.address = "Saint Petersbourg, Russie";
-    this.state.mail = "maxence.tisserant@epitech.eu";
-    this.state.phone = "0123456789";
-    this.state.artworkName = "Path of Exile"; */
-
-
     return (
       <div>
         <Jumbotron className="billingJumbotron">
