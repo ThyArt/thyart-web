@@ -53,21 +53,21 @@ class BillingTable extends Component {
     getColumns() {
         return [
             {
-                property: 'name',
+                property: 'client',
                 header: {
-                    label: 'Prénom'
+                    label: 'Client'
                 }
             },
             {
-                property: 'family',
+                property: 'oeuvre',
                 header: {
-                    label: 'Nom de famille'
+                    label: 'Nom de l\'oeuvre'
                 }
             },
             {
-                property: 'mail',
+                property: 'date',
                 header: {
-                    label: 'Adresse Mail'
+                    label: 'Date'
                 }
             },
             {
