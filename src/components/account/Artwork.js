@@ -224,9 +224,9 @@ class Artwork extends Component {
           <Form inline>
             <FormGroup bsSize='large'>
               <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                           placeholder='Enter text to search...' id='searchBar'/>{' '}
+                           placeholder='Entrer le texte à rechercher...' id='searchBar'/>{' '}
 
-              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Search</Button>{' '}
+              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Recherche</Button>{' '}
 
               <DropdownButton bsSize='large' className='complexButton'
                               title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}>
@@ -416,7 +416,7 @@ function mapStateToProps(state) {
     msg,
     error,
     artworks,
-        artwork
+      artwork
   } = state;
 
   return {
@@ -425,7 +425,7 @@ function mapStateToProps(state) {
     msg,
     error,
     artworks,
-      artwork
+    artwork
   }
 }
 
