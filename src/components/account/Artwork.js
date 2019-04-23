@@ -230,9 +230,9 @@ export class Artwork extends Component {
           <Form inline>
             <FormGroup bsSize='large'>
               <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                           placeholder='Enter text to search...' id='searchBar'/>{' '}
+                           placeholder='Entrer le texte à rechercher...' id='searchBar'/>{' '}
 
-              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Search</Button>{' '}
+              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Recherche</Button>{' '}
 
               <DropdownButton bsSize='large' className='complexButton'
                               title={"filter"}>
@@ -414,7 +414,7 @@ function mapStateToProps(state) {
     error,
     artworks,
       artwork
-  } = state.artworks;
+  } = state;
 
   return {
     isFetching,

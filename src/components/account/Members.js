@@ -35,6 +35,7 @@ export class Members extends Component {
     this.setState({newName: '', addModal: false});
   };
 
+
   onRemoveClose = () => {
     this.setState({newName: '', removeModal: false});
   };
