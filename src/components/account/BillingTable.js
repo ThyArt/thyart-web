@@ -59,7 +59,7 @@ class BillingTable extends Component {
                 }
             },
             {
-                property: 'name',
+                property: 'artworkName',
                 header: {
                     label: 'Nom de l\'oeuvre'
                 }
