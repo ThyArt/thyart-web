@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { FormControl,
+    FormLabel,
   Button,
   Alert,
-  FormGroup,
-  ControlLabel} from 'react-bootstrap';
+  FormGroup} from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import {fetchForgotIfNeeded, signInIfNeeded} from "../actions/actionsAuth";
 import ReactLoading from 'react-loading';
@@ -84,7 +84,7 @@ export class SignInForm extends Component {
           controlId="formValidationNull"
           validationState={this.getMailValidationState()}
         >
-          <ControlLabel>Enter your email</ControlLabel>
+          <FormLabel>Enter your email</FormLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
@@ -96,7 +96,7 @@ export class SignInForm extends Component {
           controlId="formBasicText"
           validationState={this.getPassValidationState()}
         >
-          <ControlLabel>Enter your password</ControlLabel>
+          <FormLabel>Enter your password</FormLabel>
           <FormControl
             type="password"
             value={this.state.passValue}

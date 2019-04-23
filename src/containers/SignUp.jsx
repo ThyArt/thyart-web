@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Carousel, Grid, Row, Col} from 'react-bootstrap';
+import {Container, Carousel, Row, Col} from 'react-bootstrap';
 import SignUpForm from '../components/SignUpForm';
 import '../css/SignUp.css';
 import Header from "../components/Header";
@@ -9,7 +9,7 @@ class SignUp extends Component{
         return (
             <div id="signup">
                 <Header/>
-                <Grid className="pull-left">
+                <Container className="pull-left">
                     <Row >
                         <Col xsHidden smHidden md={6} >
                             <Carousel id="carouselSn">
@@ -27,7 +27,7 @@ class SignUp extends Component{
                             <SignUpForm />
                         </Col>
                     </Row>
-                </Grid>
+                </Container>
             </div>
         );
     }

@@ -1,14 +1,16 @@
 .servicesRight{
     float: right;
     text-align: center;
-    margin-right: 20%;
+    margin-right: 5%;
 }
 
 .servicesLeft{
     float: left;
     text-align: center;
     margin-left: 10%;
-    margin-right: 20%;
+    margin-right: 5%;
+    font-size: 20px;
+    margin-top: 60px;
 }
 
 #deviceOne{
@@ -17,9 +19,8 @@
 }
 
 #deviceTwo{
-    margin-left: 15%;
-    height: auto;
-    width: 15%;
+    margin-left: 10%;
+    width: 45%;
 }
 
 #deviceThree{
@@ -28,7 +29,6 @@
 }
 
 #macbook, #ipad {
-    border: 1px solid black;
     margin-bottom: 0;
     padding-top: 8%;
     padding-bottom: 8%;

@@ -11,7 +11,7 @@ class About extends Component {
           <Row>
             <Col className="aboutCol">
               <img
-                src={require('../static/missing.png')}
+                src={require('../static/manage_icon.png')}
                 alt="manage"
                 height="120"
                 width="auto"
@@ -26,7 +26,7 @@ class About extends Component {
             </Col>
             <Col className="aboutCol">
               <img
-                src={require('../static/missing.png')}
+                src={require('../static/suivi_icon.png')}
                 alt="manage"
                 height="120"
                 width="auto"
@@ -41,7 +41,7 @@ class About extends Component {
             </Col>
             <Col className="aboutCol">
               <img
-                src={require('../static/missing.png')}
+                src={require('../static/relation_icon.png')}
                 alt="manage"
                 height="120"
                 width="auto"

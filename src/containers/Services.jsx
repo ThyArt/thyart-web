@@ -9,19 +9,25 @@ class Services extends Component {
       <div id="services">
         <Jumbotron id="macbook">
           <img
-            src={require('../static/Device_MacBook.png')}
+            src={require('../static/macbook.png')}
             alt="MacBook"
             id="deviceThree"
           />
-          <p className="servicesLeft">Lorem Ipsum Dolores</p>
+          <p className="servicesLeft">Visualiser facilement les données critiques
+              <br/>de votre galerie à travers une interface intuitive.
+              <br/>L'interface web permet une compatibilité avec système
+              <br/>windows, Mac et linux.
+          </p>
         </Jumbotron>
         <Jumbotron id="iphone">
           <img
-            src={require('../static/Device_Iphone.png')}
+            src={require('../static/iPhone-X-Mockup.png')}
             alt="Iphone"
             id="deviceTwo"
           />
-          <p className="servicesRight">Lorem Ipsum Dolores</p>
+          <p className="servicesRight">La version mobile du site vous permet de consulter
+          <br/>les informations de votre galerie tout en étant en déplacement
+          <br/></p>
         </Jumbotron>
         <Jumbotron id="ipad">
           <img

@@ -24,7 +24,7 @@ export class Account extends Component {
 
   componentDidMount(){
     let token = sessionStorage.getItem('token');
-    this.setState({token: token})
+    this.setState({token: token});
     if (token === null)
       this.props.dispatch(disconnect());
   }

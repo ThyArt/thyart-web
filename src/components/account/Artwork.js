@@ -3,14 +3,13 @@ import Gallery from 'react-photo-gallery';
 import Modal from "react-responsive-modal";
 import ImageUpload from './ImageUpload';
 import {Col,
-  ControlLabel,
   FormControl,
+    FormLabel,
   FormGroup,
   Button,
   Form,
-  Glyphicon,
   DropdownButton,
-  MenuItem,
+  DropdownItem,
   Row,
   ToggleButton,
   ButtonToolbar,
@@ -236,21 +235,20 @@ export class Artwork extends Component {
               <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Search</Button>{' '}
 
               <DropdownButton bsSize='large' className='complexButton'
-                              title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}>
-                <MenuItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</MenuItem>
-                <MenuItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</MenuItem>
-                <MenuItem eventKey={3} onSelect={this.onSelectAlert}>Prix croissant</MenuItem>
-                  <MenuItem eventKey={4} onSelect={this.onSelectAlert}>Prix décroissant</MenuItem>
-                  <MenuItem eventKey={5} onSelect={this.onSelectAlert}>En transit</MenuItem>
-                  <MenuItem eventKey={6} onSelect={this.onSelectAlert}>Vendu</MenuItem>
-                  <MenuItem eventKey={7} onSelect={this.onSelectAlert}>Exposé</MenuItem>
-                  <MenuItem eventKey={8} onSelect={this.onSelectAlert}>En stock</MenuItem>
-                <MenuItem divider/>
-                <MenuItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</MenuItem>
+                              title={"filter"}>
+                <DropdownItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</DropdownItem>
+                <DropdownItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</DropdownItem>
+                <DropdownItem eventKey={3} onSelect={this.onSelectAlert}>Prix croissant</DropdownItem>
+                  <DropdownItem eventKey={4} onSelect={this.onSelectAlert}>Prix décroissant</DropdownItem>
+                  <DropdownItem eventKey={5} onSelect={this.onSelectAlert}>En transit</DropdownItem>
+                  <DropdownItem eventKey={6} onSelect={this.onSelectAlert}>Vendu</DropdownItem>
+                  <DropdownItem eventKey={7} onSelect={this.onSelectAlert}>Exposé</DropdownItem>
+                  <DropdownItem eventKey={8} onSelect={this.onSelectAlert}>En stock</DropdownItem>
+                <DropdownItem divider/>
+                <DropdownItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</DropdownItem>
               </DropdownButton>{' '}
 
               <Button bsSize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
-                <Glyphicon glyph='glyphicon glyphicon-plus'/>
               </Button>
 
             </FormGroup>
@@ -267,11 +265,11 @@ export class Artwork extends Component {
               <form>
               <FormGroup controlId="formValidationSuccess1" className='addModal'
                          validationState={this.getNewArtworkValidationState()}>
-                <ControlLabel>Nom de l'oeuvre</ControlLabel>
+                <FormLabel>Nom de l'oeuvre</FormLabel>
                 <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
-                <ControlLabel>Reference</ControlLabel>
+                <FormLabel>Reference</FormLabel>
                 <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
-                <ControlLabel>Prix</ControlLabel>
+                <FormLabel>Prix</FormLabel>
                 <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
                 <ButtonToolbar>
@@ -319,11 +317,11 @@ export class Artwork extends Component {
                                 <div>
                                     <FormGroup controlId="formValidationSuccess1" className='addModal'
                                                validationState={this.getNewArtworkValidationState()}>
-                                        <ControlLabel>Nom de l'oeuvre</ControlLabel>
+                                        <FormLabel>Nom de l'oeuvre</FormLabel>
                                         <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
-                                        <ControlLabel>Reference</ControlLabel>
+                                        <FormLabel>Reference</FormLabel>
                                         <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
-                                        <ControlLabel>Prix</ControlLabel>
+                                        <FormLabel>Prix</FormLabel>
                                         <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
                                         <ButtonToolbar>

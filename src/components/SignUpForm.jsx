@@ -4,8 +4,7 @@ import {
   Alert,
   Button,
   FormGroup,
-  ControlLabel,
-  HelpBlock
+  FormLabel,
 } from 'react-bootstrap';
 import { signUpIfNeeded } from "../actions/actionsAuth";
 import PropTypes from 'prop-types';
@@ -136,7 +135,7 @@ export class SignUpForm extends Component {
                 controlId="formValidationNull"
                 validationState={this.getNameValidationState()}
               >
-                <ControlLabel>Enter an username</ControlLabel>
+                <FormLabel>Enter an username</FormLabel>
                 <FormControl
                   type="username"
                   value={this.state.nameValue}
@@ -149,7 +148,7 @@ export class SignUpForm extends Component {
                 controlId="formValidationNull"
                 validationState={this.getFirstnameValidationState()}
               >
-                <ControlLabel>Enter your first name</ControlLabel>
+                <FormLabel>Enter your first name</FormLabel>
                 <FormControl
                   type="username"
                   value={this.state.firstnameValue}
@@ -162,7 +161,7 @@ export class SignUpForm extends Component {
                 controlId="formValidationNull"
                 validationState={this.getLastnameValidationState()}
               >
-                <ControlLabel>Enter your last name</ControlLabel>
+                <FormLabel>Enter your last name</FormLabel>
                 <FormControl
                   type="username"
                   value={this.state.lastnameValue}
@@ -175,7 +174,7 @@ export class SignUpForm extends Component {
                     controlId="formValidationNull"
                     validationState={this.getMailValidationState()}
                 >
-                    <ControlLabel>Enter your email</ControlLabel>
+                    <FormLabel>Enter your email</FormLabel>
                     <FormControl
                         type="email"
                         value={this.state.mailValue}
@@ -183,13 +182,12 @@ export class SignUpForm extends Component {
                         onChange={this.handleMailChange}
                     />
                     <FormControl.Feedback/>
-                    <HelpBlock>Validation relies on email syntax</HelpBlock>
                 </FormGroup>
                 <FormGroup
                     controlId="formBasicText"
                     validationState={this.getPassValidationState()}
                 >
-                    <ControlLabel>Enter your password</ControlLabel>
+                    <FormLabel>Enter your password</FormLabel>
                     <FormControl
                         type="password"
                         value={this.state.passValue}
@@ -197,13 +195,12 @@ export class SignUpForm extends Component {
                         onChange={this.handlePassChange}
                     />
                     <FormControl.Feedback/>
-                    <HelpBlock>Enter a strong password</HelpBlock>
                 </FormGroup>
                 <FormGroup
                     controlId="formBasicText2"
                     validationState={this.getConfirmValidationState()}
                 >
-                    <ControlLabel>Confirm password</ControlLabel>
+                    <FormLabel>Confirm password</FormLabel>
                     <FormControl
                         type="password"
                         value={this.state.confirmValue}
