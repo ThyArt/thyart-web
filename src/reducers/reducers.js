@@ -132,8 +132,8 @@ function thyartApp (state = {
         });
             rows2.unshift({
                 id: id,
-                name: action.billing.lName,
-                family: action.billing.fName,
+                name: action.billing.fName,
+                artworkName: action.billing.artworkName,
                 mail: action.billing.mail
             });
 
