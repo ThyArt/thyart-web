@@ -16,6 +16,7 @@
 }
 
 #logo {
+    background: none;
     margin: 15px;
     height: 70px;
     width: auto;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Jumbotron, Col, Row } from 'react-bootstrap';
+import { PageHeader, Jumbotron, Col, Row } from 'react-bootstrap';
 import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
 import ReactLoading from 'react-loading';
@@ -177,7 +177,7 @@ export class Profile extends Component {
   render() {
     return (
       <div id='profile'>
-        <h1>Vos informations :</h1>
+        <PageHeader>Vos informations :</PageHeader>
 
         <Jumbotron className='jumbo'>
           <h3>Informations de connexion :</h3>
@@ -189,27 +189,27 @@ export class Profile extends Component {
                   Prénom:
                 </Col>
                 <Col sm={2}>
-                {
-                  this.props.isFetching ? (
-                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-                ) : (
-                  <div>
-                    {this.props.firstname}
+                  {
+                    this.props.isFetching ? (
+                      <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                    ) : (
+                      <div>
+                        {this.props.firstname}
 
-                  </div>
-                )
-                }
+                      </div>
+                    )
+                  }
                 </Col>
-                  <Col sm={2}>
-                      {
-                          !this.props.isFetching ? (
-                              <button className='modify' onClick={this.onFirstnameOpen}>
-                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                                  <span className='modifyText'>Modifier</span>
-                              </button>
-                          ) : (<div/>)
-                      }
-                  </Col>
+                <Col sm={2}>
+                  {
+                    !this.props.isFetching ? (
+                      <button className='modify' onClick={this.onFirstnameOpen}>
+                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                        <span className='modifyText'>Modifier</span>
+                      </button>
+                    ) : (<div/>)
+                  }
+                </Col>
 
               </Row>
               <Modal open={this.state.firstnameModal} onClose={this.onFirstnameClose} center>
@@ -249,16 +249,16 @@ export class Profile extends Component {
                   )
                   }
                 </Col>
-                  <Col sm={2}>
-                      {
-                          !this.props.isFetching ? (
-                              <button className='modify' onClick={this.onLastnameOpen}>
-                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                                  <span className='modifyText'>Modifier</span>
-                              </button>
-                          ) : (<div/>)
-                      }
-                  </Col>
+                <Col sm={2}>
+                  {
+                    !this.props.isFetching ? (
+                      <button className='modify' onClick={this.onLastnameOpen}>
+                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                        <span className='modifyText'>Modifier</span>
+                      </button>
+                    ) : (<div/>)
+                  }
+                </Col>
               </Row>
               <Modal open={this.state.lastnameModal} onClose={this.onLastnameClose} center>
                 <h2 className="title">Changement de nom de famille :</h2>
@@ -288,26 +288,26 @@ export class Profile extends Component {
                   Adresse mail:
                 </Col>
                 <Col sm={2}>
-                {this.props.isFetching ? (
-                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-                ) : (
+                  {this.props.isFetching ? (
+                    <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                  ) : (
                     <div>
                       {this.props.mail}
                     </div>
-                )
+                  )
 
-                }
+                  }
                 </Col>
-                  <Col sm={2}>
-                      {
-                          !this.props.isFetching ? (
-                              <button className='modify' onClick={this.onMailOpen}>
-                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                                  <span className='modifyText'>Modifier</span>
-                              </button>
-                          ) : (<div/>)
-                      }
-                  </Col>
+                <Col sm={2}>
+                  {
+                    !this.props.isFetching ? (
+                      <button className='modify' onClick={this.onMailOpen}>
+                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                        <span className='modifyText'>Modifier</span>
+                      </button>
+                    ) : (<div/>)
+                  }
+                </Col>
               </Row>
               <Modal open={this.state.mailModal} onClose={this.onMailClose} center>
                 <h2 className="title">Changement d'adresse mail :</h2>
@@ -337,25 +337,25 @@ export class Profile extends Component {
                   Mot de passe:
                 </Col>
                 <Col sm={2}>
-                {this.props.isFetching ? (
-                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-                ) : (
-                  <div>
-                    ******
-                  </div>
-                )
-                }
+                  {this.props.isFetching ? (
+                    <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                  ) : (
+                    <div>
+                      ******
+                    </div>
+                  )
+                  }
                 </Col>
-                  <Col sm={2}>
-                      {
-                          !this.props.isFetching ? (
-                              <button className='modify' onClick={this.onPasswordOpen}>
-                                  <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                                  <span className='modifyText'>Modifier</span>
-                              </button>
-                          ) : (<div/>)
-                      }
-                  </Col>
+                <Col sm={2}>
+                  {
+                    !this.props.isFetching ? (
+                      <button className='modify' onClick={this.onPasswordOpen}>
+                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                        <span className='modifyText'>Modifier</span>
+                      </button>
+                    ) : (<div/>)
+                  }
+                </Col>
               </Row>
 
               <Modal open={this.state.passwordModal} onClose={this.onPasswordClose} center>
@@ -402,35 +402,35 @@ export class Profile extends Component {
 }
 
 Profile.propTypes = {
-    isLogged: PropTypes.bool.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    token: PropTypes.string,
-    msg: PropTypes.string,
-    error: PropTypes.string,
-    mail: PropTypes.string,
-    firstname: PropTypes.string,
-    lastname: PropTypes.string,
-    dispatch: PropTypes.func.isRequired
+  isLogged: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  token: PropTypes.string,
+  msg: PropTypes.string,
+  error: PropTypes.string,
+  mail: PropTypes.string,
+  firstname: PropTypes.string,
+  lastname: PropTypes.string,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-    const {
-        isFetching,
-        msg,
-        error,
-        mail,
-        firstname,
-        lastname
-    } = state.profile;
+  const {
+    isFetching,
+    msg,
+    error,
+    mail,
+    firstname,
+    lastname
+  } = state.profile;
 
-    return {
-        isFetching,
-        msg,
-        error,
-        mail,
-        firstname,
-        lastname
-    }
+  return {
+    isFetching,
+    msg,
+    error,
+    mail,
+    firstname,
+    lastname
+  }
 }
 
 export default connect(mapStateToProps)(Profile);
