@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import * as Table from 'reactabular-table';
-import {Button, Col} from "react-bootstrap";
-import Modal from "react-responsive-modal";
-import {Redirect} from 'react-router-dom';
+import {Col} from "react-bootstrap";
 
 import '../../css/Membres.css';
-import PropTypes from "prop-types";
 import BillingTable from "./BillingTable";
 import Billing from "./Billing";
 

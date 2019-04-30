@@ -31,9 +31,15 @@ function billings (state = initialState, action)
         billingTable: rows2
       });
 
-      case ADD_BILLING:
-      rows = cloneDeep(state.billings);
-      rows2 = cloneDeep(state.billingTable);
+    case ADD_BILLING:
+      if (state.billings) {
+        rows = cloneDeep(state.billings);
+        rows2 = cloneDeep(state.billingTable);
+      }
+      else {
+        rows = [];
+        rows2 = [];
+      }
       id = uuid.v4();
       rows.unshift({
           id: id,

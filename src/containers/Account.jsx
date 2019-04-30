@@ -93,7 +93,13 @@ export class Account extends Component {
           </div>
 
 
-
+          {(this.props.isLogged === false) ? (
+            <Redirect
+              to={{
+                pathname: '/signin',
+              }}
+            />
+          ) : null}
 
 
         </div>
