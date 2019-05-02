@@ -120,7 +120,7 @@ class BillingTable extends Component {
         if (this.props.billingTable)
             rows = this.props.billingTable;
         else
-            rows = []
+            rows = [];
 
 
         return (

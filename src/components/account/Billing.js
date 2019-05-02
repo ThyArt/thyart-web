@@ -304,7 +304,7 @@ function mapStateToProps(state) {
   const {
     billings,
     currentBilling
-  } = state;
+  } = state.billings;
 
   return {
     billings,
