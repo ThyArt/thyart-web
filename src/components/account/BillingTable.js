@@ -117,11 +117,11 @@ class BillingTable extends Component {
     render() {
         let rows;
         const columns = this.state.columns;
-        if (this.props.billingTable) {
+        if (this.props.billingTable)
             rows = this.props.billingTable;
-        } else {
-            rows = [];
-        }
+        else
+            rows = []
+
 
         return (
           <div className="clients">
@@ -147,16 +147,19 @@ class BillingTable extends Component {
 }
 
 BillingTable.propTypes = {
+    billings: PropTypes.array,
     billingTable: PropTypes.array,
     dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     const {
+        billings,
         billingTable
-    } = state;
+    } = state.billings;
 
     return {
+        billings,
         billingTable
     }
 }

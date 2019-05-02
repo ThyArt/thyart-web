@@ -8,8 +8,21 @@ import * as uuid from "uuid";
 
 export const initialState = [
   {
-    billings: [],
-    billingTable: [],
+    billings: [{
+      id: 42,
+      fName: 'test',
+      lName: 'test',
+      mail: 'test@test.fr',
+      address: 'test',
+      phone: '0663522073',
+      artworkName: 'test'
+    }],
+    billingTable: [{
+      id: 42,
+      name: 'test',
+      artworkName: 'test',
+      mail: 'test@test.fr'
+    }],
     currentBilling: null
   }
 ];
