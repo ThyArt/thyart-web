@@ -1,6 +1,7 @@
 #links {
     font-size: 20px;
     padding-top: 20px;
+    background-color: white;
 }
 
 #name {
@@ -15,6 +16,7 @@
 }
 
 #logo {
+    background: none;
     margin: 15px;
     height: 70px;
     width: auto;

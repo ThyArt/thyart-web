@@ -8,7 +8,7 @@ import uuidv4 from "uuid/v4";
 moment.locale('fr');
 const local = BigCalendar.momentLocalizer(moment);
 
-class Scheduler extends Component {
+export class Scheduler extends Component {
   constructor(props) {
     super(props);
 
@@ -42,7 +42,7 @@ class Scheduler extends Component {
   };
 
   handleEventSelect = event => {
-    if (window.confirm('Do you really want to the event "' + event.title + '"?')) {
+    if (window.confirm('Voulez vous vraiment supprimer l\'événement "' + event.title + '"?')) {
       let eventCopy = this.state.events.slice();
       const index = this.getArrayIndex(eventCopy, event);
       eventCopy.splice(index);
@@ -51,7 +51,7 @@ class Scheduler extends Component {
   };
 
   handleEventCreate = info => {
-    const title = prompt('Title of the event?');
+    const title = prompt('Nom de l\'événement?');
     if (title) {
       console.log(info);
       this.setState({events: [...this.state.events, {title: title,

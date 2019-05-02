@@ -34,14 +34,42 @@ class Carousel extends Component {
       >
         <BaseCarousel.Item>
           <img
-            width="100%"
-            src={require('../static/carousel.png')}
-            alt="carousel"
+              width="100%"
+              src={require('../static/mess.png')}
+              alt="carousel"
+          />
+          <BaseCarousel.Caption>
+            <h3>Rassemblez vos données</h3>
+            <p>
+              Thy Art regroupe les données dont vous avez besoin
+            </p>
+            <br />
+          </BaseCarousel.Caption>
+        </BaseCarousel.Item>
+        <BaseCarousel.Item>
+          <img
+              width="100%"
+              src={require('../static/galerie.png')}
+              alt="carousel"
+          />
+          <BaseCarousel.Caption>
+            <h3>Pour les galeries</h3>
+            <p>
+              Outils spécifique pour les besoins d'une galerie d'art.
+            </p>
+            <br />
+          </BaseCarousel.Caption>
+        </BaseCarousel.Item>
+        <BaseCarousel.Item>
+          <img
+              width="100%"
+              src={require('../static/carousel.png')}
+              alt="carousel"
           />
           <BaseCarousel.Caption>
             <h3>Thy Art</h3>
             <p>
-              The <b>easy</b> dashboard for <b>your</b> gallery
+              Le Tableau de bord pour votre galerie.
             </p>
             <br />
           </BaseCarousel.Caption>

@@ -8,9 +8,12 @@ import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import Account from './containers/Account';
 import NotFound from './containers/404';
+import ClientDetails from './containers/ClientDetails';
+import Billing from './components/account/Billing'
 import { Provider } from 'react-redux'
 import configureStore from "./configureStore";
 
+require('dotenv').config();
 const store = configureStore();
 
 ReactDOM.render(
@@ -22,6 +25,8 @@ ReactDOM.render(
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/account" component={Account} />
+              <Route exact path="/billing" component={Billing} />
+              <Route exact path="/client" component={ClientDetails} />
               <Route component={NotFound} />
             </Switch>
           </Router>

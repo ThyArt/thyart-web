@@ -1,18 +1,21 @@
 version: 0.2
 
 phases:
+
   build:
     commands:
       - yarn install
       - yarn test --coverage --maxWorkers 2
-      - yarn build
-      - cp -rf build/* ./
+
+  post_build:
+    commands:
+      - echo REACT_APP_API_ENDPOINT=$API_ENDPOINT >> .env
+      - echo REACT_APP_CLIENT_ID=$CLIENT_ID >> .env
+      - echo REACT_APP_CLIENT_SECRET=$CLIENT_SECRET >> .env
 
 artifacts:
   files:
-    - static/**/*
-    - asset-manifest.json
-    - favicon.ico
-    - index.html
-    - manifest.json
-    - service-worker.js
+    - public/*
+    - src/**/*
+    - package.json
+    - .env

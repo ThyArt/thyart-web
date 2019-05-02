@@ -8,14 +8,10 @@ class Header extends Component {
         return (
             <div id="header">
                 <Navbar id="navBar" fixedTop>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <a href="/#carousel">
-                                <img src={require('../static/SmallLogo.png')} alt="logo"  id="logo"/>
-                            </a>
+                        <Navbar.Brand href="/#carousel">
+                            <img src={require('../static/SmallLogo.png')} alt="logo"  id="logo"/>
                         </Navbar.Brand>
                         <Navbar.Toggle/>
-                    </Navbar.Header>
                     <Navbar.Collapse id="links">
                         <Nav>
                             <NavItem href="/#carousel" eventKey={1} id="name">
@@ -24,7 +20,7 @@ class Header extends Component {
                         </Nav>
                         <Nav pullRight>
                             <NavItem href="/#about" eventKey={2}>
-                                About
+                                A propos
                             </NavItem>
                             <NavItem href="/#services" eventKey={3}>
                                 Services
@@ -33,10 +29,10 @@ class Header extends Component {
                                 Contact
                             </NavItem>
                             <NavItem href="/signin" eventKey={7}>
-                                Sign In
+                                Connection
                             </NavItem>
                             <NavItem href="/signup" eventKey={8}>
-                                Sign Up
+                                Inscription
                             </NavItem>
                         </Nav>
                     </Navbar.Collapse>

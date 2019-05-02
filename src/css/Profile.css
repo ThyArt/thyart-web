@@ -3,6 +3,15 @@
     padding-right: 2%;
 }
 
+.info {
+    padding: 10px;
+}
+
+.field {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 .jumbo {
     padding-left: 7%;
     padding-right: 4%;

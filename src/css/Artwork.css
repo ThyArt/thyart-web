@@ -1,0 +1,46 @@
+#page {
+    margin: 10px;
+}
+
+#toolbar {
+    margin: 10px;
+    text-align: center;
+}
+
+.complexButton {
+    margin: 0 0 0 30px;
+}
+
+.btn-group>.btn:first-child {
+    margin-left: 30px;
+}
+
+#titleModal {
+    text-align: center;
+    padding: 5px 240px;
+}
+
+#photoModal {
+    margin: 20px;
+}
+.addArtWork-modal {
+    width: 70%;
+}
+
+.infosModal {
+    margin: 50px;
+}
+
+#artWorkState {
+    margin:20px;
+}
+
+.confirmModal {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+}
+
+#searchBar {
+    width: 40vw;
+}

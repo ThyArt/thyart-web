@@ -2,25 +2,40 @@ import React, {Component} from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
-import { Redirect } from 'react-router-dom';
+import Members from '../components/account/Members';
+import Artwork from '../components/account/Artwork';
+import Client from '../components/account/Client';
+import Billings from '../components/account/Billings';
+import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {disconnect} from "../actions/actions";
+import { disconnect} from "../actions/actionsAuth";
 
 import '../css/Account.css'
 
-class Account extends Component {
-  constructor(props, context) {
-    super(props, context);
+export class Account extends Component {
+  constructor(props) {
+    super(props);
+    let token = sessionStorage.getItem('token');
 
     this.state = {
-      selected: 1
+      selected: 1,
+      token: token
     };
+  }
+
+  componentDidMount(){
+    let token = sessionStorage.getItem('token');
+    this.setState({token: token});
+    if (token === null)
+      this.props.dispatch(disconnect());
   }
 
   handleSelect = eventKey => {
     if (eventKey === 7) {
         this.props.dispatch(disconnect());
+        this.setState({token: null});
+        sessionStorage.removeItem('token');
     } else {
       this.setState({ selected: eventKey });
     }
@@ -51,7 +66,10 @@ class Account extends Component {
                 Oeuvres
               </NavItem>
               <NavItem  eventKey={4} className='item'>
-                Clients
+                Membres
+              </NavItem>
+              <NavItem  eventKey={8} className='item'>
+                Client
               </NavItem>
               <NavItem  eventKey={5} className='item'>
                 Facturation
@@ -66,46 +84,35 @@ class Account extends Component {
           </div>
 
           <div id='calendar'>
-            { this.state.selected === 1 ? <Scheduler/> : null }
-            { this.state.selected === 6 ? <Profile/> : null }
+            { this.state.selected === 1 ? <Scheduler token={this.state.token}/> : null }
+            { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
+            { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
+            { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
+            { this.state.selected === 8 ? <Client token={this.state.token}/> : null }
+            { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
           </div>
 
-            {!this.props.isLogged ? (
-                <Redirect
-                    to={{
-                        pathname: '/signin',
-                    }}
-                />
-            ) : null}
+
+
+
+
         </div>
     );
   }
 }
 
 Account.propTypes = {
-    isLogged: PropTypes.bool.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    token: PropTypes.string,
-    msg: PropTypes.string,
-    error: PropTypes.string,
-    dispatch: PropTypes.func.isRequired
+  isLogged: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     const {
         isLogged,
-        isFetching,
-        token,
-        msg,
-        error
-    } = state;
+    } = state.authentication;
 
     return {
-        isLogged,
-        isFetching,
-        token,
-        msg,
-        error
+        isLogged
     }
 }
 
