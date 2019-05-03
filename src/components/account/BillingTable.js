@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import * as Table from 'reactabular-table';
-import {Button} from "react-bootstrap";
+import { Button, DropdownButton, FormControl, FormGroup, Glyphicon, MenuItem } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
 import '../../css/Membres.css';
-import { deleteBilling, setCurrentBilling } from "../../actions/actionsBillings";
+import { deleteBilling, setCurrentBilling, sortBillings } from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
 
 class BillingTable extends Component {
@@ -27,6 +27,18 @@ class BillingTable extends Component {
     componentDidMount(){
 
     }
+
+    handleFilters = eventKey => {
+        const filters = {
+            '1': 'nameA',
+            '2': 'nameZ',
+            '3': 'artworkA',
+            '4': 'artworkZ',
+            '5': 'dateNew',
+            '6': 'dateOld'
+        };
+        this.props.dispatch(sortBillings(filters[eventKey.toString()]));
+    };
 
     onRemoveClose = () => {
         this.setState({ newName: '', removeModal: false });
@@ -132,6 +144,26 @@ class BillingTable extends Component {
                       Supprimer
                   </Button>
               </Modal>
+
+              <FormGroup>
+
+                  <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
+                               placeholder='Enter text to search...' id='billingSearchBar'
+                  />
+
+                  <Button bsStyle='primary' bsSize='large' onClick={this.searchBillings}>Search</Button>
+
+                  <DropdownButton bsSize='large' className='billingFilters'
+                                  title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}
+                  >
+                      <MenuItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</MenuItem>
+                      <MenuItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</MenuItem>
+                      <MenuItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</MenuItem>
+                      <MenuItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</MenuItem>
+                      <MenuItem eventKey={5} onSelect={this.handleFilters}>Date récents</MenuItem>
+                      <MenuItem eventKey={6} onSelect={this.handleFilters}>Date anciens</MenuItem>
+                  </DropdownButton>
+              </FormGroup>
 
               <Table.Provider
                 className="pure-table pure-table-bordered"
