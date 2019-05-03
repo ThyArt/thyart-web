@@ -59,6 +59,11 @@ class BillingTable extends Component {
        this.props.dispatch(deleteBilling(this.state.idToRemove));
     };
 
+    formatDate = value => {
+        const date = new Date(value);
+        return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+    };
+
     getColumns() {
         return [
             {
@@ -77,6 +82,17 @@ class BillingTable extends Component {
                 property: 'mail',
                 header: {
                     label: 'Mail du client'
+                }
+            },
+            {
+                property: 'date',
+                header: {
+                    label: 'Date de facturation'
+                },
+                cell: {
+                    formatters: [
+                        (value) => (<span>{ this.formatDate(value) }</span>)
+                    ]
                 }
             },
             {
