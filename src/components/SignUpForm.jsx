@@ -39,7 +39,7 @@ export class SignUpForm extends Component {
       this.getPassValidationState() === 'success' &&
       this.getConfirmValidationState() === 'success'
     ) {
-      this.props.dispatch(signUpIfNeeded(this.state.firstnameValue, this.state.lastnameValue,
+      this.props.dispatch(signUpIfNeeded(this.state.mailValue, this.state.firstnameValue, this.state.lastnameValue,
         this.state.mailValue, this.state.passValue));
     }
   };
