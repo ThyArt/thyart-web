@@ -84,7 +84,7 @@ export class SignInForm extends Component {
           controlId="formValidationNull"
           validationState={this.getMailValidationState()}
         >
-          <ControlLabel>Enter your email</ControlLabel>
+          <ControlLabel>Entrez votre email</ControlLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
@@ -96,7 +96,7 @@ export class SignInForm extends Component {
           controlId="formBasicText"
           validationState={this.getPassValidationState()}
         >
-          <ControlLabel>Enter your password</ControlLabel>
+          <ControlLabel>Entrez votre mot de passe</ControlLabel>
           <FormControl
             type="password"
             value={this.state.passValue}
@@ -107,12 +107,12 @@ export class SignInForm extends Component {
         {this.props.isFetching ? (
           <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
         ) : (
-          <Button onClick={this.signin}>Sign In</Button>
+          <Button onClick={this.signin}>Se connecter</Button>
         )
         }
         {this.props.isFetching ? (
           <div/>) : (
-          <Button onClick={this.forgot}>Forgot Password</Button>
+          <Button onClick={this.forgot}>Mot de passe oublié</Button>
         )
         }
         {this.props.error ? (

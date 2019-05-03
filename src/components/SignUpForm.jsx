@@ -19,12 +19,10 @@ export class SignUpForm extends Component {
     this.handlePassChange = this.handlePassChange.bind(this);
     this.handleConfirmChange = this.handleConfirmChange.bind(this);
     this.handleMailChange = this.handleMailChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleFirstnameChange = this.handleFirstnameChange.bind(this);
     this.handleLastnameChange = this.handleLastnameChange.bind(this);
 
     this.state = {
-      nameValue: '',
       firstnameValue: '',
       lastnameValue: '',
       mailValue: '',
@@ -35,23 +33,18 @@ export class SignUpForm extends Component {
 
   signup = () => {
     if (
-      this.getNameValidationState() === 'success' &&
       this.getFirstnameValidationState() === 'success' &&
       this.getLastnameValidationState() === 'success' &&
       this.getMailValidationState() === 'success' &&
       this.getPassValidationState() === 'success' &&
       this.getConfirmValidationState() === 'success'
     ) {
-      this.props.dispatch(signUpIfNeeded(this.state.nameValue, this.state.firstnameValue, this.state.lastnameValue,
+      this.props.dispatch(signUpIfNeeded(this.state.firstnameValue, this.state.lastnameValue,
         this.state.mailValue, this.state.passValue));
     }
   };
 
-  getNameValidationState() {
-    let name = this.state.nameValue;
-    if (name === '') return null;
-    return 'success';
-  }
+
 
   getFirstnameValidationState() {
     let firstname = this.state.firstnameValue;
@@ -117,9 +110,7 @@ export class SignUpForm extends Component {
     this.setState({confirmValue: e.target.value});
   }
 
-  handleNameChange(e) {
-    this.setState({nameValue: e.target.value})
-  }
+
 
   handleFirstnameChange(e) {
     this.setState({firstnameValue: e.target.value})
@@ -134,26 +125,13 @@ export class SignUpForm extends Component {
       <form>
         <FormGroup
           controlId="formValidationNull"
-          validationState={this.getNameValidationState()}
-        >
-          <ControlLabel>Enter an username</ControlLabel>
-          <FormControl
-            type="username"
-            value={this.state.nameValue}
-            placeholder="Your username"
-            onChange={this.handleNameChange}
-          />
-          <FormControl.Feedback/>
-        </FormGroup>
-        <FormGroup
-          controlId="formValidationNull"
           validationState={this.getFirstnameValidationState()}
         >
-          <ControlLabel>Enter your first name</ControlLabel>
+          <ControlLabel>Entrez votre prénom</ControlLabel>
           <FormControl
             type="username"
             value={this.state.firstnameValue}
-            placeholder="Your first name"
+            placeholder="Prénom"
             onChange={this.handleFirstnameChange}
           />
           <FormControl.Feedback/>
@@ -162,11 +140,11 @@ export class SignUpForm extends Component {
           controlId="formValidationNull"
           validationState={this.getLastnameValidationState()}
         >
-          <ControlLabel>Enter your last name</ControlLabel>
+          <ControlLabel>Entrez votre nom</ControlLabel>
           <FormControl
             type="username"
             value={this.state.lastnameValue}
-            placeholder="Your last name"
+            placeholder="Nom"
             onChange={this.handleLastnameChange}
           />
           <FormControl.Feedback/>
@@ -175,35 +153,35 @@ export class SignUpForm extends Component {
           controlId="formValidationNull"
           validationState={this.getMailValidationState()}
         >
-          <ControlLabel>Enter your email</ControlLabel>
+          <ControlLabel>Entrez votre email</ControlLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
-            placeholder="dupont@email.com"
+            placeholder="exemple@email.com"
             onChange={this.handleMailChange}
           />
           <FormControl.Feedback/>
-          <HelpBlock>Validation relies on email syntax</HelpBlock>
+          <HelpBlock>Validation basée sur la syntaxe des adresses email</HelpBlock>
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
           validationState={this.getPassValidationState()}
         >
-          <ControlLabel>Enter your password</ControlLabel>
+          <ControlLabel>Entrez votre mot de passe</ControlLabel>
           <FormControl
             type="password"
             value={this.state.passValue}
-            placeholder="Super secret password"
+            placeholder="Mot de passe"
             onChange={this.handlePassChange}
           />
           <FormControl.Feedback/>
-          <HelpBlock>Enter a strong password</HelpBlock>
+          <HelpBlock>Entrez un mot de passe renforcé</HelpBlock>
         </FormGroup>
         <FormGroup
           controlId="formBasicText2"
           validationState={this.getConfirmValidationState()}
         >
-          <ControlLabel>Confirm password</ControlLabel>
+          <ControlLabel>Confirmez votre mot de passe</ControlLabel>
           <FormControl
             type="password"
             value={this.state.confirmValue}
@@ -215,7 +193,7 @@ export class SignUpForm extends Component {
         {this.props.isFetching ? (
           <ReactLoading type={'spin'} color={'black'} height={50} width={50} />
         ) :  (
-          <Button onClick={this.signup}>Sign Up</Button>
+          <Button onClick={this.signup}>S'inscrire</Button>
         )
         }
 
