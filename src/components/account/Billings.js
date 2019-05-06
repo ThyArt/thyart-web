@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import * as Table from 'reactabular-table';
-import {Button, Col} from "react-bootstrap";
-import Modal from "react-responsive-modal";
-import {Redirect} from 'react-router-dom';
+import { Col } from "react-bootstrap";
 
 import '../../css/Membres.css';
-import PropTypes from "prop-types";
 import BillingTable from "./BillingTable";
 import Billing from "./Billing";
 
@@ -15,7 +11,8 @@ class Billings extends Component {
 
         this.state = {
             table: true,
-            modif: true
+            modif: true,
+            search: ''
         };
 
         this.onSwitch = this.onSwitch.bind(this);
@@ -36,30 +33,36 @@ class Billings extends Component {
     };
 
 
+    onSearchChange = event => {
+        this.setState({ search: event.target.value });
+    };
+
+    searchBillings = () => {
+        console.log('Performing research with parameter: ' + this.state.search);
+    };
+
     render() {
 
 
         return (
-
-          <Col sm={10}>
-              {this.state.table ?
-                <div>
-                    <button className='add' onClick={this.onSwitch}>
-                        <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"/>
-                        <span className='add'>Ajouter</span>
-                    </button>
-                    <BillingTable onClick={this.onSwitchNew}/>
-                </div>
-                :
-                <div>
-                    <button onClick={this.onSwitch}>
-                        <span className='add'>Retour</span>
-                    </button>
-                    <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>
-                </div>
-              }
-
-          </Col>
+              <Col sm={10}>
+                  {this.state.table ?
+                    <div>
+                        <button className='add' onClick={this.onSwitch}>
+                            <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"/>
+                            <span className='add'>Ajouter</span>
+                        </button>
+                        <BillingTable onClick={this.onSwitchNew}/>
+                    </div>
+                    :
+                    <div>
+                        <button onClick={this.onSwitch}>
+                            <span className='add'>Retour</span>
+                        </button>
+                        <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>
+                    </div>
+                  }
+              </Col>
         );
 
     }

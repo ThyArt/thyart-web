@@ -6,8 +6,7 @@ import {
     REQUEST_AUTH,
     RECEIVE_AUTH_ERROR
 } from "../constants/constantsAction";
-
-export const initialState = [
+const initialState = [
   {
     isLogged: false,
     isFetching: false,

@@ -43,7 +43,7 @@ function receiveArtworks(res) {
   let artworks = [];
   let src;
 
-  for (const [key, value] of Object.entries(res.data.data)) {
+  for (const [, value] of Object.entries(res.data.data)) {
     if (value.images != null && value.images[0] && value.images[0].url != null)
       src = value.images[0].url;
     else

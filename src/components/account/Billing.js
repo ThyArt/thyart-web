@@ -5,7 +5,6 @@ import "../../css/Billing.css";
 import { addBilling } from "../../actions/actionsBillings";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { findIndex } from "lodash";
 
 class Billing extends Component {
   constructor(props) {
@@ -106,7 +105,7 @@ class Billing extends Component {
       this.getArtworkNameValidationState() === 'success' &&
       this.getNameValidationState() === 'success' &&
       this.getFamilyValidationState() === 'success' &&
-      this. getNumberValidationState() === 'success'
+      this.getNumberValidationState() === 'success'
     ) {
       this.props.dispatch(addBilling({fName: this.state.fName, lName: this.state.lName,
                                       mail: this.state.mail, address: this.state.address ,
@@ -305,7 +304,7 @@ function mapStateToProps(state) {
   const {
     billings,
     currentBilling
-  } = state;
+  } = state.billings;
 
   return {
     billings,

@@ -189,8 +189,6 @@ class Client extends Component {
       <div className="clients">
         { this.state.clientRedirect ? <Redirect to={{ pathname: "/client", state: {...this.state.currentClient} }}/> : null }
 
-        <tbody>
-
         <Col sm={10}>
           {this.props.add}
           <button className='add' onClick={this.onAddOpen}>
@@ -302,8 +300,6 @@ class Client extends Component {
           </Button>
         </Modal>
 
-
-        </tbody>
         <Table.Provider
           className="pure-table pure-table-bordered"
           columns={columns}
