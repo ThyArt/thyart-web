@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { Col } from "react-bootstrap";
+import { Button, Col } from "react-bootstrap";
 
 import '../../css/Membres.css';
+import '../../css/Billing.css';
 import BillingTable from "./BillingTable";
 import Billing from "./Billing";
 
@@ -42,29 +43,26 @@ class Billings extends Component {
     };
 
     render() {
-
-
         return (
-              <Col sm={10}>
-                  {this.state.table ?
-                    <div>
-                        <button className='add' onClick={this.onSwitch}>
-                            <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"/>
-                            <span className='add'>Ajouter</span>
-                        </button>
-                        <BillingTable onClick={this.onSwitchNew}/>
-                    </div>
-                    :
-                    <div>
-                        <button onClick={this.onSwitch}>
-                            <span className='add'>Retour</span>
-                        </button>
-                        <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>
-                    </div>
-                  }
-              </Col>
+          <Col sm={10}>
+              {this.state.table ?
+                <div>
+                    <Button bsSize="lg" className='billingMainButton' onClick={this.onSwitch}>
+                        <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" className='billingAddBillImage'/>
+                        <span className='billingAddBillButton'>Ajouter</span>
+                    </Button>
+                    <BillingTable onClick={this.onSwitchNew}/>
+                </div>
+                :
+                <div>
+                    <Button  bsSize="lg" onClick={this.onSwitch} className='billingMainButton'>
+                        <span className='add'>Retour</span>
+                    </Button>
+                    <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>
+                </div>
+              }
+          </Col>
         );
-
     }
 }
 
