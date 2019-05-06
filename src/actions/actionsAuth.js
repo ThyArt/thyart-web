@@ -95,10 +95,10 @@ function fetchSignIn(username, password) {
   }
 }
 
-function fetchSignUp(name, firstname, lastname, mail, password) {
+function fetchSignUp(username, firstname, lastname, mail, password) {
 
   const body = {
-    name: name,
+    name: mail,
     firstname: firstname,
     lastname: lastname,
     email: mail,
@@ -137,7 +137,7 @@ export function signUpIfNeeded(username, firstname, lastname, mail, password) {
     if (shouldFetchApi(getState()))
     {
       dispatch(requestAuth());
-      return dispatch(fetchSignUp(username, firstname, lastname, mail, password))
+      return dispatch(fetchSignUp("username",firstname, lastname, mail, password))
     }
   }
 }

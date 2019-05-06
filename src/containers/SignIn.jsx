@@ -17,14 +17,14 @@ class SignIn extends Component {
                               <Carousel.Item >
                                   <img src={require('../static/artist.jpg')} id="quote" alt='artist'/>
                                   <Carousel.Caption>
-                                      <h3>ThyArt is a very simple but powerful tool.</h3>
-                                      <p>John Smith, galerist</p>
+                                      <h3>ThyArt est un outil simple mais utile.</h3>
+                                      <p>John Smith, galeriste</p>
                                   </Carousel.Caption>
                               </Carousel.Item>
                           </Carousel>
                       </Col>
                       <Col xs={8} md={5} className="pull-right" id={"signinForm"}>
-                          <h2>Sign In</h2>
+                          <h2>Se connecter</h2>
                           <SignInForm/>
                       </Col>
                   </Row>

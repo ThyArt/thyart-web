@@ -29,7 +29,7 @@ class Header extends Component {
                                 Contact
                             </NavItem>
                             <NavItem href="/signin" eventKey={7}>
-                                Connection
+                                Connexion
                             </NavItem>
                             <NavItem href="/signup" eventKey={8}>
                                 Inscription
