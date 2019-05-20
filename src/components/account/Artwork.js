@@ -231,9 +231,9 @@ export class Artwork extends Component {
           <Form inline>
             <FormGroup bsSize='large'>
               <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                           placeholder='Enter text to search...' id='searchBar'/>{' '}
+                           placeholder='Entrer le texte à rechercher...' id='searchBar'/>
 
-              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Search</Button>{' '}
+              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Rechercher</Button>
 
               <DropdownButton bsSize='large' className='complexButton'
                               title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}>
@@ -247,7 +247,7 @@ export class Artwork extends Component {
                 <MenuItem eventKey={8} onSelect={this.onSelectAlert}>En stock</MenuItem>
                 <MenuItem divider/>
                 <MenuItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</MenuItem>
-              </DropdownButton>{' '}
+              </DropdownButton>
 
               <Button bsSize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
                 <Glyphicon glyph='glyphicon glyphicon-plus'/>

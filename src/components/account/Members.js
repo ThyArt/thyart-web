@@ -123,13 +123,11 @@ export class Members extends Component {
       <div className="clients">
         <Col sm={10}>
           {this.props.add}
-          <button className='add' onClick={this.onAddOpen}>
-            <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" />
-            <span className='add'>Ajouter</span>
-          </button>
+          <Button bsSize="lg" className='add' id='addMemberButton' onClick={this.onAddOpen}>
+            <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" id='addMemberImage'/>
+            <span id='addMemberText'>Ajouter</span>
+          </Button>
         </Col>
-
-
 
         <Modal open={this.state.addModal} onClose={this.onAddClose} center>
           <h2 className='title'>Ajout d'un membre :</h2>
