@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import * as Table from 'reactabular-table';
-import { Button, DropdownButton, FormControl, FormGroup, Glyphicon, MenuItem } from "react-bootstrap";
+import { Button, DropdownButton, FormControl, FormGroup, DropdownItem } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
@@ -170,14 +170,14 @@ class BillingTable extends Component {
                   <Button bsStyle='primary' bsSize='large' onClick={this.searchBillings}>Search</Button>
 
                   <DropdownButton bsSize='large' className='billingFilters'
-                                  title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}
+                                  title={"filter"}
                   >
-                      <MenuItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</MenuItem>
-                      <MenuItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</MenuItem>
-                      <MenuItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</MenuItem>
-                      <MenuItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</MenuItem>
-                      <MenuItem eventKey={5} onSelect={this.handleFilters}>Date récents</MenuItem>
-                      <MenuItem eventKey={6} onSelect={this.handleFilters}>Date anciens</MenuItem>
+                      <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
+                      <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
+                      <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
+                      <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
+                      <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
+                      <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
                   </DropdownButton>
               </FormGroup>
 

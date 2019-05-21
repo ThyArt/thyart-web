@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Grid, Col, Row } from 'react-bootstrap';
+import { Carousel, Container, Col, Row } from 'react-bootstrap';
 
 import '../css/SignIn.css';
 import SignInForm from '../components/SignInForm';
@@ -10,7 +10,7 @@ class SignIn extends Component {
         return (
           <div >
               <Header/>
-              <Grid className="pull-left">
+              <Container className="pull-left">
                   <Row >
                       <Col xsHidden smHidden md={6} >
                           <Carousel id={"carouselSn"}>
@@ -28,7 +28,7 @@ class SignIn extends Component {
                           <SignInForm/>
                       </Col>
                   </Row>
-              </Grid>
+              </Container>
           </div>
         );
     }

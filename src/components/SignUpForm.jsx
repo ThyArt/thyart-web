@@ -4,8 +4,7 @@ import {
   Alert,
   Button,
   FormGroup,
-  ControlLabel,
-  HelpBlock
+  FormLabel
 } from 'react-bootstrap';
 import { signUpIfNeeded } from "../actions/actionsAuth";
 import PropTypes from 'prop-types';
@@ -127,7 +126,7 @@ export class SignUpForm extends Component {
           controlId="formValidationNull"
           validationState={this.getFirstnameValidationState()}
         >
-          <ControlLabel>Entrez votre prénom</ControlLabel>
+          <FormLabel>Entrez votre prénom</FormLabel>
           <FormControl
             type="username"
             value={this.state.firstnameValue}
@@ -140,7 +139,7 @@ export class SignUpForm extends Component {
           controlId="formValidationNull"
           validationState={this.getLastnameValidationState()}
         >
-          <ControlLabel>Entrez votre nom</ControlLabel>
+          <FormLabel>Entrez votre nom</FormLabel>
           <FormControl
             type="username"
             value={this.state.lastnameValue}
@@ -153,35 +152,33 @@ export class SignUpForm extends Component {
           controlId="formValidationNull"
           validationState={this.getMailValidationState()}
         >
-          <ControlLabel>Entrez votre email</ControlLabel>
+          <FormLabel>Entrez votre email</FormLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
             placeholder="exemple@email.com"
             onChange={this.handleMailChange}
           />
-          <FormControl.Feedback/>
-          <HelpBlock>Validation basée sur la syntaxe des adresses email</HelpBlock>
+          <FormControl.Feedback>Validation basée sur la syntaxe des adresses email</FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
           validationState={this.getPassValidationState()}
         >
-          <ControlLabel>Entrez votre mot de passe</ControlLabel>
+          <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.passValue}
             placeholder="Mot de passe"
             onChange={this.handlePassChange}
           />
-          <FormControl.Feedback/>
-          <HelpBlock>Entrez un mot de passe renforcé</HelpBlock>
+          <FormControl.Feedback>Entrez un mot de passe renforcé</FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText2"
           validationState={this.getConfirmValidationState()}
         >
-          <ControlLabel>Confirmez votre mot de passe</ControlLabel>
+          <FormLabel>Confirmez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.confirmValue}

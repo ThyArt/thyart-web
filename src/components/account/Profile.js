@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { PageHeader, Jumbotron, Col, Row } from 'react-bootstrap';
+import {Jumbotron, Col, Row } from 'react-bootstrap';
 import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
 import ReactLoading from 'react-loading';
@@ -177,7 +177,7 @@ export class Profile extends Component {
   render() {
     return (
       <div id='profile'>
-        <PageHeader>Vos informations :</PageHeader>
+        <h1>Vos informations :</h1>
 
         <Jumbotron className='jumbo'>
           <h3>Informations de connexion :</h3>

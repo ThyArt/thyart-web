@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Carousel as BaseCarousel } from 'react-bootstrap';
+import { Carousel } from 'react-bootstrap';
 
 import '../css/Carousel.css';
 
-class Carousel extends Component {
+class CarouselComp extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -26,57 +26,57 @@ class Carousel extends Component {
     const { index, direction } = this.state;
 
     return (
-      <BaseCarousel
+      <Carousel
         activeIndex={index}
         direction={direction}
         onSelect={this.handleSelect}
         id="carousel"
       >
-        <BaseCarousel.Item>
+        <Carousel.Item>
           <img
               width="100%"
               src={require('../static/mess.png')}
-              alt="carousel"
+              alt="first slide"
           />
-          <BaseCarousel.Caption>
+          <Carousel.Caption>
             <h3>Rassemblez vos données</h3>
             <p>
               Thy Art regroupe les données dont vous avez besoin
             </p>
             <br />
-          </BaseCarousel.Caption>
-        </BaseCarousel.Item>
-        <BaseCarousel.Item>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
           <img
               width="100%"
               src={require('../static/galerie.png')}
-              alt="carousel"
+              alt="second slide"
           />
-          <BaseCarousel.Caption>
+          <Carousel.Caption>
             <h3>Pour les galeries</h3>
             <p>
               Outils spécifique pour les besoins d'une galerie d'art.
             </p>
             <br />
-          </BaseCarousel.Caption>
-        </BaseCarousel.Item>
-        <BaseCarousel.Item>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
           <img
               width="100%"
               src={require('../static/carousel.png')}
-              alt="carousel"
+              alt="third slide"
           />
-          <BaseCarousel.Caption>
+          <Carousel.Caption>
             <h3>Thy Art</h3>
             <p>
               Le Tableau de bord pour votre galerie.
             </p>
             <br />
-          </BaseCarousel.Caption>
-        </BaseCarousel.Item>
-      </BaseCarousel>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
     );
   }
 }
 
-export default Carousel;
+export default CarouselComp;

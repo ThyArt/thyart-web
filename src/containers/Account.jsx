@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Navbar, Nav, NavItem } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import Members from '../components/account/Members';
@@ -56,30 +56,30 @@ export class Account extends Component {
 
           <div id='sideNav'>
             <Nav stacked bsStyle='pills' onSelect={this.handleSelect}>
-              <NavItem  eventKey={1} className='item'>
+              <Nav.Link  eventKey={1} className='item'>
                 Accueil
-              </NavItem>
-              <NavItem  eventKey={2} className='item'>
+              </Nav.Link>
+              <Nav.Link  eventKey={2} className='item'>
                 Statistiques
-              </NavItem>
-              <NavItem  eventKey={3} className='item'>
+              </Nav.Link>
+              <Nav.Link  eventKey={3} className='item'>
                 Oeuvres
-              </NavItem>
-              <NavItem  eventKey={4} className='item'>
+              </Nav.Link>
+              <Nav.Link  eventKey={4} className='item'>
                 Membres
-              </NavItem>
-              <NavItem  eventKey={8} className='item'>
+              </Nav.Link>
+              <Nav.Link  eventKey={8} className='item'>
                 Client
-              </NavItem>
-              <NavItem  eventKey={5} className='item'>
+              </Nav.Link>
+              <Nav.Link  eventKey={5} className='item'>
                 Facturation
-              </NavItem>
-              <NavItem  eventKey={6} className='item'>
+              </Nav.Link>
+              <Nav.Link  eventKey={6} className='item'>
                 Profil
-              </NavItem>
-              <NavItem  eventKey={7}>
+              </Nav.Link>
+              <Nav.Link  eventKey={7}>
                 Déconnexion
-              </NavItem>
+              </Nav.Link>
             </Nav>
           </div>
 
