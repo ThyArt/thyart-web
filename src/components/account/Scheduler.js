@@ -77,6 +77,16 @@ export class Scheduler extends Component {
               startAccessor="start"
               endAccessor="end"
               style={{ height: '700px' }}
+              messages={{
+                allDay: 'Toute la journée',
+                previous: 'Précédent',
+                next: 'Suivant',
+                today: 'Aujourd\'hui',
+                month: 'Mois',
+                time: 'Durée',
+                event: 'Evènement',
+                noEventsInRange: 'Il n\'y a pas d\'évènements programmés ce mois-ci'
+              }}
           />
         </div>
     );
