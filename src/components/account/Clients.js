@@ -3,67 +3,92 @@ import { Button, Col } from "react-bootstrap";
 
 import '../../css/Membres.css';
 import '../../css/Billing.css';
-import BillingTable from "./BillingTable";
-import Billing from "./Billing";
+
+import ClientTable from "./ClientTable";
+import Client from "./Client";
+
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import ReactLoading from 'react-loading';
+import { getCustomersIfNeeded, openCreateCustomer } from "../../actions/actionsCustomers";
 
 class Clients extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      table: true,
-      modif: true,
-      search: ''
-    };
-
-    this.onSwitch = this.onSwitch.bind(this);
   }
 
-  onSwitch = () => {
-    if (this.state.table)
-      this.setState({ modif: true, table: false });
-    else
-      this.setState({ modif: true, table: true });
+  componentDidMount(){
+    this.props.dispatch(getCustomersIfNeeded(this.props.token));
+  }
+
+  onCreate = () => {
+    this.props.dispatch(openCreateCustomer());
   };
 
-  onSwitchNew = () => {
-    if (this.state.table)
-      this.setState({modif: false, table: false, });
-    else
-      this.setState({modif: false, table: true });
-  };
-
-
-  onSearchChange = event => {
-    this.setState({ search: event.target.value });
-  };
-
-  searchBillings = () => {
-    console.log('Performing research with parameter: ' + this.state.search);
+  onReturn = () => {
+    this.props.dispatch(getCustomersIfNeeded(this.props.token));
   };
 
   render() {
     return (
-      <Col sm={10}>
-        {this.state.table ?
-          <div>
-            <Button bsSize="lg" className='billingMainButton' onClick={this.onSwitch}>
-              <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" className='billingAddBillImage'/>
-              <span className='billingAddBillButton'>Ajouter</span>
-            </Button>
-            <BillingTable onClick={this.onSwitchNew}/>
-          </div>
-          :
-          <div>
-            <Button  bsSize="lg" onClick={this.onSwitch} className='billingMainButton'>
-              <span className='add'>Retour</span>
-            </Button>
-            <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>
-          </div>
-        }
-      </Col>
+      <div>
+      {
+        this.props.isFetching ? (
+          <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+        ) : (
+          <Col sm={10}>
+            {this.props.table ?
+              <div>
+                <Button bsSize="lg" className='clientMainButton' onClick={this.onCreate}>
+                  <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"
+                       className='clientAddImage'/>
+                  <span className='clientAddButton'>Ajouter</span>
+                </Button>
+                <ClientTable token={this.props.token}/>
+              </div>
+              :
+              <div>
+                <Button bsSize="lg" onClick={this.onReturn} className='clientMainButton'>
+                  <span className='add'>Retour</span>
+                </Button>
+                <Client  token={this.props.token}/>
+              </div>
+            }
+          </Col>
+        )
+      }
+      </div>
     );
   }
 }
 
-export default Clients;
+Clients.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  msg: PropTypes.string,
+  error: PropTypes.string,
+  modif: PropTypes.bool.isRequired,
+  table: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  const {
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
+    dispatch
+  } = state.customers;
+
+  return {
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps)(Clients)

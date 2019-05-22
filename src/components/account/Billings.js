@@ -15,8 +15,6 @@ class Billings extends Component {
       modif: true,
       search: ''
     };
-
-    this.onSwitch = this.onSwitch.bind(this);
   }
 
   onSwitch = () => {
@@ -31,15 +29,6 @@ class Billings extends Component {
       this.setState({modif: false, table: false, });
     else
       this.setState({modif: false, table: true });
-  };
-
-
-  onSearchChange = event => {
-    this.setState({ search: event.target.value });
-  };
-
-  searchBillings = () => {
-    console.log('Performing research with parameter: ' + this.state.search);
   };
 
   render() {

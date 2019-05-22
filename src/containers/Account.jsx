@@ -4,7 +4,7 @@ import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import Members from '../components/account/Members';
 import Artwork from '../components/account/Artwork';
-import Client from '../components/account/Client';
+import Clients from '../components/account/Clients';
 import Billings from '../components/account/Billings';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
@@ -88,7 +88,7 @@ export class Account extends Component {
             { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
             { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
             { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
-            { this.state.selected === 8 ? <Client token={this.state.token}/> : null }
+            { this.state.selected === 8 ? <Clients token={this.state.token}/> : null }
             { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
           </div>
 

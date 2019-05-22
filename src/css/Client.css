@@ -1,0 +1,69 @@
+#clientBackButton {
+    position: fixed;
+    top: 150px;
+    left: 50px;
+    z-index: 1;
+}
+
+#clientTopBar {
+    position: fixed;
+}
+
+#clientTopTitle {
+    line-height: 10vh;
+    font-size: 40px;
+    color: #777777;
+    text-align: center;
+}
+
+.clientJumbotron {
+    background-color: #e1e1e1;
+    position: relative;
+    margin: 0 10% 100px 12%;
+    border-radius: 15px;
+    padding: 50px 50px;
+    z-index: 0;
+}
+
+.clientJumbotronTitle {
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.clientJumbotronInput {
+    margin-top: 15px;
+}
+
+.clientJumbotronInfo {
+    width: 500px;
+}
+
+#clientConfirm {
+    text-align: center;
+}
+
+#clientConfirmButton {
+    font-size: 30px;
+    margin: 50px 0;
+}
+
+.clientCreateButton {
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+    font-size: 30px;
+}
+
+.clientMainButton {
+    position: fixed;
+    right: 80px;
+}
+
+.clienAddButton {
+    margin: 0 10px;
+    font-size: 25px;
+}
+
+.clientAddImage {
+    margin: 0 0 8px;
+}

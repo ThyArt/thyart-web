@@ -399,7 +399,6 @@ export class Artwork extends Component {
 }
 
 Artwork.propTypes = {
-  isLogged: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   token: PropTypes.string,
   msg: PropTypes.string,
