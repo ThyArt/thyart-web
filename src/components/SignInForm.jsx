@@ -9,6 +9,8 @@ import { FormControl,
 import { Redirect } from 'react-router-dom';
 import {fetchForgotIfNeeded, signInIfNeeded} from "../actions/actionsAuth";
 import ReactLoading from 'react-loading';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export class SignInForm extends Component {
   constructor(props) {
@@ -104,17 +106,25 @@ export class SignInForm extends Component {
           />
           <FormControl.Feedback/>
         </FormGroup>
-        {this.props.isFetching ? (
-          <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-        ) : (
-          <Button onClick={this.signin}>Se connecter</Button>
-        )
-        }
-        {this.props.isFetching ? (
-          <div/>) : (
-          <Button onClick={this.forgot}>Mot de passe oublié</Button>
-        )
-        }
+        <container >
+          <Row>
+            <Col>
+              {this.props.isFetching ? (
+                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+              ) : (
+                  <Button variant={"outline-primary"} onClick={this.signin}>Se connecter</Button>
+              )
+              }
+            </Col>
+            <Col>
+              {this.props.isFetching ? (
+                  <div/>) : (
+                  <Button className='float-right' variant={"outline-secondary"} onClick={this.forgot}>Mot de passe oublié</Button>
+              )
+              }
+            </Col>
+          </Row>
+        </container>
         {this.props.error ? (
           <Alert bsStyle="danger">{`Error: ${
             this.props.error

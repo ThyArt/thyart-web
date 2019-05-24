@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Container, Row } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import Members from '../components/account/Members';
@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { disconnect} from "../actions/actionsAuth";
 
 import '../css/Account.css'
+import Col from "react-bootstrap/Col";
 
 export class Account extends Component {
   constructor(props) {
@@ -44,55 +45,66 @@ export class Account extends Component {
   render() {
     return (
         <div id='accountPage'>
-
-          <div>
-            <Navbar fixedTop id='topBar'>
-              <a>
-                <img src={require('../static/SmallLogo.png')} alt="logo" height="100" id="logo"/>
-              </a>
-              <span id='title'>Ma Gallerie</span>
-            </Navbar>
-          </div>
-
-          <div id='sideNav'>
-            <Nav stacked bsStyle='pills' onSelect={this.handleSelect}>
-              <Nav.Link  eventKey={1} className='item'>
-                Accueil
-              </Nav.Link>
-              <Nav.Link  eventKey={2} className='item'>
-                Statistiques
-              </Nav.Link>
-              <Nav.Link  eventKey={3} className='item'>
-                Oeuvres
-              </Nav.Link>
-              <Nav.Link  eventKey={4} className='item'>
-                Membres
-              </Nav.Link>
-              <Nav.Link  eventKey={8} className='item'>
-                Client
-              </Nav.Link>
-              <Nav.Link  eventKey={5} className='item'>
-                Facturation
-              </Nav.Link>
-              <Nav.Link  eventKey={6} className='item'>
-                Profil
-              </Nav.Link>
-              <Nav.Link  eventKey={7}>
-                Déconnexion
-              </Nav.Link>
-            </Nav>
-          </div>
-
-          <div id='calendar'>
-            { this.state.selected === 1 ? <Scheduler token={this.state.token}/> : null }
-            { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
-            { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
-            { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
-            { this.state.selected === 8 ? <Client token={this.state.token}/> : null }
-            { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
-          </div>
-
-
+          <Navbar fixedTop>
+                <Navbar.Brand>
+                    <img
+                        src={require('../static/SmallLogo.png')}
+                        width="50"
+                        height="100"
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo"
+                    />
+                </Navbar.Brand>
+                <Container>
+                  <Navbar.Text id='title'>
+                    Ma Gallerie
+                  </Navbar.Text>
+                </Container>
+          </Navbar>
+          <Container fluid={true}>
+            <Row>
+              <Col>
+              <div >
+                <Nav className='flex-column' variant={'pills'} defaultActiveKey={1} onSelect={this.handleSelect}>
+                  <Nav.Link  eventKey={1} className='item'>
+                    Accueil
+                  </Nav.Link>
+                  <Nav.Link  eventKey={2} className='item'>
+                    Statistiques
+                  </Nav.Link>
+                  <Nav.Link  eventKey={3} className='item'>
+                    Oeuvres
+                  </Nav.Link>
+                  <Nav.Link  eventKey={4} className='item'>
+                    Membres
+                  </Nav.Link>
+                  <Nav.Link  eventKey={8} className='item'>
+                    Client
+                  </Nav.Link>
+                  <Nav.Link  eventKey={5} className='item'>
+                    Facturation
+                  </Nav.Link>
+                  <Nav.Link  eventKey={6} className='item'>
+                    Profil
+                  </Nav.Link>
+                  <Nav.Link  eventKey={7}>
+                    Déconnexion
+                  </Nav.Link>
+                </Nav>
+              </div>
+              </Col>
+              <Col xs={10}>
+                <div>
+                  { this.state.selected === 1 ? <Scheduler token={this.state.token}/> : null }
+                  { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
+                  { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
+                  { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
+                  { this.state.selected === 8 ? <Client token={this.state.token}/> : null }
+                  { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
+                </div>
+              </Col>
+            </Row>
+          </Container>
           {(this.props.isLogged === false) ? (
             <Redirect
               to={{
