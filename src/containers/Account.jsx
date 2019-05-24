@@ -20,7 +20,7 @@ export class Account extends Component {
     let token = sessionStorage.getItem('token');
 
     this.state = {
-      selected: 1,
+      selected: '1',
       token: token
     };
   }
@@ -33,11 +33,12 @@ export class Account extends Component {
   }
 
   handleSelect = eventKey => {
-    if (eventKey === 7) {
+    if (eventKey === '7') {
         this.props.dispatch(disconnect());
         this.setState({token: null});
         sessionStorage.removeItem('token');
     } else {
+        console.log(eventKey);
       this.setState({ selected: eventKey });
     }
   };
@@ -65,29 +66,29 @@ export class Account extends Component {
             <Row>
               <Col>
               <div >
-                <Nav className='flex-column' variant={'pills'} defaultActiveKey={1} onSelect={this.handleSelect}>
-                  <Nav.Link  eventKey={1} className='item'>
+                <Nav className='flex-column' variant={'pills'} defaultActiveKey={'1'} onSelect={this.handleSelect}>
+                  <Nav.Link  eventKey={'1'} className='item'>
                     Accueil
                   </Nav.Link>
-                  <Nav.Link  eventKey={2} className='item'>
+                  <Nav.Link  eventKey={'2'} className='item'>
                     Statistiques
                   </Nav.Link>
-                  <Nav.Link  eventKey={3} className='item'>
+                  <Nav.Link  eventKey={'3'} className='item'>
                     Oeuvres
                   </Nav.Link>
-                  <Nav.Link  eventKey={4} className='item'>
+                  <Nav.Link  eventKey={'4'} className='item'>
                     Membres
                   </Nav.Link>
-                  <Nav.Link  eventKey={8} className='item'>
+                  <Nav.Link  eventKey={'8'} className='item'>
                     Client
                   </Nav.Link>
-                  <Nav.Link  eventKey={5} className='item'>
+                  <Nav.Link  eventKey={'5'} className='item'>
                     Facturation
                   </Nav.Link>
-                  <Nav.Link  eventKey={6} className='item'>
+                  <Nav.Link  eventKey={'6'} className='item'>
                     Profil
                   </Nav.Link>
-                  <Nav.Link  eventKey={7}>
+                  <Nav.Link  eventKey={'7'}>
                     Déconnexion
                   </Nav.Link>
                 </Nav>
@@ -95,12 +96,12 @@ export class Account extends Component {
               </Col>
               <Col xs={10}>
                 <div>
-                  { this.state.selected === 1 ? <Scheduler token={this.state.token}/> : null }
-                  { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
-                  { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
-                  { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
-                  { this.state.selected === 8 ? <Client token={this.state.token}/> : null }
-                  { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
+                  { this.state.selected === '1' ? <Scheduler token={this.state.token}/> : null }
+                  { this.state.selected === '4' ? <Members token={this.state.token}/> : null}
+                  { this.state.selected === '3' ? <Artwork token={this.state.token}/> : null }
+                  { this.state.selected === '6' ? <Profile token={this.state.token}/> : null }
+                  { this.state.selected === '8' ? <Clients token={this.state.token}/> : null }
+                  { this.state.selected === '5' ? <Billings token={this.state.token}/> : null }
                 </div>
               </Col>
             </Row>

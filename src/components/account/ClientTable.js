@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import * as Table from 'reactabular-table';
-import { Button, DropdownButton, FormControl, FormGroup, Glyphicon, MenuItem } from "react-bootstrap";
+import { Button, DropdownButton, FormControl, FormGroup, DropdownItem } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
@@ -164,14 +164,14 @@ class ClientTable extends Component {
           <Button bsStyle='primary' bsSize='large' onClick={this.searchClients}>Rechercher</Button>
 
           <DropdownButton bsSize='large' className='clientFilters'
-                          title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}
+                          title={'filtre'}
           >
-            <MenuItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</MenuItem>
-            <MenuItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</MenuItem>
-            <MenuItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</MenuItem>
-            <MenuItem eventKey={4} onSelect={this.handleFilters}>Prénom Z-A</MenuItem>
-            <MenuItem eventKey={5} onSelect={this.handleFilters}>Mail A-Z</MenuItem>
-            <MenuItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</MenuItem>
+            <DropdownItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</DropdownItem>
+            <DropdownItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</DropdownItem>
+            <DropdownItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</DropdownItem>
+            <DropdownItem eventKey={4} onSelect={this.handleFilters}>Prénom Z-A</DropdownItem>
+            <DropdownItem eventKey={5} onSelect={this.handleFilters}>Mail A-Z</DropdownItem>
+            <DropdownItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</DropdownItem>
           </DropdownButton>
         </FormGroup>
 
