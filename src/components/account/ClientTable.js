@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
 import * as Table from 'reactabular-table';
-import { Button, Col, DropdownButton, FormControl, FormGroup, Glyphicon, MenuItem, Row } from "react-bootstrap";
+import { Button, DropdownButton, FormControl, FormGroup, Glyphicon, MenuItem } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
 import '../../css/Membres.css';
-import { deleteBilling, setCurrentBilling, sortBillings } from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
+import {
+  eraseCustomerIfNeeded,
+  getCustomerIfNeeded,
+  getCustomersIfNeeded,
+  sortCustomers
+} from "../../actions/actionsCustomers";
 
-class BillingTable extends Component {
+class ClientTable extends Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +22,6 @@ class BillingTable extends Component {
       removeModal: false,
       infos: {},
       rows: [],
-      currentBilling: null,
     };
 
     this.openDetails = this.openDetails.bind(this);
@@ -30,14 +34,22 @@ class BillingTable extends Component {
 
   handleFilters = eventKey => {
     const filters = {
-      '1': 'nameA',
-      '2': 'nameZ',
-      '3': 'artworkA',
-      '4': 'artworkZ',
-      '5': 'dateNew',
-      '6': 'dateOld'
+      '1': 'firstNameA',
+      '2': 'firstNameZ',
+      '3': 'lastNameA',
+      '4': 'lastNameZ',
+      '5': 'mailA',
+      '6': 'mailZ'
     };
-    this.props.dispatch(sortBillings(filters[eventKey.toString()]));
+    this.props.dispatch(this.props.dispatch(sortCustomers(filters[eventKey.toString()])));
+  };
+
+  onSearchChange = event => {
+    this.setState({ search: event.target.value });
+  };
+
+  searchClients = () => {
+    this.props.dispatch(getCustomersIfNeeded(this.props.token, this.state.search))
   };
 
   onRemoveClose = () => {
@@ -45,10 +57,8 @@ class BillingTable extends Component {
   };
 
   openDetails(rowData) {
-    this.props.dispatch(setCurrentBilling(rowData.id));
-    this.props.onClick();
+    this.props.dispatch(getCustomerIfNeeded(this.props.token, rowData.id));
   };
-
 
   confirmRemove(id) {
     this.setState({ idToRemove: id , removeModal: true});
@@ -56,43 +66,27 @@ class BillingTable extends Component {
 
   onRemove() {
     this.setState({removeModal: false});
-    this.props.dispatch(deleteBilling(this.state.idToRemove));
-  };
-
-  formatDate = value => {
-    const date = new Date(value);
-    return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+    this.props.dispatch(eraseCustomerIfNeeded(this.props.token, this.state.idToRemove));
   };
 
   getColumns() {
     return [
       {
-        property: 'name',
+        property: 'last_name',
         header: {
-          label: 'Client'
+          label: 'Nom'
         }
       },
       {
-        property: 'artworkName',
+        property: 'first_name',
         header: {
-          label: 'Nom de l\'oeuvre'
+          label: 'Prénom'
         }
       },
       {
-        property: 'mail',
+        property: 'email',
         header: {
           label: 'Mail du client'
-        }
-      },
-      {
-        property: 'date',
-        header: {
-          label: 'Date de facturation'
-        },
-        cell: {
-          formatters: [
-            (value) => (<span>{ this.formatDate(value) }</span>)
-          ]
         }
       },
       {
@@ -145,8 +139,8 @@ class BillingTable extends Component {
   render() {
     let rows;
     const columns = this.state.columns;
-    if (this.props.billingTable)
-      rows = this.props.billingTable;
+    if (this.props.customers)
+      rows = this.props.customers;
     else
       rows = [];
 
@@ -154,33 +148,32 @@ class BillingTable extends Component {
     return (
       <div className="clients">
         <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
-          <h2 className='title'>Voulez-vous supprimer cette facture?</h2>
+          <h2 className='title'>Voulez-vous retirer ce client?</h2>
 
           <Button bsStyle="primary" onClick={this.onRemove} className='validate' bsSize='large'>
             Supprimer
           </Button>
         </Modal>
 
-        <Row>
-          <FormGroup>
-            <Col sm={8}>
-              <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                           placeholder='Entrer le texte à rechercher...' id='billingSearchBar' bsSize='large'
-              />
-            </Col>
-            <Button bsStyle='primary' bsSize='large' onClick={this.searchBillings}>Rechercher</Button>
-            <DropdownButton bsSize='large' className='billingFilters'
-                            title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}
-            >
-              <MenuItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</MenuItem>
-              <MenuItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</MenuItem>
-              <MenuItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</MenuItem>
-              <MenuItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</MenuItem>
-              <MenuItem eventKey={5} onSelect={this.handleFilters}>Date récents</MenuItem>
-              <MenuItem eventKey={6} onSelect={this.handleFilters}>Date anciens</MenuItem>
-            </DropdownButton>
-          </FormGroup>
-        </Row>
+        <FormGroup>
+
+          <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
+                       placeholder='Entrer le texte à rechercher...' id='billingSearchBar'
+          />
+
+          <Button bsStyle='primary' bsSize='large' onClick={this.searchClients}>Rechercher</Button>
+
+          <DropdownButton bsSize='large' className='clientFilters'
+                          title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}
+          >
+            <MenuItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</MenuItem>
+            <MenuItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</MenuItem>
+            <MenuItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</MenuItem>
+            <MenuItem eventKey={4} onSelect={this.handleFilters}>Prénom Z-A</MenuItem>
+            <MenuItem eventKey={5} onSelect={this.handleFilters}>Mail A-Z</MenuItem>
+            <MenuItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</MenuItem>
+          </DropdownButton>
+        </FormGroup>
 
         <Table.Provider
           className="pure-table pure-table-bordered"
@@ -195,24 +188,38 @@ class BillingTable extends Component {
 
 }
 
-BillingTable.propTypes = {
-  billings: PropTypes.array,
-  billingTable: PropTypes.array,
+ClientTable.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  msg: PropTypes.string,
+  error: PropTypes.string,
+  modif: PropTypes.bool.isRequired,
+  table: PropTypes.bool.isRequired,
+  customers: PropTypes.array,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   const {
-    billings,
-    billingTable
-  } = state.billings;
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
+    customers,
+    dispatch
+  } = state.customers;
 
   return {
-    billings,
-    billingTable
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
+    customers,
+    dispatch
   }
 }
 
 export default connect(
   mapStateToProps
-)(BillingTable)
+)(ClientTable)

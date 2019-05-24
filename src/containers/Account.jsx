@@ -4,7 +4,7 @@ import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import Members from '../components/account/Members';
 import Artwork from '../components/account/Artwork';
-import Client from '../components/account/Client';
+import Clients from '../components/account/Clients';
 import Billings from '../components/account/Billings';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
