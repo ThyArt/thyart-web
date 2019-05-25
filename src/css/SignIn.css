@@ -4,30 +4,32 @@
     padding-left: 10%;
 }
 
-#footer {
-    height: 70px;
-    display: block;
-    margin: 10px;
-}
-
 #quote {
-    width: 25vw;
+    width: 50vw;
     height: auto;
 }
 
-#logo {
-    position: absolute;
-    top: 0;
-    left: 15px;
-    z-index: 1;
-}
-
-
-#carouselSn {
-    margin-top: 20%;
-    position: absolute;
-}
-
 #signinForm {
-    margin-top: 20%
+    margin-top: 10%;
+}
+
+#carouselCol {
+    padding-left: 0px;
+}
+
+#carousel {
+    height: 93vh;
+}
+
+#carouselItem {
+    height: 93vh;
+}
+
+#row {
+    height: 93vh;
+}
+
+#image {
+    object-fit: cover;
+    height: 93vh;
 }

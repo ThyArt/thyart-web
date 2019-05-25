@@ -11,6 +11,7 @@ import {fetchForgotIfNeeded, signInIfNeeded} from "../actions/actionsAuth";
 import ReactLoading from 'react-loading';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 
 export class SignInForm extends Component {
   constructor(props) {
@@ -81,7 +82,7 @@ export class SignInForm extends Component {
 
   render() {
     return (
-      <form>
+      <Form>
         <FormGroup
           controlId="formValidationNull"
           validationState={this.getMailValidationState()}
@@ -137,7 +138,7 @@ export class SignInForm extends Component {
             }}
           />
         ) : null}
-      </form>
+      </Form>
     );
   }
 }
