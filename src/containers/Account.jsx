@@ -3,6 +3,7 @@ import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import Members from '../components/account/Members';
+import Stats from '../components/account/Stats'
 import Artwork from '../components/account/Artwork';
 import Clients from '../components/account/Clients';
 import Billings from '../components/account/Billings';
@@ -85,11 +86,12 @@ export class Account extends Component {
 
           <div id='calendar'>
             { this.state.selected === 1 ? <Scheduler token={this.state.token}/> : null }
-            { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
+            { this.state.selected === 2 ? <Stats token={this.state.token}/> : null }
             { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
+            { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
+            { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
             { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
             { this.state.selected === 8 ? <Clients token={this.state.token}/> : null }
-            { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
           </div>
 
 
