@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import '../../css/Membres.css';
 import { deleteBilling, setCurrentBilling, sortBillings } from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
+import Container from "react-bootstrap/Container";
 
 class BillingTable extends Component {
   constructor(props) {
@@ -156,39 +157,37 @@ class BillingTable extends Component {
         <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
           <h2 className='title'>Voulez-vous supprimer cette facture?</h2>
 
-          <Button bsStyle="primary" onClick={this.onRemove} className='validate' bsSize='large'>
+          <Button bsstyle="primary" onClick={this.onRemove} className='validate' bssize='large'>
             Supprimer
           </Button>
         </Modal>
 
-        <Row>
-          <FormGroup>
-            <Col sm={8}>
-              <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                           placeholder='Entrer le texte à rechercher...' id='billingSearchBar' bsSize='large'
-              />
-            </Col>
-            <Button bsStyle='primary' bsSize='large' onClick={this.searchBillings}>Rechercher</Button>
-            <DropdownButton bsSize='large' className='billingFilters'
-                            title={'filtre'}
-            >
-              <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
-              <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
-              <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
-              <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
-              <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
-              <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
-            </DropdownButton>
-          </FormGroup>
-        </Row>
+        <FormGroup>
+          <FormControl type='text' value={this.state.search} onChange={this.onSearchChange} placeholder='Entrer le texte à rechercher...' id='billingSearchBar' bssize='large'/>
+          <Button id={'buttonRechercher'} bsstyle='primary' bssize='large' onClick={this.searchBillings}>Rechercher</Button>
+        </FormGroup>
 
-        <Table.Provider
-          className="pure-table pure-table-bordered"
-          columns={columns}
-        >
-          <Table.Header />
-          <Table.Body rows={rows} rowKey="id" />
-        </Table.Provider>
+        <Container fluid>
+          <Row>
+              <Col id={'colContainerTable'}>
+                <Table.Provider className="pure-table pure-table-bordered" columns={columns}>
+                  <Table.Header />
+                  <Table.Body rows={rows} rowKey="id" />
+                </Table.Provider>
+              </Col>
+
+              <Col lg={1}>
+                <DropdownButton bssize='large' className='billingFilters' title={'filtre'}>
+                  <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
+                  <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
+                  <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
+                  <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
+                  <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
+                  <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
+                </DropdownButton>
+              </Col>
+          </Row>
+        </Container>
       </div>
     );
   }

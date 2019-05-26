@@ -16,7 +16,7 @@ class SignUp extends Component{
                               <Carousel.Item id={'carouselItem'}>
                                   <img id={'image'} src={require('../static/mess.png')}  alt='artist'/>
                                   <Carousel.Caption>
-                                      <h3 id={'quote'}>ThyArt est un outil simple mais utile.</h3>
+                                      <h3 >ThyArt est un outil simple mais utile.</h3>
                                       <p>John Smith, galeriste</p>
                                   </Carousel.Caption>
                               </Carousel.Item>

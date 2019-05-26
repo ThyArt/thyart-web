@@ -117,7 +117,7 @@ class Billing extends Component {
   editable() {
     return (
       <div>
-        <Button bsSize="lg" onClick={this.billingCreation} className='billingCreateButton' bsStyle="primary">Créer la facture</Button>
+        <Button bssize="lg" onClick={this.billingCreation} className='billingCreateButton' bsstyle="primary">Créer la facture</Button>
         <Jumbotron className="billingJumbotron">
           <h2 className="billingJumbotronTitle">Informations du client</h2>
 

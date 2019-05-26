@@ -48,9 +48,6 @@
 }
 
 .billingCreateButton {
-    position: fixed;
-    bottom: 80px;
-    right: 80px;
     font-size: 30px;
 }
 

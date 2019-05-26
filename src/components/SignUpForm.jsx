@@ -123,8 +123,8 @@ export class SignUpForm extends Component {
     return (
       <form>
         <FormGroup
-          controlId="formValidationNull"
-          validationState={this.getFirstnameValidationState()}
+          controlId="formValidationNull0"
+          validationstate={this.getFirstnameValidationState()}
         >
           <FormLabel>Entrez votre prénom</FormLabel>
           <FormControl
@@ -136,8 +136,8 @@ export class SignUpForm extends Component {
           <FormControl.Feedback/>
         </FormGroup>
         <FormGroup
-          controlId="formValidationNull"
-          validationState={this.getLastnameValidationState()}
+          controlId="formValidationNull1"
+          validationstate={this.getLastnameValidationState()}
         >
           <FormLabel>Entrez votre nom</FormLabel>
           <FormControl
@@ -149,8 +149,8 @@ export class SignUpForm extends Component {
           <FormControl.Feedback/>
         </FormGroup>
         <FormGroup
-          controlId="formValidationNull"
-          validationState={this.getMailValidationState()}
+          controlId="formValidationNull2"
+          validationstate={this.getMailValidationState()}
         >
           <FormLabel>Entrez votre email</FormLabel>
           <FormControl
@@ -163,7 +163,7 @@ export class SignUpForm extends Component {
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationState={this.getPassValidationState()}
+          validationstate={this.getPassValidationState()}
         >
           <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
@@ -176,7 +176,7 @@ export class SignUpForm extends Component {
         </FormGroup>
         <FormGroup
           controlId="formBasicText2"
-          validationState={this.getConfirmValidationState()}
+          validationstate={this.getConfirmValidationState()}
         >
           <FormLabel>Confirmez votre mot de passe</FormLabel>
           <FormControl
@@ -195,13 +195,13 @@ export class SignUpForm extends Component {
         }
 
         {this.props.msg ? (
-          <Alert bsStyle="success">
+          <Alert bsstyle="success">
             {this.props.msg}
           </Alert>
         ) : null}
 
         {this.props.error ? (
-          <Alert bsStyle="danger">{`Error while creating your account: ${
+          <Alert bsstyle="danger">{`Error while creating your account: ${
             this.props.error
             }`}</Alert>
         ) : null}

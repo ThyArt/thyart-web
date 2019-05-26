@@ -12,6 +12,9 @@ import {
   getCustomersIfNeeded,
   sortCustomers
 } from "../../actions/actionsCustomers";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 class ClientTable extends Component {
   constructor(props) {
@@ -147,41 +150,42 @@ class ClientTable extends Component {
 
     return (
       <div className="clients">
+
         <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
           <h2 className='title'>Voulez-vous retirer ce client?</h2>
-
-          <Button bsStyle="primary" onClick={this.onRemove} className='validate' bsSize='large'>
+          <Button bsstyle="primary" onClick={this.onRemove} className='validate' bssize='large'>
             Supprimer
           </Button>
         </Modal>
 
         <FormGroup>
-
-          <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                       placeholder='Entrer le texte à rechercher...' id='billingSearchBar'
-          />
-
-          <Button bsStyle='primary' bsSize='large' onClick={this.searchClients}>Rechercher</Button>
-
-          <DropdownButton bsSize='large' className='clientFilters'
-                          title={'filtre'}
-          >
-            <DropdownItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</DropdownItem>
-            <DropdownItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</DropdownItem>
-            <DropdownItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</DropdownItem>
-            <DropdownItem eventKey={4} onSelect={this.handleFilters}>Prénom Z-A</DropdownItem>
-            <DropdownItem eventKey={5} onSelect={this.handleFilters}>Mail A-Z</DropdownItem>
-            <DropdownItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</DropdownItem>
-          </DropdownButton>
+          <FormControl  type='text' value={this.state.search} onChange={this.onSearchChange}
+                       placeholder='Entrer le texte à rechercher...' id='billingSearchBar'/>
+          <Button id={'buttonRechercher'} bsstyle='primary'
+                  bssize='large' onClick={this.searchClients}>Rechercher</Button>
         </FormGroup>
 
-        <Table.Provider
-          className="pure-table pure-table-bordered"
-          columns={columns}
-        >
-          <Table.Header />
-          <Table.Body rows={rows} rowKey="id" />
-        </Table.Provider>
+        <Container fluid>
+          <Row>
+            <Col id={'colContainerTable'}>
+              <Table.Provider className="pure-table pure-table-bordered" columns={columns}>
+                <Table.Header />
+                <Table.Body rows={rows} rowKey="id" />
+              </Table.Provider>
+            </Col>
+            <Col lg={1}>
+              <DropdownButton bssize='large' id='buttonFilter' title={'filtre'}>
+                <DropdownItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</DropdownItem>
+                <DropdownItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</DropdownItem>
+                <DropdownItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</DropdownItem>
+                <DropdownItem eventKey={4} onSelect={this.handleFilters}>Prénom Z-A</DropdownItem>
+                <DropdownItem eventKey={5} onSelect={this.handleFilters}>Mail A-Z</DropdownItem>
+                <DropdownItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</DropdownItem>
+              </DropdownButton>
+            </Col>
+          </Row>
+        </Container>
+
       </div>
     );
   }

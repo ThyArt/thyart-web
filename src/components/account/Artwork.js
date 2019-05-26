@@ -228,13 +228,13 @@ export class Artwork extends Component {
       <div id='page'>
         <div id='toolbar'>
           <Form inline>
-            <FormGroup bsSize='large'>
+            <FormGroup bssize='large'>
               <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
                            placeholder='Entrer le texte à rechercher...' id='searchBar'/>
 
-              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Rechercher</Button>
+              <Button bsstyle='primary' bssize='large' onClick={this.searchArtworks}>Rechercher</Button>
 
-              <DropdownButton bsSize='large' className='complexButton'
+              <DropdownButton bssize='large' className='complexButton'
                               title={"filter"}>
                 <DropdownItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</DropdownItem>
                 <DropdownItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</DropdownItem>
@@ -248,7 +248,7 @@ export class Artwork extends Component {
                 <DropdownItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</DropdownItem>
               </DropdownButton>{' '}
 
-              <Button bsSize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
+              <Button bssize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
                 More
               </Button>
 
@@ -285,7 +285,7 @@ export class Artwork extends Component {
                       <ToggleButton value={4}>En transit</ToggleButton>
                     </ToggleButtonGroup>
                   </ButtonToolbar>
-                  <Button bsStyle="primary" onClick={this.getVerification} bsSize='large'>
+                  <Button bsstyle="primary" onClick={this.getVerification} bssize='large'>
                     Valider
                   </Button>
                 </FormGroup>
@@ -310,7 +310,7 @@ export class Artwork extends Component {
                   >
                     <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
                   </div>
-                  < Button bsStyle = "primary" onClick={this.onModifOpen} bsSize='large'>
+                  < Button bsstyle = "primary" onClick={this.onModifOpen} bssize='large'>
                     {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
                   </Button>
                   {
@@ -338,7 +338,7 @@ export class Artwork extends Component {
                             </ToggleButtonGroup>
                           </ButtonToolbar>
                         </FormGroup>
-                        < Button bsStyle = "primary" onClick={this.onModifValidation} bsSize='large' className='confirmModal'>
+                        < Button bsstyle = "primary" onClick={this.onModifValidation} bssize='large' className='confirmModal'>
                           Valider
                         </Button>
                       </div>

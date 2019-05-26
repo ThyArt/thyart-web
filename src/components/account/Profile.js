@@ -228,7 +228,7 @@ export class Profile extends Component {
                     <FormControl.Feedback />
                   </FormGroup>
                 </Col>
-                <Button bsStyle="primary" onClick={this.checkFirstname} className='validate' bsSize='large'>
+                <Button bsstyle="primary" onClick={this.checkFirstname} className='validate' bssize='large'>
                   Valider
                 </Button>
               </Modal>
@@ -276,7 +276,7 @@ export class Profile extends Component {
                     <FormControl.Feedback />
                   </FormGroup>
                 </Col>
-                <Button bsStyle="primary" onClick={this.checkLastname} className='validate' bsSize='large'>
+                <Button bsstyle="primary" onClick={this.checkLastname} className='validate' bssize='large'>
                   Valider
                 </Button>
               </Modal>
@@ -325,7 +325,7 @@ export class Profile extends Component {
                     <FormControl.Feedback />
                   </FormGroup>
                 </Col>
-                <Button bsStyle="primary" onClick={this.checkMail} className='validate' bsSize='large'>
+                <Button bsstyle="primary" onClick={this.checkMail} className='validate' bssize='large'>
                   Valider
                 </Button>
               </Modal>
@@ -388,7 +388,7 @@ export class Profile extends Component {
                     <FormControl.Feedback />
                   </FormGroup>
                 </Col>
-                <Button bsStyle="primary" onClick={this.checkPassword} className='validate' bsSize='large'>
+                <Button bsstyle="primary" onClick={this.checkPassword} className='validate' bssize='large'>
                   Valider
                 </Button>
               </Modal>

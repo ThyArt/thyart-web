@@ -46,7 +46,7 @@ export class Account extends Component {
   render() {
     return (
         <div id='accountPage'>
-          <Navbar fixedTop>
+          <Navbar>
                 <Navbar.Brand>
                     <img
                         src={require('../static/SmallLogo.png')}

@@ -123,7 +123,7 @@ export class Members extends Component {
       <div className="clients">
         <Col sm={10}>
           {this.props.add}
-          <Button bsSize="lg" className='add' id='addMemberButton' onClick={this.onAddOpen}>
+          <Button bssize="lg" className='add' id='addMemberButton' onClick={this.onAddOpen}>
             <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" id='addMemberImage'/>
             <span id='addMemberText'>Ajouter</span>
           </Button>
@@ -173,7 +173,7 @@ export class Members extends Component {
               <FormControl.Feedback />
             </FormGroup>
           </Col>
-          <Button bsStyle="primary" onClick={this.onAdd} className='validate' bsSize='large'>
+          <Button bsstyle="primary" onClick={this.onAdd} className='validate' bssize='large'>
             Valider
           </Button>
         </Modal>
@@ -181,7 +181,7 @@ export class Members extends Component {
         <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
           <h2 className='title'>Voulez-vous supprimer ce membre?</h2>
 
-          <Button bsStyle="primary" onClick={this.onRemove} className='validate' bsSize='large'>
+          <Button bsstyle="primary" onClick={this.onRemove} className='validate' bssize='large'>
             Supprimer
           </Button>
         </Modal>

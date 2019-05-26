@@ -36,15 +36,15 @@ class Billings extends Component {
       <Col sm={10}>
         {this.state.table ?
           <div>
-            <Button bsSize="lg" className='billingMainButton' onClick={this.onSwitch}>
-              <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" className='billingAddBillImage'/>
-              <span className='billingAddBillButton'>Ajouter</span>
+            <Button bssize="lg" className='clientMainButton' onClick={this.onSwitch}>
+              <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" className='clientAddImage'/>
+              <span className='clientAddButton'>Ajouter</span>
             </Button>
             <BillingTable onClick={this.onSwitchNew}/>
           </div>
           :
           <div>
-            <Button  bsSize="lg" onClick={this.onSwitch} className='billingMainButton'>
+            <Button  bssize="lg" onClick={this.onSwitch} className='billingMainButton'>
               <span className='add'>Retour</span>
             </Button>
             <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>

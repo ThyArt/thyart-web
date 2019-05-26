@@ -1,5 +1,5 @@
 .clients{
-    margin-left: 10%;
+    margin-top: 4px;
     font-size: 20px;
 }
 
@@ -194,4 +194,22 @@ a.pure-button-selected {
 #addMemberText {
     margin: 0 10px;
     font-size: 25px;
+}
+
+#billingSearchBar {
+    margin-top: 10px;
+}
+
+#buttonRechercher {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#buttonFilter{
+    margin-top: 12px;
+}
+
+#colContainerTable {
+    padding-left: 0px;
+    padding-right: 0px;
 }

@@ -86,7 +86,7 @@ export class SignInForm extends Component {
       <Form>
         <FormGroup
           controlId="formValidationNull"
-          validationState={this.getMailValidationState()}
+          validationstate={this.getMailValidationState()}
         >
           <FormLabel>Entrez votre email</FormLabel>
           <FormControl
@@ -98,7 +98,7 @@ export class SignInForm extends Component {
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationState={this.getPassValidationState()}
+          validationstate={this.getPassValidationState()}
         >
           <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
@@ -108,7 +108,7 @@ export class SignInForm extends Component {
           />
           <FormControl.Feedback/>
         </FormGroup>
-        <container >
+        <Container >
           <Row>
             <Col>
               {this.props.isFetching ? (
@@ -126,9 +126,9 @@ export class SignInForm extends Component {
               }
             </Col>
           </Row>
-        </container>
+        </Container>
         {this.props.error ? (
-          <Alert bsStyle="danger">{`Error: ${
+          <Alert bsstyle="danger">{`Error: ${
             this.props.error
             }`}</Alert>
         ) : null}
