@@ -39,16 +39,15 @@ class Clients extends Component {
           <Col sm={10}>
             {this.props.table ?
               <div>
-                <Button bsSize="lg" className='clientMainButton' onClick={this.onCreate}>
-                  <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"
-                       className='clientAddImage'/>
-                  <span className='clientAddButton'>Ajouter</span>
+                <Button bsSize="lg" className='billingMainButton' onClick={this.onCreate}>
+                  <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" className='billingAddBillImage'/>
+                  <span className='billingAddBillButton'>Ajouter</span>
                 </Button>
                 <ClientTable token={this.props.token}/>
               </div>
               :
               <div>
-                <Button bsSize="lg" onClick={this.onReturn} className='clientMainButton'>
+                <Button bsSize="lg" onClick={this.onReturn} className='billingMainButton'>
                   <span className='add'>Retour</span>
                 </Button>
                 <Client  token={this.props.token}/>

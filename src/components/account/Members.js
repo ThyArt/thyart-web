@@ -20,13 +20,14 @@ export class Members extends Component {
       newName: '',
       newFamily: '',
       newMail: '',
+      password: ''
     };
 
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
   }
 
-    onAddOpen = () => {
+  onAddOpen = () => {
     this.setState({ addModal: true });
   };
 
@@ -48,13 +49,26 @@ export class Members extends Component {
   };
 
   handleChangeFamily = event => {
-    this.setState({  newFamily: event.target.value });
+    this.setState({ newFamily: event.target.value });
+  };
+
+  handleChangePassword = event => {
+    this.setState({ password: event.target.value });
   };
 
   getNameValidationState() {
     let name = this.state.newName;
     if (name === '') return 'error';
     return 'success';
+  }
+
+  getPasswordValidationState() {
+    let password = this.state.password;
+    if (password === '') return 'error';
+    if (RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})').test(password))
+      return 'success';
+    else
+      return 'error';
   }
 
   getFamilyValidationState() {
@@ -131,10 +145,10 @@ export class Members extends Component {
 
         <Modal open={this.state.addModal} onClose={this.onAddClose} center>
           <h2 className='title'>Ajout d'un membre :</h2>
-          <Col sm={6}>
+          <Col sm={3}>
             <h3 className="firstname">Nom :</h3>
           </Col>
-          <Col sm={6}>
+          <Col sm={9}>
             <FormGroup className='input' validationState={this.getFamilyValidationState()}>
               <FormControl
                 type="firstname"
@@ -145,10 +159,10 @@ export class Members extends Component {
               <FormControl.Feedback />
             </FormGroup>
           </Col>
-          <Col sm={6}>
+          <Col sm={3}>
             <h3 className="name">Prénom :</h3>
           </Col>
-          <Col sm={6}>
+          <Col sm={9}>
             <FormGroup className='input' validationState={this.getNameValidationState()}>
               <FormControl
                 type="name"
@@ -159,16 +173,30 @@ export class Members extends Component {
               <FormControl.Feedback />
             </FormGroup>
           </Col>
-          <Col sm={6}>
+          <Col sm={3}>
             <h3 className="name">Mail :</h3>
           </Col>
-          <Col sm={6}>
+          <Col sm={9}>
             <FormGroup className='input' validationState={this.getMailValidationState()}>
               <FormControl
                 type="mail"
                 value={this.props.newMail}
                 placeholder="Entrer le mail du membre"
                 onChange={this.handleChangeMail}
+              />
+              <FormControl.Feedback />
+            </FormGroup>
+          </Col>
+          <Col sm={3}>
+            <h3 className="name">Mot de passe :</h3>
+          </Col>
+          <Col sm={9}>
+            <FormGroup className='input' validationState={this.getPasswordValidationState()}>
+              <FormControl
+                type="password"
+                value={this.props.password}
+                placeholder="Entrer le mot de passe temporaire du membre"
+                onChange={this.handleChangePassword}
               />
               <FormControl.Feedback />
             </FormGroup>

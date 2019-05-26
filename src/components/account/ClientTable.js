@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import * as Table from 'reactabular-table';
-import { Button, DropdownButton, FormControl, FormGroup, Glyphicon, MenuItem } from "react-bootstrap";
+import { Button, Col, DropdownButton, FormControl, FormGroup, Glyphicon, MenuItem, Row } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
@@ -155,14 +155,14 @@ class ClientTable extends Component {
           </Button>
         </Modal>
 
+        <Row>
         <FormGroup>
-
+          <Col sm={8}>
           <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                       placeholder='Entrer le texte à rechercher...' id='billingSearchBar'
+                       placeholder='Entrer le texte à rechercher...' id='billingSearchBar' bsSize='large'
           />
-
+          </Col>
           <Button bsStyle='primary' bsSize='large' onClick={this.searchClients}>Rechercher</Button>
-
           <DropdownButton bsSize='large' className='clientFilters'
                           title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}
           >
@@ -174,6 +174,7 @@ class ClientTable extends Component {
             <MenuItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</MenuItem>
           </DropdownButton>
         </FormGroup>
+        </Row>
 
         <Table.Provider
           className="pure-table pure-table-bordered"

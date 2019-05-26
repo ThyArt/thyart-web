@@ -129,7 +129,7 @@ class Client extends Component {
   editable() {
     return (
       <div>
-        <Button bsSize="lg" onClick={this.clientCreation} className='billingCreateButton' bsStyle="primary">Créer un nouveau client</Button>
+        <Button bsSize="lg" onClick={this.clientCreation} className='billingCreateButton' bsStyle="primary">Créer un client</Button>
         <Jumbotron className="billingJumbotron">
           <h2 className="billingJumbotronTitle">Informations du client</h2>
 
