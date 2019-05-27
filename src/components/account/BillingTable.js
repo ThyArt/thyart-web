@@ -8,6 +8,7 @@ import '../../css/Membres.css';
 import { deleteBilling, setCurrentBilling, sortBillings } from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
+import InputGroup from "react-bootstrap/InputGroup";
 
 class BillingTable extends Component {
   constructor(props) {
@@ -161,11 +162,36 @@ class BillingTable extends Component {
             Supprimer
           </Button>
         </Modal>
-
-        <FormGroup>
-          <FormControl type='text' value={this.state.search} onChange={this.onSearchChange} placeholder='Entrer le texte à rechercher...' id='billingSearchBar' bssize='large'/>
-          <Button id={'buttonRechercher'} bsstyle='primary' bssize='large' onClick={this.searchBillings}>Rechercher</Button>
-        </FormGroup>
+        <InputGroup className="mb-3">
+          <FormControl
+              type={'text'}
+              value={this.state.search}
+              onChange={this.onSearchChange}
+              placeholder='Entrer le texte à rechercher...'
+              id='billingSearchBar'
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+          />
+          <InputGroup.Append>
+            <Button id={'buttonRechercher'}
+                    variant="outline-primary"
+                    bsstyle='primary'
+                    bssize='large' onClick={this.searchBillings}>Rechercher</Button>
+            <DropdownButton
+                as={InputGroup.Append}
+                variant="outline-secondary"
+                bssize='large'
+                id='buttonFilter' title={'filtre'}>
+              <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
+              <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
+              <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
+              <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
+              <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
+              <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
+            </DropdownButton>
+          </InputGroup.Append>
+        </InputGroup>
 
         <Container fluid>
           <Row>
@@ -174,17 +200,6 @@ class BillingTable extends Component {
                   <Table.Header />
                   <Table.Body rows={rows} rowKey="id" />
                 </Table.Provider>
-              </Col>
-
-              <Col lg={1}>
-                <DropdownButton bssize='large' className='billingFilters' title={'filtre'}>
-                  <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
-                  <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
-                  <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
-                  <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
-                  <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
-                  <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
-                </DropdownButton>
               </Col>
           </Row>
         </Container>

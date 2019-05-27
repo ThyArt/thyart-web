@@ -7,6 +7,9 @@ import uuid from 'uuid';
 import '../../css/Membres.css'
 import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
 import Modal from "react-responsive-modal";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import FormLabel from "react-bootstrap/FormLabel";
 
 export class Members extends Component {
   constructor(props) {
@@ -130,52 +133,61 @@ export class Members extends Component {
         </Col>
 
         <Modal open={this.state.addModal} onClose={this.onAddClose} center>
-          <h2 className='title'>Ajout d'un membre :</h2>
-          <Col sm={6}>
-            <h3 className="firstname">Nom :</h3>
-          </Col>
-          <Col sm={6}>
-            <FormGroup className='input' validationState={this.getFamilyValidationState()}>
-              <FormControl
-                type="firstname"
-                value={this.props.newFamily}
-                placeholder="Entrer le nom du membre"
-                onChange={this.handleChangeFamily}
-              />
+          <Container>
+            <Row>
+              <h2 className='title'>Ajout d'un membre :</h2>
+            </Row>
+            <FormGroup as={Row} className='input' validationState={this.getFamilyValidationState()}>
+              <FormLabel column lg={3}>
+                Nom :
+              </FormLabel>
+              <Col>
+                <FormControl
+                    lg={9}
+                    type="firstname"
+                    value={this.props.newFamily}
+                    placeholder="Entrer le nom du membre"
+                    onChange={this.handleChangeFamily}
+                />
+              </Col>
               <FormControl.Feedback />
             </FormGroup>
-          </Col>
-          <Col sm={6}>
-            <h3 className="name">Prénom :</h3>
-          </Col>
-          <Col sm={6}>
-            <FormGroup className='input' validationState={this.getNameValidationState()}>
-              <FormControl
-                type="name"
-                value={this.props.newName}
-                placeholder="Entrer le prénom du membre"
-                onChange={this.handleChangeName}
-              />
+            <FormGroup as={Row} className='input' validationState={this.getNameValidationState()}>
+              <FormLabel column lg={3}>
+                Prénom :
+              </FormLabel>
+              <Col>
+                <FormControl
+                    lg={9}
+                    type="name"
+                    value={this.props.newName}
+                    placeholder="Entrer le prénom du membre"
+                    onChange={this.handleChangeName}
+                />
+              </Col>
               <FormControl.Feedback />
             </FormGroup>
-          </Col>
-          <Col sm={6}>
-            <h3 className="name">Mail :</h3>
-          </Col>
-          <Col sm={6}>
-            <FormGroup className='input' validationState={this.getMailValidationState()}>
-              <FormControl
-                type="mail"
-                value={this.props.newMail}
-                placeholder="Entrer le mail du membre"
-                onChange={this.handleChangeMail}
-              />
+            <FormGroup as={Row} className='input' validationState={this.getMailValidationState()}>
+              <FormLabel column lg={3}>
+                Mail :
+              </FormLabel>
+              <Col>
+                <FormControl
+                    lg={9}
+                    type="mail"
+                    value={this.props.newMail}
+                    placeholder="Entrer le mail du membre"
+                    onChange={this.handleChangeMail}
+                />
+              </Col>
               <FormControl.Feedback />
             </FormGroup>
-          </Col>
-          <Button bsstyle="primary" onClick={this.onAdd} className='validate' bssize='large'>
-            Valider
-          </Button>
+            <Row>
+              <Button bsstyle="primary" onClick={this.onAdd} className='validate' bssize='large'>
+                Valider
+              </Button>
+            </Row>
+          </Container>
         </Modal>
 
         <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>

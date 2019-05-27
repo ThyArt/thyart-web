@@ -20,6 +20,8 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actionsArtwork";
 import {createArtworkIfNeeded, sortArtworkByState, eraseArtworkIfNeeded} from "../../actions/actionsArtwork";
+import InputGroup from "react-bootstrap/InputGroup";
+import Container from "react-bootstrap/Container";
 
 export class Artwork extends Component {
   constructor(props, context) {
@@ -225,35 +227,54 @@ export class Artwork extends Component {
 
   render() {
     return (
-      <div id='page'>
-        <div id='toolbar'>
-          <Form inline>
-            <FormGroup bssize='large'>
-              <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                           placeholder='Entrer le texte à rechercher...' id='searchBar'/>
+      <div>
+        <div>
+          <Container fluid>
+            <Col xl={10} lg={10} id={'colSearchBarContainer'}>
+              <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                  <Button bssize='large'
+                          id='ajouter'
+                          onClick={this.handleAddArtworkShow}>
+                    Ajouter
+                  </Button>
+                </InputGroup.Prepend>
+                <FormControl
+                    id={'searchBar'}
+                    type={'text'}
+                    value={this.state.search}
+                    onChange={this.onSearchChange}
+                    placeholder='Entrer le texte à rechercher...'
+                    aria-describedby="basic-addon2"
+                />
+                <InputGroup.Append>
+                  <Button
+                      id={'search'}
+                      variant="outline-primary"
+                      bsstyle='primary'
+                      bssize='large' onClick={this.searchArtworks}>Rechercher</Button>
+                  <DropdownButton
+                      as={InputGroup.Append}
+                      variant="outline-secondary"
+                      title="filtre"
+                      id="dropDownFilter"
+                  >
+                    <DropdownItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</DropdownItem>
+                    <DropdownItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</DropdownItem>
+                    <DropdownItem eventKey={3} onSelect={this.onSelectAlert}>Prix croissant</DropdownItem>
+                    <DropdownItem eventKey={4} onSelect={this.onSelectAlert}>Prix décroissant</DropdownItem>
+                    <DropdownItem eventKey={5} onSelect={this.onSelectAlert}>En transit</DropdownItem>
+                    <DropdownItem eventKey={6} onSelect={this.onSelectAlert}>Vendu</DropdownItem>
+                    <DropdownItem eventKey={7} onSelect={this.onSelectAlert}>Exposé</DropdownItem>
+                    <DropdownItem eventKey={8} onSelect={this.onSelectAlert}>En stock</DropdownItem>
+                    <DropdownItem divider/>
+                    <DropdownItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</DropdownItem>
+                  </DropdownButton>{' '}
+                </InputGroup.Append>
+              </InputGroup>
+            </Col>
+          </Container>
 
-              <Button bsstyle='primary' bssize='large' onClick={this.searchArtworks}>Rechercher</Button>
-
-              <DropdownButton bssize='large' className='complexButton'
-                              title={"filter"}>
-                <DropdownItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</DropdownItem>
-                <DropdownItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</DropdownItem>
-                <DropdownItem eventKey={3} onSelect={this.onSelectAlert}>Prix croissant</DropdownItem>
-                <DropdownItem eventKey={4} onSelect={this.onSelectAlert}>Prix décroissant</DropdownItem>
-                <DropdownItem eventKey={5} onSelect={this.onSelectAlert}>En transit</DropdownItem>
-                <DropdownItem eventKey={6} onSelect={this.onSelectAlert}>Vendu</DropdownItem>
-                <DropdownItem eventKey={7} onSelect={this.onSelectAlert}>Exposé</DropdownItem>
-                <DropdownItem eventKey={8} onSelect={this.onSelectAlert}>En stock</DropdownItem>
-                <DropdownItem divider/>
-                <DropdownItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</DropdownItem>
-              </DropdownButton>{' '}
-
-              <Button bssize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
-                More
-              </Button>
-
-            </FormGroup>
-          </Form>
         </div>
 
         <Modal dialogClassName="addArtWork-modal" open={this.state.addModal} onClose={this.handleAddArtworkClose}>

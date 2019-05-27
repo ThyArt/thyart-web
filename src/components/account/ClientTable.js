@@ -15,6 +15,7 @@ import {
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import InputGroup from "react-bootstrap/InputGroup";
 
 class ClientTable extends Component {
   constructor(props) {
@@ -158,12 +159,35 @@ class ClientTable extends Component {
           </Button>
         </Modal>
 
-        <FormGroup>
-          <FormControl  type='text' value={this.state.search} onChange={this.onSearchChange}
-                       placeholder='Entrer le texte à rechercher...' id='billingSearchBar'/>
-          <Button id={'buttonRechercher'} bsstyle='primary'
-                  bssize='large' onClick={this.searchClients}>Rechercher</Button>
-        </FormGroup>
+        <InputGroup className="mb-3">
+          <FormControl
+              type={'text'}
+              value={this.state.search}
+              onChange={this.onSearchChange}
+              placeholder='Entrer le texte à rechercher...'
+              id='billingSearchBar'
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+          />
+          <InputGroup.Append>
+            <Button id={'buttonRechercher'}
+                    variant="outline-primary"
+                    bsstyle='primary'
+                    bssize='large' onClick={this.searchClients}>Rechercher</Button>
+            <DropdownButton
+                as={InputGroup.Append}
+                variant="outline-secondary"
+                bssize='large' id='buttonFilter' title={'filtre'}>
+              <DropdownItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</DropdownItem>
+              <DropdownItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</DropdownItem>
+              <DropdownItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</DropdownItem>
+              <DropdownItem eventKey={4} onSelect={this.handleFilters}>Prénom Z-A</DropdownItem>
+              <DropdownItem eventKey={5} onSelect={this.handleFilters}>Mail A-Z</DropdownItem>
+              <DropdownItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</DropdownItem>
+            </DropdownButton>
+          </InputGroup.Append>
+        </InputGroup>
 
         <Container fluid>
           <Row>
@@ -172,16 +196,6 @@ class ClientTable extends Component {
                 <Table.Header />
                 <Table.Body rows={rows} rowKey="id" />
               </Table.Provider>
-            </Col>
-            <Col lg={1}>
-              <DropdownButton bssize='large' id='buttonFilter' title={'filtre'}>
-                <DropdownItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</DropdownItem>
-                <DropdownItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</DropdownItem>
-                <DropdownItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</DropdownItem>
-                <DropdownItem eventKey={4} onSelect={this.handleFilters}>Prénom Z-A</DropdownItem>
-                <DropdownItem eventKey={5} onSelect={this.handleFilters}>Mail A-Z</DropdownItem>
-                <DropdownItem eventKey={6} onSelect={this.handleFilters}>Mail Z-A</DropdownItem>
-              </DropdownButton>
             </Col>
           </Row>
         </Container>
