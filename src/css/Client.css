@@ -1,3 +1,9 @@
+.spinner {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+
 #clientBackButton {
     position: fixed;
     top: 150px;

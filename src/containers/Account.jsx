@@ -13,6 +13,7 @@ import { disconnect} from "../actions/actionsAuth";
 
 import '../css/Account.css'
 import Col from "react-bootstrap/Col";
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 export class Account extends Component {
   constructor(props) {
@@ -124,6 +125,14 @@ Account.propTypes = {
   isLogged: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 };
+
+export function createNotificationError(error) {
+  NotificationManager.error(error, 'Erreur', 5000);
+}
+
+export function createNotificationSuccess(msg) {
+  NotificationManager.success(msg, 'Succès', 5000);
+}
 
 function mapStateToProps(state) {
     const {

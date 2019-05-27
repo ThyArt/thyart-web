@@ -1,10 +1,10 @@
 import {
   RECEIVE_PROFILE,
   REQUEST_PROFILE,
-  RECEIVE_PROFILE_ERROR
+  RECEIVE_PROFILE_ERROR, RECEIVE_PROFILE_MODIFY
 } from "../constants/constantsAction";
 
-export const initialState = [
+export const initialState =
   {
     isFetching: false,
     msg: null,
@@ -13,8 +13,7 @@ export const initialState = [
     name: null,
     firstname: null,
     lastname: null
-  }
-];
+  };
 
 function profile(state = initialState, action)
 {
@@ -36,7 +35,8 @@ function profile(state = initialState, action)
         isFetching: false,
         mail: action.mail,
         firstname: action.firstname,
-        lastname: action.lastname
+        lastname: action.lastname,
+        msg: action.msg
       });
     default:
       return state

@@ -3,7 +3,8 @@ import {
   RECEIVE_CUSTOMERS_ERROR,
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMER,
-  OPEN_CREATE_CUSTOMER, SORT_BILLINGS, SORT_CUSTOMERS
+  OPEN_CREATE_CUSTOMER,
+  SORT_CUSTOMERS
 } from "../constants/constantsAction";
 import { cloneDeep } from "lodash";
 

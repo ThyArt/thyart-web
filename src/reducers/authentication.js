@@ -6,14 +6,12 @@ import {
     REQUEST_AUTH,
     RECEIVE_AUTH_ERROR
 } from "../constants/constantsAction";
-const initialState = [
-  {
+const initialState = {
     isLogged: false,
     isFetching: false,
     msg: null,
     error: null
-  }
-];
+  };
 
 function authentication (state = initialState, action)
 {
