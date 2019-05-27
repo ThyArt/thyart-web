@@ -12,7 +12,6 @@
 }
 
 .btn-group>.btn:first-child {
-    margin-left: 30px;
 }
 
 #titleModal {
@@ -32,7 +31,8 @@
 }
 
 #artWorkState {
-    margin:20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .confirmModal {

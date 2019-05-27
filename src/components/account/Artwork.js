@@ -284,7 +284,7 @@ export class Artwork extends Component {
               <ImageUpload callbackFromParent={this.myCallback}/>
             </Col>
             <Col xs={6}>
-              <form>
+              <Form>
                 <FormGroup controlId="formValidationSuccess1" className='addModal'
                            validationState={this.getNewArtworkValidationState()}>
                   <FormLabel>Nom de l'oeuvre</FormLabel>
@@ -299,7 +299,8 @@ export class Artwork extends Component {
                                        type="radio"
                                        value={this.state.AWState}
                                        onChange={this.handleChange}
-                                       name="options">
+                                       name="options"
+                    block>
                       <ToggleButton value={1}>Exposé</ToggleButton>
                       <ToggleButton value={2}>Stock</ToggleButton>
                       <ToggleButton value={3}>Vendu</ToggleButton>
@@ -310,7 +311,7 @@ export class Artwork extends Component {
                     Valider
                   </Button>
                 </FormGroup>
-              </form>
+              </Form>
             </Col>
           </Row>
         </Modal>
