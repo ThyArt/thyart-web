@@ -169,9 +169,6 @@ class BillingTable extends Component {
               onChange={this.onSearchChange}
               placeholder='Entrer le texte à rechercher...'
               id='billingSearchBar'
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
           />
           <InputGroup.Append>
             <Button id={'buttonRechercher'}
@@ -182,7 +179,7 @@ class BillingTable extends Component {
                 as={InputGroup.Append}
                 variant="outline-secondary"
                 bssize='large'
-                id='buttonFilter' title={'filtre'}>
+                id='buttonFilter' title={'Filtres'}>
               <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
               <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
               <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>

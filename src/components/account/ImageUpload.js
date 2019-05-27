@@ -38,7 +38,7 @@ export default class ImageUpload extends Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<Image src={imagePreviewUrl} responsive alt={'../../static/images.png'}/>);
+            $imagePreview = (<Image src={imagePreviewUrl} responsive alt={'../../static/images.png'} style={this.props.style}/>);
         }
 
         return (

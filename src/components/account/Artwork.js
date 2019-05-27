@@ -245,7 +245,6 @@ export class Artwork extends Component {
                     value={this.state.search}
                     onChange={this.onSearchChange}
                     placeholder='Entrer le texte à rechercher...'
-                    aria-describedby="basic-addon2"
                 />
                 <InputGroup.Append>
                   <Button
@@ -256,7 +255,7 @@ export class Artwork extends Component {
                   <DropdownButton
                       as={InputGroup.Append}
                       variant="outline-secondary"
-                      title="filtre"
+                      title="Filtres"
                       id="dropDownFilter"
                   >
                     <DropdownItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</DropdownItem>
@@ -269,7 +268,7 @@ export class Artwork extends Component {
                     <DropdownItem eventKey={8} onSelect={this.onSelectAlert}>En stock</DropdownItem>
                     <DropdownItem divider/>
                     <DropdownItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</DropdownItem>
-                  </DropdownButton>{' '}
+                  </DropdownButton>
                 </InputGroup.Append>
               </InputGroup>
             </Col>
@@ -281,7 +280,7 @@ export class Artwork extends Component {
           <h1 id='titleModal'>Ajouter une oeuvre</h1>
           <Row>
             <Col xs={6}>
-              <ImageUpload callbackFromParent={this.myCallback}/>
+              <ImageUpload callbackFromParent={this.myCallback} style={{ maxWidth: '100%', maxHeight: '100%' }}/>
             </Col>
             <Col xs={6}>
               <Form>
@@ -366,44 +365,43 @@ export class Artwork extends Component {
                       </div>
                     ) : (
                       <div>
-                        <Row>
-                          <Col sm={5} id='photoModal'>
-                            { (this.props.artwork != null && this.props.artwork.images != null) ?
-                              (<img src={this.props.artwork.src} alt=''/>
-                              ): null
-                            }
+                        <Row className='detailsModalRows'>
+                          <Col sm={12}>
+                            <img src={this.props.artwork.images[0].url} alt="image" className='detailsModalImage'/>
                           </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            Titre:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.name}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            Référence:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.ref}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            Prix:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.price}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            État:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.state}
+                          <Col sm={12} className='detailsModalCols'>
+                            <Row>
+                              <Col sm={3}>
+                                Titre:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.name}
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col sm={3}>
+                                Référence:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.ref}
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col sm={3}>
+                                Prix:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.price}
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col sm={3}>
+                                État:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.state}
+                              </Col>
+                            </Row>
                           </Col>
                         </Row>
                       </div>

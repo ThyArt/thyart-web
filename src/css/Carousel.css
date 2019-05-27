@@ -12,3 +12,7 @@
 #container {
     height: 60vh;
 }
+
+.CaptionBlackText {
+    color: black;
+}

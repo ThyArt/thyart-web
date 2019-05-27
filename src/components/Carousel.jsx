@@ -42,7 +42,7 @@ class CarouselComp extends Component {
                        src={require('../static/mess.png')}
                        alt="first slide"
                   />
-                  <Carousel.Caption>
+                  <Carousel.Caption className='CaptionBlackText'>
                     <h3>Rassemblez vos données</h3>
                     <p>
                       Thy Art regroupe les données dont vous avez besoin
