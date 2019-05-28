@@ -31,7 +31,7 @@ function receiveSignInError(error) {
   )
     error_msg = error.response.data.message;
   else
-    error_msg = 'Unknown error.';
+    error_msg = 'Erreur inconnue.';
 
   return {
     type: RECEIVE_AUTH_ERROR,
@@ -48,7 +48,7 @@ function receiveSignUpError(error) {
   )
     error_msg = error.response.data.messages[0];
   else
-    error_msg = 'Unknown error.';
+    error_msg = 'Erreur inconnue.';
 
   return {
     type: RECEIVE_AUTH_ERROR,
@@ -60,21 +60,21 @@ function receiveSignIn(res) {
   sessionStorage.setItem('token', res.data['access_token']);
   return {
     type: RECEIVE_SIGN_IN,
-    msg: "Connected"
+    msg: "Connecté"
   }
 }
 
 function receiveSignUp(res) {
   return {
     type: RECEIVE_SIGN_UP,
-    msg: "Congratulation, you are registered! you can now connect to your account."
+    msg: "Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte."
   }
 }
 
 function receivePwd(res) {
   return {
     type: RECEIVE_PWD,
-    msg: "Congratulation email sent successfully"
+    msg: "Un email a été envoyé à l'adresse indiquée"
   }
 }
 
@@ -95,10 +95,10 @@ function fetchSignIn(username, password) {
   }
 }
 
-function fetchSignUp(name, firstname, lastname, mail, password) {
+function fetchSignUp(username, firstname, lastname, mail, password) {
 
   const body = {
-    name: name,
+    name: mail,
     firstname: firstname,
     lastname: lastname,
     email: mail,
@@ -137,7 +137,7 @@ export function signUpIfNeeded(username, firstname, lastname, mail, password) {
     if (shouldFetchApi(getState()))
     {
       dispatch(requestAuth());
-      return dispatch(fetchSignUp(username, firstname, lastname, mail, password))
+      return dispatch(fetchSignUp("username",firstname, lastname, mail, password))
     }
   }
 }

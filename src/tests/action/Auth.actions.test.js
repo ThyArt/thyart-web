@@ -1,13 +1,13 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import * as actions from '../actions/actionsAuth'
-import * as types from '../constants/constantsAction'
+import * as actions from '../../actions/actionsAuth'
+import * as types from '../../constants/constantsAction'
 import fetchMock from 'fetch-mock'
-import expect from 'expect'
+import expect from 'expect/build/index'
 import moxios from 'moxios'
 
-const middlewares = [thunk]
-const mockStore = configureMockStore(middlewares)
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 describe('async signin/signup actions', () => {
 
@@ -38,14 +38,14 @@ describe('async signin/signup actions', () => {
     const expectedActions = [
       { type: types.REQUEST_AUTH },
       { type: types.RECEIVE_SIGN_IN,
-        msg: "Connected"}
-    ]
+        msg: "Connecté"}
+    ];
     const store = mockStore({ authentication: [] })
 
     return store.dispatch(actions.signInIfNeeded('test@test.jp', 'test42')).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
-  })
+  });
 
   it('creates RECEIVE_SIGN_UP when signing up', () => {
 
@@ -56,7 +56,8 @@ describe('async signin/signup actions', () => {
         response: {
           "data": {
             "id": 1,
-            "name": "test",
+            "firstname": "test",
+            "lastname": "test",
             "email": "test@test.jp"
           }
         },
@@ -66,21 +67,21 @@ describe('async signin/signup actions', () => {
     const expectedActions = [
       { type: types.REQUEST_AUTH },
       { type: types.RECEIVE_SIGN_UP,
-        msg: "Congratulation, you are registered! you can now connect to your account."}
-    ]
+        msg: "Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte."}
+    ];
     const store = mockStore({ authentication: [] })
 
     return store.dispatch(actions.signUpIfNeeded('test', 'test', 'test', 'test@test.jp', 'test42')).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
-  })
+  });
 
   it('should create an action to disconnect', () => {
     const expectedAction = {
       type: types.DISCONNECT
-    }
+    };
     expect(actions.disconnect()).toEqual(expectedAction)
-  })
+  });
 
   it('creates RECEIVE_PWD when asking a password reset', () => {
 
@@ -91,7 +92,8 @@ describe('async signin/signup actions', () => {
         response: {
           "data": {
             "id": 1,
-            "name": "test",
+            "firstname": "test",
+            "lastname": "test",
             "email": "test@test.jp"
           }
         },
@@ -101,13 +103,13 @@ describe('async signin/signup actions', () => {
     const expectedActions = [
       { type: types.REQUEST_AUTH },
       { type: types.RECEIVE_SIGN_UP,
-        msg: "Congratulation, you are registered! you can now connect to your account."}
-    ]
-    const store = mockStore({ authentication: [] })
+        msg: "Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte."}
+    ];
+    const store = mockStore({ authentication: [] });
 
     return store.dispatch(actions.signUpIfNeeded('test', 'test', 'test', 'test@test.jp', 'test42')).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
 
-})
+});

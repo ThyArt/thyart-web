@@ -10,21 +10,13 @@ import '../css/LandingPage.css';
 class LandingPage extends Component {
   render() {
     return (
-      <div id="landingPage">
+      <div>
         <Header />
-        <div id="content">
           <Carousel />
           <About />
           <Services />
-          {/*
-            TODO:
-
-            <div id="pricing">Pricing</div>
-            <div id="blog">Blog</div>
-*/}
           <Contact />
         </div>
-      </div>
     );
   }
 }

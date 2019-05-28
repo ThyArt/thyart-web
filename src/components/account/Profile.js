@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { PageHeader, Jumbotron, Col, Row } from 'react-bootstrap';
+import {Jumbotron, Col, Row } from 'react-bootstrap';
 import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
 import ReactLoading from 'react-loading';
@@ -177,224 +177,227 @@ export class Profile extends Component {
   render() {
     return (
       <div id='profile'>
-        <PageHeader>Vos informations :</PageHeader>
+        <h1>Vos informations :</h1>
 
-        <Jumbotron className='jumbo'>
-          <h3>Informations de connexion :</h3>
+        <Col xl={8} lg={8}>
+          <Jumbotron className='jumbo'>
+            <h3>Informations de connexion :</h3>
 
-          <div className='form'>
-            <div>
-              <Row className='info'>
-                <Col sm={2} className='field'>
-                  Prénom:
-                </Col>
-                <Col sm={2}>
-                  {
-                    this.props.isFetching ? (
-                      <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+            <div className='form'>
+              <div>
+                <Row className='info'>
+                  <Col xl={3} lg={3} sm={2} className='field'>
+                    Prénom:
+                  </Col>
+                  <Col xl={4} lg={4} sm={2}>
+                    {
+                      this.props.isFetching ? (
+                          <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                      ) : (
+                          <div>
+                            {this.props.firstname}
+
+                          </div>
+                      )
+                    }
+                  </Col>
+                  <Col sm={2}>
+                    {
+                      !this.props.isFetching ? (
+                          <button className='modify' onClick={this.onFirstnameOpen}>
+                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                            <span className='modifyText'>Modifier</span>
+                          </button>
+                      ) : (<div/>)
+                    }
+                  </Col>
+
+                </Row>
+                <Modal open={this.state.firstnameModal} onClose={this.onFirstnameClose} center>
+                  <h2 className="title">Changement de prénom :</h2>
+                  <Col sm={6} className='field'>
+                    <h3 className="name">Nouveau prénom :</h3>
+                  </Col>
+                  <Col sm={6}>
+                    <FormGroup className='input' validationState={this.getFirstnameValidationState()}>
+                      <FormControl
+                          type="text"
+                          value={this.state.newFirstname}
+                          placeholder="Entrer le nouveau prénom"
+                          onChange={this.handleChangeFirstname}
+                      />
+                      <FormControl.Feedback />
+                    </FormGroup>
+                  </Col>
+                  <Button bsstyle="primary" onClick={this.checkFirstname} className='validate' bssize='large'>
+                    Valider
+                  </Button>
+                </Modal>
+              </div>
+
+              <div>
+                <Row className='info'>
+                  <Col xl={3} lg={3} sm={2} className='field'>
+                    Nom:
+                  </Col>
+                  <Col xl={4} lg={4} sm={2}>
+                    {this.props.isFetching ? (
+                        <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
                     ) : (
-                      <div>
-                        {this.props.firstname}
-
-                      </div>
+                        <div>
+                          {this.props.lastname}
+                        </div>
                     )
-                  }
-                </Col>
-                <Col sm={2}>
-                  {
-                    !this.props.isFetching ? (
-                      <button className='modify' onClick={this.onFirstnameOpen}>
-                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                        <span className='modifyText'>Modifier</span>
-                      </button>
-                    ) : (<div/>)
-                  }
-                </Col>
+                    }
+                  </Col>
+                  <Col sm={2}>
+                    {
+                      !this.props.isFetching ? (
+                          <button className='modify' onClick={this.onLastnameOpen}>
+                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                            <span className='modifyText'>Modifier</span>
+                          </button>
+                      ) : (<div/>)
+                    }
+                  </Col>
+                </Row>
+                <Modal open={this.state.lastnameModal} onClose={this.onLastnameClose} center>
+                  <h2 className="title">Changement de nom de famille :</h2>
+                  <Col sm={6} className='field'>
+                    <h3 className="name">Nouveau nom de famille :</h3>
+                  </Col>
+                  <Col sm={6}>
+                    <FormGroup className='input' validationState={this.getLastnameValidationState()}>
+                      <FormControl
+                          type="text"
+                          value={this.state.newLastname}
+                          placeholder="Entrer le nouveau nom de famille"
+                          onChange={this.handleChangeLastname}
+                      />
+                      <FormControl.Feedback />
+                    </FormGroup>
+                  </Col>
+                  <Button bsstyle="primary" onClick={this.checkLastname} className='validate' bssize='large'>
+                    Valider
+                  </Button>
+                </Modal>
+              </div>
 
-              </Row>
-              <Modal open={this.state.firstnameModal} onClose={this.onFirstnameClose} center>
-                <h2 className="title">Changement de prénom :</h2>
-                <Col sm={6} className='field'>
-                  <h3 className="name">Nouveau prénom :</h3>
-                </Col>
-                <Col sm={6}>
-                  <FormGroup className='input' validationState={this.getFirstnameValidationState()}>
-                    <FormControl
-                      type="text"
-                      value={this.state.newFirstname}
-                      placeholder="Entrer le nouveau prénom"
-                      onChange={this.handleChangeFirstname}
-                    />
-                    <FormControl.Feedback />
-                  </FormGroup>
-                </Col>
-                <Button bsStyle="primary" onClick={this.checkFirstname} className='validate' bsSize='large'>
-                  Valider
-                </Button>
-              </Modal>
+              <div>
+                <Row className="info">
+                  <Col xl={3} lg={3} sm={2} className='field'>
+                    Adresse mail:
+                  </Col>
+                  <Col xl={4} lg={4} sm={2}>
+                    {this.props.isFetching ? (
+                        <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                    ) : (
+                        <div>
+                          {this.props.mail}
+                        </div>
+                    )
+
+                    }
+                  </Col>
+                  <Col sm={2}>
+                    {
+                      !this.props.isFetching ? (
+                          <button className='modify' onClick={this.onMailOpen}>
+                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                            <span className='modifyText'>Modifier</span>
+                          </button>
+                      ) : (<div/>)
+                    }
+                  </Col>
+                </Row>
+                <Modal open={this.state.mailModal} onClose={this.onMailClose} center>
+                  <h2 className="title">Changement d'adresse mail :</h2>
+                  <Col sm={6}>
+                    <h3 className="name">Nouvelle adresse mail :</h3>
+                  </Col>
+                  <Col sm={6}>
+                    <FormGroup className='input' validationState={this.getMailValidationState()}>
+                      <FormControl
+                          type="text"
+                          value={this.state.tmpMail}
+                          placeholder="Entrer la nouvelle adresse mail"
+                          onChange={this.handleChangeMail}
+                      />
+                      <FormControl.Feedback />
+                    </FormGroup>
+                  </Col>
+                  <Button bsstyle="primary" onClick={this.checkMail} className='validate' bssize='large'>
+                    Valider
+                  </Button>
+                </Modal>
+              </div>
+
+              <div>
+                <Row className="info">
+                  <Col xl={3} lg={3} sm={2} className='field'>
+                    Mot de passe:
+                  </Col>
+                  <Col xl={4} lg={4} sm={2}>
+                    {this.props.isFetching ? (
+                        <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                    ) : (
+                        <div>
+                          ******
+                        </div>
+                    )
+                    }
+                  </Col>
+                  <Col sm={2}>
+                    {
+                      !this.props.isFetching ? (
+                          <button className='modify' onClick={this.onPasswordOpen}>
+                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
+                            <span className='modifyText'>Modifier</span>
+                          </button>
+                      ) : (<div/>)
+                    }
+                  </Col>
+                </Row>
+
+                <Modal open={this.state.passwordModal} onClose={this.onPasswordClose} center>
+                  <h2 className='title'>Changement de mot de passe :</h2>
+                  <Col sm={6}>
+                    <h3 className="name">Nouveau mot de passe :</h3>
+                  </Col>
+                  <Col sm={6}>
+                    <FormGroup className='input' validationState={this.getPassValidationState()}>
+                      <FormControl
+                          type="password"
+                          value={this.state.newPassword1}
+                          placeholder="Entrer le nouveau mot de passe"
+                          onChange={this.handleChangePassword1}
+                      />
+                      <FormControl.Feedback />
+                    </FormGroup>
+                  </Col>
+                  <Col sm={6}>
+                    <h3 className="name">Confirmer mot de passe :</h3>
+                  </Col>
+                  <Col sm={6}>
+                    <FormGroup className='input' validationState={this.getConfirmValidationState()}>
+                      <FormControl
+                          type="password"
+                          value={this.state.newPassword2}
+                          placeholder="Confirmation du nouveau mot de passe"
+                          onChange={this.handleChangePassword2}
+                      />
+                      <FormControl.Feedback />
+                    </FormGroup>
+                  </Col>
+                  <Button bsstyle="primary" onClick={this.checkPassword} className='validate' bssize='large'>
+                    Valider
+                  </Button>
+                </Modal>
+              </div>
             </div>
+          </Jumbotron>
+        </Col>
 
-            <div>
-              <Row className='info'>
-                <Col sm={2} className='field'>
-                  Nom:
-                </Col>
-                <Col sm={2}>
-                  {this.props.isFetching ? (
-                    <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-                  ) : (
-                    <div>
-                      {this.props.lastname}
-                    </div>
-                  )
-                  }
-                </Col>
-                <Col sm={2}>
-                  {
-                    !this.props.isFetching ? (
-                      <button className='modify' onClick={this.onLastnameOpen}>
-                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                        <span className='modifyText'>Modifier</span>
-                      </button>
-                    ) : (<div/>)
-                  }
-                </Col>
-              </Row>
-              <Modal open={this.state.lastnameModal} onClose={this.onLastnameClose} center>
-                <h2 className="title">Changement de nom de famille :</h2>
-                <Col sm={6} className='field'>
-                  <h3 className="name">Nouveau nom de famille :</h3>
-                </Col>
-                <Col sm={6}>
-                  <FormGroup className='input' validationState={this.getLastnameValidationState()}>
-                    <FormControl
-                      type="text"
-                      value={this.state.newLastname}
-                      placeholder="Entrer le nouveau nom de famille"
-                      onChange={this.handleChangeLastname}
-                    />
-                    <FormControl.Feedback />
-                  </FormGroup>
-                </Col>
-                <Button bsStyle="primary" onClick={this.checkLastname} className='validate' bsSize='large'>
-                  Valider
-                </Button>
-              </Modal>
-            </div>
-
-            <div>
-              <Row className="info">
-                <Col sm={2} className='field'>
-                  Adresse mail:
-                </Col>
-                <Col sm={2}>
-                  {this.props.isFetching ? (
-                    <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-                  ) : (
-                    <div>
-                      {this.props.mail}
-                    </div>
-                  )
-
-                  }
-                </Col>
-                <Col sm={2}>
-                  {
-                    !this.props.isFetching ? (
-                      <button className='modify' onClick={this.onMailOpen}>
-                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                        <span className='modifyText'>Modifier</span>
-                      </button>
-                    ) : (<div/>)
-                  }
-                </Col>
-              </Row>
-              <Modal open={this.state.mailModal} onClose={this.onMailClose} center>
-                <h2 className="title">Changement d'adresse mail :</h2>
-                <Col sm={6}>
-                  <h3 className="name">Nouvelle adresse mail :</h3>
-                </Col>
-                <Col sm={6}>
-                  <FormGroup className='input' validationState={this.getMailValidationState()}>
-                    <FormControl
-                      type="text"
-                      value={this.state.tmpMail}
-                      placeholder="Entrer la nouvelle adresse mail"
-                      onChange={this.handleChangeMail}
-                    />
-                    <FormControl.Feedback />
-                  </FormGroup>
-                </Col>
-                <Button bsStyle="primary" onClick={this.checkMail} className='validate' bsSize='large'>
-                  Valider
-                </Button>
-              </Modal>
-            </div>
-
-            <div>
-              <Row className="info">
-                <Col sm={2} className='field'>
-                  Mot de passe:
-                </Col>
-                <Col sm={2}>
-                  {this.props.isFetching ? (
-                    <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-                  ) : (
-                    <div>
-                      ******
-                    </div>
-                  )
-                  }
-                </Col>
-                <Col sm={2}>
-                  {
-                    !this.props.isFetching ? (
-                      <button className='modify' onClick={this.onPasswordOpen}>
-                        <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                        <span className='modifyText'>Modifier</span>
-                      </button>
-                    ) : (<div/>)
-                  }
-                </Col>
-              </Row>
-
-              <Modal open={this.state.passwordModal} onClose={this.onPasswordClose} center>
-                <h2 className='title'>Changement de mot de passe :</h2>
-                <Col sm={6}>
-                  <h3 className="name">Nouveau mot de passe :</h3>
-                </Col>
-                <Col sm={6}>
-                  <FormGroup className='input' validationState={this.getPassValidationState()}>
-                    <FormControl
-                      type="password"
-                      value={this.state.newPassword1}
-                      placeholder="Entrer le nouveau mot de passe"
-                      onChange={this.handleChangePassword1}
-                    />
-                    <FormControl.Feedback />
-                  </FormGroup>
-                </Col>
-                <Col sm={6}>
-                  <h3 className="name">Confirmer mot de passe :</h3>
-                </Col>
-                <Col sm={6}>
-                  <FormGroup className='input' validationState={this.getConfirmValidationState()}>
-                    <FormControl
-                      type="password"
-                      value={this.state.newPassword2}
-                      placeholder="Confirmation du nouveau mot de passe"
-                      onChange={this.handleChangePassword2}
-                    />
-                    <FormControl.Feedback />
-                  </FormGroup>
-                </Col>
-                <Button bsStyle="primary" onClick={this.checkPassword} className='validate' bsSize='large'>
-                  Valider
-                </Button>
-              </Modal>
-            </div>
-          </div>
-        </Jumbotron>
 
       </div>
     );

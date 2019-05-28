@@ -1,68 +1,97 @@
 import React, {Component} from 'react';
-import * as Table from 'reactabular-table';
-import {Button, Col} from "react-bootstrap";
-import Modal from "react-responsive-modal";
-import {Redirect} from 'react-router-dom';
+import { Button, Col } from "react-bootstrap";
 
 import '../../css/Membres.css';
-import PropTypes from "prop-types";
+import '../../css/Billing.css';
 import BillingTable from "./BillingTable";
 import Billing from "./Billing";
+ import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
+import ReactLoading from "./Clients";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
+import { sortArtworkByState } from "../../actions/actionsArtwork";
 
 class Billings extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+  }
 
-        this.state = {
-            table: true,
-            modif: true
-        };
+  componentDidMount(){
+    this.props.dispatch(getBillingsIfNeeded(this.props.token));
+  }
 
-        this.onSwitch = this.onSwitch.bind(this);
-    }
+  onCreate = () => {
+    this.props.dispatch(openCreateBilling());
+    this.props.dispatch(sortArtworkByState(this.props.token, 'exposed'));
+  };
 
-    onSwitch = () => {
-        if (this.state.table)
-            this.setState({ modif: true, table: false });
-        else
-            this.setState({ modif: true, table: true });
-    };
-
-    onSwitchNew = () => {
-        if (this.state.table)
-            this.setState({modif: false, table: false, });
-        else
-            this.setState({modif: false, table: true });
-    };
+  onReturn = () => {
+    this.props.dispatch(getBillingsIfNeeded(this.props.token));
+  };
 
 
-    render() {
-
-
-        return (
-
-          <Col sm={10}>
-              {this.state.table ?
+  render() {
+    return (
+      <div>
+        {
+          this.props.isFetching ? (
+            <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+          ) : (
+            <Col sm={10}>
+              {this.props.table ?
                 <div>
-                    <button className='add' onClick={this.onSwitch}>
-                        <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"/>
-                        <span className='add'>Ajouter</span>
-                    </button>
-                    <BillingTable onClick={this.onSwitchNew}/>
+                  <Button bssize="lg" className='clientMainButton' onClick={this.onCreate}>
+                    <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"
+                         className='clientAddImage'/>
+                    <span className='clientAddButton'>Ajouter</span>
+                  </Button>
+                  <BillingTable token={this.props.token}/>
                 </div>
                 :
                 <div>
-                    <button onClick={this.onSwitch}>
-                        <span className='add'>Retour</span>
-                    </button>
-                    <Billing  modif={this.state.modif}  onClick={this.onSwitch}/>
+                  <Button bssize="lg" onClick={this.onReturn} className='billingMainButton'>
+                    <span className='add'>Retour</span>
+                  </Button>
+                  <Billing token={this.props.token}/>
                 </div>
               }
-
-          </Col>
-        );
-
-    }
+            </Col>
+          )
+        }
+      </div>
+    );
+  }
 }
 
-export default Billings;
+Billings.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  msg: PropTypes.string,
+  error: PropTypes.string,
+  modif: PropTypes.bool.isRequired,
+  table: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  const {
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
+    dispatch
+  } = state.billings;
+
+
+  return {
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps)(Billings)

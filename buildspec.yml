@@ -10,8 +10,8 @@ phases:
   post_build:
     commands:
       - echo REACT_APP_API_ENDPOINT=$API_ENDPOINT >> .env
-      - echo REACT_APP_CLIENT_ID=$CLIENT_ID >> .env
-      - echo REACT_APP_CLIENT_SECRET=$CLIENT_SECRET >> .env
+      - echo REACT_APP_API_CLIENT_ID=$CLIENT_ID >> .env
+      - echo REACT_APP_API_CLIENT_SECRET=$CLIENT_SECRET >> .env
 
 artifacts:
   files:

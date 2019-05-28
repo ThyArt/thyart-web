@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import { Navbar, Nav, NavItem } from "react-bootstrap";
+import { Navbar, Nav, Container, Row } from "react-bootstrap";
 import Scheduler from '../components/account/Scheduler';
 import Profile from '../components/account/Profile';
 import Members from '../components/account/Members';
 import Artwork from '../components/account/Artwork';
-import Client from '../components/account/Client';
+import Clients from '../components/account/Clients';
 import Billings from '../components/account/Billings';
 import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
@@ -12,6 +12,8 @@ import PropTypes from "prop-types";
 import { disconnect} from "../actions/actionsAuth";
 
 import '../css/Account.css'
+import Col from "react-bootstrap/Col";
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 export class Account extends Component {
   constructor(props) {
@@ -19,7 +21,7 @@ export class Account extends Component {
     let token = sessionStorage.getItem('token');
 
     this.state = {
-      selected: 1,
+      selected: '1',
       token: token
     };
   }
@@ -32,11 +34,12 @@ export class Account extends Component {
   }
 
   handleSelect = eventKey => {
-    if (eventKey === 7) {
+    if (eventKey === '7') {
         this.props.dispatch(disconnect());
         this.setState({token: null});
         sessionStorage.removeItem('token');
     } else {
+        console.log(eventKey);
       this.setState({ selected: eventKey });
     }
   };
@@ -44,56 +47,74 @@ export class Account extends Component {
   render() {
     return (
         <div id='accountPage'>
-
-          <div>
-            <Navbar fixedTop id='topBar'>
-              <a>
-                <img src={require('../static/SmallLogo.png')} alt="logo" height="100" id="logo"/>
-              </a>
-              <span id='title'>Ma Gallerie</span>
-            </Navbar>
-          </div>
-
-          <div id='sideNav'>
-            <Nav stacked bsStyle='pills' onSelect={this.handleSelect}>
-              <NavItem  eventKey={1} className='item'>
-                Accueil
-              </NavItem>
-              <NavItem  eventKey={2} className='item'>
-                Statistiques
-              </NavItem>
-              <NavItem  eventKey={3} className='item'>
-                Oeuvres
-              </NavItem>
-              <NavItem  eventKey={4} className='item'>
-                Membres
-              </NavItem>
-              <NavItem  eventKey={8} className='item'>
-                Client
-              </NavItem>
-              <NavItem  eventKey={5} className='item'>
-                Facturation
-              </NavItem>
-              <NavItem  eventKey={6} className='item'>
-                Profil
-              </NavItem>
-              <NavItem  eventKey={7}>
-                Déconnexion
-              </NavItem>
-            </Nav>
-          </div>
-
-          <div id='calendar'>
-            { this.state.selected === 1 ? <Scheduler token={this.state.token}/> : null }
-            { this.state.selected === 4 ? <Members token={this.state.token}/> : null}
-            { this.state.selected === 3 ? <Artwork token={this.state.token}/> : null }
-            { this.state.selected === 6 ? <Profile token={this.state.token}/> : null }
-            { this.state.selected === 8 ? <Client token={this.state.token}/> : null }
-            { this.state.selected === 5 ? <Billings token={this.state.token}/> : null }
-          </div>
-
-
-
+          <NotificationContainer/>
+          <Navbar>
+                <Navbar.Brand>
+                    <img
+                        src={require('../static/SmallLogo.png')}
+                        width="50"
+                        height="100"
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo"
+                    />
+                </Navbar.Brand>
+                <Container>
+                  <Navbar.Text id='title'>
+                    Ma Gallerie
+                  </Navbar.Text>
+                </Container>
+          </Navbar>
+          <Container fluid={true}>
+            <Row>
+              <Col>
+              <div >
+                <Nav className='flex-column' variant={'pills'} defaultActiveKey={'1'} onSelect={this.handleSelect}>
+                  <Nav.Link  eventKey={'1'} className='item'>
+                    Accueil
+                  </Nav.Link>
+                  <Nav.Link  eventKey={'2'} className='item'>
+                    Statistiques
+                  </Nav.Link>
+                  <Nav.Link  eventKey={'3'} className='item'>
+                    Oeuvres
+                  </Nav.Link>
+                  <Nav.Link  eventKey={'4'} className='item'>
+                    Membres
+                  </Nav.Link>
+                  <Nav.Link  eventKey={'8'} className='item'>
+                    Client
+                  </Nav.Link>
+                  <Nav.Link  eventKey={'5'} className='item'>
+                    Facturation
+                  </Nav.Link>
+                  <Nav.Link  eventKey={'6'} className='item'>
+                    Profil
+                  </Nav.Link>
+                  <Nav.Link  eventKey={'7'}>
+                    Déconnexion
+                  </Nav.Link>
+                </Nav>
+              </div>
+              </Col>
+              <Col xs={10}>
+                <div>
+                  { this.state.selected === '1' ? <Scheduler token={this.state.token}/> : null }
+                  { this.state.selected === '4' ? <Members token={this.state.token}/> : null}
+                  { this.state.selected === '3' ? <Artwork token={this.state.token}/> : null }
+                  { this.state.selected === '6' ? <Profile token={this.state.token}/> : null }
+                  { this.state.selected === '8' ? <Clients token={this.state.token}/> : null }
+                  { this.state.selected === '5' ? <Billings token={this.state.token}/> : null }
+                </div>
+              </Col>
+            </Row>
+          </Container>
+          {(this.props.isLogged === false) ? (
+            <Redirect
+              to={{
+                pathname: '/signin',
+              }}
+            />
+          ) : null}
 
 
         </div>
@@ -105,6 +126,14 @@ Account.propTypes = {
   isLogged: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 };
+
+export function createNotificationError(error) {
+  NotificationManager.error(error, 'Erreur', 5000);
+}
+
+export function createNotificationSuccess(msg) {
+  NotificationManager.success(msg, 'Succès', 5000);
+}
 
 function mapStateToProps(state) {
     const {

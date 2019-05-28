@@ -1,16 +1,16 @@
-import reducer from '../reducers/authentication'
-import * as types from '../constants/constantsAction'
+import reducer from '../../reducers/authentication'
+import * as types from '../../constants/constantsAction'
 
 describe('auth reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual([
+    expect(reducer(undefined, {})).toEqual(
       {
         isLogged: false,
         isFetching: false,
         msg: null,
         error: null
       }
-    ])
+    )
   })
 
   it('should handle REQUEST_AUTH', () => {

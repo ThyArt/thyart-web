@@ -3,14 +3,13 @@ import Gallery from 'react-photo-gallery';
 import Modal from "react-responsive-modal";
 import ImageUpload from './ImageUpload';
 import {Col,
-  ControlLabel,
+  FormLabel,
   FormControl,
   FormGroup,
   Button,
   Form,
-  Glyphicon,
   DropdownButton,
-  MenuItem,
+    DropdownItem,
   Row,
   ToggleButton,
   ButtonToolbar,
@@ -21,6 +20,8 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actionsArtwork";
 import {createArtworkIfNeeded, sortArtworkByState, eraseArtworkIfNeeded} from "../../actions/actionsArtwork";
+import InputGroup from "react-bootstrap/InputGroup";
+import Container from "react-bootstrap/Container";
 
 export class Artwork extends Component {
   constructor(props, context) {
@@ -226,52 +227,70 @@ export class Artwork extends Component {
 
   render() {
     return (
-      <div id='page'>
-        <div id='toolbar'>
-          <Form inline>
-            <FormGroup bsSize='large'>
-              <FormControl type='text' value={this.state.search} onChange={this.onSearchChange}
-                           placeholder='Enter text to search...' id='searchBar'/>{' '}
+      <div>
+        <div>
+          <Container fluid>
+            <Col xl={10} lg={10} id={'colSearchBarContainer'}>
+              <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                  <Button bssize='large'
+                          id='ajouter'
+                          onClick={this.handleAddArtworkShow}>
+                    Ajouter
+                  </Button>
+                </InputGroup.Prepend>
+                <FormControl
+                    id={'searchBar'}
+                    type={'text'}
+                    value={this.state.search}
+                    onChange={this.onSearchChange}
+                    placeholder='Entrer le texte à rechercher...'
+                />
+                <InputGroup.Append>
+                  <Button
+                      id={'search'}
+                      variant="outline-primary"
+                      bsstyle='primary'
+                      bssize='large' onClick={this.searchArtworks}>Rechercher</Button>
+                  <DropdownButton
+                      as={InputGroup.Append}
+                      variant="outline-secondary"
+                      title="Filtres"
+                      id="dropDownFilter"
+                  >
+                    <DropdownItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</DropdownItem>
+                    <DropdownItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</DropdownItem>
+                    <DropdownItem eventKey={3} onSelect={this.onSelectAlert}>Prix croissant</DropdownItem>
+                    <DropdownItem eventKey={4} onSelect={this.onSelectAlert}>Prix décroissant</DropdownItem>
+                    <DropdownItem eventKey={5} onSelect={this.onSelectAlert}>En transit</DropdownItem>
+                    <DropdownItem eventKey={6} onSelect={this.onSelectAlert}>Vendu</DropdownItem>
+                    <DropdownItem eventKey={7} onSelect={this.onSelectAlert}>Exposé</DropdownItem>
+                    <DropdownItem eventKey={8} onSelect={this.onSelectAlert}>En stock</DropdownItem>
+                    <DropdownItem divider/>
+                    <DropdownItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</DropdownItem>
+                  </DropdownButton>
+                </InputGroup.Append>
+              </InputGroup>
+            </Col>
+          </Container>
 
-              <Button bsStyle='primary' bsSize='large' onClick={this.searchArtworks}>Search</Button>{' '}
-
-              <DropdownButton bsSize='large' className='complexButton'
-                              title={<span><Glyphicon glyph='glyphicon glyphicon-filter'/></span>}>
-                <MenuItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</MenuItem>
-                <MenuItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</MenuItem>
-                <MenuItem eventKey={3} onSelect={this.onSelectAlert}>Prix croissant</MenuItem>
-                <MenuItem eventKey={4} onSelect={this.onSelectAlert}>Prix décroissant</MenuItem>
-                <MenuItem eventKey={5} onSelect={this.onSelectAlert}>En transit</MenuItem>
-                <MenuItem eventKey={6} onSelect={this.onSelectAlert}>Vendu</MenuItem>
-                <MenuItem eventKey={7} onSelect={this.onSelectAlert}>Exposé</MenuItem>
-                <MenuItem eventKey={8} onSelect={this.onSelectAlert}>En stock</MenuItem>
-                <MenuItem divider/>
-                <MenuItem eventKey={9} onSelect={this.onSelectAlert}>Toutes les catégories</MenuItem>
-              </DropdownButton>{' '}
-
-              <Button bsSize='large' className='complexButton' onClick={this.handleAddArtworkShow}>
-                <Glyphicon glyph='glyphicon glyphicon-plus'/>
-              </Button>
-
-            </FormGroup>
-          </Form>
         </div>
 
         <Modal dialogClassName="addArtWork-modal" open={this.state.addModal} onClose={this.handleAddArtworkClose}>
           <h1 id='titleModal'>Ajouter une oeuvre</h1>
           <Row>
             <Col xs={6}>
-              <ImageUpload callbackFromParent={this.myCallback}/>
+              <ImageUpload callbackFromParent={this.myCallback} style={{ maxWidth: '100%', maxHeight: '100%' }}/>
             </Col>
             <Col xs={6}>
-              <form>
+              <Form>
                 <FormGroup controlId="formValidationSuccess1" className='addModal'
                            validationState={this.getNewArtworkValidationState()}>
-                  <ControlLabel>Nom de l'oeuvre</ControlLabel>
+                  <FormLabel>Nom de l'oeuvre</FormLabel>
                   <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
-                  <ControlLabel>Reference</ControlLabel>
+                  <FormLabel>Reference</FormLabel>
                   <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
-                  <ControlLabel>Prix</ControlLabel>
+                  <FormLabel>Prix</FormLabel>
                   <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
                   <ButtonToolbar>
@@ -279,18 +298,19 @@ export class Artwork extends Component {
                                        type="radio"
                                        value={this.state.AWState}
                                        onChange={this.handleChange}
-                                       name="options">
+                                       name="options"
+                    block>
                       <ToggleButton value={1}>Exposé</ToggleButton>
                       <ToggleButton value={2}>Stock</ToggleButton>
                       <ToggleButton value={3}>Vendu</ToggleButton>
                       <ToggleButton value={4}>En transit</ToggleButton>
                     </ToggleButtonGroup>
                   </ButtonToolbar>
-                  <Button bsStyle="primary" onClick={this.getVerification} bsSize='large'>
+                  <Button bsstyle="primary" onClick={this.getVerification} bssize='large'>
                     Valider
                   </Button>
                 </FormGroup>
-              </form>
+              </Form>
             </Col>
           </Row>
         </Modal>
@@ -311,7 +331,7 @@ export class Artwork extends Component {
                   >
                     <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
                   </div>
-                  < Button bsStyle = "primary" onClick={this.onModifOpen} bsSize='large'>
+                  < Button bsstyle = "primary" onClick={this.onModifOpen} bssize='large'>
                     {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
                   </Button>
                   {
@@ -319,11 +339,11 @@ export class Artwork extends Component {
                       <div>
                         <FormGroup controlId="formValidationSuccess1" className='addModal'
                                    validationState={this.getNewArtworkValidationState()}>
-                          <ControlLabel>Nom de l'oeuvre</ControlLabel>
+                          <FormLabel>Nom de l'oeuvre</FormLabel>
                           <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
-                          <ControlLabel>Reference</ControlLabel>
+                          <FormLabel>Reference</FormLabel>
                           <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
-                          <ControlLabel>Prix</ControlLabel>
+                          <FormLabel>Prix</FormLabel>
                           <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
                           <ButtonToolbar>
@@ -339,50 +359,52 @@ export class Artwork extends Component {
                             </ToggleButtonGroup>
                           </ButtonToolbar>
                         </FormGroup>
-                        < Button bsStyle = "primary" onClick={this.onModifValidation} bsSize='large' className='confirmModal'>
+                        < Button bsstyle = "primary" onClick={this.onModifValidation} bssize='large' className='confirmModal'>
                           Valider
                         </Button>
                       </div>
                     ) : (
                       <div>
-                        <Row>
-                          <Col sm={5} id='photoModal'>
-                            { (this.props.artwork != null && this.props.artwork.images != null) ?
-                              (<img src={this.props.artwork.src} alt=''/>
-                              ): null
+                        <Row className='detailsModalRows'>
+                          <Col sm={12}>
+                            { this.props.artwork.images[0] ?
+                              <img src={this.props.artwork.images[0].url} alt="image" className='detailsModalImage'/> :
+                              null
                             }
                           </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            Titre:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.name}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            Référence:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.ref}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            Prix:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.price}
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            État:
-                          </Col>
-                          <Col sm={2}>
-                            {this.props.artwork.state}
+                          <Col sm={12} className='detailsModalCols'>
+                            <Row>
+                              <Col sm={3}>
+                                Titre:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.name}
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col sm={3}>
+                                Référence:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.ref}
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col sm={3}>
+                                Prix:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.price}
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col sm={3}>
+                                État:
+                              </Col>
+                              <Col sm={9}>
+                                {this.props.artwork.state}
+                              </Col>
+                            </Row>
                           </Col>
                         </Row>
                       </div>
@@ -399,7 +421,6 @@ export class Artwork extends Component {
 }
 
 Artwork.propTypes = {
-  isLogged: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   token: PropTypes.string,
   msg: PropTypes.string,

@@ -16,6 +16,11 @@
     line-height: 10vh;
     font-size: 40px;
     color: #777777;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    top: 0;
 }
 
 #sideNav {

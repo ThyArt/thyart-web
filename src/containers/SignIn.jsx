@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Grid, Col, Row } from 'react-bootstrap';
+import { Carousel, Container, Col, Row } from 'react-bootstrap';
 
 import '../css/SignIn.css';
 import SignInForm from '../components/SignInForm';
@@ -10,25 +10,25 @@ class SignIn extends Component {
         return (
           <div >
               <Header/>
-              <Grid className="pull-left">
-                  <Row >
-                      <Col xsHidden smHidden md={6} >
-                          <Carousel id={"carouselSn"}>
-                              <Carousel.Item >
-                                  <img src={require('../static/artist.jpg')} id="quote" alt='artist'/>
+              <Container fluid>
+                  <Row id={'row'}>
+                      <Col lg={4} id={'carouselCol'}>
+                          <Carousel id={'carousel'}>
+                              <Carousel.Item id={'carouselItem'}>
+                                  <img id={'image'} src={require('../static/mess.png')} alt='artist'/>
                                   <Carousel.Caption>
-                                      <h3>ThyArt is a very simple but powerful tool.</h3>
-                                      <p>John Smith, galerist</p>
+                                      <h3>ThyArt est un outil simple mais utile.</h3>
+                                      <p>John Smith, galeriste</p>
                                   </Carousel.Caption>
                               </Carousel.Item>
                           </Carousel>
                       </Col>
-                      <Col xs={8} md={5} className="pull-right" id={"signinForm"}>
-                          <h2>Sign In</h2>
+                      <Col lg={{ span: 3, offset: 1 }} id={"signinForm"}>
+                          <h2>Se connecter</h2>
                           <SignInForm/>
                       </Col>
                   </Row>
-              </Grid>
+              </Container>
           </div>
         );
     }

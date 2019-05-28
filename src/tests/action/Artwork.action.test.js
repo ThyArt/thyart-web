@@ -1,13 +1,18 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import * as actions from '../actions/actionsArtwork'
-import * as types from '../constants/constantsAction'
-import expect from 'expect'
+import * as actions from '../../actions/actionsArtwork'
+import * as types from '../../constants/constantsAction'
+import expect from 'expect/build/index'
 import moxios from 'moxios'
-import { RECEIVE_ADDIMAGE } from "../constants/constantsAction";
+import { RECEIVE_ADDIMAGE } from '../../constants/constantsAction';
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
+
+function FormDataMock() {
+  this.append = jest.fn();
+}
+global.FormData = FormDataMock;
 
 describe('async artwork actions', () => {
 
@@ -164,11 +169,12 @@ describe('async artwork actions', () => {
       { type: types.REQUEST_ARTWORKS },
       {
         type: types.RECEIVE_ARTWORKCREATE,
+        "msg": "test a été crée",
         id: '1'
       },
       {
         type: types.RECEIVE_ADDIMAGE,
-        msg: 'Image uploaded with success.'
+        msg: 'Image téléchargée avec succès.'
       },
       {
         type: types.RECEIVE_ARTWORKS,

@@ -4,8 +4,7 @@ import {
   Alert,
   Button,
   FormGroup,
-  ControlLabel,
-  HelpBlock
+  FormLabel
 } from 'react-bootstrap';
 import { signUpIfNeeded } from "../actions/actionsAuth";
 import PropTypes from 'prop-types';
@@ -19,12 +18,10 @@ export class SignUpForm extends Component {
     this.handlePassChange = this.handlePassChange.bind(this);
     this.handleConfirmChange = this.handleConfirmChange.bind(this);
     this.handleMailChange = this.handleMailChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleFirstnameChange = this.handleFirstnameChange.bind(this);
     this.handleLastnameChange = this.handleLastnameChange.bind(this);
 
     this.state = {
-      nameValue: '',
       firstnameValue: '',
       lastnameValue: '',
       mailValue: '',
@@ -35,23 +32,18 @@ export class SignUpForm extends Component {
 
   signup = () => {
     if (
-      this.getNameValidationState() === 'success' &&
       this.getFirstnameValidationState() === 'success' &&
       this.getLastnameValidationState() === 'success' &&
       this.getMailValidationState() === 'success' &&
       this.getPassValidationState() === 'success' &&
       this.getConfirmValidationState() === 'success'
     ) {
-      this.props.dispatch(signUpIfNeeded(this.state.nameValue, this.state.firstnameValue, this.state.lastnameValue,
+      this.props.dispatch(signUpIfNeeded(this.state.mailValue, this.state.firstnameValue, this.state.lastnameValue,
         this.state.mailValue, this.state.passValue));
     }
   };
 
-  getNameValidationState() {
-    let name = this.state.nameValue;
-    if (name === '') return null;
-    return 'success';
-  }
+
 
   getFirstnameValidationState() {
     let firstname = this.state.firstnameValue;
@@ -117,9 +109,7 @@ export class SignUpForm extends Component {
     this.setState({confirmValue: e.target.value});
   }
 
-  handleNameChange(e) {
-    this.setState({nameValue: e.target.value})
-  }
+
 
   handleFirstnameChange(e) {
     this.setState({firstnameValue: e.target.value})
@@ -133,77 +123,62 @@ export class SignUpForm extends Component {
     return (
       <form>
         <FormGroup
-          controlId="formValidationNull"
-          validationState={this.getNameValidationState()}
+          controlId="formValidationNull0"
+          validationstate={this.getFirstnameValidationState()}
         >
-          <ControlLabel>Enter an username</ControlLabel>
-          <FormControl
-            type="username"
-            value={this.state.nameValue}
-            placeholder="Your username"
-            onChange={this.handleNameChange}
-          />
-          <FormControl.Feedback/>
-        </FormGroup>
-        <FormGroup
-          controlId="formValidationNull"
-          validationState={this.getFirstnameValidationState()}
-        >
-          <ControlLabel>Enter your first name</ControlLabel>
+          <FormLabel>Entrez votre prénom</FormLabel>
           <FormControl
             type="username"
             value={this.state.firstnameValue}
-            placeholder="Your first name"
+            placeholder="Prénom"
             onChange={this.handleFirstnameChange}
           />
           <FormControl.Feedback/>
         </FormGroup>
         <FormGroup
-          controlId="formValidationNull"
-          validationState={this.getLastnameValidationState()}
+          controlId="formValidationNull1"
+          validationstate={this.getLastnameValidationState()}
         >
-          <ControlLabel>Enter your last name</ControlLabel>
+          <FormLabel>Entrez votre nom</FormLabel>
           <FormControl
             type="username"
             value={this.state.lastnameValue}
-            placeholder="Your last name"
+            placeholder="Nom"
             onChange={this.handleLastnameChange}
           />
           <FormControl.Feedback/>
         </FormGroup>
         <FormGroup
-          controlId="formValidationNull"
-          validationState={this.getMailValidationState()}
+          controlId="formValidationNull2"
+          validationstate={this.getMailValidationState()}
         >
-          <ControlLabel>Enter your email</ControlLabel>
+          <FormLabel>Entrez votre email</FormLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
-            placeholder="dupont@email.com"
+            placeholder="exemple@email.com"
             onChange={this.handleMailChange}
           />
-          <FormControl.Feedback/>
-          <HelpBlock>Validation relies on email syntax</HelpBlock>
+          <FormControl.Feedback>Validation basée sur la syntaxe des adresses email</FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationState={this.getPassValidationState()}
+          validationstate={this.getPassValidationState()}
         >
-          <ControlLabel>Enter your password</ControlLabel>
+          <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.passValue}
-            placeholder="Super secret password"
+            placeholder="Mot de passe"
             onChange={this.handlePassChange}
           />
-          <FormControl.Feedback/>
-          <HelpBlock>Enter a strong password</HelpBlock>
+          <FormControl.Feedback>Entrez un mot de passe renforcé</FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText2"
-          validationState={this.getConfirmValidationState()}
+          validationstate={this.getConfirmValidationState()}
         >
-          <ControlLabel>Confirm password</ControlLabel>
+          <FormLabel>Confirmez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.confirmValue}
@@ -215,18 +190,18 @@ export class SignUpForm extends Component {
         {this.props.isFetching ? (
           <ReactLoading type={'spin'} color={'black'} height={50} width={50} />
         ) :  (
-          <Button onClick={this.signup}>Sign Up</Button>
+          <Button onClick={this.signup}>S'inscrire</Button>
         )
         }
 
         {this.props.msg ? (
-          <Alert bsStyle="success">
+          <Alert bsstyle="success">
             {this.props.msg}
           </Alert>
         ) : null}
 
         {this.props.error ? (
-          <Alert bsStyle="danger">{`Error while creating your account: ${
+          <Alert bsstyle="danger">{`Error while creating your account: ${
             this.props.error
             }`}</Alert>
         ) : null}

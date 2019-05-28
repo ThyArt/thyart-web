@@ -1,6 +1,10 @@
+
 #profile {
-    padding-left: 5%;
-    padding-right: 2%;
+}
+
+.spinner {
+    margin-top: 5%;
+    margin-left: 15%;
 }
 
 .info {
@@ -8,7 +12,6 @@
 }
 
 .field {
-    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -16,7 +19,6 @@
     padding-left: 7%;
     padding-right: 4%;
     padding-bottom: 5%;
-    text-decoration: underline;
 }
 
 .form {

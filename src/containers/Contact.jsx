@@ -11,7 +11,7 @@ class Contact extends Component {
         <p>Prêt à accélérer votre activité ?</p>
         <BrowserRouter>
           <Link to="/signup">
-            <Button bsStyle="primary" bsSize="large">
+            <Button bsstyle="primary" bssizee="large">
               Inscrivez vous
             </Button>
           </Link>

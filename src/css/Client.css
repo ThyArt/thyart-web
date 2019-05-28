@@ -1,22 +1,28 @@
-#billingBackButton {
+.spinner {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+
+#clientBackButton {
     position: fixed;
     top: 150px;
     left: 50px;
     z-index: 1;
 }
 
-#billingTopBar {
+#clientTopBar {
     position: fixed;
 }
 
-#billingTopTitle {
+#clientTopTitle {
     line-height: 10vh;
     font-size: 40px;
     color: #777777;
     text-align: center;
 }
 
-.billingJumbotron {
+.clientJumbotron {
     background-color: #e1e1e1;
     position: relative;
     margin: 0 10% 100px 12%;
@@ -25,42 +31,45 @@
     z-index: 0;
 }
 
-.billingJumbotronTitle {
+.clientJumbotronTitle {
     text-align: center;
     padding-bottom: 50px;
 }
 
-.billingJumbotronInput {
+.clientJumbotronInput {
     margin-top: 15px;
 }
 
-.billingJumbotronInfo {
+.clientJumbotronInfo {
     width: 500px;
 }
 
-#billingConfirm {
+#clientConfirm {
     text-align: center;
 }
 
-#billingConfirmButton {
+#clientConfirmButton {
     font-size: 30px;
     margin: 50px 0;
 }
 
-.billingCreateButton {
+.clientCreateButton {
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
     font-size: 30px;
 }
 
-.billingMainButton {
+.clientMainButton {
     position: fixed;
     right: 80px;
 }
 
-.billingAddBillButton {
+.clienAddButton {
     margin: 0 10px;
     font-size: 25px;
 }
 
-.billingAddBillImage {
+.clientAddImage {
     margin: 0 0 8px;
 }

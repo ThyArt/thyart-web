@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {Profile} from "../components/account/Profile";
+import { shallow } from 'enzyme/build';
+import {Artwork} from "../../components/account/Artwork";
 
 const props = {
   dispatch: jest.fn(),
@@ -9,5 +9,5 @@ const props = {
 };
 
 it('renders without crashing', () => {
-  shallow(<Profile {...props}/>);
+  shallow(<Artwork {...props}/>);
 });

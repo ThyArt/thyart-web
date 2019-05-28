@@ -5,10 +5,14 @@ import { FormControl,
   Button,
   Alert,
   FormGroup,
-  ControlLabel} from 'react-bootstrap';
+  FormLabel} from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import {fetchForgotIfNeeded, signInIfNeeded} from "../actions/actionsAuth";
 import ReactLoading from 'react-loading';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
 
 export class SignInForm extends Component {
   constructor(props) {
@@ -79,12 +83,12 @@ export class SignInForm extends Component {
 
   render() {
     return (
-      <form>
+      <Form>
         <FormGroup
           controlId="formValidationNull"
-          validationState={this.getMailValidationState()}
+          validationstate={this.getMailValidationState()}
         >
-          <ControlLabel>Enter your email</ControlLabel>
+          <FormLabel>Entrez votre email</FormLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
@@ -94,9 +98,9 @@ export class SignInForm extends Component {
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationState={this.getPassValidationState()}
+          validationstate={this.getPassValidationState()}
         >
-          <ControlLabel>Enter your password</ControlLabel>
+          <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.passValue}
@@ -104,19 +108,27 @@ export class SignInForm extends Component {
           />
           <FormControl.Feedback/>
         </FormGroup>
-        {this.props.isFetching ? (
-          <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-        ) : (
-          <Button onClick={this.signin}>Sign In</Button>
-        )
-        }
-        {this.props.isFetching ? (
-          <div/>) : (
-          <Button onClick={this.forgot}>Forgot Password</Button>
-        )
-        }
+        <Container >
+          <Row>
+            <Col>
+              {this.props.isFetching ? (
+                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+              ) : (
+                  <Button variant={"outline-primary"} onClick={this.signin}>Se connecter</Button>
+              )
+              }
+            </Col>
+            <Col>
+              {this.props.isFetching ? (
+                  <div/>) : (
+                  <Button className='float-right' variant={"outline-secondary"} onClick={this.forgot}>Mot de passe oublié</Button>
+              )
+              }
+            </Col>
+          </Row>
+        </Container>
         {this.props.error ? (
-          <Alert bsStyle="danger">{`Error: ${
+          <Alert bsstyle="danger">{`Error: ${
             this.props.error
             }`}</Alert>
         ) : null}
@@ -127,7 +139,7 @@ export class SignInForm extends Component {
             }}
           />
         ) : null}
-      </form>
+      </Form>
     );
   }
 }

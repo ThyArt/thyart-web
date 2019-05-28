@@ -1,9 +1,9 @@
-import reducer from '../reducers/profile'
-import * as types from '../constants/constantsAction'
+import reducer from '../../reducers/profile'
+import * as types from '../../constants/constantsAction'
 
 describe('profile reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual([
+    expect(reducer(undefined, {})).toEqual(
       {
         isFetching: false,
         msg: null,
@@ -13,7 +13,7 @@ describe('profile reducer', () => {
         firstname: null,
         lastname: null
       }
-    ])
+    )
   })
 
   it('should handle REQUEST_PROFILE', () => {

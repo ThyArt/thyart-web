@@ -1,2 +1,18 @@
-#carousel {
+#carouselCol {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#images {
+    width: 100%;
+    height: 60vh;
+    object-fit: cover;
+}
+
+#container {
+    height: 60vh;
+}
+
+.CaptionBlackText {
+    color: black;
 }

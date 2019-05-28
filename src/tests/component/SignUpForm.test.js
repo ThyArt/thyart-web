@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {SignUpForm} from "../components/SignUpForm";
+import { shallow } from 'enzyme/build';
+import {SignUpForm} from "../../components/SignUpForm";
 
 const props = {
   dispatch: jest.fn()
