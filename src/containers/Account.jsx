@@ -47,6 +47,7 @@ export class Account extends Component {
   render() {
     return (
         <div id='accountPage'>
+          <NotificationContainer/>
           <Navbar>
                 <Navbar.Brand>
                     <img

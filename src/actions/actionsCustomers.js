@@ -125,7 +125,6 @@ function eraseCustomer(token, id) {
   return dispatch => {
 
     return axios.delete(apiURL + customerURL + '/' + id, header_auth)
-      .then(res => dispatch(receiveCustomerDelete(res)))
       .catch(error => dispatch(receiveCustomersError(error)));
   }
 }

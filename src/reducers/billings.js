@@ -22,7 +22,6 @@ const initialState = {
   error: null,
   billings: [],
   artworks: [],
-  customers: [],
   billing: null,
   modif: false,
   table: true

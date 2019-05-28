@@ -53,14 +53,13 @@ function receiveBillingsError(error) {
 function receiveBillings(res) {
   return {
     type: RECEIVE_BILLINGS,
-    customers: res.data.data
+    billings: res.data.data
   }
 }
 
 function receiveBillingCreate(res) {
   return {
     type: RECEIVE_BILLING,
-    customer: res.data.data,
     msg: 'La facture a été crée'
   }
 }
@@ -68,7 +67,7 @@ function receiveBillingCreate(res) {
 function receiveBillingDelete(res) {
   return {
     type: RECEIVE_BILLING,
-    customer: null,
+    billing: null,
     msg: 'La facture a été supprimée'
   }
 }
@@ -76,17 +75,32 @@ function receiveBillingDelete(res) {
 function receiveBilling(res) {
   return {
     type: RECEIVE_BILLING,
-    customer: res.data.data
+    billing: res.data.data
   }
 }
 
-function createBilling(token, first_name, last_name, email,
-                       phone, address, city, country, artworkId) {
+function createBilling(token, email, phone, first_name,
+                       last_name, country, city, address, artworkId) {
   const header_auth = {
     headers: { Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token }
   };
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  var today = yyyy + '-' + mm + '-' + dd;
+  console.log(today);
+
   const body = {
     email: email,
     phone: phone,
@@ -95,11 +109,11 @@ function createBilling(token, first_name, last_name, email,
     country: country,
     city: city,
     address: address,
-    artworkId: artworkId
+    artwork_id: artworkId,
+    date: today
   };
   return dispatch => {
-    return axios.post(apiURL + billingURL, qs.stringify(body), header_auth)
-      .then(res => dispatch(receiveBillingCreate(res)))
+    return axios.post(apiURL + billingURL, body, header_auth)
       .catch(error => dispatch(receiveBillingsError(error)));
   }
 }
@@ -128,7 +142,6 @@ function eraseBilling(token, id) {
   return dispatch => {
 
     return axios.delete(apiURL + billingURL + '/' + id, header_auth)
-      .then(res => dispatch(receiveBillingDelete(res)))
       .catch(error => dispatch(receiveBillingsError(error)));
   }
 }
@@ -176,7 +189,9 @@ export function createBillingIfNeeded(token, email, phone, first_name,
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestBillings());
-      return dispatch(createBilling(token, email, phone, first_name, last_name, country, city, address, artworkId));
+      return dispatch(createBilling(token, email, phone, first_name, last_name, country, city, address, artworkId)).then(() => {
+        return dispatch(fetchBillings(token, null));
+      });
     }
   }
 }

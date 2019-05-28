@@ -26,6 +26,7 @@ class ClientTable extends Component {
       removeModal: false,
       infos: {},
       rows: [],
+      search: ''
     };
 
     this.openDetails = this.openDetails.bind(this);
@@ -140,6 +141,7 @@ class ClientTable extends Component {
       }
     ];
   }
+
   render() {
     let rows;
     const columns = this.state.columns;
