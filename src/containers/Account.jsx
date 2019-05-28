@@ -13,6 +13,7 @@ import { disconnect} from "../actions/actionsAuth";
 
 import '../css/Account.css'
 import Col from "react-bootstrap/Col";
+import Stats from "../components/account/Stats";
 
 export class Account extends Component {
   constructor(props) {
@@ -97,6 +98,7 @@ export class Account extends Component {
               <Col xs={10}>
                 <div>
                   { this.state.selected === '1' ? <Scheduler token={this.state.token}/> : null }
+                  { this.state.selected === '2' ? <Stats token={this.state.token}/> : null }
                   { this.state.selected === '4' ? <Members token={this.state.token}/> : null}
                   { this.state.selected === '3' ? <Artwork token={this.state.token}/> : null }
                   { this.state.selected === '6' ? <Profile token={this.state.token}/> : null }
