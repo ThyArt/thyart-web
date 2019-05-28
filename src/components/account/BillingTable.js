@@ -5,10 +5,15 @@ import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
 import '../../css/Membres.css';
-import { deleteBilling, setCurrentBilling, sortBillings } from "../../actions/actionsBillings";
+import {
+  eraseBillingIfNeeded,
+  getBillingIfNeeded,
+  sortBillings
+} from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import InputGroup from "react-bootstrap/InputGroup";
+
 
 class BillingTable extends Component {
   constructor(props) {
@@ -19,7 +24,7 @@ class BillingTable extends Component {
       removeModal: false,
       infos: {},
       rows: [],
-      currentBilling: null,
+      search: ''
     };
 
     this.openDetails = this.openDetails.bind(this);
@@ -39,7 +44,14 @@ class BillingTable extends Component {
       '5': 'dateNew',
       '6': 'dateOld'
     };
-    this.props.dispatch(sortBillings(filters[eventKey.toString()]));
+    this.props.dispatch(this.props.dispatch(sortBillings(filters[eventKey.toString()])));
+  };
+
+  onSearchChange = event => {
+    this.setState({ search: event.target.value });
+  };
+
+  searchBillings = () => {
   };
 
   onRemoveClose = () => {
@@ -47,8 +59,7 @@ class BillingTable extends Component {
   };
 
   openDetails(rowData) {
-    this.props.dispatch(setCurrentBilling(rowData.id));
-    this.props.onClick();
+    this.props.dispatch(getBillingIfNeeded(this.props.token, rowData.id));
   };
 
 
@@ -58,7 +69,7 @@ class BillingTable extends Component {
 
   onRemove() {
     this.setState({removeModal: false});
-    this.props.dispatch(deleteBilling(this.state.idToRemove));
+    this.props.dispatch(eraseBillingIfNeeded(this.props.token, this.state.idToRemove));
   };
 
   formatDate = value => {
@@ -68,33 +79,11 @@ class BillingTable extends Component {
 
   getColumns() {
     return [
-      {
-        property: 'name',
-        header: {
-          label: 'Client'
-        }
-      },
-      {
-        property: 'artworkName',
-        header: {
-          label: 'Nom de l\'oeuvre'
-        }
-      },
-      {
-        property: 'mail',
-        header: {
-          label: 'Mail du client'
-        }
-      },
+
       {
         property: 'date',
         header: {
           label: 'Date de facturation'
-        },
-        cell: {
-          formatters: [
-            (value) => (<span>{ this.formatDate(value) }</span>)
-          ]
         }
       },
       {
@@ -144,14 +133,14 @@ class BillingTable extends Component {
       }
     ];
   }
+
   render() {
     let rows;
     const columns = this.state.columns;
-    if (this.props.billingTable)
-      rows = this.props.billingTable;
+    if (this.props.billings)
+      rows = this.props.billings;
     else
       rows = [];
-
 
     return (
       <div className="clients">
@@ -169,9 +158,6 @@ class BillingTable extends Component {
               onChange={this.onSearchChange}
               placeholder='Entrer le texte à rechercher...'
               id='billingSearchBar'
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
           />
           <InputGroup.Append>
             <Button id={'buttonRechercher'}
@@ -182,7 +168,7 @@ class BillingTable extends Component {
                 as={InputGroup.Append}
                 variant="outline-secondary"
                 bssize='large'
-                id='buttonFilter' title={'filtre'}>
+                id='buttonFilter' title={'Filtres'}>
               <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
               <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
               <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
@@ -210,20 +196,34 @@ class BillingTable extends Component {
 }
 
 BillingTable.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  msg: PropTypes.string,
+  error: PropTypes.string,
+  modif: PropTypes.bool.isRequired,
+  table: PropTypes.bool.isRequired,
   billings: PropTypes.array,
-  billingTable: PropTypes.array,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   const {
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
     billings,
-    billingTable
+    dispatch
   } = state.billings;
 
   return {
+    isFetching,
+    msg,
+    error,
+    modif,
+    table,
     billings,
-    billingTable
+    dispatch
   }
 }
 

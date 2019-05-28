@@ -1,80 +1,113 @@
 import {
-  ADD_BILLING,
-  DELETE_BILLING,
-  SET_CURRENT_BILLING,
-  SORT_BILLINGS
+  REQUEST_BILLINGS,
+  RECEIVE_BILLINGS_ERROR,
+  RECEIVE_BILLINGS,
+  RECEIVE_BILLING,
+  OPEN_CREATE_BILLING,
+  SORT_BILLINGS,
+  REQUEST_ARTWORKS,
+  REQUEST_CUSTOMERS,
+  RECEIVE_ARTWORKS,
+  RECEIVE_CUSTOMERS,
+  RECEIVE_CUSTOMERS_ERROR,
+  RECEIVE_ARTWORKS_ERROR
 } from "../constants/constantsAction";
-import { cloneDeep, findIndex } from "lodash";
-import * as uuid from "uuid";
+import { cloneDeep } from "lodash";
 
-export const initialState = [
-  {
-    billings: [],
-    currentBilling: null
-  }
-];
+const initialState = {
+  isFetching: false,
+  isArtworksFetching: false,
+  isCustomersFetching: false,
+  msg: null,
+  error: null,
+  billings: [],
+  artworks: [],
+  billing: null,
+  modif: false,
+  table: true
+};
 
 function billings (state = initialState, action)
 {
-  let rows = cloneDeep(state.billings);
-  let rows2 = cloneDeep(state.billingTable);
-  let id;
-  let idx;
-
   switch (action.type) {
-    case DELETE_BILLING:
-      id = action.id;
-      idx = findIndex(rows, { id });
-      rows.splice(idx, 1);
-      idx = findIndex(rows2, { id });
-      rows2.splice(idx, 1);
-      return Object.assign({}, state, {
-        billings: rows,
-        billingTable: rows2
-      });
 
-    case ADD_BILLING:
-      if (!state.billings) {
-        rows = [];
-        rows2 = [];
-      }
-      id = uuid.v4();
-      rows.unshift({
-          id: id,
-          fName: action.billing.fName,
-          lName: action.billing.lName,
-          mail: action.billing.mail,
-          address: action.billing.address,
-          phone: action.billing.phone,
-          artworkName: action.billing.artworkName,
-          date: Date.now()
-        });
-      rows2.unshift({
-        id: id,
-        name: action.billing.fName,
-        artworkName: action.billing.artworkName,
-        mail: action.billing.mail,
-        date: Date.now()
-      });
+    case REQUEST_BILLINGS:
       return Object.assign({}, state, {
-        billings: rows,
-        billingTable: rows2
+        isFetching: true,
+        error: null,
+        msg: null
       });
-
-    case SET_CURRENT_BILLING:
-      id = action.id;
-      idx = findIndex(rows, {id});
-      let currentBilling = rows[idx];
-      console.log(currentBilling);
+    case REQUEST_ARTWORKS:
       return Object.assign({}, state, {
-        currentBilling: currentBilling
+        isArtworksFetching: true,
+        error: null,
+        msg: null
       });
-
+    case REQUEST_CUSTOMERS:
+      return Object.assign({}, state, {
+        isCustomersFetching: true,
+        error: null,
+        msg: null
+      });
+    case RECEIVE_BILLINGS_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error,
+        msg: null
+      });
+    case RECEIVE_CUSTOMERS_ERROR:
+      return Object.assign({}, state, {
+        isFetchingCustomers: false,
+        error: action.error,
+        msg: null
+      });
+    case RECEIVE_ARTWORKS_ERROR:
+      return Object.assign({}, state, {
+        isFetchingArtworks: false,
+        error: action.error,
+        msg: null
+      });
+    case RECEIVE_BILLINGS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        billings: action.billings,
+        error: null,
+        modif: false,
+        table: true
+      });
+    case RECEIVE_ARTWORKS:
+      return Object.assign({}, state, {
+        isArtworksFetching: false,
+        artworks: action.artworks,
+        error: null,
+      });
+    case RECEIVE_CUSTOMERS:
+      return Object.assign({}, state, {
+        isCustomersFetching: false,
+        customers: action.customers,
+        error: null,
+      });
+    case RECEIVE_BILLING:
+      return Object.assign({}, state, {
+        isFetching: false,
+        billing: action.billing,
+        error: null,
+        table: false,
+        modif: false
+      });
+    case OPEN_CREATE_BILLING:
+      return Object.assign({}, state, {
+        error: null,
+        modif: true,
+        table: false,
+        billing: null
+      });
     case SORT_BILLINGS:
+      let table = cloneDeep(state.billings);
       switch(action.sortType)
       {
         case 'nameA':
-          rows2.sort(function(a, b)
+          table.sort(function(a, b)
           {
             a = a.name;
             b = b.name;
@@ -83,7 +116,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'nameZ':
-          rows2.sort(function(a, b)
+          table.sort(function(a, b)
           {
             a = a.name;
             b = b.name;
@@ -92,7 +125,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'artworkA':
-          rows2.sort(function(a, b)
+          table.sort(function(a, b)
           {
             a = a.artworkName;
             b = b.artworkName;
@@ -101,7 +134,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'artworkZ':
-          rows2.sort(function(a, b)
+          table.sort(function(a, b)
           {
             a = a.artworkName;
             b = b.artworkName;
@@ -110,7 +143,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'dateNew':
-          rows2.sort(function(a, b)
+          table.sort(function(a, b)
           {
             a = a.date;
             b = b.date;
@@ -119,7 +152,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'dateOld':
-          rows2.sort(function(a, b)
+          table.sort(function(a, b)
           {
             a = a.date;
             b = b.date;
@@ -131,8 +164,7 @@ function billings (state = initialState, action)
           break;
       }
       return Object.assign({}, state, {
-        billings: rows,
-        billingTable: rows2
+        billings: table
       });
 
     default:

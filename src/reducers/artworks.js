@@ -3,11 +3,11 @@ import {
   RECEIVE_ARTWORK,
   RECEIVE_ARTWORKCREATE,
   RECEIVE_ARTWORKS,
-  RECEIVE_ARTWORKS_ERROR,
+  RECEIVE_ARTWORKS_ERROR, RECEIVE_ARTWORKS_MODIFY,
   REQUEST_ARTWORKS
 } from "../constants/constantsAction";
 
-const initialState = [
+const initialState =
   {
     isFetching: false,
     msg: null,
@@ -15,8 +15,7 @@ const initialState = [
     artworks: [],
     artwork: null,
     artistId: null
-  }
-];
+  };
 
 function artworks (state = initialState, action)
 {
@@ -38,24 +37,28 @@ function artworks (state = initialState, action)
       return Object.assign({}, state, {
         isFetching: false,
         artworks: action.artworks,
-        error: null
+        error: null,
+        msg: action.msg
       });
     case RECEIVE_ARTWORK:
       return Object.assign({}, state, {
         isFetching: false,
         artwork: action.artwork,
-        error: null
+        error: null,
+        msg: action.msg
       });
     case RECEIVE_ARTWORKCREATE:
       return Object.assign({}, state,{
         isFetching: false,
         artistId: action.id,
-        error: null
+        error: null,
+        msg: action.msg
       });
     case RECEIVE_ADDIMAGE:
       return Object.assign({}, state, {
         isFetching: false,
-        error: null
+        error: null,
+        msg: null
       });
     default:
       return state

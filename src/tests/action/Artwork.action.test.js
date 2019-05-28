@@ -169,11 +169,12 @@ describe('async artwork actions', () => {
       { type: types.REQUEST_ARTWORKS },
       {
         type: types.RECEIVE_ARTWORKCREATE,
+        "msg": "test a été crée",
         id: '1'
       },
       {
         type: types.RECEIVE_ADDIMAGE,
-        msg: 'Image uploaded with success.'
+        msg: 'Image téléchargée avec succès.'
       },
       {
         type: types.RECEIVE_ARTWORKS,

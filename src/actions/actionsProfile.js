@@ -1,6 +1,10 @@
 import axios from "axios";
 import { apiURL, profileURL, userURL } from "../constants/constantsApi";
-import { REQUEST_PROFILE, RECEIVE_PROFILE, RECEIVE_PROFILE_ERROR } from "../constants/constantsAction";
+import {
+  REQUEST_PROFILE,
+  RECEIVE_PROFILE,
+  RECEIVE_PROFILE_ERROR
+} from "../constants/constantsAction";
 
 function shouldFetchApi(state) {
   const isFetching = state.profile.isFetching;
@@ -23,7 +27,7 @@ export function receiveProfileError(error) {
   )
     error_msg = error.response.data.message;
   else
-    error_msg = 'Unknown error.';
+    error_msg = 'Erreur inconnue.';
 
   return {
     type: RECEIVE_PROFILE_ERROR,
@@ -32,11 +36,22 @@ export function receiveProfileError(error) {
 }
 
 function receiveProfile(res) {
+  return {
+    type: RECEIVE_PROFILE,
+    mail: res.data['data']['email'],
+    firstname: res.data['data']['firstname'],
+    lastname: res.data['data']['lastname'],
+    msg: null
+  }
+}
+
+function receiveProfileModify(res) {
   return  {
     type: RECEIVE_PROFILE,
     mail: res.data['data']['email'],
     firstname: res.data['data']['firstname'],
-    lastname: res.data['data']['lastname']
+    lastname: res.data['data']['lastname'],
+    msg: 'Votre profil a été modifié'
   }
 }
 
@@ -61,7 +76,7 @@ function modifyMail(token, mail) {
   const body = { };
   return dispatch => {
     return axios.patch(apiURL + userURL + "?email="+mail, body, header_auth)
-      .then(res => dispatch(receiveProfile(res)))
+      .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)))
   }
 }
@@ -75,7 +90,7 @@ function modifyPassword(token, password) {
   const body = { };
   return dispatch => {
     return axios.patch(apiURL + userURL + "?password="+ password, body, header_auth)
-      .then(res => dispatch(receiveProfile(res)))
+      .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)))
   }
 }
@@ -89,7 +104,7 @@ function modifyFirstname(token, firstname) {
   const body = { };
   return dispatch => {
     return axios.patch(apiURL + userURL + "?firstname="+ firstname, body, header_auth)
-      .then(res => dispatch(receiveProfile(res)))
+      .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)))
   }
 }
@@ -103,7 +118,7 @@ function modifyLastname(token, lastname) {
   const body = { };
   return dispatch => {
     return axios.patch(apiURL + userURL + "?lastname="+ lastname, body, header_auth)
-      .then(res => dispatch(receiveProfile(res)))
+      .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)))
   }
 }
@@ -112,7 +127,9 @@ export function modifyPasswordIfNeeded(token, password) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestProfile());
-      return dispatch(modifyPassword(token, password))
+      return dispatch(modifyPassword(token, password)).then(() => {
+        return dispatch(fetchProfile(token));
+      })
     }
   }
 }
@@ -121,7 +138,9 @@ export function modifyFirstnameIfNeeded(token, firstname) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestProfile());
-      return dispatch(modifyFirstname(token, firstname))
+      return dispatch(modifyFirstname(token, firstname)).then(() => {
+        return dispatch(fetchProfile(token));
+      })
     }
   }
 }
@@ -130,7 +149,9 @@ export function modifyLastnameIfNeeded(token, lastname) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestProfile());
-      return dispatch(modifyLastname(token, lastname))
+      return dispatch(modifyLastname(token, lastname)).then(() => {
+        return dispatch(fetchProfile(token));
+      })
     }
   }
 }
@@ -148,7 +169,9 @@ export function modifyMailIfNeeded(token, mail) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestProfile());
-      return dispatch(modifyMail(token, mail))
+      return dispatch(modifyMail(token, mail)).then(() => {
+        return dispatch(fetchProfile(token));
+      })
     }
   }
 }

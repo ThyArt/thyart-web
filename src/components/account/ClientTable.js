@@ -26,6 +26,7 @@ class ClientTable extends Component {
       removeModal: false,
       infos: {},
       rows: [],
+      search: ''
     };
 
     this.openDetails = this.openDetails.bind(this);
@@ -140,6 +141,7 @@ class ClientTable extends Component {
       }
     ];
   }
+
   render() {
     let rows;
     const columns = this.state.columns;
@@ -166,9 +168,6 @@ class ClientTable extends Component {
               onChange={this.onSearchChange}
               placeholder='Entrer le texte à rechercher...'
               id='billingSearchBar'
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
           />
           <InputGroup.Append>
             <Button id={'buttonRechercher'}
@@ -178,7 +177,7 @@ class ClientTable extends Component {
             <DropdownButton
                 as={InputGroup.Append}
                 variant="outline-secondary"
-                bssize='large' id='buttonFilter' title={'filtre'}>
+                bssize='large' id='buttonFilter' title={'Filtres'}>
               <DropdownItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</DropdownItem>
               <DropdownItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</DropdownItem>
               <DropdownItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</DropdownItem>

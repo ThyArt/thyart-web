@@ -30,7 +30,7 @@ function receiveArtworksError(error) {
   )
     error_msg = error.response.data.message;
   else
-    error_msg = 'Unknown error.';
+    error_msg = 'Erreur inconnue.';
 
   return {
     type: RECEIVE_ARTWORKS_ERROR,
@@ -61,27 +61,46 @@ function receiveArtworks(res) {
   }
   return {
     type: RECEIVE_ARTWORKS,
-    artworks: artworks}
+    artworks: artworks
+  }
 }
 
 function receiveArtwork(res) {
   return {
     type: RECEIVE_ARTWORK,
-    artwork: res.data.data
+    artwork: res.data.data,
+    msg: null
   }
 }
 
 function receiveArtWorkCreate(res) {
   return {
     type: RECEIVE_ARTWORKCREATE,
-    id: res.data['data']['id'].toString()
+    id: res.data.data['id'].toString(),
+    msg: res.data.data['name'] + ' a été crée'
   }
 }
 
 function receiveAddImage(res) {
   return {
     type: RECEIVE_ADDIMAGE,
-    msg: 'Image uploaded with success.'
+    msg: 'Image téléchargée avec succès.'
+  }
+}
+
+function receiveArtworkModify(res) {
+  return {
+    type: RECEIVE_ARTWORKS,
+    artwork: res.data.data,
+    msg: res.data.data['name'] + ' a été modifié'
+  }
+}
+
+function receiveArtworkDelete(res) {
+  return {
+    type: RECEIVE_ARTWORK,
+    artwork: res.data.data,
+    msg: res.data.data['name'] + 'a été supprimé'
   }
 }
 
@@ -95,6 +114,7 @@ function eraseArtwork(token, id) {
   return dispatch => {
 
     return axios.delete(apiURL + artWorkURL + '/' + id, header_auth)
+      .then(res => dispatch(receiveArtworkDelete(res)))
       .catch(error => dispatch(receiveArtworksError(error)));
   }
 }
@@ -146,7 +166,7 @@ function modifyArtWork(token, name, ref, state, price, id) {
   return dispatch => {
     return axios.patch(apiURL + artWorkURL + '/' + id + '?name=' + name
       + '&state=' + state + '&ref=' + ref + '&price=' + price, body, header_auth)
-      .then(res => dispatch(receiveArtworks(res)))
+      .then(res => dispatch(receiveArtworkModify(res)))
       .catch(error => dispatch(receiveArtworksError(error)));
   }
 }
@@ -254,7 +274,9 @@ export function modifyArtWorkIfNeeded(token, title, ref, state, price, id) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
-      return dispatch(modifyArtWork(token, title, ref, state, price, id));
+      return dispatch(modifyArtWork(token, title, ref, state, price, id)).then(() => {
+        return dispatch(fetchArtWorks(token));
+      })
     }
   }
 }
@@ -264,7 +286,7 @@ export function eraseArtworkIfNeeded(token, id) {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
       return dispatch(eraseArtwork(token, id)).then(() => {
-        return dispatch(fetchArtWorks(token))
+        return dispatch(fetchArtWorks(token));
       })
     }
   }

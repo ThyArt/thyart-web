@@ -39,6 +39,7 @@ describe('async profile actions', () => {
       { type: types.REQUEST_PROFILE },
       {
         type: types.RECEIVE_PROFILE,
+        msg: null,
         mail: 'test@test.jp',
         firstname: 'test',
         lastname: 'test2'

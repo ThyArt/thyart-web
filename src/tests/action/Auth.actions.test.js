@@ -38,7 +38,7 @@ describe('async signin/signup actions', () => {
     const expectedActions = [
       { type: types.REQUEST_AUTH },
       { type: types.RECEIVE_SIGN_IN,
-        msg: "Connected"}
+        msg: "Connecté"}
     ];
     const store = mockStore({ authentication: [] })
 
@@ -56,7 +56,8 @@ describe('async signin/signup actions', () => {
         response: {
           "data": {
             "id": 1,
-            "name": "test",
+            "firstname": "test",
+            "lastname": "test",
             "email": "test@test.jp"
           }
         },
@@ -66,7 +67,7 @@ describe('async signin/signup actions', () => {
     const expectedActions = [
       { type: types.REQUEST_AUTH },
       { type: types.RECEIVE_SIGN_UP,
-        msg: "Congratulation, you are registered! you can now connect to your account."}
+        msg: "Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte."}
     ];
     const store = mockStore({ authentication: [] })
 
@@ -91,7 +92,8 @@ describe('async signin/signup actions', () => {
         response: {
           "data": {
             "id": 1,
-            "name": "test",
+            "firstname": "test",
+            "lastname": "test",
             "email": "test@test.jp"
           }
         },
@@ -101,7 +103,7 @@ describe('async signin/signup actions', () => {
     const expectedActions = [
       { type: types.REQUEST_AUTH },
       { type: types.RECEIVE_SIGN_UP,
-        msg: "Congratulation, you are registered! you can now connect to your account."}
+        msg: "Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte."}
     ];
     const store = mockStore({ authentication: [] });
 

@@ -41,7 +41,7 @@ function receiveCustomersError(error) {
   )
     error_msg = error.response.data.message;
   else
-    error_msg = 'Unknown error.';
+    error_msg = 'Erreur inconnue.';
 
   return {
     type: RECEIVE_CUSTOMERS_ERROR,
@@ -53,6 +53,22 @@ function receiveCustomers(res) {
   return {
     type: RECEIVE_CUSTOMERS,
     customers: res.data.data
+  }
+}
+
+function receiveCustomerCreate(res) {
+  return {
+    type: RECEIVE_CUSTOMER,
+    customer: res.data.data,
+    msg: 'Client ' + res.last_name + 'a été crée'
+  }
+}
+
+function receiveCustomerDelete(res) {
+  return {
+    type: RECEIVE_CUSTOMER,
+    customer: null,
+    msg: 'Le client a été supprimé'
   }
 }
 
@@ -80,7 +96,7 @@ function createCustomer(token, email, phone, first_name, last_name, country, cit
   };
   return dispatch => {
     return axios.post(apiURL + customerURL, qs.stringify(body), header_auth)
-      .then(res => dispatch(receiveCustomer(res)))
+      .then(res => dispatch(receiveCustomerCreate(res)))
       .catch(error => dispatch(receiveCustomersError(error)));
   }
 }

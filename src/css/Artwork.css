@@ -22,6 +22,13 @@
 #photoModal {
     margin: 20px;
 }
+
+.spinner {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+
 .addArtWork-modal {
     width: 70%;
 }
@@ -49,16 +56,24 @@
     margin-top: 10px;
 }
 
-#dropDownFilter {
-    margin-top: 10px;
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
+.detailsModalRows {
+    margin-top: 20px;
+}
+
+.detailsModalCols {
+    font-size: 24px;
+}
+
+.detailsModalImage {
+    max-width: 100%;
 }
 
 #ajouter {
     margin-top: 10px;
 }
 
-#colSearchBarContainer {
-    padding-left: 0px;
+#dropDownFilter {
+    margin-top: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }

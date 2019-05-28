@@ -15,12 +15,6 @@ class LandingPage extends Component {
           <Carousel />
           <About />
           <Services />
-          {/*
-            TODO:
-
-            <div id="pricing">Pricing</div>
-            <div id="blog">Blog</div>
-*/}
           <Contact />
         </div>
     );
