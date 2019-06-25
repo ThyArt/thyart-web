@@ -64,8 +64,8 @@ function customers (state = initialState, action)
         case 'firstNameA':
           table.sort(function(a, b)
           {
-            a = a.first_name;
-            b = b.first_name;
+            a = a.first_name.toLowerCase();
+            b = b.first_name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
@@ -73,8 +73,8 @@ function customers (state = initialState, action)
         case 'firstNameZ':
           table.sort(function(a, b)
           {
-            a = a.first_name;
-            b = b.first_name;
+            a = a.first_name.toLowerCase();
+            b = b.first_name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
@@ -82,8 +82,8 @@ function customers (state = initialState, action)
         case 'lastNameA':
           table.sort(function(a, b)
           {
-            a = a.last_name;
-            b = b.last_name;
+            a = a.last_name.toLowerCase();
+            b = b.last_name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
@@ -91,8 +91,8 @@ function customers (state = initialState, action)
         case 'lastNameZ':
           table.sort(function(a, b)
           {
-            a = a.last_name;
-            b = b.last_name;
+            a = a.last_name.toLowerCase();
+            b = b.last_name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
@@ -100,8 +100,8 @@ function customers (state = initialState, action)
         case 'mailZ':
           table.sort(function(a, b)
           {
-            a = a.email;
-            b = b.email;
+            a = a.email.toLowerCase();
+            b = b.email.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
@@ -109,8 +109,8 @@ function customers (state = initialState, action)
         case 'mailA':
           table.sort(function(a, b)
           {
-            a = a.email;
-            b = b.email;
+            a = a.email.toLowerCase();
+            b = b.email.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });

@@ -18,10 +18,16 @@ import {Col,
 import '../../css/Artwork.css';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getArtWorksIfNeeded, getArtWorkIfNeeded, modifyArtWorkIfNeeded} from "../../actions/actionsArtwork";
+import {
+  getArtWorksIfNeeded,
+  getArtWorkIfNeeded,
+  modifyArtWorkIfNeeded,
+  fetchArtworkByStateIfNeeded
+} from "../../actions/actionsArtwork";
 import {createArtworkIfNeeded, sortArtworkByState, eraseArtworkIfNeeded} from "../../actions/actionsArtwork";
 import InputGroup from "react-bootstrap/InputGroup";
 import Container from "react-bootstrap/Container";
+import { sortBillings } from "../../actions/actionsBillings";
 
 export class Artwork extends Component {
   constructor(props, context) {
@@ -168,55 +174,30 @@ export class Artwork extends Component {
   };
 
   onSelectAlert = (eventKey) =>{
+    const filters = {
+      '1': 'nameA',
+      '2': 'nameZ',
+      '3': 'priceInc',
+      '4': 'priceDec'
+    };
     switch (eventKey) {
-      //a-z
       case 1:
-        this.props.artworks.sort( function( a, b ) {
-          a = a.name.toLowerCase();
-          b = b.name.toLowerCase();
-
-          return a < b ? -1 : a > b ? 1 : 0;
-        });
-        this.forceUpdate();
-        return;
-      //z-a
       case 2:
-        this.props.artworks.sort( function( a, b ) {
-          a = a.name.toLowerCase();
-          b = b.name.toLowerCase();
-
-          return a < b ? -1 : a > b ? 1 : 0;
-        });
-        this.props.artworks.reverse();
-        this.forceUpdate();
-        return;
-      //prix croissant
       case 3:
-        this.props.artworks.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-        this.forceUpdate();
-        return;
-      //prix decroissant
       case 4:
-        this.props.artworks.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-        this.forceUpdate();
-        return;
-      //En transit
+        this.props.dispatch(sortArtworks(filters[eventKey.toString()]));
       case 5:
-        this.props.dispatch(sortArtworkByState(this.props.token, 'incoming'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'incoming'));
         return;
-      //vendu
       case 6:
-        this.props.dispatch(sortArtworkByState(this.props.token, 'sold'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'sold'));
         return;
-      //expose
       case 7:
-        this.props.dispatch(sortArtworkByState(this.props.token, 'exposed'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'exposed'));
         return;
-      //en stock
       case 8:
-        this.props.dispatch(sortArtworkByState(this.props.token, 'in_stock'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'in_stock'));
         return;
-      //all
       case 9:
         this.props.dispatch(getArtWorksIfNeeded(this.props.token, null));
         return;

@@ -109,8 +109,8 @@ function billings (state = initialState, action)
         case 'nameA':
           table.sort(function(a, b)
           {
-            a = a.name;
-            b = b.name;
+            a = a.name.toLowerCase();
+            b = b.name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
@@ -118,8 +118,8 @@ function billings (state = initialState, action)
         case 'nameZ':
           table.sort(function(a, b)
           {
-            a = a.name;
-            b = b.name;
+            a = a.name.toLowerCase();
+            b = b.name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
@@ -127,8 +127,8 @@ function billings (state = initialState, action)
         case 'artworkA':
           table.sort(function(a, b)
           {
-            a = a.artworkName;
-            b = b.artworkName;
+            a = a.artworkName.toLowerCase();
+            b = b.artworkName.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
@@ -136,8 +136,8 @@ function billings (state = initialState, action)
         case 'artworkZ':
           table.sort(function(a, b)
           {
-            a = a.artworkName;
-            b = b.artworkName;
+            a = a.artworkName.toLowerCase();
+            b = b.artworkName.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });

@@ -4,8 +4,9 @@ import {
   RECEIVE_ARTWORKCREATE,
   RECEIVE_ARTWORKS,
   RECEIVE_ARTWORKS_ERROR, RECEIVE_ARTWORKS_MODIFY,
-  REQUEST_ARTWORKS
+  REQUEST_ARTWORKS, SORT_ARTWORKS
 } from "../constants/constantsAction";
+import { cloneDeep } from "lodash";
 
 const initialState =
   {
@@ -59,6 +60,36 @@ function artworks (state = initialState, action)
         isFetching: false,
         error: null,
         msg: null
+      });
+    case SORT_ARTWORKS:
+      let artworks = cloneDeep(state.artworks);
+      switch (action.sortType) {
+        case 'nameA':
+          artworks.sort( function( a, b ) {
+            a = a.name.toLowerCase();
+            b = b.name.toLowerCase();
+
+            return a < b ? -1 : a > b ? 1 : 0;
+          });
+          break;
+        case 'nameZ':
+          artworks.sort( function( a, b ) {
+            a = a.name.toLowerCase();
+            b = b.name.toLowerCase();
+
+            return a < b ? -1 : a > b ? 1 : 0;
+          });
+          artworks.reverse();
+          break;
+        case 'priceInc':
+          artworks.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+          break;
+        case 'priceDec':
+          artworks.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+          break;
+      }
+      return Object.assign({}, state, {
+        artworks: artworks
       });
     default:
       return state

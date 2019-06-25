@@ -44,7 +44,7 @@ class BillingTable extends Component {
       '5': 'dateNew',
       '6': 'dateOld'
     };
-    this.props.dispatch(this.props.dispatch(sortBillings(filters[eventKey.toString()])));
+    this.props.dispatch(sortBillings(filters[eventKey.toString()]));
   };
 
   onSearchChange = event => {

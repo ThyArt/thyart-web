@@ -5,7 +5,8 @@ import {
   RECEIVE_ADDIMAGE,
   RECEIVE_ARTWORK,
   RECEIVE_ARTWORKCREATE,
-  RECEIVE_ARTWORKS
+  RECEIVE_ARTWORKS,
+  SORT_ARTWORKS
 } from "../constants/constantsAction";
 import { apiURL, artWorkURL } from "../constants/constantsApi";
 
@@ -20,6 +21,11 @@ function requestArtworks() {
     type: REQUEST_ARTWORKS
   }
 }
+
+export const sortArtworks = sortType => ({
+  type: SORT_ARTWORKS,
+  sortType: sortType
+})
 
 function receiveArtworksError(error) {
   let error_msg;
@@ -243,7 +249,7 @@ export function uploadImageIfNeeded(file, token, id) {
   }
 }
 
-export function sortArtworkByState(token, state) {
+export function getArtworkByStateIfNeeded(token, state) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
