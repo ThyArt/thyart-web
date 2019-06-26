@@ -10,7 +10,8 @@ import {
   RECEIVE_ARTWORKS,
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMERS_ERROR,
-  RECEIVE_ARTWORKS_ERROR
+  RECEIVE_ARTWORKS_ERROR,
+  OPEN_MODIFY_BILLING
 } from "../constants/constantsAction";
 import { cloneDeep } from "lodash";
 
@@ -24,6 +25,7 @@ const initialState = {
   artworks: [],
   billing: null,
   modif: false,
+  new: false,
   table: true
 };
 
@@ -73,6 +75,7 @@ function billings (state = initialState, action)
         billings: action.billings,
         error: null,
         modif: false,
+        new: false,
         table: true
       });
     case RECEIVE_ARTWORKS:
@@ -93,14 +96,22 @@ function billings (state = initialState, action)
         billing: action.billing,
         error: null,
         table: false,
-        modif: false
+        modif: false,
+        new: false
       });
     case OPEN_CREATE_BILLING:
       return Object.assign({}, state, {
         error: null,
+        new: true,
         modif: true,
         table: false,
         billing: null
+      });
+    case OPEN_MODIFY_BILLING:
+      return Object.assign({}, state, {
+        error: null,
+        new: false,
+        modif: true
       });
     case SORT_BILLINGS:
       let table = cloneDeep(state.billings);

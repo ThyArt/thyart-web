@@ -1,12 +1,12 @@
 import axios from "axios";
 import { apiURL, billingURL } from "../constants/constantsApi";
 import {
-  OPEN_CREATE_BILLING,
+  OPEN_CREATE_BILLING, OPEN_MODIFY_BILLING,
   RECEIVE_BILLING,
   RECEIVE_BILLINGS,
   RECEIVE_BILLINGS_ERROR,
   REQUEST_BILLINGS,
-  SORT_BILLINGS
+  SORT_BILLINGS,
 } from "../constants/constantsAction";
 import qs from 'qs';
 
@@ -25,6 +25,12 @@ function requestBillings() {
 export function  openCreateBilling() {
   return {
     type: OPEN_CREATE_BILLING
+  }
+}
+
+export function  openModifyBilling() {
+  return {
+    type: OPEN_MODIFY_BILLING
   }
 }
 
@@ -160,7 +166,6 @@ function modifyBilling(token, first_name, last_name, email,
     return axios.patch(apiURL + billingURL + '/' + id + '?email=' + email
       + '&phone=' + phone + '&first_name=' + first_name + '&last_name=' + last_name
       + '&country=' + country + '&city=' + city + '&address=' + address + '&artworkId=' + artworkId , body, header_auth)
-      .then(res => dispatch(receiveBillings(res)))
       .catch(error => dispatch(receiveBillingsError(error)));
   }
 }
@@ -202,7 +207,9 @@ export function modifyBillingIfNeeded(token, email, phone, first_name,
     if (shouldFetchApi(getState())) {
       dispatch(requestBillings());
       return dispatch(modifyBilling(token, email, phone, first_name,
-        last_name, country, city, address, id, artworkId));
+        last_name, country, city, address, id, artworkId)).then(() => {
+        return dispatch(fetchBillings(token, null));
+      });
     }
   }
 }

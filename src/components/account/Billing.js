@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button, Jumbotron, Col, FormControl, FormGroup, Form } from "react-bootstrap";
 
 import "../../css/Billing.css";
-import { createBillingIfNeeded } from "../../actions/actionsBillings";
+import { createBillingIfNeeded, modifyBillingIfNeeded, openModifyBilling } from "../../actions/actionsBillings";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -130,11 +130,34 @@ class Billing extends Component {
       this.getFamilyValidationState() === 'success' &&
       this.getNumberValidationState() === 'success'
     ) {
-      this.props.dispatch(createBillingIfNeeded(this.props.token, this.state.mail, this.state.phone,
-                                                this.state.fName, this.state.lName, this.state.country,
-                                                this.state.city, this.state.address, this.state.artworkId));
+      if (this.props.new) {
+        this.props.dispatch(createBillingIfNeeded(this.props.token, this.state.mail, this.state.phone,
+          this.state.fName, this.state.lName, this.state.country,
+          this.state.city, this.state.address, this.state.artworkId));
+      }
+      else
+      {
+        this.props.dispatch(modifyBillingIfNeeded(this.props.token, this.state.mail, this.state.phone,
+          this.state.fName, this.state.lName, this.state.country,
+          this.state.city, this.state.address, this.state.artworkId));
+      }
     }
   };
+
+  onModify = () => {
+    this.props.dispatch(openModifyBilling());
+    this.setState({
+      artworkId: this.props.billing.artwork.id,
+      fName: this.props.billing.customer.first_name,
+      lName: this.props.billing.customer.last_name,
+      mail: this.props.billing.customer.email,
+      address: this.props.billing.customer.address,
+      phone: this.props.billing.customer.phone,
+      country: this.props.billing.customer.country,
+      city: this.props.billing.customer.city
+    });
+  };
+
 
   handleClickArtwork = event =>{
       console.log(event);
@@ -282,10 +305,17 @@ class Billing extends Component {
                   </FormGroup>
                   ) : (<div/>)
                 }
-              <Button bssize="lg" onClick={this.billingCreation}
-                      className='billingCreateButton' bsstyle="primary">
-                Créer une nouvelle facture
-              </Button>
+              {
+                this.props.newObj ? (
+                  <Button bssize="lg" onClick={this.billingCreation}
+                        className='billingCreateButton' bsstyle="primary">
+                    Créer une nouvelle facture
+                  </Button>) :
+                  (<Button bssize="lg" onClick={this.billingCreation}
+                           className='billingCreateButton' bsstyle="primary">
+                    Modifier facture
+                  </Button>)
+              }
             </Col>
           </div>
         </Jumbotron>
@@ -296,6 +326,9 @@ class Billing extends Component {
   nonEditable() {
     return (
       <div>
+        <Button bssize="lg" onClick={this.onModify} className='billingMainButton'>
+          <span className='add'>Modify</span>
+        </Button>
         <Jumbotron className="billingJumbotron">
           <h2 className="billingJumbotronTitle">Informations du client</h2>
 
@@ -413,6 +446,7 @@ function mapStateToProps(state) {
     error,
     billing,
     modif,
+    newObj,
     table,
     artworks,
     dispatch
@@ -424,6 +458,7 @@ function mapStateToProps(state) {
     error,
     billing,
     modif,
+    newObj,
     table,
     artworks,
     dispatch

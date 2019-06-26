@@ -8,6 +8,7 @@ import '../../css/Membres.css';
 import {
   eraseBillingIfNeeded,
   getBillingIfNeeded,
+  getBillingsIfNeeded,
   sortBillings
 } from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
@@ -52,6 +53,7 @@ class BillingTable extends Component {
   };
 
   searchBillings = () => {
+    this.props.dispatch(getBillingsIfNeeded(this.props.token, this.state.search));
   };
 
   onRemoveClose = () => {
