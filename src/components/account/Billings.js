@@ -10,7 +10,7 @@ import ReactLoading from "./Clients";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
-import { sortArtworkByState } from "../../actions/actionsArtwork";
+import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
 
 class Billings extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class Billings extends Component {
 
   onCreate = () => {
     this.props.dispatch(openCreateBilling());
-    this.props.dispatch(sortArtworkByState(this.props.token, 'exposed'));
+    this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'exposed'));
   };
 
   onReturn = () => {

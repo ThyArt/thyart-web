@@ -24,10 +24,12 @@ import {
   modifyArtWorkIfNeeded,
   fetchArtworkByStateIfNeeded
 } from "../../actions/actionsArtwork";
-import {createArtworkIfNeeded, sortArtworkByState, eraseArtworkIfNeeded} from "../../actions/actionsArtwork";
+import {createArtworkIfNeeded,
+  sortArtworks,
+  eraseArtworkIfNeeded,
+  getArtworkByStateIfNeeded} from "../../actions/actionsArtwork";
 import InputGroup from "react-bootstrap/InputGroup";
 import Container from "react-bootstrap/Container";
-import { sortBillings } from "../../actions/actionsBillings";
 
 export class Artwork extends Component {
   constructor(props, context) {
