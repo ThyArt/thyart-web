@@ -2,6 +2,7 @@ import axios from "axios";
 import { apiURL, artWorkURL, customerURL } from "../constants/constantsApi";
 import {
   OPEN_CREATE_CUSTOMER,
+  OPEN_MODIFY_CUSTOMER,
   RECEIVE_CUSTOMER,
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMERS_ERROR,
@@ -24,6 +25,12 @@ function requestCustomers() {
 export function  openCreateCustomer() {
   return {
     type: OPEN_CREATE_CUSTOMER
+  }
+}
+
+export function  openModifyCustomer() {
+  return {
+    type: OPEN_MODIFY_CUSTOMER
   }
 }
 
@@ -143,7 +150,7 @@ function modifyCustomer(token, email, phone, first_name,
     return axios.patch(apiURL + customerURL + '/' + id + '?email=' + email
       + '&phone=' + phone + '&first_name=' + first_name + '&last_name=' + last_name
       + '&country=' + country + '&city=' + city + '&address=' + address, body, header_auth)
-      .then(res => dispatch(receiveCustomers(res)))
+      .then(res => dispatch(receiveCustomer(res)))
       .catch(error => dispatch(receiveCustomersError(error)));
   }
 }

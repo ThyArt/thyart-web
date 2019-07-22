@@ -1,14 +1,14 @@
 import axios from "axios";
 import { apiURL, billingURL } from "../constants/constantsApi";
 import {
-  OPEN_CREATE_BILLING, OPEN_MODIFY_BILLING,
+  OPEN_CREATE_BILLING,
+  OPEN_MODIFY_BILLING,
   RECEIVE_BILLING,
   RECEIVE_BILLINGS,
   RECEIVE_BILLINGS_ERROR,
   REQUEST_BILLINGS,
   SORT_BILLINGS,
 } from "../constants/constantsAction";
-import qs from 'qs';
 
 function shouldFetchApi(state) {
   const isFetching = state.billings.isFetching;

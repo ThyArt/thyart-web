@@ -39,7 +39,7 @@ export class Account extends Component {
         this.setState({token: null});
         sessionStorage.removeItem('token');
     } else {
-        console.log(eventKey);
+        //console.log(eventKey);
       this.setState({ selected: eventKey });
     }
   };

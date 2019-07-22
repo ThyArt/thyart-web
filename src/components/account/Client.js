@@ -4,7 +4,7 @@ import { Button, Jumbotron, Col, FormControl, FormGroup } from "react-bootstrap"
 import "../../css/Billing.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { createCustomerIfNeeded } from "../../actions/actionsCustomers";
+import { createCustomerIfNeeded, modifyCustomerIfNeeded, openModifyCustomer } from "../../actions/actionsCustomers";
 
 class Client extends Component {
   constructor(props) {
@@ -120,10 +120,32 @@ class Client extends Component {
       this.getFamilyValidationState() === 'success' &&
       this.getNumberValidationState() === 'success'
     ) {
-      this.props.dispatch(createCustomerIfNeeded(this.props.token, this.state.mail, this.state.phone,
-        this.state.fName, this.state.lName, this.state.country, this.state.city,
-         this.state.address));
+      if (this.props.newObj) {
+
+        this.props.dispatch(createCustomerIfNeeded(this.props.token, this.state.mail, this.state.phone,
+          this.state.fName, this.state.lName, this.state.country, this.state.city,
+          this.state.address));
+      }
+      else
+      {
+        this.props.dispatch(modifyCustomerIfNeeded(this.props.token, this.state.mail, this.state.phone,
+          this.state.fName, this.state.lName, this.state.country, this.state.city,
+          this.state.address, this.props.customer.id));
+      }
     }
+  };
+
+  onModify = () => {
+    this.props.dispatch(openModifyCustomer());
+    this.setState({
+      fName: this.props.customer.first_name,
+      lName: this.props.customer.last_name,
+      mail: this.props.customer.email,
+      address: this.props.customer.address,
+      phone: this.props.customer.phone,
+      country: this.props.customer.country,
+      city: this.props.customer.city
+    });
   };
 
   editable() {
@@ -238,10 +260,17 @@ class Client extends Component {
                 />
                 <FormControl.Feedback />
               </FormGroup>
-              <Button bssize="lg" onClick={this.clientCreation}
-                      className='billingCreateButton' bsstyle="primary">
-                Créer un nouveau client
-              </Button>
+              {
+                this.props.newObj ? (
+                <Button bssize="lg" onClick={this.clientCreation}
+                        className='billingCreateButton' bsstyle="primary">
+                  Créer un nouveau client
+                </Button>) :
+                (<Button bssize="lg" onClick={this.clientCreation}
+                         className='billingCreateButton' bsstyle="primary">
+                Modifier client
+              </Button>)
+              }
             </Col>
 
           </div>
@@ -254,6 +283,9 @@ class Client extends Component {
   nonEditable() {
     return (
       <div>
+        <Button bssize="lg" onClick={this.onModify} className='billingMainButton'>
+          <span className='add'>Modify</span>
+        </Button>
         <Jumbotron className="billingJumbotron">
           <h2 className="billingJumbotronTitle">Informations du client</h2>
 
@@ -294,14 +326,14 @@ class Client extends Component {
             </Col>
 
             <Col sm={6}>
-              <h3 className="billingJumbotronTag">City :</h3>
+              <h3 className="billingJumbotronTag">Ville :</h3>
             </Col>
             <Col sm={6}>
               <h3 className="billingJumbotronInfo">{ this.props.customer.city }</h3>
             </Col>
 
             <Col sm={6}>
-              <h3 className="billingJumbotronTag">Country :</h3>
+              <h3 className="billingJumbotronTag">Pays :</h3>
             </Col>
             <Col sm={6}>
               <h3 className="billingJumbotronInfo">{ this.props.customer.country }</h3>
@@ -330,6 +362,7 @@ Client.propTypes = {
   error: PropTypes.string,
   customer: PropTypes.object,
   modif: PropTypes.bool.isRequired,
+  newObj: PropTypes.string,
   table: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 };
@@ -341,6 +374,7 @@ function mapStateToProps(state) {
     error,
     customer,
     modif,
+    newObj,
     table,
     dispatch
   } = state.customers;
@@ -351,6 +385,7 @@ function mapStateToProps(state) {
     error,
     customer,
     modif,
+    newObj,
     table,
     dispatch
   }

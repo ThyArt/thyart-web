@@ -4,7 +4,8 @@ import {
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMER,
   OPEN_CREATE_CUSTOMER,
-  SORT_CUSTOMERS
+  SORT_CUSTOMERS,
+  OPEN_MODIFY_CUSTOMER
 } from "../constants/constantsAction";
 import { cloneDeep } from "lodash";
 
@@ -15,6 +16,7 @@ const initialState = {
     customers: [],
     customer: null,
     modif: false,
+    newObj: false,
     table: true
   };
 
@@ -40,6 +42,7 @@ function customers (state = initialState, action)
         customers: action.customers,
         error: null,
         modif: false,
+        newObj: false,
         table: true
       });
     case RECEIVE_CUSTOMER:
@@ -48,14 +51,22 @@ function customers (state = initialState, action)
         customer: action.customer,
         error: null,
         table: false,
-        modif: false
+        modif: false,
+        newObj: false
       });
     case OPEN_CREATE_CUSTOMER:
       return Object.assign({}, state, {
         error: null,
         modif: true,
+        newObj: true,
         table: false,
         customer: null
+      });
+    case OPEN_MODIFY_CUSTOMER:
+      return Object.assign({}, state, {
+        error: null,
+        newObj: false,
+        modif: true
       });
     case SORT_CUSTOMERS:
       let table = cloneDeep(state.customers);

@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
 import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
+import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 
 class Billings extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Billings extends Component {
   onCreate = () => {
     this.props.dispatch(openCreateBilling());
     this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'exposed'));
+    this.props.dispatch(getCustomersIfNeeded(this.props.token));
   };
 
   onReturn = () => {

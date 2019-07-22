@@ -23,9 +23,10 @@ const initialState = {
   error: null,
   billings: [],
   artworks: [],
+  customers: [],
   billing: null,
   modif: false,
-  new: false,
+  newObj: false,
   table: true
 };
 
@@ -75,20 +76,20 @@ function billings (state = initialState, action)
         billings: action.billings,
         error: null,
         modif: false,
-        new: false,
+        newObj: false,
         table: true
       });
     case RECEIVE_ARTWORKS:
       return Object.assign({}, state, {
         isArtworksFetching: false,
         artworks: action.artworks,
-        error: null,
+        error: null
       });
     case RECEIVE_CUSTOMERS:
       return Object.assign({}, state, {
         isCustomersFetching: false,
         customers: action.customers,
-        error: null,
+        error: null
       });
     case RECEIVE_BILLING:
       return Object.assign({}, state, {
@@ -97,12 +98,12 @@ function billings (state = initialState, action)
         error: null,
         table: false,
         modif: false,
-        new: false
+        newObj: false
       });
     case OPEN_CREATE_BILLING:
       return Object.assign({}, state, {
         error: null,
-        new: true,
+        newObj: true,
         modif: true,
         table: false,
         billing: null
@@ -110,7 +111,7 @@ function billings (state = initialState, action)
     case OPEN_MODIFY_BILLING:
       return Object.assign({}, state, {
         error: null,
-        new: false,
+        newObj: false,
         modif: true
       });
     case SORT_BILLINGS:

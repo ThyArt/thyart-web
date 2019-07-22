@@ -10,6 +10,7 @@ import Modal from "react-responsive-modal";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import FormLabel from "react-bootstrap/FormLabel";
+import { getArtWorksIfNeeded } from "../../actions/actionsArtwork";
 
 export class Members extends Component {
   constructor(props) {
