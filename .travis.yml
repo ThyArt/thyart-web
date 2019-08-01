@@ -1,9 +1,20 @@
 language: node_js
-node_js: "12.6"
 cache: yarn
+node_js:
+  - '12.6'
 
 install:
+  - pip install --user awscli
   - yarn install
+
+before_script:
+  - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+  - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 
 script:
   - yarn test
+
+env:
+  global:
+    - secure: JBnTTx4kQljSPCI5kpMpvRtwzPZqXpQR5BCNydLQmmWRvgf0CKWci3UzbT/Ren/7xzuxVL3wNGbRus3/t+tNeVva4KScvZAvATo//01tbb6qd7us6UF3iPcPZC2W/fMxH/gUfs9z7/6cE2FRBJQ/g51ZpDzqgDbQiqe9ReUeAEOFw7NHqhMz3n24gZ8cgLz+bzUjpTJPDDnoHBLBjm8fPhMWKOBkLaEw8b478R7Bq2wGESjYzIuurWNN1FAi4Vq5/FrC6PcI/CgulQY3FYdVwEDnaTOEDVVpYL+uJ7OJ/68muXjW80Ij4DaEt2haLnwls4iE9RdpUIX3XnH//1Q6ch43iAndwbgymTXtuGsp3VrjEIZpCovvkjwPcwu2OJHY7WrVSyHojfH9fGrMKr1SMFZaYhm1qm8DbD96JvFoYXw/z8Pti1S35Q8qnzOL8nrpbS8eIbaf1MCAMCKMiAY6RUBv3As92v+u5OcsEE7Vcpc9slZNfL3JAKr9mPaPtVSvO82fJXWcaixlEDPO0gbYM5JyK0IsvDG1eI2Re3/lOmor2y5DtRhnU1gAQc/uVUsFl7kItbO7bxbcxr2TueNmjHFRaAvlzwFHRYfZ/QqStyXajPdmiPkvNKpxNgglWKYPmtmZencH5FVWGv5v8wDy86ErQJ0LU3CTibj1SY+O9MM=
+    - secure: PZReGeMc0pK9pse4caC2BC1S+I0yZnVkbQqj1Rh7Vp7WTGdDp6PN4ucXXfqxThnItxe9KUJY5MWYIw0bK7DrDbMDY4Ze9OStOHDPxaFZihNGtf4lJREDdN193dytTPnx4QswcIx4+maGG04+mLX8KNK/u2TpTxINcDfsrEXVPDQAnrRezzv+EAXzBE9Cu0VQINihnpSRx4R20XDP/cHrWAy/5ZjOB4r1HqnJRpEfx464XwKbOQmpQ4VQi3C6CyvTBbl25tD6N1Dpcbt3GUK6PHGlGOuGidQ6sFV+sMbd/3Gx9sVAUixB6VLlu/WMJ/aVspCV1iIOA4uStvMVsTnLbpqE2PIcguIuohQzSyLq6byJ3RqjkzEXnn/0rWiuObVVLOlvYaIkYstl/G/ryHyD9m50lq71DAdDPbVK7D9Mwd0SiHhnShlvZmO1dM5vlGvnrcw6Ha6F1eB7QQxArUTWxALaJRQ8KfDc/Q/C7WQGjjz5hVCJ0J1ClHc+81Vd1KE4lkGfYW+HrsM+lVNmOipgPqdY6KseeVBfGzTYJuvwmmysJsriw4SzC9G3f97otlW3eR59HJccG/Z/lCUb7RtJLX3t6HjEKTOxtVr2X6Wu0oT0JK9ua/0Y9/8/CmHkow0SoBmXNM3lhvg6MjsbakSOtcFgwft6yvvPOWG8LlcIfBc=
