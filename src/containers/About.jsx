@@ -21,7 +21,8 @@ class About extends Component {
               <strong className="aboutText">Gestion</strong>
               <br />
               <p className="aboutDesc">
-                Gérez votre activité, de la réception d'une oeuvre à la facturation.
+                Gérez votre activité, de la réception d'une oeuvre à la
+                facturation.
               </p>
             </Col>
             <Col className="aboutCol">
@@ -36,7 +37,8 @@ class About extends Component {
               <strong className="aboutText">Suivi</strong>
               <br />
               <p className="aboutDesc">
-                Suivez les oeuvres grâce au code QR avec notre application pour savoir exactement le statut de votre collection.
+                Suivez les oeuvres grâce au code QR avec notre application pour
+                savoir exactement le statut de votre collection.
               </p>
             </Col>
             <Col className="aboutCol">
@@ -51,7 +53,8 @@ class About extends Component {
               <strong className="aboutText">Relation</strong>
               <br />
               <p className="aboutDesc">
-                Restez en contact avec les artistes et vos clients à travers notre plateforme.
+                Restez en contact avec les artistes et vos clients à travers
+                notre plateforme.
               </p>
             </Col>
           </Row>

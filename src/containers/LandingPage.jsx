@@ -12,11 +12,11 @@ class LandingPage extends Component {
     return (
       <div>
         <Header />
-          <Carousel />
-          <About />
-          <Services />
-          <Contact />
-        </div>
+        <Carousel />
+        <About />
+        <Services />
+        <Contact />
+      </div>
     );
   }
 }

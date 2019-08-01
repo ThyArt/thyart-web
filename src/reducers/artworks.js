@@ -3,24 +3,22 @@ import {
   RECEIVE_ARTWORK,
   RECEIVE_ARTWORKCREATE,
   RECEIVE_ARTWORKS,
-  RECEIVE_ARTWORKS_ERROR, RECEIVE_ARTWORKS_MODIFY,
+  RECEIVE_ARTWORKS_ERROR,
+  RECEIVE_ARTWORKS_MODIFY,
   REQUEST_ARTWORKS
-} from "../constants/constantsAction";
+} from '../constants/constantsAction';
 
-const initialState =
-  {
-    isFetching: false,
-    msg: null,
-    error: null,
-    artworks: [],
-    artwork: null,
-    artistId: null
-  };
+const initialState = {
+  isFetching: false,
+  msg: null,
+  error: null,
+  artworks: [],
+  artwork: null,
+  artistId: null
+};
 
-function artworks (state = initialState, action)
-{
+function artworks(state = initialState, action) {
   switch (action.type) {
-
     case REQUEST_ARTWORKS:
       return Object.assign({}, state, {
         isFetching: true,
@@ -48,7 +46,7 @@ function artworks (state = initialState, action)
         msg: action.msg
       });
     case RECEIVE_ARTWORKCREATE:
-      return Object.assign({}, state,{
+      return Object.assign({}, state, {
         isFetching: false,
         artistId: action.id,
         error: null,
@@ -61,8 +59,7 @@ function artworks (state = initialState, action)
         msg: null
       });
     default:
-      return state
-
+      return state;
   }
 }
 

@@ -6,7 +6,7 @@ import {
   FormGroup,
   FormLabel
 } from 'react-bootstrap';
-import { signUpIfNeeded } from "../actions/actionsAuth";
+import { signUpIfNeeded } from '../actions/actionsAuth';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
@@ -38,12 +38,17 @@ export class SignUpForm extends Component {
       this.getPassValidationState() === 'success' &&
       this.getConfirmValidationState() === 'success'
     ) {
-      this.props.dispatch(signUpIfNeeded(this.state.mailValue, this.state.firstnameValue, this.state.lastnameValue,
-        this.state.mailValue, this.state.passValue));
+      this.props.dispatch(
+        signUpIfNeeded(
+          this.state.mailValue,
+          this.state.firstnameValue,
+          this.state.lastnameValue,
+          this.state.mailValue,
+          this.state.passValue
+        )
+      );
     }
   };
-
-
 
   getFirstnameValidationState() {
     let firstname = this.state.firstnameValue;
@@ -98,25 +103,23 @@ export class SignUpForm extends Component {
   }
 
   handleMailChange(e) {
-    this.setState({mailValue: e.target.value});
+    this.setState({ mailValue: e.target.value });
   }
 
   handlePassChange(e) {
-    this.setState({passValue: e.target.value});
+    this.setState({ passValue: e.target.value });
   }
 
   handleConfirmChange(e) {
-    this.setState({confirmValue: e.target.value});
+    this.setState({ confirmValue: e.target.value });
   }
 
-
-
   handleFirstnameChange(e) {
-    this.setState({firstnameValue: e.target.value})
+    this.setState({ firstnameValue: e.target.value });
   }
 
   handleLastnameChange(e) {
-    this.setState({lastnameValue: e.target.value})
+    this.setState({ lastnameValue: e.target.value });
   }
 
   render() {
@@ -133,7 +136,7 @@ export class SignUpForm extends Component {
             placeholder="Prénom"
             onChange={this.handleFirstnameChange}
           />
-          <FormControl.Feedback/>
+          <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formValidationNull1"
@@ -146,7 +149,7 @@ export class SignUpForm extends Component {
             placeholder="Nom"
             onChange={this.handleLastnameChange}
           />
-          <FormControl.Feedback/>
+          <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formValidationNull2"
@@ -159,7 +162,9 @@ export class SignUpForm extends Component {
             placeholder="exemple@email.com"
             onChange={this.handleMailChange}
           />
-          <FormControl.Feedback>Validation basée sur la syntaxe des adresses email</FormControl.Feedback>
+          <FormControl.Feedback>
+            Validation basée sur la syntaxe des adresses email
+          </FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
@@ -172,7 +177,9 @@ export class SignUpForm extends Component {
             placeholder="Mot de passe"
             onChange={this.handlePassChange}
           />
-          <FormControl.Feedback>Entrez un mot de passe renforcé</FormControl.Feedback>
+          <FormControl.Feedback>
+            Entrez un mot de passe renforcé
+          </FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText2"
@@ -184,26 +191,23 @@ export class SignUpForm extends Component {
             value={this.state.confirmValue}
             onChange={this.handleConfirmChange}
           />
-          <FormControl.Feedback/>
+          <FormControl.Feedback />
         </FormGroup>
 
         {this.props.isFetching ? (
           <ReactLoading type={'spin'} color={'black'} height={50} width={50} />
-        ) :  (
+        ) : (
           <Button onClick={this.signup}>S'inscrire</Button>
-        )
-        }
+        )}
 
         {this.props.msg ? (
-          <Alert bsstyle="success">
-            {this.props.msg}
-          </Alert>
+          <Alert bsstyle="success">{this.props.msg}</Alert>
         ) : null}
 
         {this.props.error ? (
           <Alert bsstyle="danger">{`Error while creating your account: ${
             this.props.error
-            }`}</Alert>
+          }`}</Alert>
         ) : null}
       </form>
     );
@@ -220,13 +224,7 @@ SignUpForm.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const {
-    isLogged,
-    isFetching,
-    token,
-    msg,
-    error
-  } = state.authentication;
+  const { isLogged, isFetching, token, msg, error } = state.authentication;
 
   return {
     isLogged,
@@ -234,7 +232,7 @@ function mapStateToProps(state) {
     token,
     msg,
     error
-  }
+  };
 }
 
 export default connect(mapStateToProps)(SignUpForm);
