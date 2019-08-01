@@ -1,4 +1,4 @@
-if [[ "$TRAVIS_BRANCH" == 'feature/travis-integration' ]];
+if [[ "$TRAVIS_BRANCH" == 'dev' ]];
 then
   yarn build
   rsync -r --delete-after --quiet "$TRAVIS_BUILD_DIR"/build/* root@staging.thyart.fr:/var/www/thyart/

@@ -1,4 +1,4 @@
-if [[ "$TRAVIS_BRANCH" == 'feature/travis-integration' ]];
+if [[ "$TRAVIS_BRANCH" == 'dev' ]];
 then
   aws s3 cp s3://thyart-ops/env/frontend/staging/.env .env
 
