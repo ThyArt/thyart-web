@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Jumbotron, Col, FormControl, FormGroup, Form } from "react-bootstrap";
+import { Button, Jumbotron, Col, FormControl, FormGroup } from "react-bootstrap";
 
 import "../../css/Billing.css";
 import { createBillingIfNeeded } from "../../actions/actionsBillings";

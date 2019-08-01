@@ -205,9 +205,7 @@ export class SignUpForm extends Component {
         ) : null}
 
         {this.props.error ? (
-          <Alert bsstyle="danger">{`Error while creating your account: ${
-            this.props.error
-          }`}</Alert>
+          <Alert bsstyle="danger">{`Error while creating your account: ${this.props.error}`}</Alert>
         ) : null}
       </form>
     );

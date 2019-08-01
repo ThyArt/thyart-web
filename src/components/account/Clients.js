@@ -13,9 +13,9 @@ import ReactLoading from 'react-loading';
 import { getCustomersIfNeeded, openCreateCustomer } from "../../actions/actionsCustomers";
 
 class Clients extends Component {
-  constructor(props) {
+/*  constructor(props) {
     super(props);
-  }
+  }*/
 
   componentDidMount(){
     this.props.dispatch(getCustomersIfNeeded(this.props.token));

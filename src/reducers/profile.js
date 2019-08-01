@@ -1,8 +1,7 @@
 import {
   RECEIVE_PROFILE,
   REQUEST_PROFILE,
-  RECEIVE_PROFILE_ERROR,
-  RECEIVE_PROFILE_MODIFY
+  RECEIVE_PROFILE_ERROR
 } from '../constants/constantsAction';
 
 export const initialState = {

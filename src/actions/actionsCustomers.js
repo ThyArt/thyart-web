@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiURL, artWorkURL, customerURL } from '../constants/constantsApi';
+import { apiURL, customerURL } from '../constants/constantsApi';
 import {
   OPEN_CREATE_CUSTOMER,
   RECEIVE_CUSTOMER,
@@ -60,13 +60,13 @@ function receiveCustomerCreate(res) {
   };
 }
 
-function receiveCustomerDelete(res) {
+/*function receiveCustomerDelete(res) {
   return {
     type: RECEIVE_CUSTOMER,
     customer: null,
     msg: 'Le client a été supprimé'
   };
-}
+}*/
 
 function receiveCustomer(res) {
   return {
@@ -141,7 +141,7 @@ function eraseCustomer(token, id) {
   };
 }
 
-function modifyCustomer(
+/*function modifyCustomer(
   token,
   email,
   phone,
@@ -189,7 +189,7 @@ function modifyCustomer(
       .then(res => dispatch(receiveCustomers(res)))
       .catch(error => dispatch(receiveCustomersError(error)));
   };
-}
+}*/
 
 function fetchCustomers(token, name) {
   const header_auth = {
@@ -238,6 +238,7 @@ export function createCustomerIfNeeded(
     }
   };
 }
+/*
 
 export function modifyCustomerIfNeeded(
   token,
@@ -269,6 +270,7 @@ export function modifyCustomerIfNeeded(
     }
   };
 }
+*/
 
 export function eraseCustomerIfNeeded(token, id) {
   return (dispatch, getState) => {
