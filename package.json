@@ -45,8 +45,8 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "env-cmd react-scripts start",
-    "build": "env-cmd react-scripts build",
+    "start": "env-cmd -f ./.env  react-scripts start",
+    "build": "env-cmd -f ./.env react-scripts build",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "pretty": "./node_modules/.bin/prettier --single-quote es6 --write ./src/**/*.{js,jsx} ./src/*.{js,jsx}"
