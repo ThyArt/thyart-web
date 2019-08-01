@@ -1,22 +1,20 @@
 import {
   RECEIVE_PROFILE,
   REQUEST_PROFILE,
-  RECEIVE_PROFILE_ERROR, RECEIVE_PROFILE_MODIFY
-} from "../constants/constantsAction";
+  RECEIVE_PROFILE_ERROR
+} from '../constants/constantsAction';
 
-export const initialState =
-  {
-    isFetching: false,
-    msg: null,
-    error: null,
-    mail: null,
-    name: null,
-    firstname: null,
-    lastname: null
-  };
+export const initialState = {
+  isFetching: false,
+  msg: null,
+  error: null,
+  mail: null,
+  name: null,
+  firstname: null,
+  lastname: null
+};
 
-function profile(state = initialState, action)
-{
+function profile(state = initialState, action) {
   switch (action.type) {
     case REQUEST_PROFILE:
       return Object.assign({}, state, {
@@ -39,7 +37,7 @@ function profile(state = initialState, action)
         msg: action.msg
       });
     default:
-      return state
+      return state;
   }
 }
 

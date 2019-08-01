@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import moment from "moment";
 import 'moment/locale/fr';
-import BigCalendar from "react-big-calendar";
+import { Calendar, momentLocalizer } from 'react-big-calendar'
 import uuidv4 from "uuid/v4";
 
 // Initialize Calendar locale to French
 moment.locale('fr');
-const local = BigCalendar.momentLocalizer(moment);
+const local = momentLocalizer(moment);
 
 export class Scheduler extends Component {
   constructor(props) {
@@ -66,7 +66,7 @@ export class Scheduler extends Component {
   render() {
     return (
         <div>
-          <BigCalendar
+          <Calendar
               localizer={local}
               views={['month', 'agenda']}
               onView={() => {}}

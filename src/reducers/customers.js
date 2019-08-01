@@ -5,23 +5,21 @@ import {
   RECEIVE_CUSTOMER,
   OPEN_CREATE_CUSTOMER,
   SORT_CUSTOMERS
-} from "../constants/constantsAction";
-import { cloneDeep } from "lodash";
+} from '../constants/constantsAction';
+import { cloneDeep } from 'lodash';
 
 const initialState = {
-    isFetching: false,
-    msg: null,
-    error: null,
-    customers: [],
-    customer: null,
-    modif: false,
-    table: true
-  };
+  isFetching: false,
+  msg: null,
+  error: null,
+  customers: [],
+  customer: null,
+  modif: false,
+  table: true
+};
 
-function customers (state = initialState, action)
-{
+function customers(state = initialState, action) {
   switch (action.type) {
-
     case REQUEST_CUSTOMERS:
       return Object.assign({}, state, {
         isFetching: true,
@@ -59,11 +57,9 @@ function customers (state = initialState, action)
       });
     case SORT_CUSTOMERS:
       let table = cloneDeep(state.customers);
-      switch(action.sortType)
-      {
+      switch (action.sortType) {
         case 'firstNameA':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.first_name;
             b = b.first_name;
 
@@ -71,8 +67,7 @@ function customers (state = initialState, action)
           });
           break;
         case 'firstNameZ':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.first_name;
             b = b.first_name;
 
@@ -80,8 +75,7 @@ function customers (state = initialState, action)
           });
           break;
         case 'lastNameA':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.last_name;
             b = b.last_name;
 
@@ -89,8 +83,7 @@ function customers (state = initialState, action)
           });
           break;
         case 'lastNameZ':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.last_name;
             b = b.last_name;
 
@@ -98,8 +91,7 @@ function customers (state = initialState, action)
           });
           break;
         case 'mailZ':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.email;
             b = b.email;
 
@@ -107,8 +99,7 @@ function customers (state = initialState, action)
           });
           break;
         case 'mailA':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.email;
             b = b.email;
 
@@ -123,8 +114,7 @@ function customers (state = initialState, action)
       });
 
     default:
-      return state
-
+      return state;
   }
 }
 
