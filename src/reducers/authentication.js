@@ -1,20 +1,19 @@
 import {
   DISCONNECT,
-    RECEIVE_PWD,
-    RECEIVE_SIGN_IN,
-    RECEIVE_SIGN_UP,
-    REQUEST_AUTH,
-    RECEIVE_AUTH_ERROR
-} from "../constants/constantsAction";
+  RECEIVE_PWD,
+  RECEIVE_SIGN_IN,
+  RECEIVE_SIGN_UP,
+  REQUEST_AUTH,
+  RECEIVE_AUTH_ERROR
+} from '../constants/constantsAction';
 const initialState = {
-    isLogged: false,
-    isFetching: false,
-    msg: null,
-    error: null
-  };
+  isLogged: false,
+  isFetching: false,
+  msg: null,
+  error: null
+};
 
-function authentication (state = initialState, action)
-{
+function authentication(state = initialState, action) {
   switch (action.type) {
     case REQUEST_AUTH:
       return Object.assign({}, state, {
@@ -52,9 +51,8 @@ function authentication (state = initialState, action)
         isLogged: false
       });
     default:
-      return state
-
+      return state;
   }
 }
 
-export default authentication
+export default authentication;

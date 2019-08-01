@@ -11,8 +11,8 @@ import {
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMERS_ERROR,
   RECEIVE_ARTWORKS_ERROR
-} from "../constants/constantsAction";
-import { cloneDeep } from "lodash";
+} from '../constants/constantsAction';
+import { cloneDeep } from 'lodash';
 
 const initialState = {
   isFetching: false,
@@ -27,10 +27,8 @@ const initialState = {
   table: true
 };
 
-function billings (state = initialState, action)
-{
+function billings(state = initialState, action) {
   switch (action.type) {
-
     case REQUEST_BILLINGS:
       return Object.assign({}, state, {
         isFetching: true,
@@ -79,13 +77,13 @@ function billings (state = initialState, action)
       return Object.assign({}, state, {
         isArtworksFetching: false,
         artworks: action.artworks,
-        error: null,
+        error: null
       });
     case RECEIVE_CUSTOMERS:
       return Object.assign({}, state, {
         isCustomersFetching: false,
         customers: action.customers,
-        error: null,
+        error: null
       });
     case RECEIVE_BILLING:
       return Object.assign({}, state, {
@@ -104,11 +102,9 @@ function billings (state = initialState, action)
       });
     case SORT_BILLINGS:
       let table = cloneDeep(state.billings);
-      switch(action.sortType)
-      {
+      switch (action.sortType) {
         case 'nameA':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.name;
             b = b.name;
 
@@ -116,8 +112,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'nameZ':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.name;
             b = b.name;
 
@@ -125,8 +120,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'artworkA':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.artworkName;
             b = b.artworkName;
 
@@ -134,8 +128,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'artworkZ':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.artworkName;
             b = b.artworkName;
 
@@ -143,8 +136,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'dateNew':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.date;
             b = b.date;
 
@@ -152,8 +144,7 @@ function billings (state = initialState, action)
           });
           break;
         case 'dateOld':
-          table.sort(function(a, b)
-          {
+          table.sort(function(a, b) {
             a = a.date;
             b = b.date;
 
@@ -168,8 +159,8 @@ function billings (state = initialState, action)
       });
 
     default:
-      return state
+      return state;
   }
 }
 
-export default billings
+export default billings;

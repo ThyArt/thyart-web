@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { FormControl,
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+  FormControl,
   Button,
   Alert,
   FormGroup,
-  FormLabel} from 'react-bootstrap';
+  FormLabel
+} from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import {fetchForgotIfNeeded, signInIfNeeded} from "../actions/actionsAuth";
+import { fetchForgotIfNeeded, signInIfNeeded } from '../actions/actionsAuth';
 import ReactLoading from 'react-loading';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
 
 export class SignInForm extends Component {
   constructor(props) {
@@ -23,7 +25,7 @@ export class SignInForm extends Component {
 
     this.state = {
       mailValue: '',
-      passValue: '',
+      passValue: ''
     };
   }
 
@@ -33,7 +35,9 @@ export class SignInForm extends Component {
       this.getPassValidationState() === 'success' &&
       this.state.passValue !== ''
     ) {
-      this.props.dispatch(signInIfNeeded(this.state.mailValue, this.state.passValue));
+      this.props.dispatch(
+        signInIfNeeded(this.state.mailValue, this.state.passValue)
+      );
     }
   };
 
@@ -74,11 +78,11 @@ export class SignInForm extends Component {
   }
 
   handleMailChange(e) {
-    this.setState({mailValue: e.target.value});
+    this.setState({ mailValue: e.target.value });
   }
 
   handlePassChange(e) {
-    this.setState({passValue: e.target.value});
+    this.setState({ passValue: e.target.value });
   }
 
   render() {
@@ -94,7 +98,7 @@ export class SignInForm extends Component {
             value={this.state.mailValue}
             onChange={this.handleMailChange}
           />
-          <FormControl.Feedback/>
+          <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
@@ -106,36 +110,46 @@ export class SignInForm extends Component {
             value={this.state.passValue}
             onChange={this.handlePassChange}
           />
-          <FormControl.Feedback/>
+          <FormControl.Feedback />
         </FormGroup>
-        <Container >
+        <Container>
           <Row>
             <Col>
               {this.props.isFetching ? (
-                  <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                <ReactLoading
+                  type={'spin'}
+                  color={'black'}
+                  height={50}
+                  width={50}
+                />
               ) : (
-                  <Button variant={"outline-primary"} onClick={this.signin}>Se connecter</Button>
-              )
-              }
+                <Button variant={'outline-primary'} onClick={this.signin}>
+                  Se connecter
+                </Button>
+              )}
             </Col>
             <Col>
               {this.props.isFetching ? (
-                  <div/>) : (
-                  <Button className='float-right' variant={"outline-secondary"} onClick={this.forgot}>Mot de passe oublié</Button>
-              )
-              }
+                <div />
+              ) : (
+                <Button
+                  className="float-right"
+                  variant={'outline-secondary'}
+                  onClick={this.forgot}
+                >
+                  Mot de passe oublié
+                </Button>
+              )}
             </Col>
           </Row>
         </Container>
         {this.props.error ? (
-          <Alert bsstyle="danger">{`Error: ${
-            this.props.error
-            }`}</Alert>
+          <Alert bsstyle="danger">{`Error: ${this.props.error}`}</Alert>
         ) : null}
         {this.props.isLogged ? (
           <Redirect
             to={{
-              pathname: '/account',
+              pathname: '/account'
             }}
           />
         ) : null}
@@ -153,19 +167,14 @@ SignInForm.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const {
-    isLogged,
-    isFetching,
-    msg,
-    error
-  } = state.authentication;
+  const { isLogged, isFetching, msg, error } = state.authentication;
 
   return {
     isLogged,
     isFetching,
     msg,
     error
-  }
+  };
 }
 
 export default connect(mapStateToProps)(SignInForm);
