@@ -5,10 +5,9 @@ import * as Table from 'reactabular-table';
 import uuid from 'uuid';
 
 import '../../css/Membres.css'
-import {Button, Col, FormControl, FormGroup} from "react-bootstrap";
+import {Button, Col, FormControl, FormGroup, Row} from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import FormLabel from "react-bootstrap/FormLabel";
 
 export class Members extends Component {
@@ -23,13 +22,14 @@ export class Members extends Component {
       newName: '',
       newFamily: '',
       newMail: '',
+      isGalerist: false,
     };
 
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
   }
 
-    onAddOpen = () => {
+  onAddOpen = () => {
     this.setState({ addModal: true });
   };
 
@@ -78,6 +78,11 @@ export class Members extends Component {
     }
   }
 
+  onPermissionsChange = event => {
+    console.log(event.target.value === 'galeriste');
+    this.setState({ isGalerist: (event.target.value === 'galeriste') });
+  };
+
   getColumns() {
     return [
       {
@@ -99,6 +104,34 @@ export class Members extends Component {
         }
       },
       {
+        property: 'permissions',
+        header: {
+          label: 'Permissions des membres'
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) => (
+                <div>
+                  <div>
+                    <Row>
+                    <Col xs={6}>
+                      <label>
+                        <input type="radio" value="galeriste" checked={this.state.isGalerist} onChange={this.onPermissionsChange}/>
+                        Galeriste
+                      </label>
+                    </Col>
+                    <Col xs={6}>
+                      <label>
+                        <input type="radio" value="membre" checked={!this.state.isGalerist} onChange={this.onPermissionsChange}/>
+                        Membre
+                      </label>
+                    </Col>
+                    </Row>
+                  </div>
+                </div>)]
+        }
+      },
+      {
         props: {
           style: {
             width: 50
@@ -107,18 +140,19 @@ export class Members extends Component {
         cell: {
           formatters: [
             (value, { rowData }) => (
-              <div>
+                <div>
                   <div
-                    className="remove"
-                    onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: 'pointer', float: 'left'}}
+                      className="remove"
+                      onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: 'pointer', float: 'left' }}
                   >
-                  <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
-                </div>
-              </div>)]
+                    <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
+                  </div>
+                </div>)]
         }
       }
     ];
   }
+
   render() {
     const { columns, rows } = this.state;
 
