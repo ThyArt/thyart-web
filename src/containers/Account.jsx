@@ -6,7 +6,7 @@ import Members from '../components/account/Members';
 import Artwork from '../components/account/Artwork';
 import Clients from '../components/account/Clients';
 import Billings from '../components/account/Billings';
-import Newsletter from '../components/account/Newsletter';
+import Newsletter from '../components/account/Newsletters';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
