@@ -19,7 +19,7 @@ function shouldFetchApi(state) {
 function requestAuth() {
   return {
     type: REQUEST_AUTH
-  }
+  };
 }
 
 function receiveSignInError(error) {
@@ -31,12 +31,12 @@ function receiveSignInError(error) {
   )
     error_msg = error.response.data.message;
   else
-    error_msg = 'Erreur inconnue.';
+    error_msg = "Erreur inconnue.";
 
   return {
     type: RECEIVE_AUTH_ERROR,
     error: error_msg
-  }
+  };
 }
 
 function receiveSignUpError(error) {
@@ -48,51 +48,51 @@ function receiveSignUpError(error) {
   )
     error_msg = error.response.data.messages[0];
   else
-    error_msg = 'Erreur inconnue.';
+    error_msg = "Erreur inconnue.";
 
   return {
     type: RECEIVE_AUTH_ERROR,
     error: error_msg
-  }
+  };
 }
 
 function receiveSignIn(res) {
-  sessionStorage.setItem('token', res.data['access_token']);
+  sessionStorage.setItem("token", res.data["access_token"]);
   return {
     type: RECEIVE_SIGN_IN,
     msg: "Connecté"
-  }
+  };
 }
 
 function receiveSignUp(res) {
   return {
     type: RECEIVE_SIGN_UP,
     msg: "Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte."
-  }
+  };
 }
 
 function receivePwd(res) {
   return {
     type: RECEIVE_PWD,
     msg: "Un email a été envoyé à l'adresse indiquée"
-  }
+  };
 }
 
 function fetchSignIn(username, password) {
   return dispatch => {
     const body = {
-      grant_type: 'password',
+      grant_type: "password",
       client_id: clientID,
       client_secret: clientSecret,
       username: username,
       password: password,
-      scope: '*'
+      scope: "*"
     };
 
     return axios.post(apiURL + tokenURL, body, header)
       .then(res => dispatch(receiveSignIn(res)))
-      .catch(error => dispatch(receiveSignInError(error)))
-  }
+      .catch(error => dispatch(receiveSignInError(error)));
+  };
 }
 
 function fetchSignUp(username, firstname, lastname, mail, password) {
@@ -107,8 +107,8 @@ function fetchSignUp(username, firstname, lastname, mail, password) {
   return dispatch => {
     return axios.post(apiURL + userURL, body, header)
       .then(res => dispatch(receiveSignUp(res)))
-      .catch(error => dispatch(receiveSignUpError(error)))
-  }
+      .catch(error => dispatch(receiveSignUpError(error)));
+  };
 }
 
 function fetchForgot(mail) {
@@ -119,40 +119,39 @@ function fetchForgot(mail) {
   return dispatch => {
     return axios.post(apiURL + pwdURL, body, header)
       .then(res => dispatch(receivePwd(res)))
-      .catch(error => dispatch(receiveSignInError(error)))
-  }
+      .catch(error => dispatch(receiveSignInError(error)));
+  };
 }
 
 export function signInIfNeeded(username, password) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestAuth());
-      return dispatch(fetchSignIn(username, password))
+      return dispatch(fetchSignIn(username, password));
     }
-  }
+  };
 }
 
 export function signUpIfNeeded(username, firstname, lastname, mail, password) {
   return (dispatch, getState) => {
-    if (shouldFetchApi(getState()))
-    {
+    if (shouldFetchApi(getState())) {
       dispatch(requestAuth());
-      return dispatch(fetchSignUp("username",firstname, lastname, mail, password))
+      return dispatch(fetchSignUp("username", firstname, lastname, mail, password));
     }
-  }
+  };
 }
 
 export function fetchForgotIfNeeded(mail) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestAuth());
-      return dispatch(fetchForgot(mail))
+      return dispatch(fetchForgot(mail));
     }
-  }
+  };
 }
 
-export function disconnect(){
+export function disconnect() {
   return {
     type: DISCONNECT
-  }
+  };
 }

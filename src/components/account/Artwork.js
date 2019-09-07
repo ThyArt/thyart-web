@@ -1,22 +1,24 @@
 import React, { Component } from "react";
-import Gallery from 'react-photo-gallery';
+import Gallery from "react-photo-gallery";
 import Modal from "react-responsive-modal";
-import ImageUpload from './ImageUpload';
-import {Col,
+import ImageUpload from "./ImageUpload";
+import {
+  Col,
   FormLabel,
   FormControl,
   FormGroup,
   Button,
   Form,
   DropdownButton,
-    DropdownItem,
+  DropdownItem,
   Row,
   ToggleButton,
   ButtonToolbar,
-  ToggleButtonGroup} from "react-bootstrap";
+  ToggleButtonGroup
+} from "react-bootstrap";
 
-import '../../css/Artwork.css';
-import {connect} from "react-redux";
+import "../../css/Artwork.css";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
   getArtWorksIfNeeded,
@@ -24,10 +26,12 @@ import {
   modifyArtWorkIfNeeded,
   fetchArtworkByStateIfNeeded
 } from "../../actions/actionsArtwork";
-import {createArtworkIfNeeded,
+import {
+  createArtworkIfNeeded,
   sortArtworks,
   eraseArtworkIfNeeded,
-  getArtworkByStateIfNeeded} from "../../actions/actionsArtwork";
+  getArtworkByStateIfNeeded
+} from "../../actions/actionsArtwork";
 import InputGroup from "react-bootstrap/InputGroup";
 import Container from "react-bootstrap/Container";
 
@@ -37,34 +41,34 @@ export class Artwork extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       currentPhoto: [],
-      file: '',
-      search: '',
-      reference: '',
+      file: "",
+      search: "",
+      reference: "",
       addModal: false,
-      price:'',
-      AWTitle: '',
+      price: "",
+      AWTitle: "",
       AWState: 1,
       detailsModal: false,
       modifMode: false
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch(getArtWorksIfNeeded(this.props.token));
   }
 
   getArtWorkState = () => {
     switch (this.state.AWState) {
       case 1:
-        return 'exposed';
+        return "exposed";
       case 2:
-        return 'in_stock';
+        return "in_stock";
       case 3:
-        return 'sold';
+        return "sold";
       case 4:
-        return 'incoming';
+        return "incoming";
       default:
-        return 'exposed';
+        return "exposed";
     }
   };
 
@@ -90,7 +94,7 @@ export class Artwork extends Component {
 
   onDetailOpen = () => {
     this.setState({
-      modifMode: false,
+      modifMode: false
     });
   };
 
@@ -105,8 +109,10 @@ export class Artwork extends Component {
   };
 
   onDetailClose = () => {
-    this.setState({ detailsModal: false ,
-      modifMode: false});
+    this.setState({
+      detailsModal: false,
+      modifMode: false
+    });
   };
 
   onModifValidation = () => {
@@ -119,41 +125,41 @@ export class Artwork extends Component {
   };
 
   handleImageClick = (event, obj) => {
-    this.setState({ detailsModal: true});
+    this.setState({ detailsModal: true });
     this.props.dispatch(getArtWorkIfNeeded(this.props.token, obj.photo.key));
   };
 
   handleAddArtworkShow = () => {
-    this.setState({addModal: true});
+    this.setState({ addModal: true });
   };
 
   handleAddArtworkClose = () => {
     this.setState({
       addModal: false,
-      price:'',
-      AWTitle: '',
+      price: "",
+      AWTitle: "",
       AWState: 1
     });
   };
 
   myCallback = (file) => {
-    this.setState({file: file});
+    this.setState({ file: file });
   };
 
   getNewArtworkValidationState = () => {
-    if (this.state.file !== '' && this.state.reference !== ''
-      && this.state.AWTitle !== '' && this.state.price !== '')
-      return 'success';
+    if (this.state.file !== "" && this.state.reference !== ""
+      && this.state.AWTitle !== "" && this.state.price !== "")
+      return "success";
   };
 
   getVerification = () => {
-    if (this.getNewArtworkValidationState() === 'success') {
+    if (this.getNewArtworkValidationState() === "success") {
       this.props.dispatch(createArtworkIfNeeded(this.state.file, this.props.token, this.state.AWTitle,
         this.state.price, this.state.reference, this.getArtWorkState()));
       this.setState({
         addModal: false,
-        price:'',
-        AWTitle: '',
+        price: "",
+        AWTitle: "",
         AWState: 1
       });
 
@@ -161,7 +167,7 @@ export class Artwork extends Component {
   };
 
   handleChange(e) {
-    this.setState({AWState: e});
+    this.setState({ AWState: e });
   }
 
   confirmRemove = () => {
@@ -175,12 +181,12 @@ export class Artwork extends Component {
     this.props.dispatch(getArtWorksIfNeeded(this.props.token, this.state.search));
   };
 
-  onSelectAlert = (eventKey) =>{
+  onSelectAlert = (eventKey) => {
     const filters = {
-      '1': 'nameA',
-      '2': 'nameZ',
-      '3': 'priceInc',
-      '4': 'priceDec'
+      "1": "nameA",
+      "2": "nameZ",
+      "3": "priceInc",
+      "4": "priceDec"
     };
     switch (eventKey) {
       case 1:
@@ -189,16 +195,16 @@ export class Artwork extends Component {
       case 4:
         this.props.dispatch(sortArtworks(filters[eventKey.toString()]));
       case 5:
-        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'incoming'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, "incoming"));
         return;
       case 6:
-        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'sold'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, "sold"));
         return;
       case 7:
-        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'exposed'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, "exposed"));
         return;
       case 8:
-        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'in_stock'));
+        this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, "in_stock"));
         return;
       case 9:
         this.props.dispatch(getArtWorksIfNeeded(this.props.token, null));
@@ -213,7 +219,7 @@ export class Artwork extends Component {
       <div>
         <div>
           <Container fluid>
-            <Col xl={10} lg={10} id={'colSearchBarContainer'}>
+            <Col xl={10} lg={10} id={"colSearchBarContainer"}>
               <InputGroup className="mb-3">
                 <InputGroup.Prepend>
                   <Button bssize='large'
@@ -223,23 +229,23 @@ export class Artwork extends Component {
                   </Button>
                 </InputGroup.Prepend>
                 <FormControl
-                    id={'searchBar'}
-                    type={'text'}
-                    value={this.state.search}
-                    onChange={this.onSearchChange}
-                    placeholder='Entrer le texte à rechercher...'
+                  id={"searchBar"}
+                  type={"text"}
+                  value={this.state.search}
+                  onChange={this.onSearchChange}
+                  placeholder='Entrer le texte à rechercher...'
                 />
                 <InputGroup.Append>
                   <Button
-                      id={'search'}
-                      variant="outline-primary"
-                      bsstyle='primary'
-                      bssize='large' onClick={this.searchArtworks}>Rechercher</Button>
+                    id={"search"}
+                    variant="outline-primary"
+                    bsstyle='primary'
+                    bssize='large' onClick={this.searchArtworks}>Rechercher</Button>
                   <DropdownButton
-                      as={InputGroup.Append}
-                      variant="outline-secondary"
-                      title="Filtres"
-                      id="dropDownFilter"
+                    as={InputGroup.Append}
+                    variant="outline-secondary"
+                    title="Filtres"
+                    id="dropDownFilter"
                   >
                     <DropdownItem eventKey={1} onSelect={this.onSelectAlert}>A-Z</DropdownItem>
                     <DropdownItem eventKey={2} onSelect={this.onSelectAlert}>Z-A</DropdownItem>
@@ -263,7 +269,7 @@ export class Artwork extends Component {
           <h1 id='titleModal'>Ajouter une oeuvre</h1>
           <Row>
             <Col xs={6}>
-              <ImageUpload callbackFromParent={this.myCallback} style={{ maxWidth: '100%', maxHeight: '100%' }}/>
+              <ImageUpload callbackFromParent={this.myCallback} style={{ maxWidth: "100%", maxHeight: "100%" }}/>
             </Col>
             <Col xs={6}>
               <Form>
@@ -277,12 +283,12 @@ export class Artwork extends Component {
                   <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
                   <ButtonToolbar>
-                    <ToggleButtonGroup id={'artWorkState'}
+                    <ToggleButtonGroup id={"artWorkState"}
                                        type="radio"
                                        value={this.state.AWState}
                                        onChange={this.handleChange}
                                        name="options"
-                    block>
+                                       block>
                       <ToggleButton value={1}>Exposé</ToggleButton>
                       <ToggleButton value={2}>Stock</ToggleButton>
                       <ToggleButton value={3}>Vendu</ToggleButton>
@@ -297,7 +303,7 @@ export class Artwork extends Component {
             </Col>
           </Row>
         </Modal>
-        { (this.props.artworks && this.props.artworks.length > 0) ?
+        {(this.props.artworks && this.props.artworks.length > 0) ?
           (<Gallery photos={this.props.artworks} direction={"column"} onClick={this.handleImageClick}/>
           ) : null
         }
@@ -310,11 +316,11 @@ export class Artwork extends Component {
 
                   <div
                     className="remove"
-                    onClick={() => this.confirmRemove()} style={{ cursor: 'pointer', float: 'left'}}
+                    onClick={() => this.confirmRemove()} style={{ cursor: "pointer", float: "left" }}
                   >
-                    <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
+                    <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
                   </div>
-                  < Button bsstyle = "primary" onClick={this.onModifOpen} bssize='large'>
+                  < Button bsstyle="primary" onClick={this.onModifOpen} bssize='large'>
                     {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
                   </Button>
                   {
@@ -330,7 +336,7 @@ export class Artwork extends Component {
                           <FormControl type='number' value={this.state.price} onChange={this.onPriceChange}/>
 
                           <ButtonToolbar>
-                            <ToggleButtonGroup id={'artWorkState'}
+                            <ToggleButtonGroup id={"artWorkState"}
                                                type="radio"
                                                value={this.state.AWState}
                                                onChange={this.handleChange}
@@ -342,7 +348,8 @@ export class Artwork extends Component {
                             </ToggleButtonGroup>
                           </ButtonToolbar>
                         </FormGroup>
-                        < Button bsstyle = "primary" onClick={this.onModifValidation} bssize='large' className='confirmModal'>
+                        < Button bsstyle="primary" onClick={this.onModifValidation} bssize='large'
+                                 className='confirmModal'>
                           Valider
                         </Button>
                       </div>
@@ -350,7 +357,7 @@ export class Artwork extends Component {
                       <div>
                         <Row className='detailsModalRows'>
                           <Col sm={12}>
-                            { this.props.artwork.images[0] ?
+                            {this.props.artwork.images[0] ?
                               <img src={this.props.artwork.images[0].url} alt="image" className='detailsModalImage'/> :
                               null
                             }
@@ -428,7 +435,7 @@ function mapStateToProps(state) {
     error,
     artworks,
     artwork
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Artwork);

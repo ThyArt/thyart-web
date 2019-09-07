@@ -18,8 +18,7 @@ const initialState =
     artistId: null
   };
 
-function artworks (state = initialState, action)
-{
+function artworks(state = initialState, action) {
   switch (action.type) {
 
     case REQUEST_ARTWORKS:
@@ -49,7 +48,7 @@ function artworks (state = initialState, action)
         msg: action.msg
       });
     case RECEIVE_ARTWORKCREATE:
-      return Object.assign({}, state,{
+      return Object.assign({}, state, {
         isFetching: false,
         artistId: action.id,
         error: null,
@@ -64,16 +63,16 @@ function artworks (state = initialState, action)
     case SORT_ARTWORKS:
       let artworks = cloneDeep(state.artworks);
       switch (action.sortType) {
-        case 'nameA':
-          artworks.sort( function( a, b ) {
+        case "nameA":
+          artworks.sort(function(a, b) {
             a = a.name.toLowerCase();
             b = b.name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'nameZ':
-          artworks.sort( function( a, b ) {
+        case "nameZ":
+          artworks.sort(function(a, b) {
             a = a.name.toLowerCase();
             b = b.name.toLowerCase();
 
@@ -81,10 +80,10 @@ function artworks (state = initialState, action)
           });
           artworks.reverse();
           break;
-        case 'priceInc':
+        case "priceInc":
           artworks.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
           break;
-        case 'priceDec':
+        case "priceDec":
           artworks.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
           break;
       }
@@ -92,7 +91,7 @@ function artworks (state = initialState, action)
         artworks: artworks
       });
     default:
-      return state
+      return state;
 
   }
 }

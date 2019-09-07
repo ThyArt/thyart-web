@@ -15,8 +15,7 @@ export const initialState =
     lastname: null
   };
 
-function profile(state = initialState, action)
-{
+function profile(state = initialState, action) {
   switch (action.type) {
     case REQUEST_PROFILE:
       return Object.assign({}, state, {
@@ -39,7 +38,7 @@ function profile(state = initialState, action)
         msg: action.msg
       });
     default:
-      return state
+      return state;
   }
 }
 

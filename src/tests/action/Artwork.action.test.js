@@ -1,20 +1,21 @@
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import * as actions from '../../actions/actionsArtwork'
-import * as types from '../../constants/constantsAction'
-import expect from 'expect/build/index'
-import moxios from 'moxios'
-import { RECEIVE_ADDIMAGE } from '../../constants/constantsAction';
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import * as actions from "../../actions/actionsArtwork";
+import * as types from "../../constants/constantsAction";
+import expect from "expect/build/index";
+import moxios from "moxios";
+import { RECEIVE_ADDIMAGE } from "../../constants/constantsAction";
 
-const middlewares = [thunk]
-const mockStore = configureMockStore(middlewares)
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 function FormDataMock() {
   this.append = jest.fn();
 }
+
 global.FormData = FormDataMock;
 
-describe('async artwork actions', () => {
+describe("async artwork actions", () => {
 
   beforeEach(function() {
     moxios.install();
@@ -22,9 +23,9 @@ describe('async artwork actions', () => {
 
   afterEach(() => {
     moxios.uninstall();
-  })
+  });
 
-  it('creates RECEIVE_ARTWORKS when fetching artworks', () => {
+  it("creates RECEIVE_ARTWORKS when fetching artworks", () => {
 
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -61,7 +62,7 @@ describe('async artwork actions', () => {
             "to": 1,
             "total": 1
           }
-        },
+        }
       });
     });
 
@@ -70,24 +71,24 @@ describe('async artwork actions', () => {
       {
         type: types.RECEIVE_ARTWORKS,
         artworks: [{
-          src: 'http://localhost/storage/1/test.jpg',
-          name: 'test',
-          key: '1',
+          src: "http://localhost/storage/1/test.jpg",
+          name: "test",
+          key: "1",
           width: 3,
           height: 3,
           price: 42,
-          state: 'exposed'
+          state: "exposed"
         }]
       }
-    ]
-    const store = mockStore({ artworks: [] })
+    ];
+    const store = mockStore({ artworks: [] });
 
     return store.dispatch(actions.getArtWorksIfNeeded()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions)
-    })
-  })
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
 
-  it('creates RECEIVE_ARTWORKCREATE then RECEIVE_ADDIMAGE then RECEIVE_ARTWORKS when creating artwork', () => {
+  it("creates RECEIVE_ARTWORKCREATE then RECEIVE_ADDIMAGE then RECEIVE_ARTWORKS when creating artwork", () => {
 
     moxios.wait(() => {
       const request1 = moxios.requests.at(0);
@@ -102,7 +103,7 @@ describe('async artwork actions', () => {
             "state": "exposed",
             "images": []
           }
-        },
+        }
       });
       moxios.wait(() => {
         const request2 = moxios.requests.at(1);
@@ -122,7 +123,7 @@ describe('async artwork actions', () => {
                 "file_name": "test.jpg"
               }]
             }
-          },
+          }
         });
         moxios.wait(() => {
           const request3 = moxios.requests.at(2);
@@ -159,10 +160,10 @@ describe('async artwork actions', () => {
                 "to": 1,
                 "total": 1
               }
-            },
+            }
           });
-        })
-      })
+        });
+      });
     });
 
     const expectedActions = [
@@ -170,30 +171,30 @@ describe('async artwork actions', () => {
       {
         type: types.RECEIVE_ARTWORKCREATE,
         "msg": "test a été crée",
-        id: '1'
+        id: "1"
       },
       {
         type: types.RECEIVE_ADDIMAGE,
-        msg: 'Image téléchargée avec succès.'
+        msg: "Image téléchargée avec succès."
       },
       {
         type: types.RECEIVE_ARTWORKS,
         artworks: [{
-          src: 'http://localhost/storage/1/test.jpg',
-          name: 'test',
-          key: '1',
+          src: "http://localhost/storage/1/test.jpg",
+          name: "test",
+          key: "1",
           width: 3,
           height: 3,
           price: 42,
-          state: 'exposed'
+          state: "exposed"
         }]
       }
-    ]
+    ];
 
-    const store = mockStore({ artworks: [] })
+    const store = mockStore({ artworks: [] });
 
-    return store.dispatch(actions.createArtworkIfNeeded('test.jpg', 1234, 'test', 42, 'test')).then(() => {
-      expect(store.getActions()).toEqual(expectedActions)
-    })
-  })
-})
+    return store.dispatch(actions.createArtworkIfNeeded("test.jpg", 1234, "test", 42, "test")).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+});

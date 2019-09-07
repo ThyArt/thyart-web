@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import { Button, Col } from "react-bootstrap";
 
-import '../../css/Membres.css';
-import '../../css/Billing.css';
+import "../../css/Membres.css";
+import "../../css/Billing.css";
 
 import ClientTable from "./ClientTable";
 import Client from "./Client";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 import { getCustomersIfNeeded, openCreateCustomer } from "../../actions/actionsCustomers";
 
 class Clients extends Component {
@@ -17,7 +17,7 @@ class Clients extends Component {
     super(props);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch(getCustomersIfNeeded(this.props.token));
   }
 
@@ -32,31 +32,31 @@ class Clients extends Component {
   render() {
     return (
       <div>
-      {
-        this.props.isFetching ? (
-          <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
-        ) : (
-          <Col sm={10}>
-            {this.props.table ?
-              <div>
-                <Button bssize="lg" className='clientMainButton' onClick={this.onCreate}>
-                  <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"
-                       className='clientAddImage'/>
-                  <span className='clientAddButton'>Ajouter</span>
-                </Button>
-                <ClientTable token={this.props.token}/>
-              </div>
-              :
-              <div>
-                <Button bssize="lg" onClick={this.onReturn} className='clientMainButton'>
-                  <span className='add'>Retour</span>
-                </Button>
-                <Client  token={this.props.token}/>
-              </div>
-            }
-          </Col>
-        )
-      }
+        {
+          this.props.isFetching ? (
+            <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
+          ) : (
+            <Col sm={10}>
+              {this.props.table ?
+                <div>
+                  <Button bssize="lg" className='clientMainButton' onClick={this.onCreate}>
+                    <img src={require("../../static/add.svg")} alt="add" height="25" width="auto"
+                         className='clientAddImage'/>
+                    <span className='clientAddButton'>Ajouter</span>
+                  </Button>
+                  <ClientTable token={this.props.token}/>
+                </div>
+                :
+                <div>
+                  <Button bssize="lg" onClick={this.onReturn} className='clientMainButton'>
+                    <span className='add'>Retour</span>
+                  </Button>
+                  <Client token={this.props.token}/>
+                </div>
+              }
+            </Col>
+          )
+        }
       </div>
     );
   }
@@ -88,7 +88,7 @@ function mapStateToProps(state) {
     modif,
     table,
     dispatch
-  }
+  };
 }
 
-export default connect(mapStateToProps)(Clients)
+export default connect(mapStateToProps)(Clients);

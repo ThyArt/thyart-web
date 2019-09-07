@@ -10,18 +10,17 @@ import {
 import { cloneDeep } from "lodash";
 
 const initialState = {
-    isFetching: false,
-    msg: null,
-    error: null,
-    customers: [],
-    customer: null,
-    modif: false,
-    newObj: false,
-    table: true
-  };
+  isFetching: false,
+  msg: null,
+  error: null,
+  customers: [],
+  customer: null,
+  modif: false,
+  newObj: false,
+  table: true
+};
 
-function customers (state = initialState, action)
-{
+function customers(state = initialState, action) {
   switch (action.type) {
 
     case REQUEST_CUSTOMERS:
@@ -70,56 +69,49 @@ function customers (state = initialState, action)
       });
     case SORT_CUSTOMERS:
       let table = cloneDeep(state.customers);
-      switch(action.sortType)
-      {
-        case 'firstNameA':
-          table.sort(function(a, b)
-          {
+      switch (action.sortType) {
+        case "firstNameA":
+          table.sort(function(a, b) {
             a = a.first_name.toLowerCase();
             b = b.first_name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'firstNameZ':
-          table.sort(function(a, b)
-          {
+        case "firstNameZ":
+          table.sort(function(a, b) {
             a = a.first_name.toLowerCase();
             b = b.first_name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'lastNameA':
-          table.sort(function(a, b)
-          {
+        case "lastNameA":
+          table.sort(function(a, b) {
             a = a.last_name.toLowerCase();
             b = b.last_name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'lastNameZ':
-          table.sort(function(a, b)
-          {
+        case "lastNameZ":
+          table.sort(function(a, b) {
             a = a.last_name.toLowerCase();
             b = b.last_name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'mailZ':
-          table.sort(function(a, b)
-          {
+        case "mailZ":
+          table.sort(function(a, b) {
             a = a.email.toLowerCase();
             b = b.email.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'mailA':
-          table.sort(function(a, b)
-          {
+        case "mailA":
+          table.sort(function(a, b) {
             a = a.email.toLowerCase();
             b = b.email.toLowerCase();
 
@@ -134,7 +126,7 @@ function customers (state = initialState, action)
       });
 
     default:
-      return state
+      return state;
 
   }
 }

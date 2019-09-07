@@ -1,4 +1,4 @@
-.clients{
+.clients {
     margin-top: 4px;
     font-size: 18px;
 }
@@ -44,6 +44,7 @@
 .pure-table td {
     background-color: transparent;
 }
+
 .pure-table-odd td {
     background-color: #f2f2f2;
 }
@@ -55,6 +56,7 @@
 .pure-table-bordered td {
     border-bottom: 1px solid #cbcbcb;
 }
+
 .pure-table-bordered tbody > tr:last-child > td {
     border-bottom-width: 0;
 }
@@ -64,6 +66,7 @@
     border-width: 0 0 1px 0;
     border-bottom: 1px solid #cbcbcb;
 }
+
 .pure-table-horizontal tbody > tr:last-child > td {
     border-bottom-width: 0;
 }
@@ -126,16 +129,18 @@
 .pure-button:hover,
 .pure-button:focus {
     filter: alpha(opacity=90);
-    background-image: -webkit-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));
-    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));
+    background-image: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.10));
+    background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.10));
 }
+
 .pure-button:focus {
     outline: 0;
 }
+
 .pure-button-active,
 .pure-button:active {
-    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;
-    border-color: #000\9;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 0 6px rgba(0, 0, 0, 0.20) inset;
+    border-color: #000 \9;
 }
 
 .pure-button[disabled],
@@ -176,6 +181,7 @@ a.pure-button-selected {
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
+
 .pure-button-group .pure-button:last-child {
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
@@ -205,7 +211,7 @@ a.pure-button-selected {
     margin-bottom: 10px;
 }
 
-#buttonFilter{
+#buttonFilter {
     margin-top: 10px;
     margin-bottom: 10px;
     border-bottom-left-radius: 0px;

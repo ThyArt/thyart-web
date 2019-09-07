@@ -30,8 +30,7 @@ const initialState = {
   table: true
 };
 
-function billings (state = initialState, action)
-{
+function billings(state = initialState, action) {
   switch (action.type) {
 
     case REQUEST_BILLINGS:
@@ -116,56 +115,49 @@ function billings (state = initialState, action)
       });
     case SORT_BILLINGS:
       let table = cloneDeep(state.billings);
-      switch(action.sortType)
-      {
-        case 'nameA':
-          table.sort(function(a, b)
-          {
+      switch (action.sortType) {
+        case "nameA":
+          table.sort(function(a, b) {
             a = a.name.toLowerCase();
             b = b.name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'nameZ':
-          table.sort(function(a, b)
-          {
+        case "nameZ":
+          table.sort(function(a, b) {
             a = a.name.toLowerCase();
             b = b.name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'artworkA':
-          table.sort(function(a, b)
-          {
+        case "artworkA":
+          table.sort(function(a, b) {
             a = a.artworkName.toLowerCase();
             b = b.artworkName.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'artworkZ':
-          table.sort(function(a, b)
-          {
+        case "artworkZ":
+          table.sort(function(a, b) {
             a = a.artworkName.toLowerCase();
             b = b.artworkName.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'dateNew':
-          table.sort(function(a, b)
-          {
+        case "dateNew":
+          table.sort(function(a, b) {
             a = a.date;
             b = b.date;
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'dateOld':
-          table.sort(function(a, b)
-          {
+        case "dateOld":
+          table.sort(function(a, b) {
             a = a.date;
             b = b.date;
 
@@ -180,8 +172,8 @@ function billings (state = initialState, action)
       });
 
     default:
-      return state
+      return state;
   }
 }
 
-export default billings
+export default billings;

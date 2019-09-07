@@ -49,13 +49,13 @@ class Billing extends Component {
 
   handleChangeCustomer = event => {
     this.setState({
-      fName: 'test',
-      lName: 'test',
-      mail: 'test@test.test',
-      address: 'test',
-      phone: '0663422073',
-      country: 'test',
-      city:'test'
+      fName: "test",
+      lName: "test",
+      mail: "test@test.test",
+      address: "test",
+      phone: "0663422073",
+      country: "test",
+      city: "test"
     });
   };
 
@@ -152,13 +152,13 @@ class Billing extends Component {
       this.setState({ artworkId: this.props.artworks[0].id });
     if (
       (!this.state.newCustomer || (
-      this.getMailValidationState() === "success" &&
-      this.getCountryValidationState() === "success" &&
-      this.getAddressValidationState() === "success" &&
-      this.getCityValidationState() === "success" &&
-      this.getNameValidationState() === "success" &&
-      this.getFamilyValidationState() === "success" &&
-      this.getNumberValidationState() === "success")) &&
+        this.getMailValidationState() === "success" &&
+        this.getCountryValidationState() === "success" &&
+        this.getAddressValidationState() === "success" &&
+        this.getCityValidationState() === "success" &&
+        this.getNameValidationState() === "success" &&
+        this.getFamilyValidationState() === "success" &&
+        this.getNumberValidationState() === "success")) &&
       this.state.artworkId !== ""
     ) {
       if (this.props.newObj) {
@@ -219,9 +219,9 @@ class Billing extends Component {
       city: ""
     });
     if (this.state.newCustomer)
-      this.setState({newCustomer: false});
+      this.setState({ newCustomer: false });
     else
-      this.setState({newCustomer: true});
+      this.setState({ newCustomer: true });
 
   };
 
@@ -281,7 +281,7 @@ class Billing extends Component {
                       placeholder="Entrer le prénom du client"
                       onChange={this.handleChangeName}
                     />
-                    <FormControl.Feedback />
+                    <FormControl.Feedback/>
                   </FormGroup>
                 </Col>
 
@@ -299,7 +299,7 @@ class Billing extends Component {
                       placeholder="Entrer le nom du client"
                       onChange={this.handleChangeFamily}
                     />
-                    <FormControl.Feedback />
+                    <FormControl.Feedback/>
                   </FormGroup>
                 </Col>
 
@@ -317,7 +317,7 @@ class Billing extends Component {
                       placeholder="Entrer l'adresse mail du client"
                       onChange={this.handleChangeMail}
                     />
-                    <FormControl.Feedback />
+                    <FormControl.Feedback/>
                   </FormGroup>
                 </Col>
 
@@ -335,7 +335,7 @@ class Billing extends Component {
                       placeholder="Entrer l'adresse du client"
                       onChange={this.handleChangeAddress}
                     />
-                    <FormControl.Feedback />
+                    <FormControl.Feedback/>
                   </FormGroup>
                 </Col>
 
@@ -353,7 +353,7 @@ class Billing extends Component {
                       placeholder="Entrer la ville du client"
                       onChange={this.handleChangeCity}
                     />
-                    <FormControl.Feedback />
+                    <FormControl.Feedback/>
                   </FormGroup>
                 </Col>
 
@@ -371,7 +371,7 @@ class Billing extends Component {
                       placeholder="Entrer le pays du client"
                       onChange={this.handleChangeCountry}
                     />
-                    <FormControl.Feedback />
+                    <FormControl.Feedback/>
                   </FormGroup>
                 </Col>
 
@@ -389,7 +389,7 @@ class Billing extends Component {
                       placeholder="Entrer le numéro de téléphone du client"
                       onChange={this.handleChangeNumber}
                     />
-                    <FormControl.Feedback />
+                    <FormControl.Feedback/>
                   </FormGroup>
                 </Col>
               </div>
@@ -426,7 +426,7 @@ class Billing extends Component {
                   </FormControl>
                 </FormGroup>
               ) : (
-                <div />
+                <div/>
               )}
               {this.props.newObj ? (
                 <Button
