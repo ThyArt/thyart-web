@@ -6,6 +6,7 @@ import Members from '../components/account/Members';
 import Artwork from '../components/account/Artwork';
 import Clients from '../components/account/Clients';
 import Billings from '../components/account/Billings';
+import Newsletter from '../components/account/Newsletter';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -95,6 +96,9 @@ export class Account extends Component {
                   <Nav.Link eventKey={'6'} className="item">
                     Profil
                   </Nav.Link>
+                  <Nav.Link eventKey={'9'} className="item">
+                    Newsletter
+                  </Nav.Link>
                   <Nav.Link eventKey={'7'}>Déconnexion</Nav.Link>
                 </Nav>
               </div>
@@ -118,6 +122,9 @@ export class Account extends Component {
                 ) : null}
                 {this.state.selected === '5' ? (
                   <Billings token={this.state.token} />
+                ) : null}
+                {this.state.selected === '9' ? (
+                    <Newsletter token={this.state.token} />
                 ) : null}
               </div>
             </Col>
