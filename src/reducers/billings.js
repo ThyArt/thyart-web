@@ -13,6 +13,10 @@ import {
   RECEIVE_ARTWORKS_ERROR
 } from '../constants/constantsAction';
 import { cloneDeep } from 'lodash';
+  RECEIVE_ARTWORKS_ERROR,
+  OPEN_MODIFY_BILLING
+} from "../constants/constantsAction";
+import { cloneDeep } from "lodash";
 
 const initialState = {
   isFetching: false,
@@ -22,8 +26,10 @@ const initialState = {
   error: null,
   billings: [],
   artworks: [],
+  customers: [],
   billing: null,
   modif: false,
+  newObj: false,
   table: true
 };
 
@@ -71,6 +77,7 @@ function billings(state = initialState, action) {
         billings: action.billings,
         error: null,
         modif: false,
+        newObj: false,
         table: true
       });
     case RECEIVE_ARTWORKS:
@@ -91,51 +98,59 @@ function billings(state = initialState, action) {
         billing: action.billing,
         error: null,
         table: false,
-        modif: false
+        modif: false,
+        newObj: false
       });
     case OPEN_CREATE_BILLING:
       return Object.assign({}, state, {
         error: null,
+        newObj: true,
         modif: true,
         table: false,
         billing: null
       });
+    case OPEN_MODIFY_BILLING:
+      return Object.assign({}, state, {
+        error: null,
+        newObj: false,
+        modif: true
+      });
     case SORT_BILLINGS:
       let table = cloneDeep(state.billings);
       switch (action.sortType) {
-        case 'nameA':
+        case "nameA":
           table.sort(function(a, b) {
-            a = a.name;
-            b = b.name;
+            a = a.name.toLowerCase();
+            b = b.name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'nameZ':
+        case "nameZ":
           table.sort(function(a, b) {
-            a = a.name;
-            b = b.name;
+            a = a.name.toLowerCase();
+            b = b.name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'artworkA':
+        case "artworkA":
           table.sort(function(a, b) {
-            a = a.artworkName;
-            b = b.artworkName;
+            a = a.artworkName.toLowerCase();
+            b = b.artworkName.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'artworkZ':
+        case "artworkZ":
           table.sort(function(a, b) {
-            a = a.artworkName;
-            b = b.artworkName;
+            a = a.artworkName.toLowerCase();
+            b = b.artworkName.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'dateNew':
+        case "dateNew":
           table.sort(function(a, b) {
             a = a.date;
             b = b.date;
@@ -143,7 +158,7 @@ function billings(state = initialState, action) {
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'dateOld':
+        case "dateOld":
           table.sort(function(a, b) {
             a = a.date;
             b = b.date;

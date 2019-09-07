@@ -5,9 +5,10 @@ import {
   RECEIVE_ADDIMAGE,
   RECEIVE_ARTWORK,
   RECEIVE_ARTWORKCREATE,
-  RECEIVE_ARTWORKS
-} from '../constants/constantsAction';
-import { apiURL, artWorkURL } from '../constants/constantsApi';
+  RECEIVE_ARTWORKS,
+  SORT_ARTWORKS
+} from "../constants/constantsAction";
+import { apiURL, artWorkURL } from "../constants/constantsApi";
 
 function shouldFetchApi(state) {
   const isFetching = state.artworks.isFetching;
@@ -21,11 +22,17 @@ function requestArtworks() {
   };
 }
 
+export const sortArtworks = sortType => ({
+  type: SORT_ARTWORKS,
+  sortType: sortType
+});
+
 function receiveArtworksError(error) {
   let error_msg;
   if (error.response && error.response.data && error.response.data.message)
     error_msg = error.response.data.message;
-  else error_msg = 'Erreur inconnue.';
+  else
+    error_msg = "Erreur inconnue.";
 
   return {
     type: RECEIVE_ARTWORKS_ERROR,
@@ -40,16 +47,18 @@ function receiveArtworks(res) {
   for (const [, value] of Object.entries(res.data.data)) {
     if (value.images != null && value.images[0] && value.images[0].url != null)
       src = value.images[0].url;
-    else src = '';
-    artworks.push({
-      src: src,
-      name: value.name,
-      key: value.id.toString(),
-      width: 3,
-      height: 3,
-      price: value.price,
-      state: value.state
-    });
+    else
+      src = "";
+    artworks.push(
+      {
+        src: src,
+        name: value.name,
+        key: value.id.toString(),
+        width: 3,
+        height: 3,
+        price: value.price,
+        state: value.state
+      });
   }
   return {
     type: RECEIVE_ARTWORKS,
@@ -68,15 +77,15 @@ function receiveArtwork(res) {
 function receiveArtWorkCreate(res) {
   return {
     type: RECEIVE_ARTWORKCREATE,
-    id: res.data.data['id'].toString(),
-    msg: res.data.data['name'] + ' a été crée'
+    id: res.data.data["id"].toString(),
+    msg: res.data.data["name"] + " a été crée"
   };
 }
 
 function receiveAddImage(res) {
   return {
     type: RECEIVE_ADDIMAGE,
-    msg: 'Image téléchargée avec succès.'
+    msg: "Image téléchargée avec succès."
   };
 }
 
@@ -84,7 +93,7 @@ function receiveArtworkModify(res) {
   return {
     type: RECEIVE_ARTWORKS,
     artwork: res.data.data,
-    msg: res.data.data['name'] + ' a été modifié'
+    msg: res.data.data["name"] + " a été modifié"
   };
 }
 
@@ -92,22 +101,22 @@ function receiveArtworkDelete(res) {
   return {
     type: RECEIVE_ARTWORK,
     artwork: res.data.data,
-    msg: res.data.data['name'] + 'a été supprimé'
+    msg: res.data.data["name"] + "a été supprimé"
   };
 }
 
 function eraseArtwork(token, id) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     }
   };
 
   return dispatch => {
-    return axios
-      .delete(apiURL + artWorkURL + '/' + id, header_auth)
+
+    return axios.delete(apiURL + artWorkURL + "/" + id, header_auth)
       .then(res => dispatch(receiveArtworkDelete(res)))
       .catch(error => dispatch(receiveArtworksError(error)));
   };
@@ -116,9 +125,9 @@ function eraseArtwork(token, id) {
 function createArtWork(file, token, name, price, ref, state) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     }
   };
   const body = {
@@ -138,14 +147,14 @@ function createArtWork(file, token, name, price, ref, state) {
 function uploadImage(token, file, id) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token
     }
   };
   let form = new FormData();
-  form.append('images[]', file);
-  let url = artWorkURL + '/' + id + '/image';
+  form.append("images[]", file);
+  let url = artWorkURL + "/" + id + "/image";
   return dispatch => {
     return axios
       .post(apiURL + url, form, header_auth)
@@ -157,32 +166,17 @@ function uploadImage(token, file, id) {
 function modifyArtWork(token, name, ref, state, price, id) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + token
     }
   };
 
   const body = {};
 
   return dispatch => {
-    return axios
-      .patch(
-        apiURL +
-          artWorkURL +
-          '/' +
-          id +
-          '?name=' +
-          name +
-          '&state=' +
-          state +
-          '&ref=' +
-          ref +
-          '&price=' +
-          price,
-        body,
-        header_auth
-      )
+    return axios.patch(apiURL + artWorkURL + "/" + id + "?name=" + name
+      + "&state=" + state + "&ref=" + ref + "&price=" + price, body, header_auth)
       .then(res => dispatch(receiveArtworkModify(res)))
       .catch(error => dispatch(receiveArtworksError(error)));
   };
@@ -191,15 +185,15 @@ function modifyArtWork(token, name, ref, state, price, id) {
 function fetchArtWork(token, id) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     }
   };
 
   return dispatch => {
-    return axios
-      .get(apiURL + artWorkURL + '/' + id, header_auth)
+
+    return axios.get(apiURL + artWorkURL + "/" + id, header_auth)
       .then(res => dispatch(receiveArtwork(res)))
       .catch(error => dispatch(receiveArtworksError(error)));
   };
@@ -208,13 +202,13 @@ function fetchArtWork(token, id) {
 function fetchArtWorksByState(token, state) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     }
   };
 
-  state = '?state=' + state;
+  state = "?state=" + state;
   return dispatch => {
     return axios
       .get(apiURL + artWorkURL + state, header_auth)
@@ -226,14 +220,16 @@ function fetchArtWorksByState(token, state) {
 function fetchArtWorks(token, name) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     }
   };
 
-  if (name == null || name.replace(/\s/g, '').length === 0) name = '/';
-  else name = '?name=' + name;
+  if (name == null || name.replace(/\s/g, "").length === 0)
+    name = "/";
+  else
+    name = "?name=" + name;
   return dispatch => {
     return axios
       .get(apiURL + artWorkURL + name, header_auth)
@@ -246,15 +242,11 @@ export function createArtworkIfNeeded(file, token, name, price, ref, state) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
-      return dispatch(createArtWork(file, token, name, price, ref, state)).then(
-        () => {
-          return dispatch(
-            uploadImage(token, file, getState().artworks.artistId)
-          ).then(() => {
-            return dispatch(fetchArtWorks(token));
-          });
-        }
-      );
+      return dispatch(createArtWork(file, token, name, price, ref, state)).then(() => {
+        return dispatch(uploadImage(token, file, getState().artworks.artistId)).then(() => {
+          return dispatch(fetchArtWorks(token));
+        });
+      });
     }
   };
 }
@@ -268,7 +260,7 @@ export function uploadImageIfNeeded(file, token, id) {
   };
 }
 
-export function sortArtworkByState(token, state) {
+export function getArtworkByStateIfNeeded(token, state) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
@@ -299,11 +291,9 @@ export function modifyArtWorkIfNeeded(token, title, ref, state, price, id) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
-      return dispatch(modifyArtWork(token, title, ref, state, price, id)).then(
-        () => {
-          return dispatch(fetchArtWorks(token));
-        }
-      );
+      return dispatch(modifyArtWork(token, title, ref, state, price, id)).then(() => {
+        return dispatch(fetchArtWorks(token));
+      });
     }
   };
 }

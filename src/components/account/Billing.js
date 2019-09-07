@@ -1,8 +1,19 @@
-import React, {Component} from 'react';
-import { Button, Jumbotron, Col, FormControl, FormGroup } from "react-bootstrap";
+import React, { Component } from "react";
+import {
+  Button,
+  Jumbotron,
+  Col,
+  FormControl,
+  FormGroup,
+  Form
+} from "react-bootstrap";
 
 import "../../css/Billing.css";
-import { createBillingIfNeeded } from "../../actions/actionsBillings";
+import {
+  createBillingIfNeeded,
+  modifyBillingIfNeeded,
+  openModifyBilling
+} from "../../actions/actionsBillings";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -11,32 +22,48 @@ class Billing extends Component {
     super(props);
 
     this.state = {
-      artworkId: '',
-      fName: '',
-      lName: '',
-      mail: '',
-      address: '',
-      phone: '',
-      country: '',
-      city: ''
+      newCustomer: true,
+      artworkId: "",
+      fName: "",
+      lName: "",
+      mail: "",
+      address: "",
+      phone: "",
+      country: "",
+      city: ""
     };
-    this.billingCreation= this.billingCreation.bind(this);
+    this.billingCreation = this.billingCreation.bind(this);
+  }
+
+  getCustomerValidationState() {
+    return "success";
   }
 
   getArtworkIdValidationState() {
-    return 'success';
+    return "success";
   }
 
   handleChangeArtworkId = event => {
     this.setState({ artworkId: event.target.value });
+  };
 
+  handleChangeCustomer = event => {
+    this.setState({
+      fName: "test",
+      lName: "test",
+      mail: "test@test.test",
+      address: "test",
+      phone: "0663422073",
+      country: "test",
+      city: "test"
+    });
   };
 
   getCountryValidationState() {
     let country = this.state.country;
-    if (country === '') return 'error';
-    return 'success';
-  };
+    if (country === "") return "error";
+    return "success";
+  }
 
   handleChangeCountry = event => {
     this.setState({ country: event.target.value });
@@ -44,9 +71,9 @@ class Billing extends Component {
 
   getCityValidationState() {
     let city = this.state.city;
-    if (city === '') return 'error';
-    return 'success';
-  };
+    if (city === "") return "error";
+    return "success";
+  }
 
   handleChangeCity = event => {
     this.setState({ city: event.target.value });
@@ -54,9 +81,9 @@ class Billing extends Component {
 
   getNameValidationState() {
     let name = this.state.fName;
-    if (name === '') return 'error';
-    return 'success';
-  };
+    if (name === "") return "error";
+    return "success";
+  }
 
   handleChangeName = event => {
     this.setState({ fName: event.target.value });
@@ -64,9 +91,9 @@ class Billing extends Component {
 
   getFamilyValidationState() {
     let family = this.state.lName;
-    if (family === '') return 'error';
-    return 'success';
-  };
+    if (family === "") return "error";
+    return "success";
+  }
 
   handleChangeFamily = event => {
     this.setState({ lName: event.target.value });
@@ -74,15 +101,15 @@ class Billing extends Component {
 
   getMailValidationState() {
     let email = this.state.mail;
-    if (email === '') return 'error';
+    if (email === "") return "error";
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
-  };
+  }
 
   handleChangeMail = event => {
     this.setState({ mail: event.target.value });
@@ -90,15 +117,15 @@ class Billing extends Component {
 
   getAddressValidationState() {
     let address = this.state.address;
-    if (address === '') return 'error';
+    if (address === "") return "error";
     let re = /^.+$/;
 
     if (re.test(address)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
-  };
+  }
 
   handleChangeAddress = event => {
     this.setState({ address: event.target.value });
@@ -106,155 +133,268 @@ class Billing extends Component {
 
   getNumberValidationState() {
     let number = this.state.phone;
-    if (number === '') return 'error';
+    if (number === "") return "error";
     let re = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
 
     if (re.test(number)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
-  };
+  }
 
   handleChangeNumber = event => {
     this.setState({ phone: event.target.value });
   };
 
   billingCreation = () => {
+    if (this.state.artworkId === "" && this.props.artworks.length)
+      this.setState({ artworkId: this.props.artworks[0].id });
     if (
-      this.getMailValidationState() === 'success' &&
-      this.getCountryValidationState() === 'success' &&
-      this.getAddressValidationState() === 'success' &&
-      this.getCityValidationState() === 'success' &&
-      this.getNameValidationState() === 'success' &&
-      this.getFamilyValidationState() === 'success' &&
-      this.getNumberValidationState() === 'success'
+      (!this.state.newCustomer || (
+        this.getMailValidationState() === "success" &&
+        this.getCountryValidationState() === "success" &&
+        this.getAddressValidationState() === "success" &&
+        this.getCityValidationState() === "success" &&
+        this.getNameValidationState() === "success" &&
+        this.getFamilyValidationState() === "success" &&
+        this.getNumberValidationState() === "success")) &&
+      this.state.artworkId !== ""
     ) {
-      this.props.dispatch(createBillingIfNeeded(this.props.token, this.state.mail, this.state.phone,
-                                                this.state.fName, this.state.lName, this.state.country,
-                                                this.state.city, this.state.address, this.state.artworkId));
+      if (this.props.newObj) {
+        this.props.dispatch(
+          createBillingIfNeeded(
+            this.props.token,
+            this.state.mail,
+            this.state.phone,
+            this.state.fName,
+            this.state.lName,
+            this.state.country,
+            this.state.city,
+            this.state.address,
+            this.state.artworkId
+          )
+        );
+      } else {
+        this.props.dispatch(
+          modifyBillingIfNeeded(
+            this.props.token,
+            this.state.mail,
+            this.state.phone,
+            this.state.fName,
+            this.state.lName,
+            this.state.country,
+            this.state.city,
+            this.state.address,
+            this.props.billing.id,
+            this.state.artworkId
+          )
+        );
+      }
     }
   };
 
-  handleClickArtwork = event =>{
-      console.log(event);
-    };
+  onModify = () => {
+    this.props.dispatch(openModifyBilling());
+    this.setState({
+      artworkId: this.props.billing.artwork.id,
+      fName: this.props.billing.customer.first_name,
+      lName: this.props.billing.customer.last_name,
+      mail: this.props.billing.customer.email,
+      address: this.props.billing.customer.address,
+      phone: this.props.billing.customer.phone,
+      country: this.props.billing.customer.country,
+      city: this.props.billing.customer.city
+    });
+  };
+
+  onSwitchClient = () => {
+    this.setState({
+      fName: "",
+      lName: "",
+      mail: "",
+      address: "",
+      phone: "",
+      country: "",
+      city: ""
+    });
+    if (this.state.newCustomer)
+      this.setState({ newCustomer: false });
+    else
+      this.setState({ newCustomer: true });
+
+  };
 
   editable() {
     return (
       <div>
-
         <Jumbotron className="billingJumbotron">
-          <h2 className="billingJumbotronTitle">Informations du client</h2>
-
-          <div className="row">
-            <Col sm={5}>
-              <h3 className="billingJumbotronTag">Prénom :</h3>
-            </Col>
-            <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this.getNameValidationState()}>
-                <FormControl
-                  type="name"
-                  value={this.state.fName}
-                  placeholder="Entrer le prénom du client"
-                  onChange={this.handleChangeName}
-                />
-                <FormControl.Feedback />
+          {!this.state.newCustomer ? (
+            <div>
+              <Button
+                bssize="lg"
+                onClick={this.onSwitchClient}
+                className="billingMainButton"
+              >
+                <span className="add">Nouveau client</span>
+              </Button>
+              <FormGroup
+                className="billingJumbotronInput"
+                validationState={this.getCustomerValidationState()}
+              >
+                <FormControl onChange={this.handleChangeCustomer} as="select">
+                  <option key="0" value="">
+                    Choisissez un client
+                  </option>
+                  {this.props.customers.map(customer => (
+                    <option key={customer.id} value={customer}>
+                      {customer.first_name + " " + customer.last_name}
+                    </option>
+                  ))}
+                </FormControl>
               </FormGroup>
-            </Col>
+            </div>
+          ) : (
+            <div>
+              <Button
+                bssize="lg"
+                onClick={this.onSwitchClient}
+                className="billingMainButton"
+              >
+                <span className="add">Client existant</span>
+              </Button>
 
-            <Col sm={5}>
-              <h3 className="billingJumbotronTag">Nom :</h3>
-            </Col>
-            <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this.getFamilyValidationState()}>
-                <FormControl
-                  type="name"
-                  value={this.state.lName}
-                  placeholder="Entrer le nom du client"
-                  onChange={this.handleChangeFamily}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
+              <h2 className="billingJumbotronTitle">Informations du client</h2>
 
-            <Col sm={5}>
-              <h3 className="billingJumbotronTag">Mail :</h3>
-            </Col>
-            <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this.getMailValidationState()}>
-                <FormControl
-                  type="name"
-                  value={this.state.mail}
-                  placeholder="Entrer l'adresse mail du client"
-                  onChange={this.handleChangeMail}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
+              <div className="row">
+                <Col sm={5}>
+                  <h3 className="billingJumbotronTag">Prénom :</h3>
+                </Col>
+                <Col sm={7}>
+                  <FormGroup
+                    className="billingJumbotronInput"
+                    validationState={this.getNameValidationState()}
+                  >
+                    <FormControl
+                      type="name"
+                      value={this.state.fName}
+                      placeholder="Entrer le prénom du client"
+                      onChange={this.handleChangeName}
+                    />
+                    <FormControl.Feedback/>
+                  </FormGroup>
+                </Col>
 
-            <Col sm={5}>
-              <h3 className="billingJumbotronTag">Adresse :</h3>
-            </Col>
-            <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this.getAddressValidationState()}>
-                <FormControl
-                  type="name"
-                  value={this.state.address}
-                  placeholder="Entrer l'adresse du client"
-                  onChange={this.handleChangeAddress}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
+                <Col sm={5}>
+                  <h3 className="billingJumbotronTag">Nom :</h3>
+                </Col>
+                <Col sm={7}>
+                  <FormGroup
+                    className="billingJumbotronInput"
+                    validationState={this.getFamilyValidationState()}
+                  >
+                    <FormControl
+                      type="name"
+                      value={this.state.lName}
+                      placeholder="Entrer le nom du client"
+                      onChange={this.handleChangeFamily}
+                    />
+                    <FormControl.Feedback/>
+                  </FormGroup>
+                </Col>
 
+                <Col sm={5}>
+                  <h3 className="billingJumbotronTag">Mail :</h3>
+                </Col>
+                <Col sm={7}>
+                  <FormGroup
+                    className="billingJumbotronInput"
+                    validationState={this.getMailValidationState()}
+                  >
+                    <FormControl
+                      type="name"
+                      value={this.state.mail}
+                      placeholder="Entrer l'adresse mail du client"
+                      onChange={this.handleChangeMail}
+                    />
+                    <FormControl.Feedback/>
+                  </FormGroup>
+                </Col>
 
-            <Col sm={5}>
-              <h3 className="billingJumbotronTag">Ville :</h3>
-            </Col>
-            <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this.getCityValidationState()}>
-                <FormControl
-                  type="name"
-                  value={this.state.city}
-                  placeholder="Entrer la ville du client"
-                  onChange={this.handleChangeCity}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
+                <Col sm={5}>
+                  <h3 className="billingJumbotronTag">Adresse :</h3>
+                </Col>
+                <Col sm={7}>
+                  <FormGroup
+                    className="billingJumbotronInput"
+                    validationState={this.getAddressValidationState()}
+                  >
+                    <FormControl
+                      type="name"
+                      value={this.state.address}
+                      placeholder="Entrer l'adresse du client"
+                      onChange={this.handleChangeAddress}
+                    />
+                    <FormControl.Feedback/>
+                  </FormGroup>
+                </Col>
 
-            <Col sm={5}>
-              <h3 className="billingJumbotronTag">Pays :</h3>
-            </Col>
-            <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this.getCountryValidationState()}>
-                <FormControl
-                  type="name"
-                  value={this.state.country}
-                  placeholder="Entrer le pays du client"
-                  onChange={this.handleChangeCountry}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
+                <Col sm={5}>
+                  <h3 className="billingJumbotronTag">Ville :</h3>
+                </Col>
+                <Col sm={7}>
+                  <FormGroup
+                    className="billingJumbotronInput"
+                    validationState={this.getCityValidationState()}
+                  >
+                    <FormControl
+                      type="name"
+                      value={this.state.city}
+                      placeholder="Entrer la ville du client"
+                      onChange={this.handleChangeCity}
+                    />
+                    <FormControl.Feedback/>
+                  </FormGroup>
+                </Col>
 
-            <Col sm={5}>
-              <h3 className="billingJumbotronTag">Téléphone :</h3>
-            </Col>
-            <Col sm={7}>
-              <FormGroup className='billingJumbotronInput' validationState={this.getNumberValidationState()}>
-                <FormControl
-                  type="name"
-                  value={this.state.phone}
-                  placeholder="Entrer le numéro de téléphone du client"
-                  onChange={this.handleChangeNumber}
-                />
-                <FormControl.Feedback />
-              </FormGroup>
-            </Col>
+                <Col sm={5}>
+                  <h3 className="billingJumbotronTag">Pays :</h3>
+                </Col>
+                <Col sm={7}>
+                  <FormGroup
+                    className="billingJumbotronInput"
+                    validationState={this.getCountryValidationState()}
+                  >
+                    <FormControl
+                      type="name"
+                      value={this.state.country}
+                      placeholder="Entrer le pays du client"
+                      onChange={this.handleChangeCountry}
+                    />
+                    <FormControl.Feedback/>
+                  </FormGroup>
+                </Col>
 
-          </div>
+                <Col sm={5}>
+                  <h3 className="billingJumbotronTag">Téléphone :</h3>
+                </Col>
+                <Col sm={7}>
+                  <FormGroup
+                    className="billingJumbotronInput"
+                    validationState={this.getNumberValidationState()}
+                  >
+                    <FormControl
+                      type="name"
+                      value={this.state.phone}
+                      placeholder="Entrer le numéro de téléphone du client"
+                      onChange={this.handleChangeNumber}
+                    />
+                    <FormControl.Feedback/>
+                  </FormGroup>
+                </Col>
+              </div>
+            </div>
+          )}
         </Jumbotron>
 
         <Jumbotron className="billingJumbotron">
@@ -265,37 +405,65 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Nom de l'oeuvre :</h3>
             </Col>
             <Col sm={7}>
-              {
-                this.props.artworks.length ? (
-                <FormGroup className='billingJumbotronInput' validationState={this.getArtworkIdValidationState()}>
+              {this.props.artworks.length ? (
+                <FormGroup
+                  className="billingJumbotronInput"
+                  validationState={this.getArtworkIdValidationState()}
+                >
                   <FormControl
                     onChange={this.handleChangeArtworkId}
                     as="select"
                     value={this.props.artworks[0].value}
                   >
-                    {this.props.artworks.map(artwork =>
-                      <option key={artwork.id} value={artwork.key} >
+                    <option key="0" value="">
+                      Choisissez une oeuvre
+                    </option>
+                    {this.props.artworks.map(artwork => (
+                      <option key={artwork.id} value={artwork.key}>
                         {artwork.name}
                       </option>
-                    )}
-                    </FormControl>
-                  </FormGroup>
-                  ) : (<div/>)
-                }
-              <Button bssize="lg" onClick={this.billingCreation}
-                      className='billingCreateButton' bsstyle="primary">
-                Créer une nouvelle facture
-              </Button>
+                    ))}
+                  </FormControl>
+                </FormGroup>
+              ) : (
+                <div/>
+              )}
+              {this.props.newObj ? (
+                <Button
+                  bssize="lg"
+                  onClick={this.billingCreation}
+                  className="billingCreateButton"
+                  bsstyle="primary"
+                >
+                  Créer une nouvelle facture
+                </Button>
+              ) : (
+                <Button
+                  bssize="lg"
+                  onClick={this.billingCreation}
+                  className="billingCreateButton"
+                  bsstyle="primary"
+                >
+                  Modifier facture
+                </Button>
+              )}
             </Col>
           </div>
         </Jumbotron>
       </div>
     );
-  };
+  }
 
   nonEditable() {
     return (
       <div>
+        <Button
+          bssize="lg"
+          onClick={this.onModify}
+          className="billingMainButton"
+        >
+          <span className="add">Modify</span>
+        </Button>
         <Jumbotron className="billingJumbotron">
           <h2 className="billingJumbotronTitle">Informations du client</h2>
 
@@ -304,51 +472,64 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Prénom :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.billing.customer.first_name }</h3>
+              <h3 className="billingJumbotronInfo">
+                {this.props.billing.customer.first_name}
+              </h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Nom :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.billing.customer.last_name }</h3>
+              <h3 className="billingJumbotronInfo">
+                {this.props.billing.customer.last_name}
+              </h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Mail :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.billing.customer.email }</h3>
+              <h3 className="billingJumbotronInfo">
+                {this.props.billing.customer.email}
+              </h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Téléphone :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.billing.customer.phone }</h3>
+              <h3 className="billingJumbotronInfo">
+                {this.props.billing.customer.phone}
+              </h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Adresse :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.billing.customer.address }</h3>
+              <h3 className="billingJumbotronInfo">
+                {this.props.billing.customer.address}
+              </h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">City :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.billing.customer.city }</h3>
+              <h3 className="billingJumbotronInfo">
+                {this.props.billing.customer.city}
+              </h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Country :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.billing.customer.country }</h3>
+              <h3 className="billingJumbotronInfo">
+                {this.props.billing.customer.country}
+              </h3>
             </Col>
-
           </div>
         </Jumbotron>
 
@@ -360,7 +541,7 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Nom de l'oeuvre :</h3>
             </Col>
             <Col sm={6}>
-              <h3>{ this.props.billing.artwork.name }</h3>
+              <h3>{this.props.billing.artwork.name}</h3>
             </Col>
           </div>
           <div className="row">
@@ -368,7 +549,7 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Référence :</h3>
             </Col>
             <Col sm={6}>
-              <h3>{ this.props.billing.artwork.ref }</h3>
+              <h3>{this.props.billing.artwork.ref}</h3>
             </Col>
           </div>
           <div className="row">
@@ -376,22 +557,16 @@ class Billing extends Component {
               <h3 className="billingJumbotronTag">Prix :</h3>
             </Col>
             <Col sm={6}>
-              <h3>{ this.props.billing.artwork.price + '€'}</h3>
+              <h3>{this.props.billing.artwork.price + "€"}</h3>
             </Col>
           </div>
         </Jumbotron>
       </div>
     );
-  };
+  }
 
   render() {
-    return (
-      <div>
-
-        {this.props.modif ? this.editable() : this.nonEditable()}
-
-      </div>
-    );
+    return <div>{this.props.modif ? this.editable() : this.nonEditable()}</div>;
   }
 }
 
@@ -403,6 +578,7 @@ Billing.propTypes = {
   modif: PropTypes.bool.isRequired,
   table: PropTypes.bool.isRequired,
   artworks: PropTypes.array,
+  customers: PropTypes.array,
   dispatch: PropTypes.func.isRequired
 };
 
@@ -413,8 +589,10 @@ function mapStateToProps(state) {
     error,
     billing,
     modif,
+    newObj,
     table,
     artworks,
+    customers,
     dispatch
   } = state.billings;
 
@@ -424,12 +602,12 @@ function mapStateToProps(state) {
     error,
     billing,
     modif,
+    newObj,
     table,
     artworks,
+    customers,
     dispatch
-  }
+  };
 }
 
-export default connect(
-  mapStateToProps
-)(Billing);
+export default connect(mapStateToProps)(Billing);

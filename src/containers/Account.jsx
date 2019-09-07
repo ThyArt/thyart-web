@@ -22,10 +22,10 @@ import {
 export class Account extends Component {
   constructor(props) {
     super(props);
-    let token = sessionStorage.getItem('token');
+    let token = sessionStorage.getItem("token");
 
     this.state = {
-      selected: '1',
+      selected: "1",
       token: token
     };
   }
@@ -147,11 +147,11 @@ Account.propTypes = {
 };
 
 export function createNotificationError(error) {
-  NotificationManager.error(error, 'Erreur', 5000);
+  NotificationManager.error(error, "Erreur", 5000);
 }
 
 export function createNotificationSuccess(msg) {
-  NotificationManager.success(msg, 'Succès', 5000);
+  NotificationManager.success(msg, "Succès", 5000);
 }
 
 function mapStateToProps(state) {

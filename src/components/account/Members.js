@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
-import { cloneDeep, findIndex } from 'lodash';
-import * as Table from 'reactabular-table';
-import uuid from 'uuid';
+import { cloneDeep, findIndex } from "lodash";
+import * as Table from "reactabular-table";
+import uuid from "uuid";
 
-import '../../css/Membres.css'
-import {Button, Col, FormControl, FormGroup, Row} from "react-bootstrap";
+import "../../css/Membres.css";
+import { Button, Col, FormControl, FormGroup } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import Container from "react-bootstrap/Container";
 import FormLabel from "react-bootstrap/FormLabel";
-import Switch from "react-switch";
+import { getArtWorksIfNeeded } from "../../actions/actionsArtwork";
 
 export class Members extends Component {
   constructor(props) {
@@ -20,9 +20,9 @@ export class Members extends Component {
       columns: this.getColumns(), // initial columns
       addModal: false,
       removeModal: false,
-      newName: '',
-      newFamily: '',
-      newMail: '',
+      newName: "",
+      newFamily: "",
+      newMail: ""
     };
 
     this.onAdd = this.onAdd.bind(this);
@@ -34,12 +34,12 @@ export class Members extends Component {
   };
 
   onAddClose = () => {
-    this.setState({newName: '', addModal: false});
+    this.setState({ newName: "", addModal: false });
   };
 
 
   onRemoveClose = () => {
-    this.setState({newName: '', removeModal: false});
+    this.setState({ newName: "", removeModal: false });
   };
 
   handleChangeMail = event => {
@@ -51,30 +51,30 @@ export class Members extends Component {
   };
 
   handleChangeFamily = event => {
-    this.setState({  newFamily: event.target.value });
+    this.setState({ newFamily: event.target.value });
   };
 
   getNameValidationState() {
     let name = this.state.newName;
-    if (name === '') return 'error';
-    return 'success';
+    if (name === "") return "error";
+    return "success";
   }
 
   getFamilyValidationState() {
     let family = this.state.newFamily;
-    if (family === '') return 'error';
-    return 'success';
+    if (family === "") return "error";
+    return "success";
   }
 
   getMailValidationState() {
     let email = this.state.newMail;
-    if (email === '') return 'error';
+    if (email === "") return "error";
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
   }
 
@@ -85,21 +85,21 @@ export class Members extends Component {
   getColumns() {
     return [
       {
-        property: 'name',
+        property: "name",
         header: {
-          label: 'Prénom'
+          label: "Prénom"
         }
       },
       {
-        property: 'family',
+        property: "family",
         header: {
-          label: 'Nom de famille'
+          label: "Nom de famille"
         }
       },
       {
-        property: 'mail',
+        property: "mail",
         header: {
-          label: 'Adresse Mail'
+          label: "Adresse Mail"
         }
       },
       {
@@ -136,14 +136,14 @@ export class Members extends Component {
         cell: {
           formatters: [
             (value, { rowData }) => (
-                <div>
-                  <div
-                      className="remove"
-                      onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: 'pointer', float: 'left' }}
-                  >
-                    <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
-                  </div>
-                </div>)]
+              <div>
+                <div
+                  className="remove"
+                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: "pointer", float: "left" }}
+                >
+                  <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
+                </div>
+              </div>)]
         }
       }
     ];
@@ -157,7 +157,7 @@ export class Members extends Component {
         <Col sm={10}>
           {this.props.add}
           <Button bssize="lg" className='add' id='addMemberButton' onClick={this.onAddOpen}>
-            <img src={require('../../static/add.svg')} alt="add" height="25" width="auto" id='addMemberImage'/>
+            <img src={require("../../static/add.svg")} alt="add" height="25" width="auto" id='addMemberImage'/>
             <span id='addMemberText'>Ajouter</span>
           </Button>
         </Col>
@@ -173,14 +173,14 @@ export class Members extends Component {
               </FormLabel>
               <Col>
                 <FormControl
-                    lg={9}
-                    type="firstname"
-                    value={this.props.newFamily}
-                    placeholder="Entrer le nom du membre"
-                    onChange={this.handleChangeFamily}
+                  lg={9}
+                  type="firstname"
+                  value={this.props.newFamily}
+                  placeholder="Entrer le nom du membre"
+                  onChange={this.handleChangeFamily}
                 />
               </Col>
-              <FormControl.Feedback />
+              <FormControl.Feedback/>
             </FormGroup>
             <FormGroup as={Row} className='input' validationState={this.getNameValidationState()}>
               <FormLabel column lg={3}>
@@ -188,14 +188,14 @@ export class Members extends Component {
               </FormLabel>
               <Col>
                 <FormControl
-                    lg={9}
-                    type="name"
-                    value={this.props.newName}
-                    placeholder="Entrer le prénom du membre"
-                    onChange={this.handleChangeName}
+                  lg={9}
+                  type="name"
+                  value={this.props.newName}
+                  placeholder="Entrer le prénom du membre"
+                  onChange={this.handleChangeName}
                 />
               </Col>
-              <FormControl.Feedback />
+              <FormControl.Feedback/>
             </FormGroup>
             <FormGroup as={Row} className='input' validationState={this.getMailValidationState()}>
               <FormLabel column lg={3}>
@@ -203,14 +203,14 @@ export class Members extends Component {
               </FormLabel>
               <Col>
                 <FormControl
-                    lg={9}
-                    type="mail"
-                    value={this.props.newMail}
-                    placeholder="Entrer le mail du membre"
-                    onChange={this.handleChangeMail}
+                  lg={9}
+                  type="mail"
+                  value={this.props.newMail}
+                  placeholder="Entrer le mail du membre"
+                  onChange={this.handleChangeMail}
                 />
               </Col>
-              <FormControl.Feedback />
+              <FormControl.Feedback/>
             </FormGroup>
             <Row>
               <Button bsstyle="primary" onClick={this.onAdd} className='validate' bssize='large'>
@@ -232,16 +232,16 @@ export class Members extends Component {
           className="pure-table pure-table-bordered"
           columns={columns}
         >
-          <Table.Header />
-          <Table.Body rows={rows} rowKey="id" />
+          <Table.Header/>
+          <Table.Body rows={rows} rowKey="id"/>
         </Table.Provider>
       </div>
     );
   }
 
   onAdd(e) {
-    if (this.getNameValidationState() === 'success' && this.getMailValidationState() === 'success'
-      && this.getFamilyValidationState() === 'success') {
+    if (this.getNameValidationState() === "success" && this.getMailValidationState() === "success"
+      && this.getFamilyValidationState() === "success") {
       e.preventDefault();
 
       const rows = cloneDeep(this.state.rows);
@@ -254,12 +254,12 @@ export class Members extends Component {
         isGalerist: false
       });
 
-      this.setState({rows, addModal: false});
+      this.setState({ rows, addModal: false });
     }
   }
 
   confirmRemove(id) {
-    this.setState({ idToRemove: id , removeModal: true});
+    this.setState({ idToRemove: id, removeModal: true });
 
   }
 

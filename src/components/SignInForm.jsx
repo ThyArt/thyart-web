@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   FormControl,
   Button,
   Alert,
   FormGroup,
   FormLabel
-} from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import { fetchForgotIfNeeded, signInIfNeeded } from '../actions/actionsAuth';
-import ReactLoading from 'react-loading';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
+} from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import { fetchForgotIfNeeded, signInIfNeeded } from "../actions/actionsAuth";
+import ReactLoading from "react-loading";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
 
 export class SignInForm extends Component {
   constructor(props) {
@@ -24,16 +24,16 @@ export class SignInForm extends Component {
     this.handleMailChange = this.handleMailChange.bind(this);
 
     this.state = {
-      mailValue: '',
-      passValue: ''
+      mailValue: "",
+      passValue: ""
     };
   }
 
   signin = () => {
     if (
-      this.getMailValidationState() === 'success' &&
-      this.getPassValidationState() === 'success' &&
-      this.state.passValue !== ''
+      this.getMailValidationState() === "success" &&
+      this.getPassValidationState() === "success" &&
+      this.state.passValue !== ""
     ) {
       this.props.dispatch(
         signInIfNeeded(this.state.mailValue, this.state.passValue)
@@ -42,38 +42,38 @@ export class SignInForm extends Component {
   };
 
   forgot = () => {
-    if (this.getMailValidationState() === 'success') {
+    if (this.getMailValidationState() === "success") {
       this.props.dispatch(fetchForgotIfNeeded(this.state.mailValue));
     }
   };
 
   getMailValidationState() {
     let email = this.state.mailValue;
-    if (email === '') return null;
+    if (email === "") return null;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
   }
 
   getPassValidationState() {
     let password = this.state.passValue;
-    if (password === '') return null;
+    if (password === "") return null;
     let strongRegex = new RegExp(
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
     );
     let mediumRegex = new RegExp(
-      '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'
+      "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
     );
     if (strongRegex.test(password) || mediumRegex.test(password)) {
-      return 'success';
-    } else if (password !== '') {
-      return 'warning';
+      return "success";
+    } else if (password !== "") {
+      return "warning";
     } else {
-      return 'error';
+      return "error";
     }
   }
 
@@ -116,40 +116,31 @@ export class SignInForm extends Component {
           <Row>
             <Col>
               {this.props.isFetching ? (
-                <ReactLoading
-                  type={'spin'}
-                  color={'black'}
-                  height={50}
-                  width={50}
-                />
+                <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
               ) : (
-                <Button variant={'outline-primary'} onClick={this.signin}>
-                  Se connecter
-                </Button>
-              )}
+                <Button variant={"outline-primary"} onClick={this.signin}>Se connecter</Button>
+              )
+              }
             </Col>
             <Col>
               {this.props.isFetching ? (
-                <div />
-              ) : (
-                <Button
-                  className="float-right"
-                  variant={'outline-secondary'}
-                  onClick={this.forgot}
-                >
-                  Mot de passe oublié
-                </Button>
-              )}
+                <div/>) : (
+                <Button className='float-right' variant={"outline-secondary"} onClick={this.forgot}>Mot de passe
+                  oublié</Button>
+              )
+              }
             </Col>
           </Row>
         </Container>
         {this.props.error ? (
-          <Alert bsstyle="danger">{`Error: ${this.props.error}`}</Alert>
+          <Alert bsstyle="danger">{`Error: ${
+            this.props.error
+          }`}</Alert>
         ) : null}
         {this.props.isLogged ? (
           <Redirect
             to={{
-              pathname: '/account'
+              pathname: "/account"
             }}
           />
         ) : null}

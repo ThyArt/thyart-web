@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Jumbotron } from 'react-bootstrap';
+import React, { Component } from "react";
+import { Jumbotron } from "react-bootstrap";
 
 import '../css/Services.css';
 import Container from 'react-bootstrap/Container';

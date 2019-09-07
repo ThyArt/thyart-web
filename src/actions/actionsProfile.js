@@ -22,7 +22,8 @@ export function receiveProfileError(error) {
   let error_msg;
   if (error.response && error.response.data && error.response.data.message)
     error_msg = error.response.data.message;
-  else error_msg = 'Erreur inconnue.';
+  else
+    error_msg = "Erreur inconnue.";
 
   return {
     type: RECEIVE_PROFILE_ERROR,
@@ -33,9 +34,9 @@ export function receiveProfileError(error) {
 function receiveProfile(res) {
   return {
     type: RECEIVE_PROFILE,
-    mail: res.data['data']['email'],
-    firstname: res.data['data']['firstname'],
-    lastname: res.data['data']['lastname'],
+    mail: res.data["data"]["email"],
+    firstname: res.data["data"]["firstname"],
+    lastname: res.data["data"]["lastname"],
     msg: null
   };
 }
@@ -43,19 +44,18 @@ function receiveProfile(res) {
 function receiveProfileModify(res) {
   return {
     type: RECEIVE_PROFILE,
-    mail: res.data['data']['email'],
-    firstname: res.data['data']['firstname'],
-    lastname: res.data['data']['lastname'],
-    msg: 'Votre profil a été modifié'
+    mail: res.data["data"]["email"],
+    firstname: res.data["data"]["firstname"],
+    lastname: res.data["data"]["lastname"],
+    msg: "Votre profil a été modifié"
   };
 }
 
 function fetchProfile(token) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json", "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     }
   };
   return dispatch => {
@@ -69,15 +69,14 @@ function fetchProfile(token) {
 function modifyMail(token, mail) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/xxx-form-urlencoded',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/xxx-form-urlencoded",
+      Authorization: "Bearer " + token
     }
   };
   const body = {};
   return dispatch => {
-    return axios
-      .patch(apiURL + userURL + '?email=' + mail, body, header_auth)
+    return axios.patch(apiURL + userURL + "?email=" + mail, body, header_auth)
       .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)));
   };
@@ -86,15 +85,14 @@ function modifyMail(token, mail) {
 function modifyPassword(token, password) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/xxx-form-urlencoded',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/xxx-form-urlencoded",
+      Authorization: "Bearer " + token
     }
   };
   const body = {};
   return dispatch => {
-    return axios
-      .patch(apiURL + userURL + '?password=' + password, body, header_auth)
+    return axios.patch(apiURL + userURL + "?password=" + password, body, header_auth)
       .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)));
   };
@@ -103,15 +101,14 @@ function modifyPassword(token, password) {
 function modifyFirstname(token, firstname) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/xxx-form-urlencoded',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/xxx-form-urlencoded",
+      Authorization: "Bearer " + token
     }
   };
   const body = {};
   return dispatch => {
-    return axios
-      .patch(apiURL + userURL + '?firstname=' + firstname, body, header_auth)
+    return axios.patch(apiURL + userURL + "?firstname=" + firstname, body, header_auth)
       .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)));
   };
@@ -120,15 +117,14 @@ function modifyFirstname(token, firstname) {
 function modifyLastname(token, lastname) {
   const header_auth = {
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/xxx-form-urlencoded',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/xxx-form-urlencoded",
+      Authorization: "Bearer " + token
     }
   };
   const body = {};
   return dispatch => {
-    return axios
-      .patch(apiURL + userURL + '?lastname=' + lastname, body, header_auth)
+    return axios.patch(apiURL + userURL + "?lastname=" + lastname, body, header_auth)
       .then(res => dispatch(receiveProfileModify(res)))
       .catch(error => dispatch(receiveProfileError(error)));
   };

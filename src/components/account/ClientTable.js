@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import * as Table from 'reactabular-table';
-import { Button, DropdownButton, FormControl, DropdownItem } from "react-bootstrap";
+import React, { Component } from "react";
+import * as Table from "reactabular-table";
+import { Button, DropdownButton, FormControl, FormGroup, DropdownItem } from "react-bootstrap";
 import Modal from "react-responsive-modal";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import '../../css/Membres.css';
+import "../../css/Membres.css";
 import PropTypes from "prop-types";
 import {
   eraseCustomerIfNeeded,
@@ -26,25 +26,25 @@ class ClientTable extends Component {
       removeModal: false,
       infos: {},
       rows: [],
-      search: ''
+      search: ""
     };
 
     this.openDetails = this.openDetails.bind(this);
     this.onRemove = this.onRemove.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
   }
 
   handleFilters = eventKey => {
     const filters = {
-      '1': 'firstNameA',
-      '2': 'firstNameZ',
-      '3': 'lastNameA',
-      '4': 'lastNameZ',
-      '5': 'mailA',
-      '6': 'mailZ'
+      "1": "firstNameA",
+      "2": "firstNameZ",
+      "3": "lastNameA",
+      "4": "lastNameZ",
+      "5": "mailA",
+      "6": "mailZ"
     };
     this.props.dispatch(this.props.dispatch(sortCustomers(filters[eventKey.toString()])));
   };
@@ -54,11 +54,11 @@ class ClientTable extends Component {
   };
 
   searchClients = () => {
-    this.props.dispatch(getCustomersIfNeeded(this.props.token, this.state.search))
+    this.props.dispatch(getCustomersIfNeeded(this.props.token, this.state.search));
   };
 
   onRemoveClose = () => {
-    this.setState({ newName: '', removeModal: false });
+    this.setState({ newName: "", removeModal: false });
   };
 
   openDetails(rowData) {
@@ -66,38 +66,38 @@ class ClientTable extends Component {
   };
 
   confirmRemove(id) {
-    this.setState({ idToRemove: id , removeModal: true});
+    this.setState({ idToRemove: id, removeModal: true });
   };
 
   onRemove() {
-    this.setState({removeModal: false});
+    this.setState({ removeModal: false });
     this.props.dispatch(eraseCustomerIfNeeded(this.props.token, this.state.idToRemove));
   };
 
   getColumns() {
     return [
       {
-        property: 'last_name',
+        property: "last_name",
         header: {
-          label: 'Nom'
+          label: "Nom"
         }
       },
       {
-        property: 'first_name',
+        property: "first_name",
         header: {
-          label: 'Prénom'
+          label: "Prénom"
         }
       },
       {
-        property: 'email',
+        property: "email",
         header: {
-          label: 'Mail du client'
+          label: "Mail du client"
         }
       },
       {
-        property: 'details',
+        property: "details",
         header: {
-          label: 'Details'
+          label: "Details"
         },
         props: {
           style: {
@@ -110,16 +110,16 @@ class ClientTable extends Component {
               <div>
                 <div
                   className="open"
-                  onClick={() => this.openDetails(rowData)} style={{ cursor: 'pointer', float: 'left'}}
+                  onClick={() => this.openDetails(rowData)} style={{ cursor: "pointer", float: "left" }}
                 >
-                  <img src={require('../../static/external-link.svg')} alt="modify" height="30" width="auto" />
+                  <img src={require("../../static/external-link.svg")} alt="modify" height="30" width="auto"/>
                 </div>
               </div>)]
         }
       },
       {
         header: {
-          label: 'Supprimer'
+          label: "Supprimer"
         },
         props: {
           style: {
@@ -132,9 +132,9 @@ class ClientTable extends Component {
               <div>
                 <div
                   className="remove"
-                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: 'pointer', float: 'left'}}
+                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: "pointer", float: "left" }}
                 >
-                  <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
+                  <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
                 </div>
               </div>)]
         }
@@ -163,21 +163,21 @@ class ClientTable extends Component {
 
         <InputGroup className="mb-3">
           <FormControl
-              type={'text'}
-              value={this.state.search}
-              onChange={this.onSearchChange}
-              placeholder='Entrer le texte à rechercher...'
-              id='billingSearchBar'
+            type={"text"}
+            value={this.state.search}
+            onChange={this.onSearchChange}
+            placeholder='Entrer le texte à rechercher...'
+            id='billingSearchBar'
           />
           <InputGroup.Append>
-            <Button id={'buttonRechercher'}
+            <Button id={"buttonRechercher"}
                     variant="outline-primary"
                     bsstyle='primary'
                     bssize='large' onClick={this.searchClients}>Rechercher</Button>
             <DropdownButton
-                as={InputGroup.Append}
-                variant="outline-secondary"
-                bssize='large' id='buttonFilter' title={'Filtres'}>
+              as={InputGroup.Append}
+              variant="outline-secondary"
+              bssize='large' id='buttonFilter' title={"Filtres"}>
               <DropdownItem eventKey={1} onSelect={this.handleFilters}>Noms A-Z</DropdownItem>
               <DropdownItem eventKey={2} onSelect={this.handleFilters}>Noms Z-A</DropdownItem>
               <DropdownItem eventKey={3} onSelect={this.handleFilters}>Prénom A-Z</DropdownItem>
@@ -190,10 +190,10 @@ class ClientTable extends Component {
 
         <Container fluid>
           <Row>
-            <Col id={'colContainerTable'}>
+            <Col id={"colContainerTable"}>
               <Table.Provider className="pure-table pure-table-bordered" columns={columns}>
-                <Table.Header />
-                <Table.Body rows={rows} rowKey="id" />
+                <Table.Header/>
+                <Table.Body rows={rows} rowKey="id"/>
               </Table.Provider>
             </Col>
           </Row>
@@ -234,9 +234,9 @@ function mapStateToProps(state) {
     table,
     customers,
     dispatch
-  }
+  };
 }
 
 export default connect(
   mapStateToProps
-)(ClientTable)
+)(ClientTable);

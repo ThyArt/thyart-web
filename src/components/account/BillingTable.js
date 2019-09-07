@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import * as Table from 'reactabular-table';
-import { Button, Col, DropdownButton, FormControl, DropdownItem, Row } from "react-bootstrap";
+import React, { Component } from "react";
+import * as Table from "reactabular-table";
+import { Button, Col, DropdownButton, FormControl, FormGroup, DropdownItem, Row } from "react-bootstrap";
 import Modal from "react-responsive-modal";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import '../../css/Membres.css';
+import "../../css/Membres.css";
 import {
   eraseBillingIfNeeded,
   getBillingIfNeeded,
+  getBillingsIfNeeded,
   sortBillings
 } from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
@@ -24,27 +25,27 @@ class BillingTable extends Component {
       removeModal: false,
       infos: {},
       rows: [],
-      search: ''
+      search: ""
     };
 
     this.openDetails = this.openDetails.bind(this);
     this.onRemove = this.onRemove.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
   }
 
   handleFilters = eventKey => {
     const filters = {
-      '1': 'nameA',
-      '2': 'nameZ',
-      '3': 'artworkA',
-      '4': 'artworkZ',
-      '5': 'dateNew',
-      '6': 'dateOld'
+      "1": "nameA",
+      "2": "nameZ",
+      "3": "artworkA",
+      "4": "artworkZ",
+      "5": "dateNew",
+      "6": "dateOld"
     };
-    this.props.dispatch(this.props.dispatch(sortBillings(filters[eventKey.toString()])));
+    this.props.dispatch(sortBillings(filters[eventKey.toString()]));
   };
 
   onSearchChange = event => {
@@ -52,10 +53,11 @@ class BillingTable extends Component {
   };
 
   searchBillings = () => {
+    this.props.dispatch(getBillingsIfNeeded(this.props.token, this.state.search));
   };
 
   onRemoveClose = () => {
-    this.setState({ newName: '', removeModal: false });
+    this.setState({ newName: "", removeModal: false });
   };
 
   openDetails(rowData) {
@@ -64,11 +66,11 @@ class BillingTable extends Component {
 
 
   confirmRemove(id) {
-    this.setState({ idToRemove: id , removeModal: true});
+    this.setState({ idToRemove: id, removeModal: true });
   };
 
   onRemove() {
-    this.setState({removeModal: false});
+    this.setState({ removeModal: false });
     this.props.dispatch(eraseBillingIfNeeded(this.props.token, this.state.idToRemove));
   };
 
@@ -81,15 +83,15 @@ class BillingTable extends Component {
     return [
 
       {
-        property: 'date',
+        property: "date",
         header: {
-          label: 'Date de facturation'
+          label: "Date de facturation"
         }
       },
       {
-        property: 'details',
+        property: "details",
         header: {
-          label: 'Details'
+          label: "Details"
         },
         props: {
           style: {
@@ -102,16 +104,16 @@ class BillingTable extends Component {
               <div>
                 <div
                   className="open"
-                  onClick={() => this.openDetails(rowData)} style={{ cursor: 'pointer', float: 'left'}}
+                  onClick={() => this.openDetails(rowData)} style={{ cursor: "pointer", float: "left" }}
                 >
-                  <img src={require('../../static/external-link.svg')} alt="modify" height="30" width="auto" />
+                  <img src={require("../../static/external-link.svg")} alt="modify" height="30" width="auto"/>
                 </div>
               </div>)]
         }
       },
       {
         header: {
-          label: 'Supprimer'
+          label: "Supprimer"
         },
         props: {
           style: {
@@ -124,9 +126,9 @@ class BillingTable extends Component {
               <div>
                 <div
                   className="remove"
-                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: 'pointer', float: 'left'}}
+                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: "pointer", float: "left" }}
                 >
-                  <img src={require('../../static/cross.png')} alt="modify" height="30" width="auto" />
+                  <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
                 </div>
               </div>)]
         }
@@ -153,22 +155,22 @@ class BillingTable extends Component {
         </Modal>
         <InputGroup className="mb-3">
           <FormControl
-              type={'text'}
-              value={this.state.search}
-              onChange={this.onSearchChange}
-              placeholder='Entrer le texte à rechercher...'
-              id='billingSearchBar'
+            type={"text"}
+            value={this.state.search}
+            onChange={this.onSearchChange}
+            placeholder='Entrer le texte à rechercher...'
+            id='billingSearchBar'
           />
           <InputGroup.Append>
-            <Button id={'buttonRechercher'}
+            <Button id={"buttonRechercher"}
                     variant="outline-primary"
                     bsstyle='primary'
                     bssize='large' onClick={this.searchBillings}>Rechercher</Button>
             <DropdownButton
-                as={InputGroup.Append}
-                variant="outline-secondary"
-                bssize='large'
-                id='buttonFilter' title={'Filtres'}>
+              as={InputGroup.Append}
+              variant="outline-secondary"
+              bssize='large'
+              id='buttonFilter' title={"Filtres"}>
               <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
               <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
               <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
@@ -181,12 +183,12 @@ class BillingTable extends Component {
 
         <Container fluid>
           <Row>
-              <Col id={'colContainerTable'}>
-                <Table.Provider className="pure-table pure-table-bordered" columns={columns}>
-                  <Table.Header />
-                  <Table.Body rows={rows} rowKey="id" />
-                </Table.Provider>
-              </Col>
+            <Col id={"colContainerTable"}>
+              <Table.Provider className="pure-table pure-table-bordered" columns={columns}>
+                <Table.Header/>
+                <Table.Body rows={rows} rowKey="id"/>
+              </Table.Provider>
+            </Col>
           </Row>
         </Container>
       </div>
@@ -224,9 +226,9 @@ function mapStateToProps(state) {
     table,
     billings,
     dispatch
-  }
+  };
 }
 
 export default connect(
   mapStateToProps
-)(BillingTable)
+)(BillingTable);
