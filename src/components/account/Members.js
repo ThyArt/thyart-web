@@ -9,6 +9,7 @@ import {Button, Col, FormControl, FormGroup, Row} from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import Container from "react-bootstrap/Container";
 import FormLabel from "react-bootstrap/FormLabel";
+import Switch from "react-switch";
 
 export class Members extends Component {
   constructor(props) {
@@ -22,7 +23,6 @@ export class Members extends Component {
       newName: '',
       newFamily: '',
       newMail: '',
-      isGalerist: false,
     };
 
     this.onAdd = this.onAdd.bind(this);
@@ -78,9 +78,8 @@ export class Members extends Component {
     }
   }
 
-  onPermissionsChange = event => {
-    console.log(event.target.value === 'galeriste');
-    this.setState({ isGalerist: (event.target.value === 'galeriste') });
+  onPermissionsChange = (checked) => {
+    console.log(checked);
   };
 
   getColumns() {
@@ -114,17 +113,14 @@ export class Members extends Component {
                 <div>
                   <div>
                     <Row>
-                    <Col xs={6}>
-                      <label>
-                        <input type="radio" value="galeriste" checked={this.state.isGalerist} onChange={this.onPermissionsChange}/>
-                        Galeriste
-                      </label>
+                    <Col xs={4}>
+                      Membre
                     </Col>
-                    <Col xs={6}>
-                      <label>
-                        <input type="radio" value="membre" checked={!this.state.isGalerist} onChange={this.onPermissionsChange}/>
-                        Membre
-                      </label>
+                    <Col xs={4}>
+                      <Switch checkedIcon={false} uncheckedIcon={false} checked={rowData.isGalerist} onChange={this.onPermissionsChange} />
+                    </Col>
+                    <Col xs={4}>
+                      Galeriste
                     </Col>
                     </Row>
                   </div>
@@ -242,6 +238,7 @@ export class Members extends Component {
       </div>
     );
   }
+
   onAdd(e) {
     if (this.getNameValidationState() === 'success' && this.getMailValidationState() === 'success'
       && this.getFamilyValidationState() === 'success') {
@@ -253,7 +250,8 @@ export class Members extends Component {
         id: uuid.v4(),
         name: this.state.newName,
         family: this.state.newFamily,
-        mail: this.state.newMail
+        mail: this.state.newMail,
+        isGalerist: false
       });
 
       this.setState({rows, addModal: false});
