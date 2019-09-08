@@ -31,8 +31,8 @@ export class SignInForm extends Component {
 
   signin = () => {
     if (
-      this.getMailValidationState() === 'success' &&
-      this.getPassValidationState() === 'success' &&
+      this.getMailValidationState() &&
+      this.getPassValidationState() &&
       this.state.passValue !== ''
     ) {
       this.props.dispatch(
@@ -42,7 +42,7 @@ export class SignInForm extends Component {
   };
 
   forgot = () => {
-    if (this.getMailValidationState() === 'success') {
+    if (this.getMailValidationState()) {
       this.props.dispatch(fetchForgotIfNeeded(this.state.mailValue));
     }
   };
@@ -53,9 +53,9 @@ export class SignInForm extends Component {
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
-      return 'success';
+      return true;
     } else {
-      return 'error';
+      return false;
     }
   }
 
@@ -69,11 +69,9 @@ export class SignInForm extends Component {
       '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'
     );
     if (strongRegex.test(password) || mediumRegex.test(password)) {
-      return 'success';
-    } else if (password !== '') {
-      return 'warning';
+      return true;
     } else {
-      return 'error';
+      return false;
     }
   }
 
@@ -90,25 +88,25 @@ export class SignInForm extends Component {
       <Form>
         <FormGroup
           controlId="formValidationNull"
-          validationstate={this.getMailValidationState()}
         >
           <FormLabel>Entrez votre email</FormLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
             onChange={this.handleMailChange}
+            isValid={this.getMailValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationstate={this.getPassValidationState()}
         >
           <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.passValue}
             onChange={this.handlePassChange}
+            isValid={this.getPassValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>

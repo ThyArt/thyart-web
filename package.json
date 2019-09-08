@@ -13,6 +13,7 @@
     "eslint-utils": "1.4.2",
     "expect": "^24.5.0",
     "fetch-mock": "^7.3.9",
+    "formik": "^1.5.8",
     "jquery": "^3.4.1",
     "lodash": "4.17.15",
     "mock-local-storage": "^1.1.8",
@@ -44,7 +45,8 @@
     "redux-thunk": "^2.3.0",
     "spdx-correct": "^3.0.0",
     "spdx-expression-parse": "^3.0.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "env-cmd -f ./.env  react-scripts start",
