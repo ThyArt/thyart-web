@@ -14,9 +14,10 @@ class Services extends Component {
         <Jumbotron id="macbook">
           <Container>
             <Row>
-              <Col>
+              <Col className={"ColStyle"}>
                 <Image
-                  fluid
+                    className={"Img"}
+                    fluid
                   src={require('../static/macbook.png')}
                   alt="MacBook"
                 />
@@ -42,6 +43,7 @@ class Services extends Component {
               </Col>
               <Col>
                 <Image
+                    className={"Img"}
                   id={'iphoneImg'}
                   src={require('../static/iPhone-X-Mockup.png')}
                   alt="Iphone"

@@ -7,9 +7,9 @@ import Header from '../components/Header';
 class SignUp extends Component {
   render() {
     return (
-      <div id="signup">
+      <div id={"baseDiv"}>
         <Header />
-        <Container fluid>
+        <Container fluid id={"baseContainer"}>
           <Row id={'row'}>
             <Col lg={4} id={'carouselCol'}>
               <Carousel id="carousel">

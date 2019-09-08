@@ -15,6 +15,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+import '../css/signInForm.css';
 
 export class SignInForm extends Component {
   constructor(props) {
@@ -110,9 +111,8 @@ export class SignInForm extends Component {
           />
           <FormControl.Feedback />
         </FormGroup>
-        <Container>
+        <Container fluid id={"LogContainer"}>
           <Row>
-            <Col>
               {this.props.isFetching ? (
                 <ReactLoading
                   type={'spin'}
@@ -121,24 +121,24 @@ export class SignInForm extends Component {
                   width={50}
                 />
               ) : (
-                <Button variant={'outline-primary'} onClick={this.signin}>
+                <Button id={"signIn"} variant={'outline-primary'} onClick={this.signin}>
                   Se connecter
                 </Button>
               )}
-            </Col>
-            <Col>
-              {this.props.isFetching ? (
+          </Row>
+          <Row>
+            {this.props.isFetching ? (
                 <div />
-              ) : (
+            ) : (
                 <Button
-                  className="float-right"
-                  variant={'outline-secondary'}
-                  onClick={this.forgot}
+                    id={"forgotPwd"}
+                    className="float-right"
+                    variant={'outline-secondary'}
+                    onClick={this.forgot}
                 >
                   Mot de passe oublié
                 </Button>
-              )}
-            </Col>
+            )}
           </Row>
         </Container>
         {this.props.error ? (
