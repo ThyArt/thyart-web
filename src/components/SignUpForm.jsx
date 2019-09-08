@@ -4,7 +4,8 @@ import {
   Alert,
   Button,
   FormGroup,
-  FormLabel
+  FormLabel,
+    Form
 } from 'react-bootstrap';
 import { signUpIfNeeded } from '../actions/actionsAuth';
 import PropTypes from 'prop-types';
@@ -26,18 +27,22 @@ export class SignUpForm extends Component {
       lastnameValue: '',
       mailValue: '',
       passValue: '',
-      confirmValue: ''
+      confirmValue: '',
+      validated: false
     };
   }
 
   signup = () => {
+    console.log("in");
     if (
-      this.getFirstnameValidationState() === 'success' &&
-      this.getLastnameValidationState() === 'success' &&
-      this.getMailValidationState() === 'success' &&
-      this.getPassValidationState() === 'success' &&
-      this.getConfirmValidationState() === 'success'
+      this.getFirstnameValidationState() &&
+      this.getLastnameValidationState() &&
+      this.getMailValidationState() &&
+      this.getPassValidationState() &&
+      this.getConfirmValidationState()
     ) {
+      console.log("validated");
+      this.validated = true;
       this.props.dispatch(
         signUpIfNeeded(
           this.state.mailValue,
@@ -47,30 +52,31 @@ export class SignUpForm extends Component {
           this.state.passValue
         )
       );
+      console.log("signed in")
     }
+    this.validated = false;
   };
 
   getFirstnameValidationState() {
     let firstname = this.state.firstnameValue;
     if (firstname === '') return null;
-    return 'success';
+    return true;
   }
 
   getLastnameValidationState() {
     let lastname = this.state.lastnameValue;
     if (lastname === '') return null;
-    return 'success';
+    return true;
   }
 
   getMailValidationState() {
     let email = this.state.mailValue;
     if (email === '') return null;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     if (re.test(email)) {
-      return 'success';
+      return true;
     } else {
-      return 'error';
+      return false;
     }
   }
 
@@ -84,11 +90,9 @@ export class SignUpForm extends Component {
       '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'
     );
     if (strongRegex.test(password) || mediumRegex.test(password)) {
-      return 'success';
-    } else if (password !== '') {
-      return 'warning';
+      return true;
     } else {
-      return 'error';
+      return false;
     }
   }
 
@@ -96,9 +100,9 @@ export class SignUpForm extends Component {
     let password = this.state.confirmValue;
     if (password === '') return null;
     if (password === this.state.passValue) {
-      return 'success';
+      return true;
     } else {
-      return 'error';
+      return false;
     }
   }
 
@@ -124,10 +128,9 @@ export class SignUpForm extends Component {
 
   render() {
     return (
-      <form>
+      <Form noValidate validated={this.validated}>
         <FormGroup
           controlId="formValidationNull0"
-          validationstate={this.getFirstnameValidationState()}
         >
           <FormLabel>Entrez votre prénom</FormLabel>
           <FormControl
@@ -135,12 +138,12 @@ export class SignUpForm extends Component {
             value={this.state.firstnameValue}
             placeholder="Prénom"
             onChange={this.handleFirstnameChange}
+            isValid={this.getFirstnameValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formValidationNull1"
-          validationstate={this.getLastnameValidationState()}
         >
           <FormLabel>Entrez votre nom</FormLabel>
           <FormControl
@@ -148,12 +151,12 @@ export class SignUpForm extends Component {
             value={this.state.lastnameValue}
             placeholder="Nom"
             onChange={this.handleLastnameChange}
+            isValid={this.getLastnameValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formValidationNull2"
-          validationstate={this.getMailValidationState()}
         >
           <FormLabel>Entrez votre email</FormLabel>
           <FormControl
@@ -161,14 +164,15 @@ export class SignUpForm extends Component {
             value={this.state.mailValue}
             placeholder="exemple@email.com"
             onChange={this.handleMailChange}
+            isValid={this.getMailValidationState()}
+            required
           />
-          <FormControl.Feedback>
+          <FormControl.Feedback type={"invalid"}>
             Validation basée sur la syntaxe des adresses email
           </FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationstate={this.getPassValidationState()}
         >
           <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
@@ -176,22 +180,26 @@ export class SignUpForm extends Component {
             value={this.state.passValue}
             placeholder="Mot de passe"
             onChange={this.handlePassChange}
+            isValid={this.getPassValidationState()}
+            required
           />
-          <FormControl.Feedback>
+          <FormControl.Feedback type={"invalid"}>
             Entrez un mot de passe renforcé
           </FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText2"
-          validationstate={this.getConfirmValidationState()}
         >
           <FormLabel>Confirmez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.confirmValue}
             onChange={this.handleConfirmChange}
+            isValid={this.getConfirmValidationState()}
           />
-          <FormControl.Feedback />
+          <FormControl.Feedback type={"invalid"}>
+            Le mot de passe ne correspond pas
+          </FormControl.Feedback>
         </FormGroup>
 
         {this.props.isFetching ? (
@@ -207,7 +215,7 @@ export class SignUpForm extends Component {
         {this.props.error ? (
           <Alert bsstyle="danger">{`Error while creating your account: ${this.props.error}`}</Alert>
         ) : null}
-      </form>
+      </Form>
     );
   }
 }
