@@ -5,29 +5,40 @@ import * as Table from "reactabular-table";
 import uuid from "uuid";
 
 import "../../css/Membres.css";
-import { Button, Col, FormControl, FormGroup } from "react-bootstrap";
+import { Button, Col, FormControl, FormGroup, Row } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import Container from "react-bootstrap/Container";
 import FormLabel from "react-bootstrap/FormLabel";
-import { getArtWorksIfNeeded } from "../../actions/actionsArtwork";
+import Switch from "react-switch";
+import { getMembersIfNeeded, createMemberIfNeeded } from "../../actions/actionsMembers";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 
 export class Members extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      rows: [], // initial rows
-      columns: this.getColumns(), // initial columns
+      rows: [],
+      columns: this.getColumns(),
       addModal: false,
       removeModal: false,
+      newUsername: "",
       newName: "",
       newFamily: "",
-      newMail: ""
+      newMail: "",
+      newPassword: ""
     };
 
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
   }
+
+  componentDidMount() {
+    this.props.dispatch(getMembersIfNeeded(this.props.token));
+  }
+
 
   onAddOpen = () => {
     this.setState({ addModal: true });
@@ -37,13 +48,16 @@ export class Members extends Component {
     this.setState({ newName: "", addModal: false });
   };
 
-
   onRemoveClose = () => {
     this.setState({ newName: "", removeModal: false });
   };
 
   handleChangeMail = event => {
     this.setState({ newMail: event.target.value });
+  };
+
+  handleChangeUsername = event => {
+    this.setState({ newUsername: event.target.value });
   };
 
   handleChangeName = event => {
@@ -53,6 +67,16 @@ export class Members extends Component {
   handleChangeFamily = event => {
     this.setState({ newFamily: event.target.value });
   };
+
+  handleChangePassword = event => {
+    this.setState({ newPassword: event.target.value });
+  };
+
+  getUsernameValidationState() {
+    let name = this.state.newUsername;
+    if (name === "") return "error";
+    return "success";
+  }
 
   getNameValidationState() {
     let name = this.state.newName;
@@ -78,6 +102,24 @@ export class Members extends Component {
     }
   }
 
+  getPasswordValidationState() {
+    let password = this.state.newPassword;
+    if (password === "") return "error";
+    let strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    let mediumRegex = new RegExp(
+      "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
+    );
+    if (strongRegex.test(password) || mediumRegex.test(password)) {
+      return "success";
+    } else if (password !== "") {
+      return "warning";
+    } else {
+      return "error";
+    }
+  }
+
   onPermissionsChange = (checked) => {
     console.log(checked);
   };
@@ -87,23 +129,29 @@ export class Members extends Component {
       {
         property: "name",
         header: {
+          label: "Nom d'utilisateur"
+        }
+      },
+      {
+        property: "firstname",
+        header: {
           label: "Prénom"
         }
       },
       {
-        property: "family",
+        property: "lastname",
         header: {
           label: "Nom de famille"
         }
       },
       {
-        property: "mail",
+        property: "email",
         header: {
           label: "Adresse Mail"
         }
       },
       {
-        property: 'permissions',
+        property: 'role',
         header: {
           label: 'Permissions des membres'
         },
@@ -150,7 +198,12 @@ export class Members extends Component {
   }
 
   render() {
-    const { columns, rows } = this.state;
+    let rows;
+    const columns = this.state.columns;
+    if (this.props.members)
+      rows = this.props.members;
+    else
+      rows = [];
 
     return (
       <div className="clients">
@@ -167,6 +220,21 @@ export class Members extends Component {
             <Row>
               <h2 className='title'>Ajout d'un membre :</h2>
             </Row>
+            <FormGroup as={Row} className='input' validationState={this.getUsernameValidationState()}>
+              <FormLabel column lg={3}>
+                Nom d'utilisateur :
+              </FormLabel>
+              <Col>
+                <FormControl
+                  lg={9}
+                  type="username"
+                  value={this.props.newUsername}
+                  placeholder="Entrer le nom d'utilisateur"
+                  onChange={this.handleChangeUsername}
+                />
+              </Col>
+              <FormControl.Feedback/>
+            </FormGroup>
             <FormGroup as={Row} className='input' validationState={this.getFamilyValidationState()}>
               <FormLabel column lg={3}>
                 Nom :
@@ -212,20 +280,27 @@ export class Members extends Component {
               </Col>
               <FormControl.Feedback/>
             </FormGroup>
+            <FormGroup as={Row} className='input' validationState={this.getPasswordValidationState()}>
+              <FormLabel column lg={3}>
+                Mot de passe :
+              </FormLabel>
+              <Col>
+                <FormControl
+                  lg={9}
+                  type="password"
+                  value={this.props.newPassword}
+                  placeholder="Entrer le mot de passe"
+                  onChange={this.handleChangePassword}
+                />
+              </Col>
+              <FormControl.Feedback/>
+            </FormGroup>
             <Row>
               <Button bsstyle="primary" onClick={this.onAdd} className='validate' bssize='large'>
                 Valider
               </Button>
             </Row>
           </Container>
-        </Modal>
-
-        <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
-          <h2 className='title'>Voulez-vous supprimer ce membre?</h2>
-
-          <Button bsstyle="primary" onClick={this.onRemove} className='validate' bssize='large'>
-            Supprimer
-          </Button>
         </Modal>
 
         <Table.Provider
@@ -241,26 +316,16 @@ export class Members extends Component {
 
   onAdd(e) {
     if (this.getNameValidationState() === "success" && this.getMailValidationState() === "success"
-      && this.getFamilyValidationState() === "success") {
+      && this.getFamilyValidationState() === "success" && this.getUsernameValidationState() === "success"
+      && this.getPasswordValidationState() === "success") {
       e.preventDefault();
-
-      const rows = cloneDeep(this.state.rows);
-
-      rows.unshift({
-        id: uuid.v4(),
-        name: this.state.newName,
-        family: this.state.newFamily,
-        mail: this.state.newMail,
-        isGalerist: false
-      });
-
-      this.setState({ rows, addModal: false });
+      this.props.dispatch(createMemberIfNeeded(this.props.token, this.state.newUsername, this.state.newMail, this.state.newName, this.state.newFamily, this.state.newPassword));
+      this.setState({addModal: false });
     }
   }
 
   confirmRemove(id) {
     this.setState({ idToRemove: id, removeModal: true });
-
   }
 
   onRemove() {
@@ -275,4 +340,30 @@ export class Members extends Component {
   }
 }
 
-export default Members;
+Members.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  msg: PropTypes.string,
+  error: PropTypes.string,
+  table: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  const {
+    isFetching,
+    msg,
+    error,
+    members,
+    dispatch
+  } = state.members;
+
+  return {
+    isFetching,
+    msg,
+    error,
+    members,
+    dispatch
+  };
+}
+
+export default connect(mapStateToProps)(Members);

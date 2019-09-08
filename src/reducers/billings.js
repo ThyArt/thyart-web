@@ -10,13 +10,10 @@ import {
   RECEIVE_ARTWORKS,
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMERS_ERROR,
-  RECEIVE_ARTWORKS_ERROR
-} from '../constants/constantsAction';
-import { cloneDeep } from 'lodash';
   RECEIVE_ARTWORKS_ERROR,
   OPEN_MODIFY_BILLING
-} from "../constants/constantsAction";
-import { cloneDeep } from "lodash";
+} from '../constants/constantsAction';
+import { cloneDeep } from 'lodash';
 
 const initialState = {
   isFetching: false,

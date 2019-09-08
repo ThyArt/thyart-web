@@ -67,7 +67,7 @@ function receiveCustomerCreate(res) {
   };
 }
 
-/*function receiveCustomerDelete(res) {
+function receiveCustomerDelete(res) {
   return {
     type: RECEIVE_CUSTOMER,
     customer: null,
@@ -147,7 +147,7 @@ function eraseCustomer(token, id) {
   };
 }
 
-/*function modifyCustomer(
+function modifyCustomer(
   token,
   email,
   phone,
@@ -226,7 +226,7 @@ export function createCustomerIfNeeded(
     }
   };
 }
-/*
+
 
 export function modifyCustomerIfNeeded(
   token,
@@ -247,7 +247,7 @@ export function modifyCustomerIfNeeded(
     }
   };
 }
-*/
+
 
 export function eraseCustomerIfNeeded(token, id) {
   return (dispatch, getState) => {

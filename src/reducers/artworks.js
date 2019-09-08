@@ -23,7 +23,9 @@ function artworks(state = initialState, action) {
       return Object.assign({}, state, {
         isFetching: true,
         error: null,
-        msg: null
+        msg: null,
+        artwork: null
+
       });
     case RECEIVE_ARTWORKS_ERROR:
       return Object.assign({}, state, {

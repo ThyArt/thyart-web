@@ -8,7 +8,7 @@ import {
   RECEIVE_ARTWORKS,
   SORT_ARTWORKS
 } from "../constants/constantsAction";
-import { apiURL, artWorkURL } from "../constants/constantsApi";
+import { apiURL, artWorkImg, artWorkImgComp, artWorkURL } from "../constants/constantsApi";
 
 function shouldFetchApi(state) {
   const isFetching = state.artworks.isFetching;
@@ -41,12 +41,13 @@ function receiveArtworksError(error) {
 }
 
 function receiveArtworks(res) {
+  console.log(res);
   let artworks = [];
   let src;
 
   for (const [, value] of Object.entries(res.data.data)) {
-    if (value.images != null && value.images[0] && value.images[0].url != null)
-      src = value.images[0].url;
+    if (value.images != null && value.images[0] && value.images[0].urls != null)
+      src = value.images[0].urls['small'];
     else
       src = "";
     artworks.push(
@@ -154,7 +155,26 @@ function uploadImage(token, file, id) {
   };
   let form = new FormData();
   form.append("images[]", file);
-  let url = artWorkURL + "/" + id + "/image";
+  let url = artWorkURL + "/" + id + artWorkImg;
+  return dispatch => {
+    return axios
+      .post(apiURL + url, form, header_auth)
+      .then(res => dispatch(receiveAddImage(res)))
+      .catch(error => dispatch(receiveArtworksError(error)));
+  };
+}
+
+function uploadCompressedImage(token, file, id) {
+  const header_auth = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token
+    }
+  };
+  let form = new FormData();
+  form.append("images[]", file);
+  let url = artWorkURL + "/" + id + artWorkImgComp;
   return dispatch => {
     return axios
       .post(apiURL + url, form, header_auth)
@@ -244,7 +264,9 @@ export function createArtworkIfNeeded(file, token, name, price, ref, state) {
       dispatch(requestArtworks());
       return dispatch(createArtWork(file, token, name, price, ref, state)).then(() => {
         return dispatch(uploadImage(token, file, getState().artworks.artistId)).then(() => {
-          return dispatch(fetchArtWorks(token));
+          return dispatch(uploadCompressedImage(token, file, getState().artworks.artistId)).then(() => {
+            return dispatch(fetchArtWorks(token));
+          });
         });
       });
     }

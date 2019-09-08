@@ -9,15 +9,13 @@ import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBil
 import ReactLoading from "./Clients";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-/*
 import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
-*/
-import { sortArtworkByState } from "../../actions/actionsArtwork";
+import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
 
 class Newsletters extends Component {
-  /*  constructor(props) {
+  constructor(props) {
       super(props);
-    }*/
+    }
 
   componentDidMount(){
     this.props.dispatch(getBillingsIfNeeded(this.props.token));
@@ -25,7 +23,7 @@ class Newsletters extends Component {
 
   onCreate = () => {
     this.props.dispatch(openCreateBilling());
-    this.props.dispatch(sortArtworkByState(this.props.token, 'exposed'));
+    this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'exposed'));
   };
 
   onReturn = () => {

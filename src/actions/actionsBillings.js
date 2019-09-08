@@ -59,14 +59,14 @@ function receiveBillings(res) {
   };
 }
 
-/*function receiveBillingCreate(res) {
+function receiveBillingCreate(res) {
   return {
     type: RECEIVE_BILLING,
     msg: "La facture a été crée"
   };
 }
 
-/*function receiveBillingDelete(res) {
+function receiveBillingDelete(res) {
   return {
     type: RECEIVE_BILLING,
     billing: null,

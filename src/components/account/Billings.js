@@ -9,15 +9,15 @@ import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBil
 import ReactLoading from "./Clients";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-/*
+
 import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
 import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
 import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 
 class Billings extends Component {
-/*  constructor(props) {
+  constructor(props) {
     super(props);
-  }*/
+  }
 
   componentDidMount() {
     this.props.dispatch(getBillingsIfNeeded(this.props.token));
