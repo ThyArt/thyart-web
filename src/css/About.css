@@ -1,7 +1,8 @@
 #about {
     background-color: #F4F5F7;
-    padding-right: 10%;
     padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5%;
 }
 
 .aboutLogo {
@@ -15,25 +16,30 @@
 
 .aboutDesc {
     margin-top: 10%;
-    margin-bottom: 30%;
+    margin-bottom: 10%;
     font-size: 20px;
 }
 
 .aboutCol {
     background-color: white;
-    padding: 0;
-    margin: 10% 30px;
+    padding: 10px;
     border-radius: 2%;
-    min-width: 200px;
+    min-width: 300px;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
 #aboutContainer {
     text-align: center;
 }
 
+#rowStyle{
+    padding-left: 10px;
+}
+
 .quotation {
     font-size: 30px;
-    padding-bottom: 10%;
+    padding: 5%;
 }
 
 .quote {
