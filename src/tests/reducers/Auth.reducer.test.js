@@ -1,8 +1,8 @@
-import reducer from '../../reducers/authentication'
-import * as types from '../../constants/constantsAction'
+import reducer from "../../reducers/authentication";
+import * as types from "../../constants/constantsAction";
 
-describe('auth reducer', () => {
-  it('should return the initial state', () => {
+describe("auth reducer", () => {
+  it("should return the initial state", () => {
     expect(reducer(undefined, {})).toEqual(
       {
         isLogged: false,
@@ -10,10 +10,10 @@ describe('auth reducer', () => {
         msg: null,
         error: null
       }
-    )
-  })
+    );
+  });
 
-  it('should handle REQUEST_AUTH', () => {
+  it("should handle REQUEST_AUTH", () => {
     expect(
       reducer([], {
         type: types.REQUEST_AUTH
@@ -24,72 +24,72 @@ describe('auth reducer', () => {
         error: null,
         msg: null
       }
-    )
-  })
+    );
+  });
 
-  it('should handle RECEIVE_AUTH_ERROR', () => {
+  it("should handle RECEIVE_AUTH_ERROR", () => {
     expect(
       reducer([], {
         type: types.RECEIVE_AUTH_ERROR,
-        error: 'error'
+        error: "error"
       })
     ).toEqual(
       {
         isFetching: false,
-        error: 'error',
+        error: "error",
         msg: null
       }
-    )
-  })
+    );
+  });
 
-  it('should handle RECEIVE_SIGN_IN', () => {
+  it("should handle RECEIVE_SIGN_IN", () => {
     expect(
       reducer([], {
         type: types.RECEIVE_SIGN_IN,
-        msg: 'msg'
+        msg: "msg"
       })
     ).toEqual(
       {
         isFetching: false,
         isLogged: true,
         error: null,
-        msg: 'msg'
+        msg: "msg"
       }
-    )
-  })
+    );
+  });
 
 
-  it('should handle RECEIVE_SIGN_UP', () => {
+  it("should handle RECEIVE_SIGN_UP", () => {
     expect(
       reducer([], {
         type: types.RECEIVE_SIGN_UP,
-        msg: 'msg'
+        msg: "msg"
       })
     ).toEqual(
       {
         isFetching: false,
         error: null,
-        msg: 'msg'
+        msg: "msg"
       }
-    )
-  })
+    );
+  });
 
-  it('should handle RECEIVE_PWD', () => {
+  it("should handle RECEIVE_PWD", () => {
     expect(
       reducer([], {
         type: types.RECEIVE_PWD,
-        msg: 'msg'
+        msg: "msg"
       })
     ).toEqual(
       {
         isFetching: false,
         error: null,
-        msg: 'msg'
+        msg: "msg"
       }
-    )
-  })
+    );
+  });
 
-  it('should handle DISCONNECT', () => {
+  it("should handle DISCONNECT", () => {
     expect(
       reducer([], {
         type: types.DISCONNECT
@@ -98,6 +98,6 @@ describe('auth reducer', () => {
       {
         isLogged: false
       }
-    )
-  })
-})
+    );
+  });
+});

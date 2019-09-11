@@ -4,9 +4,10 @@ import {
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMER,
   OPEN_CREATE_CUSTOMER,
-  SORT_CUSTOMERS
-} from '../constants/constantsAction';
-import { cloneDeep } from 'lodash';
+  SORT_CUSTOMERS,
+  OPEN_MODIFY_CUSTOMER
+} from "../constants/constantsAction";
+import { cloneDeep } from "lodash";
 
 const initialState = {
   isFetching: false,
@@ -15,6 +16,7 @@ const initialState = {
   customers: [],
   customer: null,
   modif: false,
+  newObj: false,
   table: true
 };
 
@@ -38,6 +40,7 @@ function customers(state = initialState, action) {
         customers: action.customers,
         error: null,
         modif: false,
+        newObj: false,
         table: true
       });
     case RECEIVE_CUSTOMER:
@@ -46,62 +49,70 @@ function customers(state = initialState, action) {
         customer: action.customer,
         error: null,
         table: false,
-        modif: false
+        modif: false,
+        newObj: false
       });
     case OPEN_CREATE_CUSTOMER:
       return Object.assign({}, state, {
         error: null,
         modif: true,
+        newObj: true,
         table: false,
         customer: null
+      });
+    case OPEN_MODIFY_CUSTOMER:
+      return Object.assign({}, state, {
+        error: null,
+        newObj: false,
+        modif: true
       });
     case SORT_CUSTOMERS:
       let table = cloneDeep(state.customers);
       switch (action.sortType) {
-        case 'firstNameA':
+        case "firstNameA":
           table.sort(function(a, b) {
-            a = a.first_name;
-            b = b.first_name;
+            a = a.first_name.toLowerCase();
+            b = b.first_name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'firstNameZ':
+        case "firstNameZ":
           table.sort(function(a, b) {
-            a = a.first_name;
-            b = b.first_name;
+            a = a.first_name.toLowerCase();
+            b = b.first_name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'lastNameA':
+        case "lastNameA":
           table.sort(function(a, b) {
-            a = a.last_name;
-            b = b.last_name;
+            a = a.last_name.toLowerCase();
+            b = b.last_name.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
-        case 'lastNameZ':
+        case "lastNameZ":
           table.sort(function(a, b) {
-            a = a.last_name;
-            b = b.last_name;
+            a = a.last_name.toLowerCase();
+            b = b.last_name.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'mailZ':
+        case "mailZ":
           table.sort(function(a, b) {
-            a = a.email;
-            b = b.email;
+            a = a.email.toLowerCase();
+            b = b.email.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
-        case 'mailA':
+        case "mailA":
           table.sort(function(a, b) {
-            a = a.email;
-            b = b.email;
+            a = a.email.toLowerCase();
+            b = b.email.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
@@ -115,6 +126,7 @@ function customers(state = initialState, action) {
 
     default:
       return state;
+
   }
 }
 

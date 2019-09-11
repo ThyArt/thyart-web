@@ -6,6 +6,7 @@ import Members from '../components/account/Members';
 import Artwork from '../components/account/Artwork';
 import Clients from '../components/account/Clients';
 import Billings from '../components/account/Billings';
+import Newsletter from '../components/account/Newsletters';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -21,10 +22,10 @@ import {
 export class Account extends Component {
   constructor(props) {
     super(props);
-    let token = sessionStorage.getItem('token');
+    let token = sessionStorage.getItem("token");
 
     this.state = {
-      selected: '1',
+      selected: "1",
       token: token
     };
   }
@@ -41,7 +42,6 @@ export class Account extends Component {
       this.setState({ token: null });
       sessionStorage.removeItem('token');
     } else {
-      console.log(eventKey);
       this.setState({ selected: eventKey });
     }
   };
@@ -95,6 +95,9 @@ export class Account extends Component {
                   <Nav.Link eventKey={'6'} className="item">
                     Profil
                   </Nav.Link>
+                  <Nav.Link eventKey={'9'} className="item">
+                    Newsletter
+                  </Nav.Link>
                   <Nav.Link eventKey={'7'}>Déconnexion</Nav.Link>
                 </Nav>
               </div>
@@ -119,6 +122,9 @@ export class Account extends Component {
                 {this.state.selected === '5' ? (
                   <Billings token={this.state.token} />
                 ) : null}
+                {this.state.selected === '9' ? (
+                    <Newsletter token={this.state.token} />
+                ) : null}
               </div>
             </Col>
           </Row>
@@ -141,11 +147,11 @@ Account.propTypes = {
 };
 
 export function createNotificationError(error) {
-  NotificationManager.error(error, 'Erreur', 5000);
+  NotificationManager.error(error, "Erreur", 5000);
 }
 
 export function createNotificationSuccess(msg) {
-  NotificationManager.success(msg, 'Succès', 5000);
+  NotificationManager.success(msg, "Succès", 5000);
 }
 
 function mapStateToProps(state) {

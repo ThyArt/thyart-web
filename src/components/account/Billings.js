@@ -1,31 +1,32 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import { Button, Col } from "react-bootstrap";
 
-import '../../css/Membres.css';
-import '../../css/Billing.css';
+import "../../css/Membres.css";
+import "../../css/Billing.css";
 import BillingTable from "./BillingTable";
 import Billing from "./Billing";
- import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
+import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
 import ReactLoading from "./Clients";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-/*
-import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
-*/
-import { sortArtworkByState } from "../../actions/actionsArtwork";
+
+//import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
+import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
+import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 
 class Billings extends Component {
-/*  constructor(props) {
+  constructor(props) {
     super(props);
-  }*/
+  }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch(getBillingsIfNeeded(this.props.token));
   }
 
   onCreate = () => {
     this.props.dispatch(openCreateBilling());
-    this.props.dispatch(sortArtworkByState(this.props.token, 'exposed'));
+    this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, "exposed"));
+    this.props.dispatch(getCustomersIfNeeded(this.props.token));
   };
 
   onReturn = () => {
@@ -38,13 +39,13 @@ class Billings extends Component {
       <div>
         {
           this.props.isFetching ? (
-            <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+            <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
           ) : (
             <Col sm={10}>
               {this.props.table ?
                 <div>
                   <Button bssize="lg" className='clientMainButton' onClick={this.onCreate}>
-                    <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"
+                    <img src={require("../../static/add.svg")} alt="add" height="25" width="auto"
                          className='clientAddImage'/>
                     <span className='clientAddButton'>Ajouter</span>
                   </Button>
@@ -93,7 +94,7 @@ function mapStateToProps(state) {
     modif,
     table,
     dispatch
-  }
+  };
 }
 
-export default connect(mapStateToProps)(Billings)
+export default connect(mapStateToProps)(Billings);
