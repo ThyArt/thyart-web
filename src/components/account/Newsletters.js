@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button, Col } from "react-bootstrap";
 
 import '../../css/Membres.css';
-import '../../css/Billing.css';
+import '../../css/Newsletter.css';
 import NewsletterTable from "./NewsletterTable";
 import Newsletter from "./Newsletter";
 import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
@@ -50,7 +50,7 @@ class Newsletters extends Component {
                       </div>
                       :
                       <div>
-                        <Button bssize="lg" onClick={this.onReturn} className='billingMainButton'>
+                        <Button bssize="lg" onClick={this.onReturn} className='newsletterMainButton'>
                           <span className='add'>Retour</span>
                         </Button>
                         <Newsletter token={this.props.token}/>

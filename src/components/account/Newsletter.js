@@ -144,14 +144,14 @@ class Newsletter extends Component {
     return (
         <div>
 
-          <Jumbotron className="billingJumbotron">
-            <h2 className="billingJumbotronTitle">Sélection des clients</h2>
+          <Jumbotron className="newsletterJumbotron">
+            <h2 className="newsletterJumbotronTitle">Sélection des clients</h2>
 
 
           </Jumbotron>
 
-          <Jumbotron className="billingJumbotron">
-            <h2 className="billingJumbotronTitle">Texte</h2>
+          <Jumbotron className="newsletterJumbotron">
+            <h2 className="newsletterJumbotronTitle">Texte</h2>
 
           </Jumbotron>
         </div>
@@ -161,13 +161,13 @@ class Newsletter extends Component {
   nonEditable() {
     return (
         <div>
-          <Jumbotron className="billingJumbotron">
-            <h2 className="billingJumbotronTitle">Sélection des clients</h2>
+          <Jumbotron className="newsletterJumbotron">
+            <h2 className="newsletterJumbotronTitle">Sélection des clients</h2>
 
           </Jumbotron>
 
-          <Jumbotron className="billingJumbotron">
-            <h2 className="billingJumbotronTitle">Texte</h2>
+          <Jumbotron className="newsletterJumbotron">
+            <h2 className="newsletterJumbotronTitle">Texte</h2>
 
           </Jumbotron>
         </div>

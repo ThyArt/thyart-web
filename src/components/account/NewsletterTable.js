@@ -5,6 +5,8 @@ import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
 import '../../css/Membres.css';
+import '../../css/Newsletter.css';
+
 import {
   eraseBillingIfNeeded,
   getBillingIfNeeded,
@@ -122,41 +124,41 @@ class NewsletterTable extends Component {
       rows = [];
 
     return (
-        <div className="clients">
-          <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
-            <h2 className='title'>Voulez-vous supprimer cette facture?</h2>
+      <div className="clients">
+        <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
+          <h2 className='title'>Voulez-vous supprimer cette facture?</h2>
 
-            <Button bsstyle="primary" onClick={this.onRemove} className='validate' bssize='large'>
-              Supprimer
-            </Button>
-          </Modal>
-          <InputGroup className="mb-3">
-            <FormControl
-                type={'text'}
-                value={this.state.search}
-                onChange={this.onSearchChange}
-                placeholder='Entrer le texte à rechercher...'
-                id='newsletterSearchBar'
-            />
-            <InputGroup.Append>
-              <Button id={'buttonRechercher'}
-                      variant="outline-primary"
-                      bsstyle='primary'
-                      bssize='large' onClick={this.searchBillings}>Rechercher</Button>
-              <DropdownButton
-                  as={InputGroup.Append}
-                  variant="outline-secondary"
-                  bssize='large'
-                  id='buttonFilter' title={'Filtres'}>
-                <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
-                <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
-                <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
-                <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
-                <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
-                <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
-              </DropdownButton>
-            </InputGroup.Append>
-          </InputGroup>
+          <Button bsstyle="primary" onClick={this.onRemove} className='validate' bssize='large'>
+            Supprimer
+          </Button>
+        </Modal>
+        <InputGroup className="mb-3">
+          <FormControl
+              type={'text'}
+              value={this.state.search}
+              onChange={this.onSearchChange}
+              placeholder='Entrer le texte à rechercher...'
+              id='newsletterSearchBar'
+          />
+          <InputGroup.Append>
+            <Button id={'buttonRechercher'}
+                    variant="outline-primary"
+                    bsstyle='primary'
+                    bssize='large' onClick={this.searchBillings}>Rechercher</Button>
+            <DropdownButton
+                as={InputGroup.Append}
+                variant="outline-secondary"
+                bssize='large'
+                id='buttonFilter' title={'Filtres'}>
+              <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
+              <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
+              <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
+              <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
+              <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
+              <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
+            </DropdownButton>
+          </InputGroup.Append>
+        </InputGroup>
 
           <Container fluid>
             <Row>

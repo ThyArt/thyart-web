@@ -1,22 +1,26 @@
-#billingBackButton {
+#newsletterBackButton {
     position: fixed;
     top: 150px;
     left: 50px;
     z-index: 1;
 }
 
-#billingTopBar {
+#newsletterSearchBar {
+    margin-top: 10px;
+}
+
+#newsletterTopBar {
     position: fixed;
 }
 
-#billingTopTitle {
+#newsletterTopTitle {
     line-height: 10vh;
     font-size: 40px;
     color: #777777;
     text-align: center;
 }
 
-.billingJumbotron {
+.newsletterJumbotron {
     background-color: #e1e1e1;
     position: relative;
     margin: 0 10% 100px 12%;
@@ -25,42 +29,42 @@
     z-index: 0;
 }
 
-.billingJumbotronTitle {
+.newsletterJumbotronTitle {
     text-align: center;
     padding-bottom: 50px;
 }
 
-.billingJumbotronInput {
+.newsletterJumbotronInput {
     margin-top: 15px;
 }
 
-.billingJumbotronInfo {
+.newsletterJumbotronInfo {
     width: 500px;
 }
 
-#billingConfirm {
+#newsletterConfirm {
     text-align: center;
 }
 
-#billingConfirmButton {
+#newsletterConfirmButton {
     font-size: 30px;
     margin: 50px 0;
 }
 
-.billingCreateButton {
+.newsletterCreateButton {
     font-size: 30px;
 }
 
-.billingMainButton {
+.newsletterMainButton {
     position: fixed;
     right: 80px;
 }
 
-.billingAddBillButton {
+.newsletterAddBillButton {
     margin: 0 10px;
     font-size: 25px;
 }
 
-.billingAddBillImage {
+.newsletterAddBillImage {
     margin: 0 0 8px;
 }
