@@ -34,7 +34,8 @@ function receiveSignInError(error) {
   let error_msg;
   if (error.response && error.response.data && error.response.data.message)
     error_msg = error.response.data.message;
-  else error_msg = 'Erreur inconnue.';
+  else
+    error_msg = "Erreur inconnue.";
 
   return {
     type: RECEIVE_AUTH_ERROR,
@@ -46,7 +47,8 @@ function receiveSignUpError(error) {
   let error_msg;
   if (error.response && error.response.data && error.response.data.messages)
     error_msg = error.response.data.messages[0];
-  else error_msg = 'Erreur inconnue.';
+  else
+    error_msg = "Erreur inconnue.";
 
   return {
     type: RECEIVE_AUTH_ERROR,
@@ -55,18 +57,17 @@ function receiveSignUpError(error) {
 }
 
 function receiveSignIn(res) {
-  sessionStorage.setItem('token', res.data['access_token']);
+  sessionStorage.setItem("token", res.data["access_token"]);
   return {
     type: RECEIVE_SIGN_IN,
-    msg: 'Connecté'
+    msg: "Connecté"
   };
 }
 
 function receiveSignUp(res) {
   return {
     type: RECEIVE_SIGN_UP,
-    msg:
-      'Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte.'
+    msg: "Félicitation, vous êtes inscris! Vous pouvez maintenant vous connecter à votre compte."
   };
 }
 
@@ -80,12 +81,12 @@ function receivePwd(res) {
 function fetchSignIn(username, password) {
   return dispatch => {
     const body = {
-      grant_type: 'password',
+      grant_type: "password",
       client_id: clientID,
       client_secret: clientSecret,
       username: username,
       password: password,
-      scope: '*'
+      scope: "*"
     };
 
     return axios
@@ -137,9 +138,7 @@ export function signUpIfNeeded(username, firstname, lastname, mail, password) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestAuth());
-      return dispatch(
-        fetchSignUp('username', firstname, lastname, mail, password)
-      );
+      return dispatch(fetchSignUp("username", firstname, lastname, mail, password));
     }
   };
 }

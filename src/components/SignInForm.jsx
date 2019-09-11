@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   FormControl,
   Button,
@@ -25,8 +25,8 @@ export class SignInForm extends Component {
     this.handleMailChange = this.handleMailChange.bind(this);
 
     this.state = {
-      mailValue: '',
-      passValue: ''
+      mailValue: "",
+      passValue: ""
     };
   }
 
@@ -50,7 +50,7 @@ export class SignInForm extends Component {
 
   getMailValidationState() {
     let email = this.state.mailValue;
-    if (email === '') return null;
+    if (email === "") return null;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
@@ -62,12 +62,12 @@ export class SignInForm extends Component {
 
   getPassValidationState() {
     let password = this.state.passValue;
-    if (password === '') return null;
+    if (password === "") return null;
     let strongRegex = new RegExp(
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
     );
     let mediumRegex = new RegExp(
-      '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'
+      "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
     );
     if (strongRegex.test(password) || mediumRegex.test(password)) {
       return true;
@@ -114,12 +114,7 @@ export class SignInForm extends Component {
         <Container fluid id={"LogContainer"}>
           <Row>
               {this.props.isFetching ? (
-                <ReactLoading
-                  type={'spin'}
-                  color={'black'}
-                  height={50}
-                  width={50}
-                />
+                <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
               ) : (
                 <Button id={"signIn"} variant={'outline-primary'} onClick={this.signin}>
                   Se connecter
@@ -142,12 +137,14 @@ export class SignInForm extends Component {
           </Row>
         </Container>
         {this.props.error ? (
-          <Alert bsstyle="danger">{`Error: ${this.props.error}`}</Alert>
+          <Alert bsstyle="danger">{`Error: ${
+            this.props.error
+          }`}</Alert>
         ) : null}
         {this.props.isLogged ? (
           <Redirect
             to={{
-              pathname: '/account'
+              pathname: "/account"
             }}
           />
         ) : null}
