@@ -1,31 +1,31 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import { Button, Jumbotron, Col, FormControl, FormGroup } from "react-bootstrap";
 
 import "../../css/Billing.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { createCustomerIfNeeded } from "../../actions/actionsCustomers";
+import { createCustomerIfNeeded, modifyCustomerIfNeeded, openModifyCustomer } from "../../actions/actionsCustomers";
 
 class Client extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fName: '',
-      lName: '',
-      mail: '',
-      address: '',
-      phone: '',
-      country: '',
-      city: ''
+      fName: "",
+      lName: "",
+      mail: "",
+      address: "",
+      phone: "",
+      country: "",
+      city: ""
     };
-    this.clientCreation= this.clientCreation.bind(this);
+    this.clientCreation = this.clientCreation.bind(this);
   }
 
   getCountryValidationState() {
     let country = this.state.country;
-    if (country === '') return 'error';
-    return 'success';
+    if (country === "") return "error";
+    return "success";
   };
 
   handleChangeCountry = event => {
@@ -34,8 +34,8 @@ class Client extends Component {
 
   getCityValidationState() {
     let city = this.state.city;
-    if (city === '') return 'error';
-    return 'success';
+    if (city === "") return "error";
+    return "success";
   };
 
   handleChangeCity = event => {
@@ -44,8 +44,8 @@ class Client extends Component {
 
   getNameValidationState() {
     let name = this.state.fName;
-    if (name === '') return 'error';
-    return 'success';
+    if (name === "") return "error";
+    return "success";
   };
 
   handleChangeName = event => {
@@ -54,8 +54,8 @@ class Client extends Component {
 
   getFamilyValidationState() {
     let family = this.state.lName;
-    if (family === '') return 'error';
-    return 'success';
+    if (family === "") return "error";
+    return "success";
   };
 
   handleChangeFamily = event => {
@@ -64,13 +64,13 @@ class Client extends Component {
 
   getMailValidationState() {
     let email = this.state.mail;
-    if (email === '') return 'error';
+    if (email === "") return "error";
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
   };
 
@@ -80,13 +80,13 @@ class Client extends Component {
 
   getAddressValidationState() {
     let address = this.state.address;
-    if (address === '') return 'error';
+    if (address === "") return "error";
     let re = /^.+$/;
 
     if (re.test(address)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
   };
 
@@ -96,13 +96,13 @@ class Client extends Component {
 
   getNumberValidationState() {
     let number = this.state.phone;
-    if (number === '') return 'error';
+    if (number === "") return "error";
     let re = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
 
     if (re.test(number)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
   };
 
@@ -112,18 +112,38 @@ class Client extends Component {
 
   clientCreation = () => {
     if (
-      this.getMailValidationState() === 'success' &&
-      this.getCountryValidationState() === 'success' &&
-      this.getAddressValidationState() === 'success' &&
-      this.getCityValidationState() === 'success' &&
-      this.getNameValidationState() === 'success' &&
-      this.getFamilyValidationState() === 'success' &&
-      this.getNumberValidationState() === 'success'
+      this.getMailValidationState() === "success" &&
+      this.getCountryValidationState() === "success" &&
+      this.getAddressValidationState() === "success" &&
+      this.getCityValidationState() === "success" &&
+      this.getNameValidationState() === "success" &&
+      this.getFamilyValidationState() === "success" &&
+      this.getNumberValidationState() === "success"
     ) {
-      this.props.dispatch(createCustomerIfNeeded(this.props.token, this.state.mail, this.state.phone,
-        this.state.fName, this.state.lName, this.state.country, this.state.city,
-         this.state.address));
+      if (this.props.newObj) {
+
+        this.props.dispatch(createCustomerIfNeeded(this.props.token, this.state.mail, this.state.phone,
+          this.state.fName, this.state.lName, this.state.country, this.state.city,
+          this.state.address));
+      } else {
+        this.props.dispatch(modifyCustomerIfNeeded(this.props.token, this.state.mail, this.state.phone,
+          this.state.fName, this.state.lName, this.state.country, this.state.city,
+          this.state.address, this.props.customer.id));
+      }
     }
+  };
+
+  onModify = () => {
+    this.props.dispatch(openModifyCustomer());
+    this.setState({
+      fName: this.props.customer.first_name,
+      lName: this.props.customer.last_name,
+      mail: this.props.customer.email,
+      address: this.props.customer.address,
+      phone: this.props.customer.phone,
+      country: this.props.customer.country,
+      city: this.props.customer.city
+    });
   };
 
   editable() {
@@ -145,7 +165,7 @@ class Client extends Component {
                   placeholder="Entrer le prénom du client"
                   onChange={this.handleChangeName}
                 />
-                <FormControl.Feedback />
+                <FormControl.Feedback/>
               </FormGroup>
             </Col>
 
@@ -160,7 +180,7 @@ class Client extends Component {
                   placeholder="Entrer le nom du client"
                   onChange={this.handleChangeFamily}
                 />
-                <FormControl.Feedback />
+                <FormControl.Feedback/>
               </FormGroup>
             </Col>
 
@@ -175,7 +195,7 @@ class Client extends Component {
                   placeholder="Entrer l'adresse mail du client"
                   onChange={this.handleChangeMail}
                 />
-                <FormControl.Feedback />
+                <FormControl.Feedback/>
               </FormGroup>
             </Col>
 
@@ -190,7 +210,7 @@ class Client extends Component {
                   placeholder="Entrer l'adresse du client"
                   onChange={this.handleChangeAddress}
                 />
-                <FormControl.Feedback />
+                <FormControl.Feedback/>
               </FormGroup>
             </Col>
 
@@ -206,7 +226,7 @@ class Client extends Component {
                   placeholder="Entrer la ville du client"
                   onChange={this.handleChangeCity}
                 />
-                <FormControl.Feedback />
+                <FormControl.Feedback/>
               </FormGroup>
             </Col>
 
@@ -221,7 +241,7 @@ class Client extends Component {
                   placeholder="Entrer le pays du client"
                   onChange={this.handleChangeCountry}
                 />
-                <FormControl.Feedback />
+                <FormControl.Feedback/>
               </FormGroup>
             </Col>
 
@@ -236,12 +256,19 @@ class Client extends Component {
                   placeholder="Entrer le numéro de téléphone du client"
                   onChange={this.handleChangeNumber}
                 />
-                <FormControl.Feedback />
+                <FormControl.Feedback/>
               </FormGroup>
-              <Button bssize="lg" onClick={this.clientCreation}
-                      className='billingCreateButton' bsstyle="primary">
-                Créer un nouveau client
-              </Button>
+              {
+                this.props.newObj ? (
+                    <Button bssize="lg" onClick={this.clientCreation}
+                            className='billingCreateButton' bsstyle="primary">
+                      Créer un nouveau client
+                    </Button>) :
+                  (<Button bssize="lg" onClick={this.clientCreation}
+                           className='billingCreateButton' bsstyle="primary">
+                    Modifier client
+                  </Button>)
+              }
             </Col>
 
           </div>
@@ -254,6 +281,9 @@ class Client extends Component {
   nonEditable() {
     return (
       <div>
+        <Button bssize="lg" onClick={this.onModify} className='billingMainButton'>
+          <span className='add'>Modify</span>
+        </Button>
         <Jumbotron className="billingJumbotron">
           <h2 className="billingJumbotronTitle">Informations du client</h2>
 
@@ -262,49 +292,49 @@ class Client extends Component {
               <h3 className="billingJumbotronTag">Prénom :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.customer.first_name }</h3>
+              <h3 className="billingJumbotronInfo">{this.props.customer.first_name}</h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Nom :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.customer.last_name }</h3>
+              <h3 className="billingJumbotronInfo">{this.props.customer.last_name}</h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Mail :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.customer.email }</h3>
+              <h3 className="billingJumbotronInfo">{this.props.customer.email}</h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Téléphone :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.customer.phone }</h3>
+              <h3 className="billingJumbotronInfo">{this.props.customer.phone}</h3>
             </Col>
 
             <Col sm={6}>
               <h3 className="billingJumbotronTag">Adresse :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.customer.address }</h3>
+              <h3 className="billingJumbotronInfo">{this.props.customer.address}</h3>
             </Col>
 
             <Col sm={6}>
-              <h3 className="billingJumbotronTag">City :</h3>
+              <h3 className="billingJumbotronTag">Ville :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.customer.city }</h3>
+              <h3 className="billingJumbotronInfo">{this.props.customer.city}</h3>
             </Col>
 
             <Col sm={6}>
-              <h3 className="billingJumbotronTag">Country :</h3>
+              <h3 className="billingJumbotronTag">Pays :</h3>
             </Col>
             <Col sm={6}>
-              <h3 className="billingJumbotronInfo">{ this.props.customer.country }</h3>
+              <h3 className="billingJumbotronInfo">{this.props.customer.country}</h3>
             </Col>
 
           </div>
@@ -330,6 +360,7 @@ Client.propTypes = {
   error: PropTypes.string,
   customer: PropTypes.object,
   modif: PropTypes.bool.isRequired,
+  newObj: PropTypes.string,
   table: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 };
@@ -341,6 +372,7 @@ function mapStateToProps(state) {
     error,
     customer,
     modif,
+    newObj,
     table,
     dispatch
   } = state.customers;
@@ -351,11 +383,12 @@ function mapStateToProps(state) {
     error,
     customer,
     modif,
+    newObj,
     table,
     dispatch
-  }
+  };
 }
 
 export default connect(
   mapStateToProps
-)(Client)
+)(Client);

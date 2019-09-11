@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Carousel, Container, Col, Row } from 'react-bootstrap';
+import React, { Component } from "react";
+import { Carousel, Container, Col, Row } from "react-bootstrap";
 
 import '../css/SignIn.css';
 import SignInForm from '../components/SignInForm';

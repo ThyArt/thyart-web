@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import React, { Component } from "react";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
-import '../css/Header.css';
+import "../css/Header.css";
 
 class Header extends Component {
   render() {
     return (
-      <Navbar bg="light" expand="lg" id={'NavBar'}>
+      <Navbar bg="light" expand="lg" id={"NavBar"}>
         <Navbar.Brand href="/">Thy Art</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end">
             <Nav.Item>

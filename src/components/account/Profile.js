@@ -1,28 +1,30 @@
-import React, {Component} from 'react';
-import {Jumbotron, Col, Row } from 'react-bootstrap';
+import React, { Component } from "react";
+import { Jumbotron, Col, Row } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 
-import '../../css/Profile.css'
+import "../../css/Profile.css";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {getProfileIfNeeded,
+import { connect } from "react-redux";
+import {
+  getProfileIfNeeded,
   modifyMailIfNeeded,
   modifyPasswordIfNeeded,
   modifyFirstnameIfNeeded,
-  modifyLastnameIfNeeded} from "../../actions/actionsProfile";
+  modifyLastnameIfNeeded
+} from "../../actions/actionsProfile";
 
 export class Profile extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      tmpMail: '',
-      newPassword1: '',
-      newPassword2: '',
-      newFirstname: '',
-      newLastname: '',
+      tmpMail: "",
+      newPassword1: "",
+      newPassword2: "",
+      newFirstname: "",
+      newLastname: "",
       mailModal: false,
       passwordModal: false,
       firstnameModal: false,
@@ -30,16 +32,16 @@ export class Profile extends Component {
     };
   }
 
-  componentDidMount(){
-    this.props.dispatch(getProfileIfNeeded(this.props.token))
+  componentDidMount() {
+    this.props.dispatch(getProfileIfNeeded(this.props.token));
   }
 
   onMailOpen = () => {
-    this.setState({tmpMail: this.props.mail, mailModal: true });
+    this.setState({ tmpMail: this.props.mail, mailModal: true });
   };
 
   onMailClose = () => {
-    this.setState({tmpMail: this.props.mail, mailModal: false});
+    this.setState({ tmpMail: this.props.mail, mailModal: false });
   };
 
   onPasswordOpen = () => {
@@ -47,23 +49,23 @@ export class Profile extends Component {
   };
 
   onPasswordClose = () => {
-    this.setState({newPassword1: '', newPassword2: '', passwordModal: false });
+    this.setState({ newPassword1: "", newPassword2: "", passwordModal: false });
   };
 
   onFirstnameOpen = () => {
-    this.setState({newFirstname: this.props.firstname, firstnameModal: true });
+    this.setState({ newFirstname: this.props.firstname, firstnameModal: true });
   };
 
   onFirstnameClose = () => {
-    this.setState({newFirstname: this.props.firstname, firstnameModal: false});
+    this.setState({ newFirstname: this.props.firstname, firstnameModal: false });
   };
 
   onLastnameOpen = () => {
-    this.setState({newLastname: this.props.lastname, lastnameModal: true });
+    this.setState({ newLastname: this.props.lastname, lastnameModal: true });
   };
 
   onLastnameClose = () => {
-    this.setState({newLastname: this.props.lastname, lastnameModal: false});
+    this.setState({ newLastname: this.props.lastname, lastnameModal: false });
   };
 
   handleChangeMail = event => {
@@ -88,89 +90,86 @@ export class Profile extends Component {
 
   getFirstnameValidationState() {
     let firstname = this.state.newFirstname;
-    if (firstname === '') return 'error';
-    return 'success';
+    if (firstname === "") return "error";
+    return "success";
   }
 
   getLastnameValidationState() {
     let lastname = this.state.newLastname;
-    if (lastname === '') return 'error';
-    return 'success';
+    if (lastname === "") return "error";
+    return "success";
   }
 
   getMailValidationState() {
     let email = this.state.tmpMail;
-    if (email === '') return 'error';
+    if (email === "") return "error";
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(email)) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
   }
 
   getPassValidationState() {
     let password = this.state.newPassword1;
-    if (password === '') return 'error';
+    if (password === "") return "error";
     let strongRegex = new RegExp(
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
     );
     let mediumRegex = new RegExp(
-      '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'
+      "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
     );
     if (strongRegex.test(password) || mediumRegex.test(password)) {
-      return 'success';
-    } else if (password !== '') {
-      return 'warning';
+      return "success";
+    } else if (password !== "") {
+      return "warning";
     } else {
-      return 'error';
+      return "error";
     }
   }
 
   getConfirmValidationState() {
     let password = this.state.newPassword1;
-    if (password === '') return 'error';
+    if (password === "") return "error";
     if (password === this.state.newPassword2) {
-      return 'success';
+      return "success";
     } else {
-      return 'error';
+      return "error";
     }
   }
 
   checkMail = () => {
-    if (this.getMailValidationState() === 'success') {
+    if (this.getMailValidationState() === "success") {
       this.props.dispatch(modifyMailIfNeeded(this.props.token, this.state.tmpMail));
-      this.setState({mailModal: false });
-      this.setState({ newMail: ''});
+      this.setState({ mailModal: false });
+      this.setState({ newMail: "" });
 
     }
   };
 
   checkPassword = () => {
-    if (this.getPassValidationState() === 'success' && this.getConfirmValidationState() === 'success')
-    {
+    if (this.getPassValidationState() === "success" && this.getConfirmValidationState() === "success") {
       this.setState({ passwordModal: false });
       this.props.dispatch(modifyPasswordIfNeeded(this.props.token, this.state.newPassword1));
-      this.setState({ newPassword1: '', newPassword2: '' });
+      this.setState({ newPassword1: "", newPassword2: "" });
     }
   };
 
   checkFirstname = () => {
-    if (this.getFirstnameValidationState() === 'success')
-    {
+    if (this.getFirstnameValidationState() === "success") {
       this.setState({ firstnameModal: false });
       this.props.dispatch(modifyFirstnameIfNeeded(this.props.token, this.state.newFirstname));
-      this.setState({ newFirstname: ''});
+      this.setState({ newFirstname: "" });
     }
   };
 
   checkLastname = () => {
-    if (this.getLastnameValidationState() === 'success')
-    {
+    if (this.getLastnameValidationState() === "success") {
       this.setState({ lastnameModal: false });
       this.props.dispatch(modifyLastnameIfNeeded(this.props.token, this.state.newLastname));
-      this.setState({ newLastname: ''});
+      this.setState({ newLastname: "" });
     }
   };
 
@@ -192,22 +191,22 @@ export class Profile extends Component {
                   <Col xl={4} lg={4} sm={2}>
                     {
                       this.props.isFetching ? (
-                          <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                        <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
                       ) : (
-                          <div>
-                            {this.props.firstname}
+                        <div>
+                          {this.props.firstname}
 
-                          </div>
+                        </div>
                       )
                     }
                   </Col>
                   <Col sm={2}>
                     {
                       !this.props.isFetching ? (
-                          <button className='modify' onClick={this.onFirstnameOpen}>
-                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                            <span className='modifyText'>Modifier</span>
-                          </button>
+                        <button className='modify' onClick={this.onFirstnameOpen}>
+                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <span className='modifyText'>Modifier</span>
+                        </button>
                       ) : (<div/>)
                     }
                   </Col>
@@ -221,12 +220,12 @@ export class Profile extends Component {
                   <Col sm={6}>
                     <FormGroup className='input' validationState={this.getFirstnameValidationState()}>
                       <FormControl
-                          type="text"
-                          value={this.state.newFirstname}
-                          placeholder="Entrer le nouveau prénom"
-                          onChange={this.handleChangeFirstname}
+                        type="text"
+                        value={this.state.newFirstname}
+                        placeholder="Entrer le nouveau prénom"
+                        onChange={this.handleChangeFirstname}
                       />
-                      <FormControl.Feedback />
+                      <FormControl.Feedback/>
                     </FormGroup>
                   </Col>
                   <Button bsstyle="primary" onClick={this.checkFirstname} className='validate' bssize='large'>
@@ -242,21 +241,21 @@ export class Profile extends Component {
                   </Col>
                   <Col xl={4} lg={4} sm={2}>
                     {this.props.isFetching ? (
-                        <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                      <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
                     ) : (
-                        <div>
-                          {this.props.lastname}
-                        </div>
+                      <div>
+                        {this.props.lastname}
+                      </div>
                     )
                     }
                   </Col>
                   <Col sm={2}>
                     {
                       !this.props.isFetching ? (
-                          <button className='modify' onClick={this.onLastnameOpen}>
-                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                            <span className='modifyText'>Modifier</span>
-                          </button>
+                        <button className='modify' onClick={this.onLastnameOpen}>
+                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <span className='modifyText'>Modifier</span>
+                        </button>
                       ) : (<div/>)
                     }
                   </Col>
@@ -269,12 +268,12 @@ export class Profile extends Component {
                   <Col sm={6}>
                     <FormGroup className='input' validationState={this.getLastnameValidationState()}>
                       <FormControl
-                          type="text"
-                          value={this.state.newLastname}
-                          placeholder="Entrer le nouveau nom de famille"
-                          onChange={this.handleChangeLastname}
+                        type="text"
+                        value={this.state.newLastname}
+                        placeholder="Entrer le nouveau nom de famille"
+                        onChange={this.handleChangeLastname}
                       />
-                      <FormControl.Feedback />
+                      <FormControl.Feedback/>
                     </FormGroup>
                   </Col>
                   <Button bsstyle="primary" onClick={this.checkLastname} className='validate' bssize='large'>
@@ -290,11 +289,11 @@ export class Profile extends Component {
                   </Col>
                   <Col xl={4} lg={4} sm={2}>
                     {this.props.isFetching ? (
-                        <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                      <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
                     ) : (
-                        <div>
-                          {this.props.mail}
-                        </div>
+                      <div>
+                        {this.props.mail}
+                      </div>
                     )
 
                     }
@@ -302,10 +301,10 @@ export class Profile extends Component {
                   <Col sm={2}>
                     {
                       !this.props.isFetching ? (
-                          <button className='modify' onClick={this.onMailOpen}>
-                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                            <span className='modifyText'>Modifier</span>
-                          </button>
+                        <button className='modify' onClick={this.onMailOpen}>
+                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <span className='modifyText'>Modifier</span>
+                        </button>
                       ) : (<div/>)
                     }
                   </Col>
@@ -318,12 +317,12 @@ export class Profile extends Component {
                   <Col sm={6}>
                     <FormGroup className='input' validationState={this.getMailValidationState()}>
                       <FormControl
-                          type="text"
-                          value={this.state.tmpMail}
-                          placeholder="Entrer la nouvelle adresse mail"
-                          onChange={this.handleChangeMail}
+                        type="text"
+                        value={this.state.tmpMail}
+                        placeholder="Entrer la nouvelle adresse mail"
+                        onChange={this.handleChangeMail}
                       />
-                      <FormControl.Feedback />
+                      <FormControl.Feedback/>
                     </FormGroup>
                   </Col>
                   <Button bsstyle="primary" onClick={this.checkMail} className='validate' bssize='large'>
@@ -339,21 +338,21 @@ export class Profile extends Component {
                   </Col>
                   <Col xl={4} lg={4} sm={2}>
                     {this.props.isFetching ? (
-                        <ReactLoading type={'spin'} color={'black'} height={50} width={50}/>
+                      <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
                     ) : (
-                        <div>
-                          ******
-                        </div>
+                      <div>
+                        ******
+                      </div>
                     )
                     }
                   </Col>
                   <Col sm={2}>
                     {
                       !this.props.isFetching ? (
-                          <button className='modify' onClick={this.onPasswordOpen}>
-                            <img src={require('../../static/pencil.svg')} alt="modify" height="25" width="auto"/>
-                            <span className='modifyText'>Modifier</span>
-                          </button>
+                        <button className='modify' onClick={this.onPasswordOpen}>
+                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <span className='modifyText'>Modifier</span>
+                        </button>
                       ) : (<div/>)
                     }
                   </Col>
@@ -367,12 +366,12 @@ export class Profile extends Component {
                   <Col sm={6}>
                     <FormGroup className='input' validationState={this.getPassValidationState()}>
                       <FormControl
-                          type="password"
-                          value={this.state.newPassword1}
-                          placeholder="Entrer le nouveau mot de passe"
-                          onChange={this.handleChangePassword1}
+                        type="password"
+                        value={this.state.newPassword1}
+                        placeholder="Entrer le nouveau mot de passe"
+                        onChange={this.handleChangePassword1}
                       />
-                      <FormControl.Feedback />
+                      <FormControl.Feedback/>
                     </FormGroup>
                   </Col>
                   <Col sm={6}>
@@ -381,12 +380,12 @@ export class Profile extends Component {
                   <Col sm={6}>
                     <FormGroup className='input' validationState={this.getConfirmValidationState()}>
                       <FormControl
-                          type="password"
-                          value={this.state.newPassword2}
-                          placeholder="Confirmation du nouveau mot de passe"
-                          onChange={this.handleChangePassword2}
+                        type="password"
+                        value={this.state.newPassword2}
+                        placeholder="Confirmation du nouveau mot de passe"
+                        onChange={this.handleChangePassword2}
                       />
-                      <FormControl.Feedback />
+                      <FormControl.Feedback/>
                     </FormGroup>
                   </Col>
                   <Button bsstyle="primary" onClick={this.checkPassword} className='validate' bssize='large'>
@@ -433,7 +432,7 @@ function mapStateToProps(state) {
     mail,
     firstname,
     lastname
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Profile);

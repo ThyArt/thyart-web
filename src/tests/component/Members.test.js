@@ -1,7 +1,12 @@
-import React from 'react';
-import { shallow } from 'enzyme/build';
-import {Members} from "../../components/account/Members";
+import React from "react";
+import { shallow } from "enzyme/build";
+import { Members } from "../../components/account/Members";
 
-it('renders without crashing', () => {
-  shallow(<Members />);
+const props = {
+  dispatch: jest.fn(),
+  isFetching: false
+};
+
+it("renders without crashing", () => {
+  shallow(<Members {...props} />);
 });

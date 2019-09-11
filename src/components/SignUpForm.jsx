@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   FormControl,
   Alert,
@@ -57,6 +57,7 @@ export class SignUpForm extends Component {
     this.validated = false;
   };
 
+
   getFirstnameValidationState() {
     let firstname = this.state.firstnameValue;
     if (firstname === '') return null;
@@ -71,7 +72,7 @@ export class SignUpForm extends Component {
 
   getMailValidationState() {
     let email = this.state.mailValue;
-    if (email === '') return null;
+    if (email === "") return null;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(email)) {
       return true;
@@ -82,12 +83,12 @@ export class SignUpForm extends Component {
 
   getPassValidationState() {
     let password = this.state.passValue;
-    if (password === '') return null;
+    if (password === "") return null;
     let strongRegex = new RegExp(
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
     );
     let mediumRegex = new RegExp(
-      '^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'
+      "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
     );
     if (strongRegex.test(password) || mediumRegex.test(password)) {
       return true;
@@ -98,7 +99,7 @@ export class SignUpForm extends Component {
 
   getConfirmValidationState() {
     let password = this.state.confirmValue;
-    if (password === '') return null;
+    if (password === "") return null;
     if (password === this.state.passValue) {
       return true;
     } else {
@@ -117,6 +118,7 @@ export class SignUpForm extends Component {
   handleConfirmChange(e) {
     this.setState({ confirmValue: e.target.value });
   }
+
 
   handleFirstnameChange(e) {
     this.setState({ firstnameValue: e.target.value });
@@ -203,7 +205,7 @@ export class SignUpForm extends Component {
         </FormGroup>
 
         {this.props.isFetching ? (
-          <ReactLoading type={'spin'} color={'black'} height={50} width={50} />
+          <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
         ) : (
           <Button onClick={this.signup}>S'inscrire</Button>
         )}
@@ -213,7 +215,9 @@ export class SignUpForm extends Component {
         ) : null}
 
         {this.props.error ? (
-          <Alert bsstyle="danger">{`Error while creating your account: ${this.props.error}`}</Alert>
+          <Alert bsstyle="danger">{`Error while creating your account: ${
+            this.props.error
+          }`}</Alert>
         ) : null}
       </Form>
     );

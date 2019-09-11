@@ -4,11 +4,13 @@ import authentication from './authentication';
 import profile from './profile';
 import billings from './billings';
 import customers from './customers';
+import members from './members';
 
 export default combineReducers({
   artworks,
   authentication,
   profile,
   billings,
-  customers
+  customers,
+  members
 });

@@ -1,14 +1,14 @@
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import * as actions from '../../actions/actionsProfile'
-import * as types from '../../constants/constantsAction'
-import expect from 'expect/build/index'
-import moxios from 'moxios'
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import * as actions from "../../actions/actionsProfile";
+import * as types from "../../constants/constantsAction";
+import expect from "expect/build/index";
+import moxios from "moxios";
 
-const middlewares = [thunk]
-const mockStore = configureMockStore(middlewares)
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
-describe('async profile actions', () => {
+describe("async profile actions", () => {
 
   beforeEach(function() {
     moxios.install();
@@ -16,9 +16,9 @@ describe('async profile actions', () => {
 
   afterEach(() => {
     moxios.uninstall();
-  })
+  });
 
-  it('creates RECEIVE_PROFILE when fetching profile', () => {
+  it("creates RECEIVE_PROFILE when fetching profile", () => {
 
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -28,7 +28,7 @@ describe('async profile actions', () => {
           "data": {
             "id": 1,
             "firstname": "test",
-            "lastname" : "test2",
+            "lastname": "test2",
             "email": "test@test.jp"
           }
         }
@@ -40,16 +40,16 @@ describe('async profile actions', () => {
       {
         type: types.RECEIVE_PROFILE,
         msg: null,
-        mail: 'test@test.jp',
-        firstname: 'test',
-        lastname: 'test2'
+        mail: "test@test.jp",
+        firstname: "test",
+        lastname: "test2"
       }
-    ]
-    const store = mockStore({ profile: [] })
+    ];
+    const store = mockStore({ profile: [] });
 
     return store.dispatch(actions.getProfileIfNeeded()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions)
-    })
-  })
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
 
-})
+});

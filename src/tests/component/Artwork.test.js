@@ -1,6 +1,6 @@
-import React from 'react';
-import { shallow } from 'enzyme/build';
-import {Artwork} from "../../components/account/Artwork";
+import React from "react";
+import { shallow } from "enzyme/build";
+import { Artwork } from "../../components/account/Artwork";
 
 const props = {
   dispatch: jest.fn(),
@@ -8,6 +8,6 @@ const props = {
   isFetching: false
 };
 
-it('renders without crashing', () => {
+it("renders without crashing", () => {
   shallow(<Artwork {...props}/>);
 });

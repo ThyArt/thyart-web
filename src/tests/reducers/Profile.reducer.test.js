@@ -1,8 +1,8 @@
-import reducer from '../../reducers/profile'
-import * as types from '../../constants/constantsAction'
+import reducer from "../../reducers/profile";
+import * as types from "../../constants/constantsAction";
 
-describe('profile reducer', () => {
-  it('should return the initial state', () => {
+describe("profile reducer", () => {
+  it("should return the initial state", () => {
     expect(reducer(undefined, {})).toEqual(
       {
         isFetching: false,
@@ -13,10 +13,10 @@ describe('profile reducer', () => {
         firstname: null,
         lastname: null
       }
-    )
-  })
+    );
+  });
 
-  it('should handle REQUEST_PROFILE', () => {
+  it("should handle REQUEST_PROFILE", () => {
     expect(
       reducer([], {
         type: types.REQUEST_PROFILE
@@ -27,40 +27,40 @@ describe('profile reducer', () => {
         error: null,
         msg: null
       }
-    )
-  })
+    );
+  });
 
-  it('should handle RECEIVE_PROFILE_ERROR', () => {
+  it("should handle RECEIVE_PROFILE_ERROR", () => {
     expect(
       reducer([], {
         type: types.RECEIVE_PROFILE_ERROR,
-        error: 'error'
+        error: "error"
       })
     ).toEqual(
       {
         isFetching: false,
-        error: 'error',
+        error: "error",
         msg: null
       }
-    )
-  })
+    );
+  });
 
-  it('should handle RECEIVE_PROFILE', () => {
+  it("should handle RECEIVE_PROFILE", () => {
     expect(
       reducer([], {
         type: types.RECEIVE_PROFILE,
-        mail: 'test@test.jp',
-        firstname: 'test',
-        lastname: 'test2'
+        mail: "test@test.jp",
+        firstname: "test",
+        lastname: "test2"
       })
     ).toEqual(
       {
         isFetching: false,
-        mail: 'test@test.jp',
-        firstname: 'test',
-        lastname: 'test2'
+        mail: "test@test.jp",
+        firstname: "test",
+        lastname: "test2"
       }
-    )
-  })
+    );
+  });
 
-})
+});
