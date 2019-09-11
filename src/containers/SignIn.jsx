@@ -8,9 +8,9 @@ import Header from '../components/Header';
 class SignIn extends Component {
   render() {
     return (
-      <div>
+      <div id={"baseDiv"}>
         <Header />
-        <Container fluid>
+        <Container fluid id={"baseContainer"}>
           <Row id={'row'}>
             <Col lg={4} id={'carouselCol'}>
               <Carousel id={'carousel'}>
@@ -27,7 +27,7 @@ class SignIn extends Component {
                 </Carousel.Item>
               </Carousel>
             </Col>
-            <Col lg={{ span: 3, offset: 1 }} id={'signinForm'}>
+            <Col lg={{ span: 3, offset: 1 }} id={'signInForm'}>
               <h2>Se connecter</h2>
               <SignInForm />
             </Col>

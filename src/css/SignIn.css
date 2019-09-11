@@ -1,16 +1,25 @@
-#signin {
-    background-color: #F4F5F7;
-    padding-right: 10%;
-    padding-left: 10%;
+html{
+    height:100%;
 }
 
-#quote {
-    width: 50vw;
-    height: auto;
+body{
+    height: 100%;
 }
 
-#signinForm {
-    margin-top: 10%;
+#root {
+    height: 100%;
+}
+
+#baseDiv{
+    height: 100%;
+}
+
+#baseContainer{
+    height: calc(100% - 62px);
+}
+
+#row {
+    height: 100%;
 }
 
 #carouselCol {
@@ -18,18 +27,30 @@
 }
 
 #carousel {
-    height: 93vh;
+    height: 100%;
+}
+
+.carousel-inner{
+    height: 100%;
 }
 
 #carouselItem {
-    height: 93vh;
-}
-
-#row {
-    height: 93vh;
+    height: 100%;
 }
 
 #image {
     object-fit: cover;
-    height: 93vh;
+    height: 100%;
+}
+
+#signInForm {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.signInButton {
+    background-color: #F4F5F7;
+    padding-right: 10%;
+    padding-left: 10%;
+    margin-bottom: 5%;
 }

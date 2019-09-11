@@ -9,7 +9,7 @@ class About extends Component {
     return (
       <div id="about">
         <Container fluid id="aboutContainer">
-          <Row>
+          <Row id={"rowStyle"}>
             <Col className="aboutCol">
               <img
                 src={require("../static/manage_icon.png")}

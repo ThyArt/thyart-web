@@ -21,21 +21,30 @@
 
 #macbook, #ipad {
     margin-bottom: 0;
-    padding-top: 8%;
-    padding-bottom: 8%;
+    padding-top: 5%;
+    padding-bottom: 5%;
     background-color: #DDDEDE;
 }
 
-#iphone {
-    padding-top: 10%;
-    padding-bottom: 10%;
-    margin-bottom: 0;
-    background-color: #F4F5F7;
+.ColStyle{
 }
 
-#iphoneImg {
-    height: 299px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.Img{
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#iphone {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin-bottom: 0;
+    background-color: #F4F5F7;
 }

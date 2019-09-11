@@ -90,31 +90,30 @@ export class SignInForm extends Component {
       <Form>
         <FormGroup
           controlId="formValidationNull"
-          validationstate={this.getMailValidationState()}
         >
           <FormLabel>Entrez votre email</FormLabel>
           <FormControl
             type="email"
             value={this.state.mailValue}
             onChange={this.handleMailChange}
+            isValid={this.getMailValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationstate={this.getPassValidationState()}
         >
           <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.passValue}
             onChange={this.handlePassChange}
+            isValid={this.getPassValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>
-        <Container>
+        <Container fluid id={"LogContainer"}>
           <Row>
-            <Col>
               {this.props.isFetching ? (
                 <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
               ) : (

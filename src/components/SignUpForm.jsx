@@ -31,6 +31,7 @@ export class SignUpForm extends Component {
   }
 
   signup = () => {
+    console.log("in");
     if (
       this.getFirstnameValidationState() === "success" &&
       this.getLastnameValidationState() === "success" &&
@@ -38,6 +39,8 @@ export class SignUpForm extends Component {
       this.getPassValidationState() === "success" &&
       this.getConfirmValidationState() === "success"
     ) {
+      console.log("validated");
+      this.validated = true;
       this.props.dispatch(
         signUpIfNeeded(
           this.state.mailValue,
@@ -47,7 +50,9 @@ export class SignUpForm extends Component {
           this.state.passValue
         )
       );
+      console.log("signed in")
     }
+    this.validated = false;
   };
 
 
@@ -67,7 +72,6 @@ export class SignUpForm extends Component {
     let email = this.state.mailValue;
     if (email === "") return null;
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     if (re.test(email)) {
       return "success";
     } else {
@@ -126,10 +130,9 @@ export class SignUpForm extends Component {
 
   render() {
     return (
-      <form>
+      <Form noValidate validated={this.validated}>
         <FormGroup
           controlId="formValidationNull0"
-          validationstate={this.getFirstnameValidationState()}
         >
           <FormLabel>Entrez votre prénom</FormLabel>
           <FormControl
@@ -137,12 +140,12 @@ export class SignUpForm extends Component {
             value={this.state.firstnameValue}
             placeholder="Prénom"
             onChange={this.handleFirstnameChange}
+            isValid={this.getFirstnameValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formValidationNull1"
-          validationstate={this.getLastnameValidationState()}
         >
           <FormLabel>Entrez votre nom</FormLabel>
           <FormControl
@@ -150,12 +153,12 @@ export class SignUpForm extends Component {
             value={this.state.lastnameValue}
             placeholder="Nom"
             onChange={this.handleLastnameChange}
+            isValid={this.getLastnameValidationState()}
           />
           <FormControl.Feedback />
         </FormGroup>
         <FormGroup
           controlId="formValidationNull2"
-          validationstate={this.getMailValidationState()}
         >
           <FormLabel>Entrez votre email</FormLabel>
           <FormControl
@@ -163,14 +166,15 @@ export class SignUpForm extends Component {
             value={this.state.mailValue}
             placeholder="exemple@email.com"
             onChange={this.handleMailChange}
+            isValid={this.getMailValidationState()}
+            required
           />
-          <FormControl.Feedback>
+          <FormControl.Feedback type={"invalid"}>
             Validation basée sur la syntaxe des adresses email
           </FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText"
-          validationstate={this.getPassValidationState()}
         >
           <FormLabel>Entrez votre mot de passe</FormLabel>
           <FormControl
@@ -178,22 +182,26 @@ export class SignUpForm extends Component {
             value={this.state.passValue}
             placeholder="Mot de passe"
             onChange={this.handlePassChange}
+            isValid={this.getPassValidationState()}
+            required
           />
-          <FormControl.Feedback>
+          <FormControl.Feedback type={"invalid"}>
             Entrez un mot de passe renforcé
           </FormControl.Feedback>
         </FormGroup>
         <FormGroup
           controlId="formBasicText2"
-          validationstate={this.getConfirmValidationState()}
         >
           <FormLabel>Confirmez votre mot de passe</FormLabel>
           <FormControl
             type="password"
             value={this.state.confirmValue}
             onChange={this.handleConfirmChange}
+            isValid={this.getConfirmValidationState()}
           />
-          <FormControl.Feedback />
+          <FormControl.Feedback type={"invalid"}>
+            Le mot de passe ne correspond pas
+          </FormControl.Feedback>
         </FormGroup>
 
         {this.props.isFetching ? (
@@ -211,7 +219,7 @@ export class SignUpForm extends Component {
             this.props.error
           }`}</Alert>
         ) : null}
-      </form>
+      </Form>
     );
   }
 }
