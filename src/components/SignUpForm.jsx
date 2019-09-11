@@ -10,6 +10,7 @@ import { signUpIfNeeded } from "../actions/actionsAuth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
+import Form from "react-bootstrap/Form";
 
 export class SignUpForm extends Component {
   constructor(props, context) {

@@ -114,6 +114,7 @@ export class SignInForm extends Component {
         </FormGroup>
         <Container fluid id={"LogContainer"}>
           <Row>
+            <Col>
               {this.props.isFetching ? (
                 <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
               ) : (
