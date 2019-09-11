@@ -344,7 +344,7 @@ Members.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   msg: PropTypes.string,
   error: PropTypes.string,
-  table: PropTypes.bool.isRequired,
+  members: PropTypes.array,
   dispatch: PropTypes.func.isRequired
 };
 

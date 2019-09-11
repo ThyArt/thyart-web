@@ -264,10 +264,8 @@ export function createArtworkIfNeeded(file, token, name, price, ref, state) {
       dispatch(requestArtworks());
       return dispatch(createArtWork(file, token, name, price, ref, state)).then(() => {
         return dispatch(uploadImage(token, file, getState().artworks.artistId)).then(() => {
-          return dispatch(uploadCompressedImage(token, file, getState().artworks.artistId)).then(() => {
             return dispatch(fetchArtWorks(token));
           });
-        });
       });
     }
   };
