@@ -193,6 +193,7 @@ export class Artwork extends Component {
       case 3:
       case 4:
         this.props.dispatch(sortArtworks(filters[eventKey.toString()]));
+        return;
       case 5:
         this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, "incoming"));
         return;

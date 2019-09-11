@@ -59,20 +59,20 @@ function receiveBillings(res) {
   };
 }
 
-function receiveBillingCreate(res) {
+/*function receiveBillingCreate(res) {
   return {
     type: RECEIVE_BILLING,
     msg: "La facture a été crée"
   };
-}
+}*/
 
-function receiveBillingDelete(res) {
+/*function receiveBillingDelete(res) {
   return {
     type: RECEIVE_BILLING,
     billing: null,
     msg: "La facture a été supprimée"
   };
-}
+}*/
 
 function receiveBilling(res) {
   return {
@@ -111,7 +111,7 @@ function createBilling(
   if (mm < 10) {
     mm = "0" + mm;
   }
-  var today = yyyy + "-" + mm + "-" + dd;
+  today = yyyy + "-" + mm + "-" + dd;
   console.log(today);
 
   const body = {

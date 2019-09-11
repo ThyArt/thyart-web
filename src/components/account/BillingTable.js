@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as Table from "reactabular-table";
-import { Button, Col, DropdownButton, FormControl, FormGroup, DropdownItem, Row } from "react-bootstrap";
+import { Button, Col, DropdownButton, FormControl, DropdownItem, Row } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import { connect } from "react-redux";
 

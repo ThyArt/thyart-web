@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Container, Col, Row } from "react-grid-system";
 
 import "../css/About.css";
-import { disconnect } from "../actions/actionsAuth";
 
 class About extends Component {
 

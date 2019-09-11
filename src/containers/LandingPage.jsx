@@ -6,9 +6,7 @@ import Contact from "./Contact.jsx";
 import Services from "./Services";
 
 import "../css/LandingPage.css";
-import { disconnect } from "../actions/actionsAuth";
 import { Redirect } from "react-router-dom";
-import Form from "react-bootstrap/Form";
 
 class LandingPage extends Component {
 

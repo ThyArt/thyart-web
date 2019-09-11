@@ -67,13 +67,13 @@ function receiveCustomerCreate(res) {
   };
 }
 
-function receiveCustomerDelete(res) {
+/*function receiveCustomerDelete(res) {
   return {
     type: RECEIVE_CUSTOMER,
     customer: null,
     msg: "Le client a été supprimé"
   };
-}
+}*/
 
 function receiveCustomer(res) {
   return {

@@ -163,7 +163,7 @@ function uploadImage(token, file, id) {
       .catch(error => dispatch(receiveArtworksError(error)));
   };
 }
-
+/*
 function uploadCompressedImage(token, file, id) {
   const header_auth = {
     headers: {
@@ -181,7 +181,7 @@ function uploadCompressedImage(token, file, id) {
       .then(res => dispatch(receiveAddImage(res)))
       .catch(error => dispatch(receiveArtworksError(error)));
   };
-}
+}*/
 
 function modifyArtWork(token, name, ref, state, price, id) {
   const header_auth = {

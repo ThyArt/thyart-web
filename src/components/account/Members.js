@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import { cloneDeep, findIndex } from "lodash";
 import * as Table from "reactabular-table";
-import uuid from "uuid";
 
 import "../../css/Membres.css";
 import { Button, Col, FormControl, FormGroup, Row } from "react-bootstrap";
@@ -13,7 +12,6 @@ import Switch from "react-switch";
 import { getMembersIfNeeded, createMemberIfNeeded } from "../../actions/actionsMembers";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 
 export class Members extends Component {
   constructor(props) {

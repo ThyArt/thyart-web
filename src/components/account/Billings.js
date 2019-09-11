@@ -10,7 +10,7 @@ import ReactLoading from "./Clients";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
+//import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
 import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
 import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 

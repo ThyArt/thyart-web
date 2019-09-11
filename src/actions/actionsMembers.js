@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { apiURL, customerURL, memberURL, userURL } from "../constants/constantsApi";
+import { apiURL, memberURL, userURL } from "../constants/constantsApi";
 import {
   RECEIVE_MEMBERS,
-  RECEIVE_MEMBERS_ERROR, REQUEST_BILLINGS,
+  RECEIVE_MEMBERS_ERROR,
   REQUEST_MEMBERS
 } from "../constants/constantsAction";
 

@@ -3,7 +3,6 @@ import {
   RECEIVE_MEMBERS_ERROR,
   RECEIVE_MEMBERS
 } from "../constants/constantsAction";
-import { cloneDeep } from "lodash";
 
 const initialState = {
   isFetching: false,

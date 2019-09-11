@@ -4,8 +4,7 @@ import {
   Jumbotron,
   Col,
   FormControl,
-  FormGroup,
-  Form
+  FormGroup
 } from "react-bootstrap";
 
 import "../../css/Billing.css";
