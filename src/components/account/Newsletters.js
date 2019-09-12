@@ -13,9 +13,9 @@ import { connect } from "react-redux";
 import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
 
 class Newsletters extends Component {
-  constructor(props) {
+  /*constructor(props) {
       super(props);
-    }
+    }*/
 
   componentDidMount(){
     this.props.dispatch(getBillingsIfNeeded(this.props.token));

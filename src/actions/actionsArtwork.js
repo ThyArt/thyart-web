@@ -8,7 +8,7 @@ import {
   RECEIVE_ARTWORKS,
   SORT_ARTWORKS
 } from "../constants/constantsAction";
-import { apiURL, artWorkImg, artWorkImgComp, artWorkURL } from "../constants/constantsApi";
+import { apiURL, artWorkImg, artWorkURL } from "../constants/constantsApi";
 
 function shouldFetchApi(state) {
   const isFetching = state.artworks.isFetching;
@@ -45,7 +45,7 @@ function receiveArtworks(res) {
   let artworks = [];
   let src;
 
-  for (const [, value] of Object.entries(res.data.data)) {
+  res.data.data.forEach(function(value) {
     if (value.images != null && value.images[0] && value.images[0].urls != null)
       src = value.images[0].urls['small'];
     else
@@ -60,7 +60,7 @@ function receiveArtworks(res) {
         price: value.price,
         state: value.state
       });
-  }
+  });
   return {
     type: RECEIVE_ARTWORKS,
     artworks: artworks
