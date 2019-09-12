@@ -15,9 +15,9 @@ import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
 import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 
 class Billings extends Component {
-  constructor(props) {
+  /*constructor(props) {
     super(props);
-  }
+  }*/
 
   componentDidMount() {
     this.props.dispatch(getBillingsIfNeeded(this.props.token));

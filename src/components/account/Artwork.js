@@ -358,7 +358,7 @@ export class Artwork extends Component {
                         <Row className='detailsModalRows'>
                           <Col sm={12}>
                             {this.props.artwork.images[0] ?
-                              <img src={this.props.artwork.images[0].urls['origin']} alt="image" className='detailsModalImage'/> :
+                              <img src={this.props.artwork.images[0].urls['origin']} alt="artwork" className='detailsModalImage'/> :
                               null
                             }
                           </Col>

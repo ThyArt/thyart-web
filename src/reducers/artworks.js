@@ -87,6 +87,8 @@ function artworks(state = initialState, action) {
         case "priceDec":
           artworks.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
           break;
+        default:
+          break;
       }
       return Object.assign({}, state, {
         artworks: artworks
