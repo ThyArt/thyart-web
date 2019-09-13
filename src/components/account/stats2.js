@@ -11,13 +11,13 @@ import {
 } from 'react-vis';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {Container} from "react-bootstrap";
-import Row from "react-bootstrap/Row";
+// import {Container} from "react-bootstrap";
+// import Row from "react-bootstrap/Row";
 
 const blueData = [{x: 'Dépense', y: 25}, {x: 'Chiffre d\'affaire', y: 45}];
 
 
-const labelData = blueData.map((d, idx) => ({
+const labelData = blueData.map((_) => ({
 }));
 
 class Stats2 extends React.Component {
@@ -27,7 +27,7 @@ class Stats2 extends React.Component {
 
     render() {
         const {useCanvas} = this.state;
-        const content = useCanvas ? 'TOGGLE TO SVG' : 'TOGGLE TO CANVAS';
+        // const content = useCanvas ? 'TOGGLE TO SVG' : 'TOGGLE TO CANVAS';
         const BarSeries = useCanvas ? VerticalBarSeriesCanvas : VerticalBarSeries;
         return (
             <div>
