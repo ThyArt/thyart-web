@@ -23,7 +23,6 @@ export class Account extends Component {
   constructor(props) {
     super(props);
     let token = sessionStorage.getItem("token");
-
     this.state = {
       selected: "1",
       token: token
@@ -61,7 +60,7 @@ export class Account extends Component {
             />
           </Navbar.Brand>
           <Container>
-            <Navbar.Text id="title">Ma Gallerie</Navbar.Text>
+            <Navbar.Text id="title">Ma Galerie</Navbar.Text>
           </Container>
         </Navbar>
         <Container fluid={true}>
@@ -129,7 +128,7 @@ export class Account extends Component {
             </Col>
           </Row>
         </Container>
-        {this.props.isLogged === false ? (
+        {this.state.token === null ? (
           <Redirect
             to={{
               pathname: '/signin'
