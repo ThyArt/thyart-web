@@ -47,7 +47,7 @@ function receiveArtworks(res) {
 
   res.data.data.forEach(function(value) {
     if (value.images != null && value.images[0] && value.images[0].urls != null)
-      src = value.images[0].urls['small'];
+      src = value.images[0].urls['large'];
     else
       src = "";
     artworks.push(
