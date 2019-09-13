@@ -41,7 +41,6 @@ function receiveArtworksError(error) {
 }
 
 function receiveArtworks(res) {
-  console.log(res);
   let artworks = [];
   let src;
 
@@ -83,7 +82,7 @@ function receiveArtWorkCreate(res) {
   };
 }
 
-function receiveAddImage(res) {
+function receiveAddImage() {
   return {
     type: RECEIVE_ADDIMAGE,
     msg: "Image téléchargée avec succès."

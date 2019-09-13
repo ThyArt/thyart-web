@@ -18,7 +18,7 @@ import Stats2 from "./stats2";
 const greenData = [{x: 'Juillet', y: 25}, {x: 'Aout', y: 40}, {x: 'Septembre', y: 15}];
 
 
-const labelData = greenData.map((d, idx) => ({
+const labelData = greenData.map((_) => ({
 }));
 
 class Stats extends React.Component {
@@ -28,7 +28,7 @@ class Stats extends React.Component {
 
     render() {
         const {useCanvas} = this.state;
-        const content = useCanvas ? 'TOGGLE TO SVG' : 'TOGGLE TO CANVAS';
+        // const content = useCanvas ? 'TOGGLE TO SVG' : 'TOGGLE TO CANVAS';
         const BarSeries = useCanvas ? VerticalBarSeriesCanvas : VerticalBarSeries;
         return (
             <Container>
@@ -43,7 +43,7 @@ class Stats extends React.Component {
                             <LabelSeries data={labelData} getLabel={d => d.x} />
                         </XYPlot>
                     </div>
-                    <Stats2></Stats2>
+                    <Stats2/>
                 </Row>
             </Container>
         );
