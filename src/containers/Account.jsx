@@ -18,6 +18,7 @@ import {
   NotificationContainer,
   NotificationManager
 } from 'react-notifications';
+import Stats from "../components/account/Stats";
 
 export class Account extends Component {
   constructor(props) {
@@ -107,20 +108,23 @@ export class Account extends Component {
                 {this.state.selected === '1' ? (
                   <Scheduler token={this.state.token} />
                 ) : null}
+                {this.state.selected === '2' ? (
+                    <Stats token={this.state.token} />
+                ) : null}
+                {this.state.selected === '3' ? (
+                    <Artwork token={this.state.token} />
+                ) : null}
                 {this.state.selected === '4' ? (
                   <Members token={this.state.token} />
                 ) : null}
-                {this.state.selected === '3' ? (
-                  <Artwork token={this.state.token} />
+                {this.state.selected === '5' ? (
+                    <Billings token={this.state.token} />
                 ) : null}
                 {this.state.selected === '6' ? (
                   <Profile token={this.state.token} />
                 ) : null}
                 {this.state.selected === '8' ? (
                   <Clients token={this.state.token} />
-                ) : null}
-                {this.state.selected === '5' ? (
-                  <Billings token={this.state.token} />
                 ) : null}
                 {this.state.selected === '9' ? (
                     <Newsletter token={this.state.token} />
