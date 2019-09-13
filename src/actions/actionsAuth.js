@@ -153,6 +153,7 @@ export function fetchForgotIfNeeded(mail) {
 }
 
 export function disconnect() {
+  sessionStorage.removeItem('token');
   return {
     type: DISCONNECT
   };
