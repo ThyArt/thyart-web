@@ -53,7 +53,7 @@ class Billings extends Component {
                 </div>
                 :
                 <div>
-                  <Button bssize="lg" onClick={this.onReturn} className='billingMainButton'>
+                  <Button bssize="lg" onClick={this.onReturn} className='billingReturnButton'>
                     <span className='add'>Retour</span>
                   </Button>
                   <Billing token={this.props.token}/>
