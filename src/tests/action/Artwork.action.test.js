@@ -41,7 +41,7 @@ describe("async artwork actions", () => {
               "state": "exposed",
               "images": [{
                 "id": 1,
-                "urls": {"small":"http://localhost/storage/1/test.jpg"},
+                "urls": {"large":"http://localhost/storage/1/test.jpg"},
                 "name": "test",
                 "file_name": "test.jpg"
               }]
@@ -118,7 +118,7 @@ describe("async artwork actions", () => {
               "state": "exposed",
               "images": [{
                 "id": 1,
-                "urls": {"small":"http://localhost/storage/1/test.jpg"},
+                "urls": {"large":"http://localhost/storage/1/test.jpg"},
                 "name": "test",
                 "file_name": "test.jpg"
               }]
@@ -139,7 +139,7 @@ describe("async artwork actions", () => {
                   "state": "exposed",
                   "images": [{
                     "id": 1,
-                    "urls": {"small":"http://localhost/storage/1/test.jpg"},
+                    "urls": {"large":"http://localhost/storage/1/test.jpg"},
                     "name": "test",
                     "file_name": "test.jpg"
                   }]
