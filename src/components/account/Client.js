@@ -258,6 +258,37 @@ class Client extends Component {
                 />
                 <FormControl.Feedback/>
               </FormGroup>
+            </Col>
+
+            <Col sm={5}>
+              <h3 className="billingJumbotronTag">Nb d'oeuvres achetées :</h3>
+            </Col>
+            <Col sm={7}>
+              <FormGroup className='billingJumbotronInput'>
+                <FormControl
+                    type="oeuvreAchete"
+                    //value={}
+                    placeholder="Entrer le nombre d'oeuvres achetées par le client"
+                    //onChange={}
+                />
+                <FormControl.Feedback/>
+              </FormGroup>
+            </Col>
+
+            <Col sm={5}>
+              <h3 className="billingJumbotronTag">Argent dépensé :</h3>
+            </Col>
+            <Col sm={7}>
+              <FormGroup className='billingJumbotronInput'>
+                <FormControl
+                    type="argentDepense"
+                    //value={}
+                    placeholder="Entrer l'argent dépensé par le client"
+                    //onChange={}
+                />
+                <FormControl.Feedback/>
+              </FormGroup>
+
               {
                 this.props.newObj ? (
                     <Button bssize="lg" onClick={this.clientCreation}
@@ -335,6 +366,27 @@ class Client extends Component {
             </Col>
             <Col sm={6}>
               <h3 className="billingJumbotronInfo">{this.props.customer.country}</h3>
+            </Col>
+
+            <Col sm={6}>
+              <h3 className="billingJumbotronTag">Oeuvres achetées :</h3>
+            </Col>
+            <Col sm={6}>
+              <h3 className="billingJumbotronInfo">{}</h3>
+            </Col>
+
+            <Col sm={6}>
+              <h3 className="billingJumbotronTag">Argent dépensé :</h3>
+            </Col>
+            <Col sm={6}>
+              <h3 className="billingJumbotronInfo">{}</h3>
+            </Col>
+
+            <Col sm={6}>
+              <h3 className="billingJumbotronTag">Argent dépensé en moyenne :</h3>
+            </Col>
+            <Col sm={6}>
+              <h3 className="billingJumbotronInfo">{}</h3>
             </Col>
 
           </div>
