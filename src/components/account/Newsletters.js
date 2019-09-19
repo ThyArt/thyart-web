@@ -6,8 +6,10 @@ import '../../css/Newsletter.css';
 import NewsletterTable from "./NewsletterTable";
 import Newsletter from "./Newsletter";
 import ReactLoading from "./Clients";
+import {getNewslettersIfNeeded, openCreateNewsletter} from "../../actions/actionsNewsletters";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
 
 class Newsletters extends Component {
   /*constructor(props) {
@@ -15,12 +17,18 @@ class Newsletters extends Component {
     }*/
 
   componentDidMount(){
+    this.props.dispatch(getNewslettersIfNeeded(this.props.token));
   }
 
   onCreate = () => {
+    this.props.dispatch(openCreateNewsletter());
+    this.props.dispatch(getCustomersIfNeeded(this.props.token));
+
+
   };
 
   onReturn = () => {
+    this.props.dispatch(getNewslettersIfNeeded(this.props.token));
   };
 
 
@@ -74,7 +82,7 @@ function mapStateToProps(state) {
     modif,
     table,
     dispatch
-  } = state.billings;
+  } = state.newsletters;
 
 
   return {
