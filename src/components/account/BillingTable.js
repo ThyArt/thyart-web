@@ -83,6 +83,18 @@ class BillingTable extends Component {
     return [
 
       {
+        property: "customer",
+        header: {
+          label: "Client"
+        }
+      },
+      {
+        property: "artwork",
+        header: {
+          label: "Nom de l'oeuvre"
+        }
+      },
+      {
         property: "date",
         header: {
           label: "Date de facturation"
