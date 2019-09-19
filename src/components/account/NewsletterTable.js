@@ -8,10 +8,10 @@ import '../../css/Membres.css';
 import '../../css/Newsletter.css';
 
 import {
-  eraseBillingIfNeeded,
-  getBillingIfNeeded,
-  sortBillings
-} from "../../actions/actionsBillings";
+  eraseNewsletterIfNeeded,
+  getNewsletterIfNeeded,
+  sortNewsletters
+} from "../../actions/actionsNewsletters";
 import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -42,14 +42,14 @@ class NewsletterTable extends Component {
       '1': 'dateNew',
       '2': 'dateOld'
     };
-    this.props.dispatch(this.props.dispatch(sortBillings(filters[eventKey.toString()])));
+    this.props.dispatch(this.props.dispatch(sortNewsletters(filters[eventKey.toString()])));
   };
 
   onSearchChange = event => {
     this.setState({ search: event.target.value });
   };
 
-  searchBillings = () => {
+  searchNewsletters = () => {
   };
 
   onRemoveClose = () => {
@@ -57,7 +57,7 @@ class NewsletterTable extends Component {
   };
 
   openDetails(rowData) {
-    this.props.dispatch(getBillingIfNeeded(this.props.token, rowData.id));
+    this.props.dispatch(getNewsletterIfNeeded(this.props.token, rowData.id));
   };
 
 
@@ -67,7 +67,7 @@ class NewsletterTable extends Component {
 
   onRemove() {
     this.setState({removeModal: false});
-    this.props.dispatch(eraseBillingIfNeeded(this.props.token, this.state.idToRemove));
+    this.props.dispatch(eraseNewsletterIfNeeded(this.props.token, this.state.idToRemove));
   };
 
   formatDate = value => {
@@ -114,8 +114,8 @@ class NewsletterTable extends Component {
   render() {
     let rows;
     const columns = this.state.columns;
-    if (this.props.billings)
-      rows = this.props.billings;
+    if (this.props.newsletters)
+      rows = this.props.newsletters;
     else
       rows = [];
 
@@ -140,7 +140,7 @@ class NewsletterTable extends Component {
             <Button id={'buttonRechercher'}
                     variant="outline-primary"
                     bsstyle='primary'
-                    bssize='large' onClick={this.searchBillings}>Rechercher</Button>
+                    bssize='large' onClick={this.searchNewsletters}>Rechercher</Button>
             <DropdownButton
                 as={InputGroup.Append}
                 variant="outline-secondary"
@@ -174,9 +174,10 @@ NewsletterTable.propTypes = {
   error: PropTypes.string,
   modif: PropTypes.bool.isRequired,
   table: PropTypes.bool.isRequired,
-  billings: PropTypes.array,
+  newsletters: PropTypes.array,
   dispatch: PropTypes.func.isRequired
 };
+
 
 function mapStateToProps(state) {
   const {
@@ -185,17 +186,17 @@ function mapStateToProps(state) {
     error,
     modif,
     table,
-    billings,
+    newsletters,
     dispatch
-  } = state.billings;
+  } = state.newsletters;
 
   return {
-    isFetching,
+   isFetching,
     msg,
     error,
     modif,
     table,
-    billings,
+    newsletters,
     dispatch
   }
 }

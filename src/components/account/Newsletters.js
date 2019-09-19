@@ -5,12 +5,9 @@ import '../../css/Membres.css';
 import '../../css/Newsletter.css';
 import NewsletterTable from "./NewsletterTable";
 import Newsletter from "./Newsletter";
-import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
 import ReactLoading from "./Clients";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-//import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
-import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
 
 class Newsletters extends Component {
   /*constructor(props) {
@@ -18,16 +15,12 @@ class Newsletters extends Component {
     }*/
 
   componentDidMount(){
-    this.props.dispatch(getBillingsIfNeeded(this.props.token));
   }
 
   onCreate = () => {
-    this.props.dispatch(openCreateBilling());
-    this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, 'exposed'));
   };
 
   onReturn = () => {
-    this.props.dispatch(getBillingsIfNeeded(this.props.token));
   };
 
 
