@@ -39,12 +39,8 @@ class NewsletterTable extends Component {
 
   handleFilters = eventKey => {
     const filters = {
-      '1': 'nameA',
-      '2': 'nameZ',
-      '3': 'artworkA',
-      '4': 'artworkZ',
-      '5': 'dateNew',
-      '6': 'dateOld'
+      '1': 'dateNew',
+      '2': 'dateOld'
     };
     this.props.dispatch(this.props.dispatch(sortBillings(filters[eventKey.toString()])));
   };
@@ -150,12 +146,8 @@ class NewsletterTable extends Component {
                 variant="outline-secondary"
                 bssize='large'
                 id='buttonFilter' title={'Filtres'}>
-              <DropdownItem eventKey={1} onSelect={this.handleFilters}>Clients A-Z</DropdownItem>
-              <DropdownItem eventKey={2} onSelect={this.handleFilters}>Clients Z-A</DropdownItem>
-              <DropdownItem eventKey={3} onSelect={this.handleFilters}>Oeuvres A-Z</DropdownItem>
-              <DropdownItem eventKey={4} onSelect={this.handleFilters}>Oeuvres Z-A</DropdownItem>
-              <DropdownItem eventKey={5} onSelect={this.handleFilters}>Date récents</DropdownItem>
-              <DropdownItem eventKey={6} onSelect={this.handleFilters}>Date anciens</DropdownItem>
+              <DropdownItem eventKey={1} onSelect={this.handleFilters}>Date récents</DropdownItem>
+              <DropdownItem eventKey={2} onSelect={this.handleFilters}>Date anciens</DropdownItem>
             </DropdownButton>
           </InputGroup.Append>
         </InputGroup>
