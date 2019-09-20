@@ -3,8 +3,7 @@ import { Jumbotron } from "react-bootstrap";
 
 import "../../css/Newsletter.css";
 import {
-  createNewsletterIfNeeded,
-  modifyNewsletterIfNeeded
+  createNewsletterIfNeeded
 } from "../../actions/actionsNewsletters";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -19,31 +18,13 @@ class Newsletter extends Component {
     this.newsletterCreation = this.newsletterCreation.bind(this);
   }
 
-
-
   newsletterCreation = () => {
-    if (this.state.artworkId === "" && this.props.artworks.length)
-      this.setState({ artworkId: this.props.artworks[0].id });
-    if (!this.state.newCustomer) {
-      if (this.props.newObj) {
         this.props.dispatch(
             createNewsletterIfNeeded(
                 this.props.token
             )
         );
-      } else {
-        this.props.dispatch(
-            modifyNewsletterIfNeeded(
-                this.props.token
-            )
-        );
-      }
-    }
-  };
-
-
-
-
+    };
 
   editable() {
     return (
@@ -89,7 +70,6 @@ Newsletter.propTypes = {
   newsletter: PropTypes.object,
   modif: PropTypes.bool.isRequired,
   table: PropTypes.bool.isRequired,
-  artworks: PropTypes.array,
   customers: PropTypes.array,
   dispatch: PropTypes.func.isRequired
 };

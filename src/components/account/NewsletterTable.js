@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import * as Table from 'reactabular-table';
 import { Button, Col, DropdownButton, FormControl, DropdownItem, Row } from "react-bootstrap";
-import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
 import '../../css/Membres.css';
 import '../../css/Newsletter.css';
 
 import {
-  eraseNewsletterIfNeeded,
   getNewsletterIfNeeded,
   sortNewsletters
 } from "../../actions/actionsNewsletters";
@@ -30,7 +28,6 @@ class NewsletterTable extends Component {
     };
 
     this.openDetails = this.openDetails.bind(this);
-    this.onRemove = this.onRemove.bind(this);
   }
 
   componentDidMount(){
@@ -52,22 +49,8 @@ class NewsletterTable extends Component {
   searchNewsletters = () => {
   };
 
-  onRemoveClose = () => {
-    this.setState({ newName: '', removeModal: false });
-  };
-
   openDetails(rowData) {
     this.props.dispatch(getNewsletterIfNeeded(this.props.token, rowData.id));
-  };
-
-
-  confirmRemove(id) {
-    this.setState({ idToRemove: id , removeModal: true});
-  };
-
-  onRemove() {
-    this.setState({removeModal: false});
-    this.props.dispatch(eraseNewsletterIfNeeded(this.props.token, this.state.idToRemove));
   };
 
   formatDate = value => {
@@ -121,13 +104,6 @@ class NewsletterTable extends Component {
 
     return (
       <div className="clients">
-        <Modal open={this.state.removeModal} onClose={this.onRemoveClose} center>
-          <h2 className='title'>Voulez-vous supprimer cette facture?</h2>
-
-          <Button bsstyle="primary" onClick={this.onRemove} className='validate' bssize='large'>
-            Supprimer
-          </Button>
-        </Modal>
         <InputGroup className="mb-3">
           <FormControl
               type={'text'}

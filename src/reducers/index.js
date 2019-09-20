@@ -5,6 +5,7 @@ import profile from './profile';
 import billings from './billings';
 import customers from './customers';
 import members from './members';
+import newsletters from "./newsletters";
 
 export default combineReducers({
   artworks,
@@ -12,5 +13,6 @@ export default combineReducers({
   profile,
   billings,
   customers,
-  members
+  members,
+  newsletters
 });
