@@ -6,7 +6,8 @@ import {
   RECEIVE_CUSTOMER,
   RECEIVE_CUSTOMERS,
   RECEIVE_CUSTOMERS_ERROR,
-  REQUEST_CUSTOMERS, SORT_CUSTOMERS
+  REQUEST_CUSTOMERS,
+  SORT_CUSTOMERS
 } from "../constants/constantsAction";
 import qs from "qs";
 
@@ -178,6 +179,7 @@ function modifyCustomer(
 }
 
 function fetchCustomers(token, name) {
+  console.log('test2');
   const header_auth = {
     headers: {
       Accept: "application/json",

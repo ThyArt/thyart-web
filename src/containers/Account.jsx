@@ -37,7 +37,7 @@ export class Account extends Component {
   }
 
   handleSelect = eventKey => {
-    if (eventKey === '7') {
+    if (eventKey === '9') {
       this.props.dispatch(disconnect());
       this.setState({ token: null });
       sessionStorage.removeItem('token');
@@ -86,19 +86,19 @@ export class Account extends Component {
                   <Nav.Link eventKey={'4'} className="item">
                     Membres
                   </Nav.Link>
-                  <Nav.Link eventKey={'8'} className="item">
-                    Client
-                  </Nav.Link>
                   <Nav.Link eventKey={'5'} className="item">
-                    Facturation
+                    Clients
                   </Nav.Link>
                   <Nav.Link eventKey={'6'} className="item">
+                    Facturations
+                  </Nav.Link>
+                  <Nav.Link eventKey={'7'} className="item">
                     Profil
                   </Nav.Link>
-                  <Nav.Link eventKey={'9'} className="item">
-                    Newsletter
+                  <Nav.Link eventKey={'8'} className="item">
+                    Newsletters
                   </Nav.Link>
-                  <Nav.Link eventKey={'7'}>Déconnexion</Nav.Link>
+                  <Nav.Link eventKey={'9'}>Déconnexion</Nav.Link>
                 </Nav>
               </div>
             </Col>
@@ -117,15 +117,15 @@ export class Account extends Component {
                   <Members token={this.state.token} />
                 ) : null}
                 {this.state.selected === '5' ? (
-                    <Billings token={this.state.token} />
+                    <Clients token={this.state.token} />
                 ) : null}
                 {this.state.selected === '6' ? (
-                  <Profile token={this.state.token} />
+                    <Billings token={this.state.token} />
+                ) : null}
+                {this.state.selected === '7' ? (
+                    <Profile token={this.state.token} />
                 ) : null}
                 {this.state.selected === '8' ? (
-                  <Clients token={this.state.token} />
-                ) : null}
-                {this.state.selected === '9' ? (
                     <Newsletter token={this.state.token} />
                 ) : null}
               </div>

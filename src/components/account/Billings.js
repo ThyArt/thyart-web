@@ -5,19 +5,16 @@ import "../../css/Membres.css";
 import "../../css/Billing.css";
 import BillingTable from "./BillingTable";
 import Billing from "./Billing";
-import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
-import ReactLoading from "./Clients";
+import ReactLoading from "react-loading";
+import {getArtWorksByStateIfNeeded, getBillingsIfNeeded, openCreateBilling} from "../../actions/actionsBillings";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-//import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
-import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
-import { getCustomersIfNeeded } from "../../actions/actionsCustomers";
-
 class Billings extends Component {
-  /*constructor(props) {
+
+  constructor(props) {
     super(props);
-  }*/
+  }
 
   componentDidMount() {
     this.props.dispatch(getBillingsIfNeeded(this.props.token));
@@ -25,8 +22,6 @@ class Billings extends Component {
 
   onCreate = () => {
     this.props.dispatch(openCreateBilling());
-    this.props.dispatch(getArtworkByStateIfNeeded(this.props.token, "exposed"));
-    this.props.dispatch(getCustomersIfNeeded(this.props.token));
   };
 
   onReturn = () => {

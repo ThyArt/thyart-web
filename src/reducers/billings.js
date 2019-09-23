@@ -6,12 +6,9 @@ import {
   OPEN_CREATE_BILLING,
   SORT_BILLINGS,
   REQUEST_ARTWORKS,
-  REQUEST_CUSTOMERS,
   RECEIVE_ARTWORKS,
-  RECEIVE_CUSTOMERS,
-  RECEIVE_CUSTOMERS_ERROR,
   RECEIVE_ARTWORKS_ERROR,
-  OPEN_MODIFY_BILLING
+  OPEN_MODIFY_BILLING, RECEIVE_BILLINGS_ARTWORKS, RECEIVE_BILLINGS_CUSTOMERS
 } from '../constants/constantsAction';
 import { cloneDeep } from 'lodash';
 
@@ -44,21 +41,17 @@ function billings(state = initialState, action) {
         error: null,
         msg: null
       });
-    case REQUEST_CUSTOMERS:
+    case RECEIVE_BILLINGS_ARTWORKS:
       return Object.assign({}, state, {
-        isCustomersFetching: true,
-        error: null,
-        msg: null
+        artworks: action.artworks
+      });
+    case RECEIVE_BILLINGS_CUSTOMERS:
+      return Object.assign({}, state, {
+        customers: action.customers
       });
     case RECEIVE_BILLINGS_ERROR:
       return Object.assign({}, state, {
         isFetching: false,
-        error: action.error,
-        msg: null
-      });
-    case RECEIVE_CUSTOMERS_ERROR:
-      return Object.assign({}, state, {
-        isFetchingCustomers: false,
         error: action.error,
         msg: null
       });
@@ -81,12 +74,6 @@ function billings(state = initialState, action) {
       return Object.assign({}, state, {
         isArtworksFetching: false,
         artworks: action.artworks,
-        error: null
-      });
-    case RECEIVE_CUSTOMERS:
-      return Object.assign({}, state, {
-        isCustomersFetching: false,
-        customers: action.customers,
         error: null
       });
     case RECEIVE_BILLING:
@@ -117,32 +104,32 @@ function billings(state = initialState, action) {
       switch (action.sortType) {
         case "nameA":
           table.sort(function(a, b) {
-            a = a.name.toLowerCase();
-            b = b.name.toLowerCase();
+            a = a.customer.toLowerCase();
+            b = b.customer.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
         case "nameZ":
           table.sort(function(a, b) {
-            a = a.name.toLowerCase();
-            b = b.name.toLowerCase();
+            a = a.customer.toLowerCase();
+            b = b.customer.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });
           break;
         case "artworkA":
           table.sort(function(a, b) {
-            a = a.artworkName.toLowerCase();
-            b = b.artworkName.toLowerCase();
+            a = a.artwork.toLowerCase();
+            b = b.artwork.toLowerCase();
 
             return a < b ? -1 : a > b ? 1 : 0;
           });
           break;
         case "artworkZ":
           table.sort(function(a, b) {
-            a = a.artworkName.toLowerCase();
-            b = b.artworkName.toLowerCase();
+            a = a.artwork.toLowerCase();
+            b = b.artwork.toLowerCase();
 
             return a > b ? -1 : a < b ? 1 : 0;
           });

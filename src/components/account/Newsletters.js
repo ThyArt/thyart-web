@@ -6,11 +6,11 @@ import '../../css/Newsletter.css';
 import NewsletterTable from "./NewsletterTable";
 import Newsletter from "./Newsletter";
 import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
-import ReactLoading from "./Clients";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-//import { createNotificationError, createNotificationSuccess } from "../../containers/Account";
 import { getArtworkByStateIfNeeded } from "../../actions/actionsArtwork";
+import ReactLoading from "react-loading";
+
 
 class Newsletters extends Component {
   /*constructor(props) {
