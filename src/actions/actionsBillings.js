@@ -68,7 +68,6 @@ function receiveCustomers(res) {
 }
 
 function receiveBillingsError(error) {
-  console.log(error);
   let error_msg;
   if (error.response && error.response.data && error.response.data.message)
     error_msg = error.response.data.message;
@@ -362,7 +361,11 @@ export function modifyBillingIfNeeded(token, email, phone, first_name,
       dispatch(requestBillings());
       return dispatch(modifyBilling(token,  first_name, last_name, email, phone,
           country, city, address, id, artworkId)).then(() => {
-        return dispatch(fetchBillings(token, null));
+        return dispatch(fetchCustomers(token)).then(() => {
+          return dispatch(fetchArtWorks(token)).then(() => {
+            return dispatch(fetchBillings(token));
+          });
+        });
       });
     }
   };
