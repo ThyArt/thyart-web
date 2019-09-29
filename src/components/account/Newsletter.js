@@ -7,15 +7,20 @@ import {
 } from "../../actions/actionsNewsletters";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Select from "react-dropdown-select";
 
 class Newsletter extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      customer: ""
+      customers: []
     };
     this.newsletterCreation = this.newsletterCreation.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(this.props.customers);
   }
 
   newsletterCreation = () => {
@@ -31,6 +36,8 @@ class Newsletter extends Component {
         <div>
           <Jumbotron className="newsletterJumbotron">
             <h2 className="newsletterJumbotronTitle">Sélection des clients</h2>
+
+            <Select options={[]} onChange={(customers) => this.setValues(customers)} />
           </Jumbotron>
 
           <Jumbotron className="newsletterJumbotron">
@@ -71,7 +78,8 @@ Newsletter.propTypes = {
   modif: PropTypes.bool.isRequired,
   table: PropTypes.bool.isRequired,
   customers: PropTypes.array,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  isCustomersFetching: PropTypes.bool
 };
 
 function mapStateToProps(state) {
@@ -84,7 +92,8 @@ function mapStateToProps(state) {
     newObj,
     table,
     customers,
-    dispatch
+    dispatch,
+    isCustomersFetching
   } = state.newsletters;
 
   return {
@@ -96,7 +105,8 @@ function mapStateToProps(state) {
     newObj,
     table,
     customers,
-    dispatch
+    dispatch,
+    isCustomersFetching
   };
 }
 
