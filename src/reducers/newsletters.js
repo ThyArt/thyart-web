@@ -4,7 +4,10 @@ import {
     RECEIVE_NEWSLETTERS,
     RECEIVE_NEWSLETTER,
     OPEN_CREATE_NEWSLETTER,
-    SORT_NEWSLETTERS, REQUEST_CUSTOMERS, RECEIVE_CUSTOMERS,
+    SORT_NEWSLETTERS,
+    REQUEST_CUSTOMERS,
+    RECEIVE_CUSTOMERS,
+    RECEIVE_NEWSLETTERS_CUSTOMERS
 } from "../constants/constantsAction";
 import { cloneDeep } from "lodash";
 
@@ -46,6 +49,10 @@ function newsletters(state = initialState, action) {
                 isCustomersFetching: false,
                 customers: action.customers,
                 error: null
+            });
+        case RECEIVE_NEWSLETTERS_CUSTOMERS:
+            return Object.assign({}, state, {
+                customers: action.customers
             });
         case RECEIVE_NEWSLETTERS:
             return Object.assign({}, state, {

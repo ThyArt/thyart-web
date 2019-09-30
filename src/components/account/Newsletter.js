@@ -14,7 +14,8 @@ class Newsletter extends Component {
     super(props);
 
     this.state = {
-      customers: []
+      selectedCustomers: []
+
     };
     this.newsletterCreation = this.newsletterCreation.bind(this);
   }
@@ -31,13 +32,17 @@ class Newsletter extends Component {
         );
     };
 
+  setSelectedCustomers(customers) {
+    this.setState({selectedCustomers: customers});
+  };
+
   editable() {
     return (
         <div>
           <Jumbotron className="newsletterJumbotron">
             <h2 className="newsletterJumbotronTitle">Sélection des clients</h2>
 
-            <Select options={[]} onChange={(customers) => this.setValues(customers)} />
+            <Select options={this.props.customers} labelField="last_name" valueField="id" onChange={(customers) => this.setSelectedCustomers(customers)} />
           </Jumbotron>
 
           <Jumbotron className="newsletterJumbotron">
