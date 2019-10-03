@@ -5,7 +5,6 @@ export const tokenURL = "oauth/token";
 export const pwdURL = "api/password/create";
 export const profileURL = "api/user/self";
 export const artWorkURL = "api/artwork";
-export const artWorkImgComp = "/cimage";
 export const artWorkImg = "/image";
 export const customerURL = "api/customer";
 export const billingURL = "api/order";

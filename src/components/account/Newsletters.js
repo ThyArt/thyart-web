@@ -23,8 +23,6 @@ class Newsletters extends Component {
   onCreate = () => {
     this.props.dispatch(openCreateNewsletter());
     this.props.dispatch(getCustomersIfNeeded(this.props.token));
-
-
   };
 
   onReturn = () => {

@@ -6,9 +6,9 @@ import {
   RECEIVE_NEWSLETTERS,
   RECEIVE_NEWSLETTERS_ERROR,
   REQUEST_NEWSLETTERS,
-  SORT_NEWSLETTERS,
   RECEIVE_NEWSLETTERS_CUSTOMERS
 } from "../constants/constantsAction";
+import {getCustomersIfNeeded} from "./actionsCustomers";
 
 function shouldFetchApi(state) {
   const isFetching = state.newsletters.isFetching;
@@ -83,15 +83,9 @@ function receiveNewsletter(res) {
 }
 
 function createNewsletter(
-  token,
-  email,
-  phone,
-  first_name,
-  last_name,
-  country,
-  city,
-  address,
-  artworkId
+  subject,
+  description,
+  token
 ) {
   const header_auth = {
     headers: {
@@ -101,30 +95,9 @@ function createNewsletter(
     }
   };
 
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth() + 1;
-
-  var yyyy = today.getFullYear();
-  if (dd < 10) {
-    dd = "0" + dd;
-  }
-  if (mm < 10) {
-    mm = "0" + mm;
-  }
-  today = yyyy + "-" + mm + "-" + dd;
-  console.log(today);
-
   const body = {
-    email: email,
-    phone: phone,
-    first_name: first_name,
-    last_name: last_name,
-    country: country,
-    city: city,
-    address: address,
-    artwork_id: artworkId,
-    date: today
+    subject: subject,
+    description: description
   };
   return dispatch => {
     return axios
@@ -186,34 +159,22 @@ function fetchNewsletters(token) {
 }
 
 export function createNewsletterIfNeeded(
-  token,
-  email,
-  phone,
-  first_name,
-  last_name,
-  country,
-  city,
-  address,
-  artworkId
+  subject,
+  description,
+  token
 ) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestNewsletters());
-      return dispatch(
-        createNewsletter(
-          token,
-          email,
-          phone,
-          first_name,
-          last_name,
-          country,
-          city,
-          address,
-          artworkId
-        )
-      ).then(() => {
-        return dispatch(fetchNewsletters(token, null));
-      });
+        return dispatch(
+            createNewsletter(
+                subject,
+                description,
+                token
+            )
+        ).then(() => {
+          return dispatch(fetchNewsletters(token, null));
+        });
     }
   };
 }
