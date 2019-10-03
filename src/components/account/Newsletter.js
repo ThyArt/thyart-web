@@ -2,23 +2,30 @@ import React, {Component} from "react";
 import { Jumbotron } from "react-bootstrap";
 
 import "../../css/Newsletter.css";
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {
   createNewsletterIfNeeded
 } from "../../actions/actionsNewsletters";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Select from "react-dropdown-select";
+import { EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 
 class Newsletter extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedCustomers: []
-
+      selectedCustomers: [],
+      editorState: EditorState.createEmpty(),
     };
     this.newsletterCreation = this.newsletterCreation.bind(this);
   }
+
+  onEditorStateChange = editorState => {
+    this.setState({ editorState });
+  };
 
   componentDidMount() {
     console.log(this.props.customers);
@@ -48,7 +55,14 @@ class Newsletter extends Component {
           <Jumbotron className="newsletterJumbotron">
             <h2 className="newsletterJumbotronTitle">Texte</h2>
 
-
+            <div style={{ backgroundColor: "white" }}>
+              <Editor
+                      editorState={this.state.editorState}
+                      wrapperClassName="demo-wrapper"
+                      editorClassName="demo-editor"
+                      onEditorStateChange={this.onEditorStateChange}
+              />
+            </div>
           </Jumbotron>
         </div>
     );
