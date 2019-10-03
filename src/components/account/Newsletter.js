@@ -49,7 +49,13 @@ class Newsletter extends Component {
           <Jumbotron className="newsletterJumbotron">
             <h2 className="newsletterJumbotronTitle">Sélection des clients</h2>
 
-            <Select options={this.props.customers} labelField="last_name" valueField="id" onChange={(customers) => this.setSelectedCustomers(customers)} />
+            <Select
+                options={this.props.customers}
+                labelField="last_name"
+                valueField="id"
+                onChange={(customers) => this.setSelectedCustomers(customers)}
+                multi={true}
+            />
           </Jumbotron>
 
           <Jumbotron className="newsletterJumbotron">
@@ -57,10 +63,10 @@ class Newsletter extends Component {
 
             <div style={{ backgroundColor: "white" }}>
               <Editor
-                      editorState={this.state.editorState}
-                      wrapperClassName="demo-wrapper"
-                      editorClassName="demo-editor"
-                      onEditorStateChange={this.onEditorStateChange}
+                  editorState={this.state.editorState}
+                  wrapperClassName="demo-wrapper"
+                  editorClassName="demo-editor"
+                  onEditorStateChange={this.onEditorStateChange}
               />
             </div>
           </Jumbotron>

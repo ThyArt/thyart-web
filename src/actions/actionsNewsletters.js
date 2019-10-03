@@ -1,14 +1,13 @@
 import axios from 'axios';
-import {apiURL, customerURL, newsletterURL} from '../constants/constantsApi';
+import {apiURL, newsletterURL} from '../constants/constantsApi';
 import {
   OPEN_CREATE_NEWSLETTER,
   RECEIVE_NEWSLETTER,
   RECEIVE_NEWSLETTERS,
   RECEIVE_NEWSLETTERS_ERROR,
   REQUEST_NEWSLETTERS,
-  RECEIVE_NEWSLETTERS_CUSTOMERS
+  SORT_NEWSLETTERS
 } from "../constants/constantsAction";
-import {getCustomersIfNeeded} from "./actionsCustomers";
 
 function shouldFetchApi(state) {
   const isFetching = state.newsletters.isFetching;
@@ -32,13 +31,6 @@ export const sortNewsletters = sortType => ({
   type: SORT_NEWSLETTERS,
   sortType: sortType
 });
-
-function receiveCustomers(res) {
-  return {
-  type: RECEIVE_NEWSLETTERS_CUSTOMERS,
-    customers: res.data.data,
-  };
-}
 
 function receiveNewslettersError(error) {
   let error_msg;
@@ -118,27 +110,6 @@ function fetchNewsletter(token, id) {
     return axios.get(apiURL + newsletterURL + "/" + id, header_auth)
       .then(res => dispatch(receiveNewsletter(res)))
       .catch(error => dispatch(receiveNewslettersError(error)));
-  };
-}
-
-function fetchCustomers(token, name) {
-  const header_auth = {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    }
-  };
-
-  if (name == null || name.replace(/\s/g, "").length === 0)
-    name = "/";
-  else
-    name = "?last_name=" + name;
-  return dispatch => {
-    return axios
-        .get(apiURL + customerURL + name, header_auth)
-        .then(res => dispatch(receiveCustomers(res, name)))
-        .catch(error => dispatch(receiveNewslettersError(error)));
   };
 }
 
