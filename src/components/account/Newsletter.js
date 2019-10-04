@@ -49,12 +49,13 @@ class Newsletter extends Component {
           <Jumbotron className="newsletterJumbotron">
             <h2 className="newsletterJumbotronTitle">Sélection des clients</h2>
 
-            <Select
+            <Select style={{ backgroundColor: "white" }}
                 options={this.props.customers}
                 labelField="last_name"
                 valueField="id"
                 onChange={(customers) => this.setSelectedCustomers(customers)}
                 multi={true}
+                separator={true}
             />
           </Jumbotron>
 
