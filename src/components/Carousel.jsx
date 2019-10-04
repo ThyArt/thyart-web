@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Carousel } from "react-bootstrap";
 
-import "../css/Carousel.css";
+import "../assets/css/Carousel.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -39,7 +39,7 @@ class CarouselComp extends Component {
             >
               <Carousel.Item>
                 <img id={"images"}
-                     src={require("../static/mess.png")}
+                     src={require("../assets/static/mess.png")}
                      alt="first slide"
                 />
                 <Carousel.Caption className='CaptionBlackText'>
@@ -52,7 +52,7 @@ class CarouselComp extends Component {
               </Carousel.Item>
               <Carousel.Item>
                 <img id={"images"}
-                     src={require("../static/galerie.png")}
+                     src={require("../assets/static/galerie.png")}
                      alt="second slide"
                 />
                 <Carousel.Caption>
@@ -65,7 +65,7 @@ class CarouselComp extends Component {
               </Carousel.Item>
               <Carousel.Item>
                 <img id={"images"}
-                     src={require("../static/carousel.png")}
+                     src={require("../assets/static/carousel.png")}
                      alt="third slide"
                 />
                 <Carousel.Caption>

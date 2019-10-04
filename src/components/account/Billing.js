@@ -7,7 +7,7 @@ import {
   FormGroup
 } from "react-bootstrap";
 
-import "../../css/Billing.css";
+import "../../assets/css/Billing.css";
 import {
   createBillingIfNeeded,
   modifyBillingIfNeeded,

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./css/index.css";
+import "./assets/css/index.css";
 import LandingPage from "./containers/LandingPage.jsx";
 import registerServiceWorker from "./registerServiceWorker";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";

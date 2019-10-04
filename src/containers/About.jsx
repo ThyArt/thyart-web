@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Col, Row } from "react-grid-system";
 
-import "../css/About.css";
+import "../assets/css/About.css";
 
 class About extends Component {
 
@@ -12,7 +12,7 @@ class About extends Component {
           <Row id={"rowStyle"}>
             <Col className="aboutCol">
               <img
-                src={require("../static/manage_icon.png")}
+                src={require("../assets/static/manage_icon.png")}
                 alt="manage"
                 height="120"
                 width="auto"
@@ -28,7 +28,7 @@ class About extends Component {
             </Col>
             <Col className="aboutCol">
               <img
-                src={require("../static/suivi_icon.png")}
+                src={require("../assets/static/suivi_icon.png")}
                 alt="manage"
                 height="120"
                 width="auto"
@@ -44,7 +44,7 @@ class About extends Component {
             </Col>
             <Col className="aboutCol">
               <img
-                src={require("../static/relation_icon.png")}
+                src={require("../assets/static/relation_icon.png")}
                 alt="manage"
                 height="120"
                 width="auto"

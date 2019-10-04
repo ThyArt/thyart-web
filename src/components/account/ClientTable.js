@@ -4,7 +4,7 @@ import { Button, DropdownButton, FormControl, DropdownItem } from "react-bootstr
 import Modal from "react-responsive-modal";
 import { connect } from "react-redux";
 
-import "../../css/Membres.css";
+import "../../assets/css/Membres.css";
 import PropTypes from "prop-types";
 import {
   eraseCustomerIfNeeded,
@@ -112,7 +112,7 @@ class ClientTable extends Component {
                   className="open"
                   onClick={() => this.openDetails(rowData)} style={{ cursor: "pointer", float: "left" }}
                 >
-                  <img src={require("../../static/external-link.svg")} alt="modify" height="30" width="auto"/>
+                  <img src={require("../../assets/static/external-link.svg")} alt="modify" height="30" width="auto"/>
                 </div>
               </div>)]
         }
@@ -134,7 +134,7 @@ class ClientTable extends Component {
                   className="remove"
                   onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: "pointer", float: "left" }}
                 >
-                  <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
+                  <img src={require("../../assets/static/cross.png")} alt="modify" height="30" width="auto"/>
                 </div>
               </div>)]
         }

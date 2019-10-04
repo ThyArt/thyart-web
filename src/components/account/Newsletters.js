@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Col } from "react-bootstrap";
 
-import '../../css/Membres.css';
-import '../../css/Newsletter.css';
+import '../../assets/css/Membres.css';
+import '../../assets/css/Newsletter.css';
 import NewsletterTable from "./NewsletterTable";
 import Newsletter from "./Newsletter";
 import { getBillingsIfNeeded, openCreateBilling } from "../../actions/actionsBillings";
@@ -42,7 +42,7 @@ class Newsletters extends Component {
                   {this.props.table ?
                       <div>
                         <Button bssize="lg" className='clientMainButton' onClick={this.onCreate}>
-                          <img src={require('../../static/add.svg')} alt="add" height="25" width="auto"
+                          <img src={require('../../assets/static/add.svg')} alt="add" height="25" width="auto"
                                className='clientAddImage'/>
                           <span className='clientAddButton'>Ajouter</span>
                         </Button>

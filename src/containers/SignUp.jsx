@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Carousel, Container, Row, Col } from 'react-bootstrap';
 import SignUpForm from '../components/SignUpForm';
-import '../css/SignUp.css';
+import '../assets/css/SignUp.css';
 import Header from '../components/Header';
 
 class SignUp extends Component {
@@ -16,7 +16,7 @@ class SignUp extends Component {
                 <Carousel.Item id={'carouselItem'}>
                   <img
                     id={'image'}
-                    src={require('../static/mess.png')}
+                    src={require('../assets/static/mess.png')}
                     alt="artist"
                   />
                   <Carousel.Caption>

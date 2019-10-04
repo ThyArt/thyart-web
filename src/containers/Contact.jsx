@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { BrowserRouter, Link } from "react-router-dom";
 
-import "../css/Contact.css";
+import "../assets/css/Contact.css";
 
 class Contact extends Component {
   render() {

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { cloneDeep, findIndex } from "lodash";
 import * as Table from "reactabular-table";
 
-import "../../css/Membres.css";
+import "../../assets/css/Membres.css";
 import { Button, Col, FormControl, FormGroup, Row } from "react-bootstrap";
 import Modal from "react-responsive-modal";
 import Container from "react-bootstrap/Container";
@@ -187,7 +187,7 @@ export class Members extends Component {
                   className="remove"
                   onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: "pointer", float: "left" }}
                 >
-                  <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
+                  <img src={require("../../assets/static/cross.png")} alt="modify" height="30" width="auto"/>
                 </div>
               </div>)]
         }
@@ -208,7 +208,7 @@ export class Members extends Component {
         <Col sm={10}>
           {this.props.add}
           <Button bssize="lg" className='add' id='addMemberButton' onClick={this.onAddOpen}>
-            <img src={require("../../static/add.svg")} alt="add" height="25" width="auto" id='addMemberImage'/>
+            <img src={require("../../assets/static/add.svg")} alt="add" height="25" width="auto" id='addMemberImage'/>
             <span id='addMemberText'>Ajouter</span>
           </Button>
         </Col>

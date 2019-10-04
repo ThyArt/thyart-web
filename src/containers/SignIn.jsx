@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Carousel, Container, Col, Row } from "react-bootstrap";
 
-import '../css/SignIn.css';
+import '../assets/css/SignIn.css';
 import SignInForm from '../components/SignInForm';
 import Header from '../components/Header';
 
@@ -17,7 +17,7 @@ class SignIn extends Component {
                 <Carousel.Item id={'carouselItem'}>
                   <img
                     id={'image'}
-                    src={require('../static/mess.png')}
+                    src={require('../assets/static/mess.png')}
                     alt="artist"
                   />
                   <Carousel.Caption>

@@ -5,7 +5,7 @@ import Carousel from "../components/Carousel";
 import Contact from "./Contact.jsx";
 import Services from "./Services";
 
-import "../css/LandingPage.css";
+import "../assets/css/LandingPage.css";
 import { Redirect } from "react-router-dom";
 
 class LandingPage extends Component {

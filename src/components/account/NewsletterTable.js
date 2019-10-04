@@ -4,8 +4,8 @@ import { Button, Col, DropdownButton, FormControl, DropdownItem, Row } from "rea
 import Modal from "react-responsive-modal";
 import { connect } from 'react-redux';
 
-import '../../css/Membres.css';
-import '../../css/Newsletter.css';
+import '../../assets/css/Membres.css';
+import '../../assets/css/Newsletter.css';
 
 import {
   eraseBillingIfNeeded,
@@ -106,7 +106,7 @@ class NewsletterTable extends Component {
                       className="open"
                       onClick={() => this.openDetails(rowData)} style={{ cursor: 'pointer', float: 'left'}}
                   >
-                    <img src={require('../../static/external-link.svg')} alt="modify" height="30" width="auto" />
+                    <img src={require('../../assets/static/external-link.svg')} alt="modify" height="30" width="auto" />
                   </div>
                 </div>)]
         }

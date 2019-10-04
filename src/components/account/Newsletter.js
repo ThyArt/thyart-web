@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Jumbotron} from "react-bootstrap";
 
-import "../../css/Newsletter.css";
+import "../../assets/css/Newsletter.css";
 import { createBillingIfNeeded } from "../../actions/actionsBillings";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";

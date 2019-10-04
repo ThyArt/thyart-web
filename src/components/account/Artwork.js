@@ -17,7 +17,7 @@ import {
   ToggleButtonGroup
 } from "react-bootstrap";
 
-import "../../css/Artwork.css";
+import "../../assets/css/Artwork.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -318,7 +318,7 @@ export class Artwork extends Component {
                     className="remove"
                     onClick={() => this.confirmRemove()} style={{ cursor: "pointer", float: "left" }}
                   >
-                    <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
+                    <img src={require("../../assets/static/cross.png")} alt="modify" height="30" width="auto"/>
                   </div>
                   < Button bsstyle="primary" onClick={this.onModifOpen} bssize='large'>
                     {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}

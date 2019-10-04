@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Jumbotron } from "react-bootstrap";
 
-import '../css/Services.css';
+import '../assets/css/Services.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -18,7 +18,7 @@ class Services extends Component {
                 <Image
                     className={"Img"}
                     fluid
-                  src={require('../static/macbook.png')}
+                  src={require('../assets/static/macbook.png')}
                   alt="MacBook"
                 />
               </Col>
@@ -45,7 +45,7 @@ class Services extends Component {
                 <Image
                     className={"Img"}
                   id={'iphoneImg'}
-                  src={require('../static/iPhone-X-Mockup.png')}
+                  src={require('../assets/static/iPhone-X-Mockup.png')}
                   alt="Iphone"
                 />
               </Col>

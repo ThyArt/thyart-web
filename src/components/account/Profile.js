@@ -4,7 +4,7 @@ import Modal from "react-responsive-modal";
 import { FormControl, FormGroup, Button } from "react-bootstrap";
 import ReactLoading from "react-loading";
 
-import "../../css/Profile.css";
+import "../../assets/css/Profile.css";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -204,7 +204,7 @@ export class Profile extends Component {
                     {
                       !this.props.isFetching ? (
                         <button className='modify' onClick={this.onFirstnameOpen}>
-                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <img src={require("../../assets/static/pencil.svg")} alt="modify" height="25" width="auto"/>
                           <span className='modifyText'>Modifier</span>
                         </button>
                       ) : (<div/>)
@@ -253,7 +253,7 @@ export class Profile extends Component {
                     {
                       !this.props.isFetching ? (
                         <button className='modify' onClick={this.onLastnameOpen}>
-                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <img src={require("../../assets/static/pencil.svg")} alt="modify" height="25" width="auto"/>
                           <span className='modifyText'>Modifier</span>
                         </button>
                       ) : (<div/>)
@@ -302,7 +302,7 @@ export class Profile extends Component {
                     {
                       !this.props.isFetching ? (
                         <button className='modify' onClick={this.onMailOpen}>
-                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <img src={require("../../assets/static/pencil.svg")} alt="modify" height="25" width="auto"/>
                           <span className='modifyText'>Modifier</span>
                         </button>
                       ) : (<div/>)
@@ -350,7 +350,7 @@ export class Profile extends Component {
                     {
                       !this.props.isFetching ? (
                         <button className='modify' onClick={this.onPasswordOpen}>
-                          <img src={require("../../static/pencil.svg")} alt="modify" height="25" width="auto"/>
+                          <img src={require("../../assets/static/pencil.svg")} alt="modify" height="25" width="auto"/>
                           <span className='modifyText'>Modifier</span>
                         </button>
                       ) : (<div/>)

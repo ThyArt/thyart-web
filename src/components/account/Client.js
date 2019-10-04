@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Jumbotron, Col, FormControl, FormGroup } from "react-bootstrap";
 
-import "../../css/Billing.css";
+import "../../assets/css/Billing.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { createCustomerIfNeeded, modifyCustomerIfNeeded, openModifyCustomer } from "../../actions/actionsCustomers";

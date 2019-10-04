@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { disconnect } from '../actions/actionsAuth';
 
-import '../css/Account.css';
+import '../assets/css/Account.css';
 import {
   NotificationContainer,
   NotificationManager
@@ -40,7 +40,7 @@ export class Account extends Component {
         <Navbar>
           <Navbar.Brand>
             <img
-              src={require('../static/SmallLogo.png')}
+              src={require('../assets/static/SmallLogo.png')}
               width="50"
               height="100"
               className="d-inline-block align-top"
