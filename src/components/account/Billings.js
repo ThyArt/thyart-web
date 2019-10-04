@@ -29,11 +29,6 @@ class Billings extends Component {
     this.props.dispatch(getCustomersIfNeeded(this.props.token));
   };
 
-  onReturn = () => {
-    this.props.dispatch(getBillingsIfNeeded(this.props.token));
-  };
-
-
   render() {
     return (
       <div>
@@ -53,9 +48,6 @@ class Billings extends Component {
                 </div>
                 :
                 <div>
-                  <Button bssize="lg" onClick={this.onReturn} className='billingReturnButton'>
-                    <span className='add'>Retour</span>
-                  </Button>
                   <Billing token={this.props.token}/>
                 </div>
               }

@@ -68,3 +68,12 @@
 .newsletterAddBillImage {
     margin: 0 0 8px;
 }
+
+.newsletterSelector {
+    background-color: white;
+}
+
+.newsletterEditor {
+    background-color: white;
+    height: 300px;
+}

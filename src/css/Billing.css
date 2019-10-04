@@ -31,7 +31,7 @@
 }
 
 .billingJumbotronInput {
-    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 .billingJumbotronInfo {
@@ -54,12 +54,12 @@
 .billingMainButton {
     position: fixed;
     right: 80px;
+    z-index: 1;
 }
 
 .billingReturnButton {
     position: fixed;
-    top: 120px;
-    left: 250px;
+    left: 18%;
     z-index: 1;
 }
 

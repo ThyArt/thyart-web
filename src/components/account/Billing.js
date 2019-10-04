@@ -9,7 +9,7 @@ import {
 
 import "../../css/Billing.css";
 import {
-  createBillingIfNeeded,
+  createBillingIfNeeded, getBillingsIfNeeded,
   modifyBillingIfNeeded,
   openModifyBilling
 } from "../../actions/actionsBillings";
@@ -221,7 +221,10 @@ class Billing extends Component {
       this.setState({ newCustomer: false });
     else
       this.setState({ newCustomer: true });
+  };
 
+  onReturn = () => {
+    this.props.dispatch(getBillingsIfNeeded(this.props.token));
   };
 
   editable() {
@@ -238,10 +241,9 @@ class Billing extends Component {
                 <span className="add">Nouveau client</span>
               </Button>
               <FormGroup
-                className="billingJumbotronInput"
                 validationState={this.getCustomerValidationState()}
               >
-                <FormControl onChange={this.handleChangeCustomer} as="select">
+                <FormControl onChange={this.handleChangeCustomer} as="select" className="billingJumbotronInput">
                   <option key="0" value="">
                     Choisissez un client
                   </option>
@@ -255,6 +257,9 @@ class Billing extends Component {
             </div>
           ) : (
             <div>
+              <Button bssize="lg" onClick={this.onReturn} className='billingReturnButton'>
+                <span className='add'>Retour</span>
+              </Button>
               <Button
                 bssize="lg"
                 onClick={this.onSwitchClient}
@@ -271,14 +276,14 @@ class Billing extends Component {
                 </Col>
                 <Col sm={7}>
                   <FormGroup
-                    className="billingJumbotronInput"
                     validationState={this.getNameValidationState()}
                   >
                     <FormControl
-                      type="name"
-                      value={this.state.fName}
-                      placeholder="Entrer le prénom du client"
-                      onChange={this.handleChangeName}
+                        className="billingJumbotronInput"
+                        type="name"
+                        value={this.state.fName}
+                        placeholder="Entrer le prénom du client"
+                        onChange={this.handleChangeName}
                     />
                     <FormControl.Feedback/>
                   </FormGroup>
@@ -289,14 +294,14 @@ class Billing extends Component {
                 </Col>
                 <Col sm={7}>
                   <FormGroup
-                    className="billingJumbotronInput"
                     validationState={this.getFamilyValidationState()}
                   >
                     <FormControl
-                      type="name"
-                      value={this.state.lName}
-                      placeholder="Entrer le nom du client"
-                      onChange={this.handleChangeFamily}
+                        className="billingJumbotronInput"
+                        type="name"
+                        value={this.state.lName}
+                        placeholder="Entrer le nom du client"
+                        onChange={this.handleChangeFamily}
                     />
                     <FormControl.Feedback/>
                   </FormGroup>
@@ -307,14 +312,14 @@ class Billing extends Component {
                 </Col>
                 <Col sm={7}>
                   <FormGroup
-                    className="billingJumbotronInput"
                     validationState={this.getMailValidationState()}
                   >
                     <FormControl
-                      type="name"
-                      value={this.state.mail}
-                      placeholder="Entrer l'adresse mail du client"
-                      onChange={this.handleChangeMail}
+                        className="billingJumbotronInput"
+                        type="name"
+                        value={this.state.mail}
+                        placeholder="Entrer l'adresse mail du client"
+                        onChange={this.handleChangeMail}
                     />
                     <FormControl.Feedback/>
                   </FormGroup>
@@ -325,14 +330,14 @@ class Billing extends Component {
                 </Col>
                 <Col sm={7}>
                   <FormGroup
-                    className="billingJumbotronInput"
                     validationState={this.getAddressValidationState()}
                   >
                     <FormControl
-                      type="name"
-                      value={this.state.address}
-                      placeholder="Entrer l'adresse du client"
-                      onChange={this.handleChangeAddress}
+                        className="billingJumbotronInput"
+                        type="name"
+                        value={this.state.address}
+                        placeholder="Entrer l'adresse du client"
+                        onChange={this.handleChangeAddress}
                     />
                     <FormControl.Feedback/>
                   </FormGroup>
@@ -343,14 +348,14 @@ class Billing extends Component {
                 </Col>
                 <Col sm={7}>
                   <FormGroup
-                    className="billingJumbotronInput"
                     validationState={this.getCityValidationState()}
                   >
                     <FormControl
-                      type="name"
-                      value={this.state.city}
-                      placeholder="Entrer la ville du client"
-                      onChange={this.handleChangeCity}
+                        className="billingJumbotronInput"
+                        type="name"
+                        value={this.state.city}
+                        placeholder="Entrer la ville du client"
+                        onChange={this.handleChangeCity}
                     />
                     <FormControl.Feedback/>
                   </FormGroup>
@@ -361,14 +366,14 @@ class Billing extends Component {
                 </Col>
                 <Col sm={7}>
                   <FormGroup
-                    className="billingJumbotronInput"
                     validationState={this.getCountryValidationState()}
                   >
                     <FormControl
-                      type="name"
-                      value={this.state.country}
-                      placeholder="Entrer le pays du client"
-                      onChange={this.handleChangeCountry}
+                        className="billingJumbotronInput"
+                        type="name"
+                        value={this.state.country}
+                        placeholder="Entrer le pays du client"
+                        onChange={this.handleChangeCountry}
                     />
                     <FormControl.Feedback/>
                   </FormGroup>
@@ -379,14 +384,14 @@ class Billing extends Component {
                 </Col>
                 <Col sm={7}>
                   <FormGroup
-                    className="billingJumbotronInput"
                     validationState={this.getNumberValidationState()}
                   >
                     <FormControl
-                      type="name"
-                      value={this.state.phone}
-                      placeholder="Entrer le numéro de téléphone du client"
-                      onChange={this.handleChangeNumber}
+                        className="billingJumbotronInput"
+                        type="name"
+                        value={this.state.phone}
+                        placeholder="Entrer le numéro de téléphone du client"
+                        onChange={this.handleChangeNumber}
                     />
                     <FormControl.Feedback/>
                   </FormGroup>
@@ -406,13 +411,13 @@ class Billing extends Component {
             <Col sm={7}>
               {this.props.artworks.length ? (
                 <FormGroup
-                  className="billingJumbotronInput"
                   validationState={this.getArtworkIdValidationState()}
                 >
                   <FormControl
-                    onChange={this.handleChangeArtworkId}
-                    as="select"
-                    value={this.props.artworks[0].value}
+                      className="billingJumbotronInput"
+                      onChange={this.handleChangeArtworkId}
+                      as="select"
+                      value={this.props.artworks[0].value}
                   >
                     <option key="0" value="">
                       Choisissez une oeuvre
@@ -423,28 +428,30 @@ class Billing extends Component {
                       </option>
                     ))}
                   </FormControl>
+                  {this.props.newObj ? (
+                      <Button
+                          bssize="lg"
+                          onClick={this.billingCreation}
+                          className="billingCreateButton"
+                          bsstyle="primary"
+                      >
+                        Créer une nouvelle facture
+                      </Button>
+                  ) : (
+                      <Button
+                          bssize="lg"
+                          onClick={this.billingCreation}
+                          className="billingCreateButton"
+                          bsstyle="primary"
+                      >
+                        Modifier facture
+                      </Button>
+                  )}
                 </FormGroup>
               ) : (
-                <div/>
-              )}
-              {this.props.newObj ? (
-                <Button
-                  bssize="lg"
-                  onClick={this.billingCreation}
-                  className="billingCreateButton"
-                  bsstyle="primary"
-                >
-                  Créer une nouvelle facture
-                </Button>
-              ) : (
-                <Button
-                  bssize="lg"
-                  onClick={this.billingCreation}
-                  className="billingCreateButton"
-                  bsstyle="primary"
-                >
-                  Modifier facture
-                </Button>
+                  <p>
+                    Aucune oeuvre, veuillez ajouter des oeuvres avant de créer une facture.
+                  </p>
               )}
             </Col>
           </div>
