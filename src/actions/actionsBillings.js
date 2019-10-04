@@ -271,8 +271,6 @@ function fetchArtWorksByState(token, state) {
     }
   };
 
-  console.log('test');
-
   state = "?state=" + state;
   return dispatch => {
     return axios

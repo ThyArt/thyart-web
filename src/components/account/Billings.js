@@ -21,6 +21,7 @@ class Billings extends Component {
   }
 
   onCreate = () => {
+    this.props.dispatch(getArtWorksByStateIfNeeded(this.props.token, 'exposed'));
     this.props.dispatch(openCreateBilling());
   };
 

@@ -43,11 +43,13 @@ function billings(state = initialState, action) {
       });
     case RECEIVE_BILLINGS_ARTWORKS:
       return Object.assign({}, state, {
-        artworks: action.artworks
+        artworks: action.artworks,
+        isFetching: false
       });
     case RECEIVE_BILLINGS_CUSTOMERS:
       return Object.assign({}, state, {
-        customers: action.customers
+        customers: action.customers,
+        isFetching: false
       });
     case RECEIVE_BILLINGS_ERROR:
       return Object.assign({}, state, {
