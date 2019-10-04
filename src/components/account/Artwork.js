@@ -45,6 +45,8 @@ export class Artwork extends Component {
       reference: "",
       addModal: false,
       price: "",
+      artistID: "",
+      artist: "",
       AWTitle: "",
       AWState: 1,
       detailsModal: false,
@@ -277,6 +279,8 @@ export class Artwork extends Component {
                            validationState={this.getNewArtworkValidationState()}>
                   <FormLabel>Nom de l'oeuvre</FormLabel>
                   <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
+                  <FormLabel>Nom de l'artiste</FormLabel>
+                  <FormControl type='text' value={this.state.artist} onChange={this.onReferenceChange}/>
                   <FormLabel>Reference</FormLabel>
                   <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
                   <FormLabel>Prix</FormLabel>
@@ -330,6 +334,8 @@ export class Artwork extends Component {
                                    validationState={this.getNewArtworkValidationState()}>
                           <FormLabel>Nom de l'oeuvre</FormLabel>
                           <FormControl type='text' value={this.state.AWTitle} onChange={this.onAWTitleChange}/>
+                          <FormLabel>Nom de l'artiste</FormLabel>
+                          <FormControl type='text' value={this.state.artist} onChange={this.onReferenceChange}/>
                           <FormLabel>Reference</FormLabel>
                           <FormControl type='text' value={this.state.reference} onChange={this.onReferenceChange}/>
                           <FormLabel>Prix</FormLabel>

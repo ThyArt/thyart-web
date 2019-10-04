@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, Container, Row } from 'react-bootstrap';
+import { Navbar, Container } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
