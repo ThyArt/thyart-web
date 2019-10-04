@@ -12,7 +12,15 @@
     "env-cmd": "^10.0.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint-utils": "1.4.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "^4.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.14.0",
+    "eslint-plugin-react-hooks": "^2.1.1",
     "expect": "^24.5.0",
     "fetch-mock": "^7.4.0",
     "formik": "^1.5.8",
@@ -59,8 +67,15 @@
     "eject": "react-scripts eject",
     "pretty": "./node_modules/.bin/prettier --single-quote es6 --write ./src/**/*.{js,jsx} ./src/*.{js,jsx}"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "devDependencies": {
-    "jest-localstorage-mock": "^2.4.0"
+    "cypress": "^3.4.1",
+    "eslint-plugin-cypress": "^2.6.1",
+    "eslint-plugin-jest": "^22.17.0",
+    "jest-localstorage-mock": "^2.4.0",
+    "prettier": "^1.18.2"
   },
   "browserslist": {
     "production": [
