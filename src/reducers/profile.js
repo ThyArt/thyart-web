@@ -1,7 +1,8 @@
 import {
   RECEIVE_PROFILE,
   REQUEST_PROFILE,
-  RECEIVE_PROFILE_ERROR
+  RECEIVE_PROFILE_ERROR,
+  RECEIVE_PERMISSIONS
 } from '../constants/constantsAction';
 
 export const initialState = {
@@ -12,7 +13,8 @@ export const initialState = {
   name: null,
   firstname: null,
   lastname: null,
-  role: null
+  role: null,
+  permissions: []
 };
 
 function profile(state = initialState, action) {
@@ -28,6 +30,12 @@ function profile(state = initialState, action) {
         isFetching: false,
         error: action.error,
         msg: null
+      });
+    case RECEIVE_PERMISSIONS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: null,
+        permissions: action.permissions
       });
     case RECEIVE_PROFILE:
       let role;

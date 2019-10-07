@@ -174,6 +174,20 @@ export class Profile extends Component {
   };
 
   render() {
+
+    let permissions = [];
+    if (this.props.permissions)
+    {
+      this.props.permissions.forEach((permission) => {
+      permissions.push(
+          <div key={permission}>
+            {permission}
+          </div>
+      );
+      });
+    }
+
+
     return (
       <div id='profile'>
         <h1>Vos informations :</h1>
@@ -415,6 +429,14 @@ export class Profile extends Component {
 
             </div>
           </Jumbotron>
+
+          <Jumbotron className='jumbo'>
+            <h3>Permissions :</h3>
+            <div id="form">
+              { permissions }
+            </div>
+
+          </Jumbotron>
         </Col>
 
 
@@ -433,7 +455,8 @@ Profile.propTypes = {
   firstname: PropTypes.string,
   lastname: PropTypes.string,
   role: PropTypes.string,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  permissions: PropTypes.array
 };
 
 function mapStateToProps(state) {
@@ -444,7 +467,8 @@ function mapStateToProps(state) {
     mail,
     firstname,
     lastname,
-    role
+    role,
+    permissions
   } = state.profile;
 
   return {
@@ -454,7 +478,8 @@ function mapStateToProps(state) {
     mail,
     firstname,
     lastname,
-    role
+    role,
+    permissions
   };
 }
 
