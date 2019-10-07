@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {apiURL, memberURL, roleURL, userURL} from "../constants/constantsApi";
+import {apiURL, memberURL, permissionURL, roleURL, userURL} from "../constants/constantsApi";
 import {
   RECEIVE_MEMBERS,
-  RECEIVE_MEMBERS_ERROR,
+  RECEIVE_MEMBERS_ERROR, RECEIVE_PERMISSIONS,
   REQUEST_MEMBERS
 } from "../constants/constantsAction";
 
@@ -35,6 +35,28 @@ function receiveMembers(res) {
   return {
   type: RECEIVE_MEMBERS,
     members: res.data.data.filter(data => (data.role === "gallerist" || data.role === "member"))
+  };
+}
+
+function receivePermissions(res) {
+  return {
+    type: RECEIVE_PERMISSIONS,
+    permissions: res.data.data
+  };
+}
+
+function fetchPermissions(token) {
+  const header_auth = {
+    headers: {
+      Accept: "application/json", "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  };
+  return dispatch => {
+    return axios
+        .get(apiURL + permissionURL, header_auth)
+        .then(res => dispatch(receivePermissions(res)))
+        .catch(error => dispatch(receiveMembersError(error)));
   };
 }
 
@@ -141,7 +163,10 @@ export function getMembersIfNeeded(token) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestMembers());
-      return dispatch(fetchMembers(token));
+      return dispatch(fetchPermissions(token)).then(() => {
+          return dispatch(fetchMembers(token));
+        }
+      );
     }
   };
 }

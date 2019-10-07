@@ -3,7 +3,7 @@ import {
   RECEIVE_ARTWORK,
   RECEIVE_ARTWORKCREATE,
   RECEIVE_ARTWORKS,
-  RECEIVE_ARTWORKS_ERROR,
+  RECEIVE_ARTWORKS_ERROR, RECEIVE_PERMISSIONS,
   //RECEIVE_ARTWORKS_MODIFY,
   REQUEST_ARTWORKS, SORT_ARTWORKS
 } from "../constants/constantsAction";
@@ -15,7 +15,11 @@ const initialState = {
   error: null,
   artworks: [],
   artwork: null,
-  artistId: null
+  artistId: null,
+  canSee: false,
+  canAdd: false,
+  canModify: false,
+  canDelete: false
 };
 
 function artworks(state = initialState, action) {
@@ -33,6 +37,21 @@ function artworks(state = initialState, action) {
         isFetching: false,
         error: action.error,
         msg: null
+      });
+    case RECEIVE_PERMISSIONS:
+      let canSee = (action.permissions.find( permission => permission.id === 21) !== undefined);
+      let canAdd = (action.permissions.find( permission => permission.id === 20) !== undefined);
+      let canModify = (action.permissions.find( permission => permission.id === 22) !== undefined);
+      let canDelete = (action.permissions.find( permission => permission.id === 23) !== undefined);
+
+
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: null,
+        canSee: canSee,
+        canAdd: canAdd,
+        canModify: canModify,
+        canDelete: canDelete
       });
     case RECEIVE_ARTWORKS:
       return Object.assign({}, state, {

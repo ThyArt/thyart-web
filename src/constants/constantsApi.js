@@ -11,7 +11,7 @@ export const customerURL = "api/customer";
 export const billingURL = "api/order";
 export const memberURL = "api/user/member";
 export const roleURL = "api/user/role";
-
+export const permissionURL = "api/user/self/permissions";
 
 export const header = {
   headers: { Accept: "application/json", "Content-Type": "application/json" }

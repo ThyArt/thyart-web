@@ -37,7 +37,6 @@ export class Members extends Component {
     this.props.dispatch(getMembersIfNeeded(this.props.token));
   }
 
-
   onAddOpen = () => {
     this.setState({ addModal: true });
   };
@@ -346,7 +345,9 @@ Members.propTypes = {
   msg: PropTypes.string,
   error: PropTypes.string,
   members: PropTypes.array,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  canAdd: PropTypes.bool,
+  canModify: PropTypes.bool
 };
 
 function mapStateToProps(state) {
@@ -355,7 +356,9 @@ function mapStateToProps(state) {
     msg,
     error,
     members,
-    dispatch
+    dispatch,
+    canAdd,
+    canModify
   } = state.members;
 
   return {
@@ -363,7 +366,9 @@ function mapStateToProps(state) {
     msg,
     error,
     members,
-    dispatch
+    dispatch,
+    canAdd,
+    canModify
   };
 }
 

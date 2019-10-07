@@ -5,7 +5,7 @@ import {
   RECEIVE_CUSTOMER,
   OPEN_CREATE_CUSTOMER,
   SORT_CUSTOMERS,
-  OPEN_MODIFY_CUSTOMER
+  OPEN_MODIFY_CUSTOMER, RECEIVE_PERMISSIONS
 } from "../constants/constantsAction";
 import { cloneDeep } from "lodash";
 
@@ -17,7 +17,11 @@ const initialState = {
   customer: null,
   modif: false,
   newObj: false,
-  table: true
+  table: true,
+  canSee: false,
+  canAdd: false,
+  canModify: false,
+  canDelete: false
 };
 
 function customers(state = initialState, action) {
@@ -33,6 +37,20 @@ function customers(state = initialState, action) {
         isFetching: false,
         error: action.error,
         msg: null
+      });
+    case RECEIVE_PERMISSIONS:
+      let canSee = (action.permissions.find( permission => permission.id === 8) !== undefined);
+      let canAdd = (action.permissions.find( permission => permission.id === 7) !== undefined);
+      let canModify = (action.permissions.find( permission => permission.id === 9) !== undefined);
+      let canDelete = (action.permissions.find( permission => permission.id === 10) !== undefined);
+
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: null,
+        canSee: canSee,
+        canAdd: canAdd,
+        canModify: canModify,
+        canDelete: canDelete
       });
     case RECEIVE_CUSTOMERS:
       return Object.assign({}, state, {

@@ -222,11 +222,16 @@ export class Artwork extends Component {
             <Col xl={10} lg={10} id={"colSearchBarContainer"}>
               <InputGroup className="mb-3">
                 <InputGroup.Prepend>
-                  <Button bssize='large'
-                          id='ajouter'
-                          onClick={this.handleAddArtworkShow}>
-                    Ajouter
-                  </Button>
+                  {
+                    (this.props.canAdd) ?
+                        (
+                            <Button bssize='large'
+                                    id='ajouter'
+                                    onClick={this.handleAddArtworkShow}>
+                              Ajouter
+                            </Button>
+                        ) : null
+                  }
                 </InputGroup.Prepend>
                 <FormControl
                   id={"searchBar"}
@@ -303,9 +308,15 @@ export class Artwork extends Component {
             </Col>
           </Row>
         </Modal>
-        {(this.props.artworks && this.props.artworks.length > 0) ?
+        {(this.props.artworks && this.props.artworks.length > 0 && this.props.canSee) ?
           (<Gallery photos={this.props.artworks} direction={"column"} onClick={this.handleImageClick}/>
           ) : null
+        }
+        {
+          (!this.props.canSee) ?
+              (
+                  <div class="permissionMessage">Vous n'avez pas la permission de voir les artworks</div>
+              ) : null
         }
         <Modal open={this.state.detailsModal} onClose={this.onDetailClose} onOpen={this.onDetailOpen}>
           <h1 id='titleModal'>Détails de l'oeuvre</h1>
@@ -313,16 +324,27 @@ export class Artwork extends Component {
             (this.props.artwork != null) ?
               (
                 <div>
+                  {
+                    (this.props.canDelete) ?
+                        (
+                            <div
+                                className="remove"
+                                onClick={() => this.confirmRemove()} style={{ cursor: "pointer", float: "left" }}
+                            >
+                              <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
+                            </div>
+                        ) : null
+                  }
 
-                  <div
-                    className="remove"
-                    onClick={() => this.confirmRemove()} style={{ cursor: "pointer", float: "left" }}
-                  >
-                    <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
-                  </div>
-                  < Button bsstyle="primary" onClick={this.onModifOpen} bssize='large'>
-                    {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
-                  </Button>
+                  {
+                    (this.props.canModify) ?
+                        (
+                            < Button bsstyle="primary" onClick={this.onModifOpen} bssize='large'>
+                              {(this.state.modifMode) ? (<div>Détail</div>) : (<div>Modifier</div>)}
+                            </Button>
+                        ) : null
+                  }
+
                   {
                     (this.state.modifMode) ? (
                       <div>
@@ -417,7 +439,11 @@ Artwork.propTypes = {
   error: PropTypes.string,
   artworks: PropTypes.array,
   artwork: PropTypes.object,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  canSee: PropTypes.bool,
+  canAdd: PropTypes.bool,
+  canModify: PropTypes.bool,
+  canDelete: PropTypes.bool
 };
 
 function mapStateToProps(state) {
@@ -426,7 +452,11 @@ function mapStateToProps(state) {
     msg,
     error,
     artworks,
-    artwork
+    artwork,
+    canSee,
+    canAdd,
+    canModify,
+    canDelete
   } = state.artworks;
 
   return {
@@ -434,7 +464,11 @@ function mapStateToProps(state) {
     msg,
     error,
     artworks,
-    artwork
+    artwork,
+    canSee,
+    canAdd,
+    canModify,
+    canDelete
   };
 }
 

@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { apiURL, customerURL } from '../constants/constantsApi';
+import {apiURL, customerURL, permissionURL} from '../constants/constantsApi';
 import {
   OPEN_CREATE_CUSTOMER,
   OPEN_MODIFY_CUSTOMER,
   RECEIVE_CUSTOMER,
   RECEIVE_CUSTOMERS,
-  RECEIVE_CUSTOMERS_ERROR,
+  RECEIVE_CUSTOMERS_ERROR, RECEIVE_PERMISSIONS,
   REQUEST_CUSTOMERS, SORT_CUSTOMERS
 } from "../constants/constantsAction";
 import qs from "qs";
@@ -79,6 +79,28 @@ function receiveCustomer(res) {
   return {
     type: RECEIVE_CUSTOMER,
     customer: res.data.data
+  };
+}
+
+function receivePermissions(res) {
+  return {
+    type: RECEIVE_PERMISSIONS,
+    permissions: res.data.data
+  };
+}
+
+function fetchPermissions(token) {
+  const header_auth = {
+    headers: {
+      Accept: "application/json", "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  };
+  return dispatch => {
+    return axios
+        .get(apiURL + permissionURL, header_auth)
+        .then(res => dispatch(receivePermissions(res)))
+        .catch(error => dispatch(receiveCustomersError(error)));
   };
 }
 
@@ -264,7 +286,9 @@ export function getCustomerIfNeeded(token, id) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestCustomers());
-      return dispatch(fetchCustomer(token, id));
+      return dispatch(fetchPermissions(token)).then(() => {
+        return dispatch(fetchCustomer(token, id));
+      });
     }
   };
 }
@@ -273,7 +297,9 @@ export function getCustomersIfNeeded(token, name) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestCustomers());
-      return dispatch(fetchCustomers(token, name));
+      return dispatch(fetchPermissions(token)).then(() => {
+        return dispatch(fetchCustomers(token, name));
+      });
     }
   };
 }

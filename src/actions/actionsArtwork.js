@@ -6,9 +6,9 @@ import {
   RECEIVE_ARTWORK,
   RECEIVE_ARTWORKCREATE,
   RECEIVE_ARTWORKS,
-  SORT_ARTWORKS
+  SORT_ARTWORKS, RECEIVE_PERMISSIONS
 } from "../constants/constantsAction";
-import { apiURL, artWorkImg, artWorkURL } from "../constants/constantsApi";
+import {apiURL, artWorkImg, artWorkURL, permissionURL} from "../constants/constantsApi";
 
 function shouldFetchApi(state) {
   const isFetching = state.artworks.isFetching;
@@ -37,6 +37,29 @@ function receiveArtworksError(error) {
   return {
     type: RECEIVE_ARTWORKS_ERROR,
     error: error_msg
+  };
+}
+
+function receivePermissions(res) {
+  return {
+    type: RECEIVE_PERMISSIONS,
+    permissions: res.data.data
+  };
+}
+
+function fetchPermissions(token) {
+  const header_auth = {
+    headers: {
+      Accept: "application/json", "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  };
+
+  return dispatch => {
+    return axios
+        .get(apiURL + permissionURL, header_auth)
+        .then(res => dispatch(receivePermissions(res)))
+        .catch(error => dispatch(receiveArtworksError(error)));
   };
 }
 
@@ -283,7 +306,9 @@ export function getArtworkByStateIfNeeded(token, state) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
-      return dispatch(fetchArtWorksByState(token, state));
+      return dispatch(fetchPermissions(token)).then(() => {
+        return dispatch(fetchArtWorksByState(token, state));
+      });
     }
   };
 }
@@ -292,7 +317,9 @@ export function getArtWorksIfNeeded(token, name) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
-      return dispatch(fetchArtWorks(token, name));
+      return dispatch(fetchPermissions(token)).then(() => {
+        return dispatch(fetchArtWorks(token, name));
+      });
     }
   };
 }
@@ -301,7 +328,9 @@ export function getArtWorkIfNeeded(token, id) {
   return (dispatch, getState) => {
     if (shouldFetchApi(getState())) {
       dispatch(requestArtworks());
-      return dispatch(fetchArtWork(token, id));
+      return dispatch(fetchPermissions(token)).then(() => {
+        return dispatch(fetchArtWork(token, id));
+      });
     }
   };
 }

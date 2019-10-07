@@ -5,6 +5,9 @@ import "../../css/Billing.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { createCustomerIfNeeded, modifyCustomerIfNeeded, openModifyCustomer } from "../../actions/actionsCustomers";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import * as Table from "reactabular-table";
 
 class Client extends Component {
   constructor(props) {
@@ -281,9 +284,14 @@ class Client extends Component {
   nonEditable() {
     return (
       <div>
-        <Button bssize="lg" onClick={this.onModify} className='billingMainButton'>
-          <span className='add'>Modify</span>
-        </Button>
+        {
+          (this.props.canModify) ?
+              (
+                  <Button bssize="lg" onClick={this.onModify} className='billingMainButton'>
+                    <span className='add'>Modify</span>
+                  </Button>
+              ) : null
+        }
         <Jumbotron className="billingJumbotron">
           <h2 className="billingJumbotronTitle">Informations du client</h2>
 
@@ -362,7 +370,8 @@ Client.propTypes = {
   modif: PropTypes.bool.isRequired,
   newObj: PropTypes.string,
   table: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  canModify: PropTypes.bool
 };
 
 function mapStateToProps(state) {
@@ -374,7 +383,8 @@ function mapStateToProps(state) {
     modif,
     newObj,
     table,
-    dispatch
+    dispatch,
+    canModify
   } = state.customers;
 
   return {
@@ -385,7 +395,8 @@ function mapStateToProps(state) {
     modif,
     newObj,
     table,
-    dispatch
+    dispatch,
+    canModify
   };
 }
 

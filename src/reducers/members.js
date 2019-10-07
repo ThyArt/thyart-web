@@ -1,7 +1,7 @@
 import {
   REQUEST_MEMBERS,
   RECEIVE_MEMBERS_ERROR,
-  RECEIVE_MEMBERS
+  RECEIVE_MEMBERS, RECEIVE_PERMISSIONS
 } from "../constants/constantsAction";
 
 const initialState = {
@@ -9,6 +9,8 @@ const initialState = {
   msg: null,
   error: null,
   members: [],
+  canAdd: false,
+  canModify: false
 };
 
 function members(state = initialState, action) {
@@ -24,6 +26,16 @@ function members(state = initialState, action) {
         isFetching: false,
         error: action.error,
         msg: null
+      });
+    case RECEIVE_PERMISSIONS:
+      let canAdd = (action.permissions.find( permission => permission.id === 1) !== undefined);
+      let canModify = (action.permissions.find( permission => permission.id === 2) !== undefined);
+
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: null,
+        canAdd: canAdd,
+        canModify: canModify,
       });
     case RECEIVE_MEMBERS:
       return Object.assign({}, state, {

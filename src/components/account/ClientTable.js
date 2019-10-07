@@ -75,7 +75,7 @@ class ClientTable extends Component {
   };
 
   getColumns() {
-    return [
+    let columns = [
       {
         property: "last_name",
         header: {
@@ -107,14 +107,14 @@ class ClientTable extends Component {
         cell: {
           formatters: [
             (value, { rowData }) => (
-              <div>
-                <div
-                  className="open"
-                  onClick={() => this.openDetails(rowData)} style={{ cursor: "pointer", float: "left" }}
-                >
-                  <img src={require("../../static/external-link.svg")} alt="modify" height="30" width="auto"/>
-                </div>
-              </div>)]
+                <div>
+                  <div
+                      className="open"
+                      onClick={() => this.openDetails(rowData)} style={{ cursor: "pointer", float: "left" }}
+                  >
+                    <img src={require("../../static/external-link.svg")} alt="modify" height="30" width="auto"/>
+                  </div>
+                </div>)]
         }
       },
       {
@@ -129,17 +129,22 @@ class ClientTable extends Component {
         cell: {
           formatters: [
             (value, { rowData }) => (
-              <div>
-                <div
-                  className="remove"
-                  onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: "pointer", float: "left" }}
-                >
-                  <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
-                </div>
-              </div>)]
+                <div>
+                  <div
+                      className="remove"
+                      onClick={() => this.confirmRemove(rowData.id)} style={{ cursor: "pointer", float: "left" }}
+                  >
+                    <img src={require("../../static/cross.png")} alt="modify" height="30" width="auto"/>
+                  </div>
+                </div>)]
         }
       }
     ];
+
+  if (!this.props.canDelete)
+    columns.pop();
+
+    return columns;
   }
 
   render() {
@@ -188,16 +193,23 @@ class ClientTable extends Component {
           </InputGroup.Append>
         </InputGroup>
 
-        <Container fluid>
-          <Row>
-            <Col id={"colContainerTable"}>
-              <Table.Provider className="pure-table pure-table-bordered" columns={columns}>
-                <Table.Header/>
-                <Table.Body rows={rows} rowKey="id"/>
-              </Table.Provider>
-            </Col>
-          </Row>
-        </Container>
+        {
+          (this.props.canSee) ?
+              (
+                  <Container fluid>
+                    <Row>
+                      <Col id={"colContainerTable"}>
+                        <Table.Provider className="pure-table pure-table-bordered" columns={columns}>
+                          <Table.Header/>
+                          <Table.Body rows={rows} rowKey="id"/>
+                        </Table.Provider>
+                      </Col>
+                    </Row>
+                  </Container>
+              ) : (
+                  <div id="permissionMessage">Vous n'avez pas la permission de voir les clients</div>
+              )
+        }
 
       </div>
     );
@@ -212,7 +224,11 @@ ClientTable.propTypes = {
   modif: PropTypes.bool.isRequired,
   table: PropTypes.bool.isRequired,
   customers: PropTypes.array,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  canSee: PropTypes.bool,
+  canAdd: PropTypes.bool,
+  canModify: PropTypes.bool,
+  canDelete: PropTypes.bool
 };
 
 function mapStateToProps(state) {
@@ -223,7 +239,10 @@ function mapStateToProps(state) {
     modif,
     table,
     customers,
-    dispatch
+    dispatch,
+    canSee,
+    canAdd,
+    canDelete
   } = state.customers;
 
   return {
@@ -233,7 +252,10 @@ function mapStateToProps(state) {
     modif,
     table,
     customers,
-    dispatch
+    dispatch,
+    canSee,
+    canAdd,
+    canDelete
   };
 }
 
