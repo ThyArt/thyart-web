@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiURL, memberURL, userURL } from "../constants/constantsApi";
+import {apiURL, memberURL, roleURL, userURL} from "../constants/constantsApi";
 import {
   RECEIVE_MEMBERS,
   RECEIVE_MEMBERS_ERROR,
@@ -34,7 +34,22 @@ function receiveMembersError(error) {
 function receiveMembers(res) {
   return {
   type: RECEIVE_MEMBERS,
-    members: res.data.data
+    members: res.data.data.filter(data => (data.role === "gallerist" || data.role === "member"))
+  };
+}
+
+function modifyMember(token, id, role) {
+  const header_auth = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Bearer " + token
+    }
+  };
+
+  return dispatch => {
+    return axios
+        .post(apiURL + roleURL + "/" + id + "?role=" + role, {}, header_auth)
+        .catch(error => dispatch(receiveMembersError(error)));
   };
 }
 
@@ -105,6 +120,21 @@ export function createMemberIfNeeded(
       });
     }
   };
+}
+
+export function modifyMemberIfNeeded(token, id, role)
+{
+  return (dispatch, getState) => {
+    if (shouldFetchApi(getState()))
+    {
+      dispatch(requestMembers());
+      return dispatch(modifyMember(token, id, role)).then(() =>
+          {
+            return dispatch(fetchMembers(token));
+          }
+      );
+    }
+  }
 }
 
 export function getMembersIfNeeded(token) {

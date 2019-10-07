@@ -9,7 +9,7 @@ import Modal from "react-responsive-modal";
 import Container from "react-bootstrap/Container";
 import FormLabel from "react-bootstrap/FormLabel";
 import Switch from "react-switch";
-import { getMembersIfNeeded, createMemberIfNeeded } from "../../actions/actionsMembers";
+import {getMembersIfNeeded, createMemberIfNeeded, modifyMemberIfNeeded} from "../../actions/actionsMembers";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -118,8 +118,11 @@ export class Members extends Component {
     }
   }
 
-  onPermissionsChange = (checked) => {
-    console.log(checked);
+  onPermissionsChange = (checked, event, id) => {
+    if (checked)
+      this.props.dispatch(modifyMemberIfNeeded(this.props.token, id, "gallerist"));
+    else
+      this.props.dispatch(modifyMemberIfNeeded(this.props.token, id, "member"));
   };
 
   getColumns() {
@@ -163,7 +166,7 @@ export class Members extends Component {
                       Membre
                     </Col>
                     <Col xs={4}>
-                      <Switch checkedIcon={false} uncheckedIcon={false} checked={rowData.isGalerist} onChange={this.onPermissionsChange} />
+                      <Switch checkedIcon={false} uncheckedIcon={false} checked={(rowData.role === 'gallerist')} onChange={this.onPermissionsChange} id={rowData.id}/>
                     </Col>
                     <Col xs={4}>
                       Galeriste

@@ -37,7 +37,8 @@ function receiveProfile(res) {
     mail: res.data["data"]["email"],
     firstname: res.data["data"]["firstname"],
     lastname: res.data["data"]["lastname"],
-    msg: null
+    msg: null,
+    role: res.data["data"]["role"]
   };
 }
 
@@ -47,7 +48,8 @@ function receiveProfileModify(res) {
     mail: res.data["data"]["email"],
     firstname: res.data["data"]["firstname"],
     lastname: res.data["data"]["lastname"],
-    msg: "Votre profil a été modifié"
+    msg: "Votre profil a été modifié",
+    role: res.data["data"]["role"]
   };
 }
 

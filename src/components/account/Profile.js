@@ -393,6 +393,26 @@ export class Profile extends Component {
                   </Button>
                 </Modal>
               </div>
+
+              <div>
+                <Row className="info">
+                  <Col xl={3} lg={3} sm={2} className='field'>
+                    Role:
+                  </Col>
+                  <Col xl={4} lg={4} sm={2}>
+                    {this.props.isFetching ? (
+                        <ReactLoading type={"spin"} color={"black"} height={50} width={50}/>
+                    ) : (
+                        <div>
+                          {this.props.role}
+                        </div>
+                    )
+                    }
+                  </Col>
+                </Row>
+
+              </div>
+
             </div>
           </Jumbotron>
         </Col>
@@ -412,6 +432,7 @@ Profile.propTypes = {
   mail: PropTypes.string,
   firstname: PropTypes.string,
   lastname: PropTypes.string,
+  role: PropTypes.string,
   dispatch: PropTypes.func.isRequired
 };
 
@@ -422,7 +443,8 @@ function mapStateToProps(state) {
     error,
     mail,
     firstname,
-    lastname
+    lastname,
+    role
   } = state.profile;
 
   return {
@@ -431,7 +453,8 @@ function mapStateToProps(state) {
     error,
     mail,
     firstname,
-    lastname
+    lastname,
+    role
   };
 }
 

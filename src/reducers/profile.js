@@ -11,7 +11,8 @@ export const initialState = {
   mail: null,
   name: null,
   firstname: null,
-  lastname: null
+  lastname: null,
+  role: null
 };
 
 function profile(state = initialState, action) {
@@ -29,12 +30,30 @@ function profile(state = initialState, action) {
         msg: null
       });
     case RECEIVE_PROFILE:
+      let role;
+
+      switch (action.role) {
+        case 'gallerist':
+          role = 'Galeriste';
+          break;
+        case 'member':
+          role = 'Membre de la galerie';
+          break;
+        case 'admin':
+          role = 'Administrateur';
+          break;
+        default:
+          role = action.role;
+          break;
+      }
+
       return Object.assign({}, state, {
         isFetching: false,
         mail: action.mail,
         firstname: action.firstname,
         lastname: action.lastname,
-        msg: action.msg
+        msg: action.msg,
+        role: role
       });
     default:
       return state;
