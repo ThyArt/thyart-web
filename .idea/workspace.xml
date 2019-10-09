@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d5d71b40-c4da-448d-a9c4-44cf18048016" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/actions/actionsAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/actionsAuth.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1OgIO1ItBiYQkjtL3LI5EKjaVOJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.travis" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d5d71b40-c4da-448d-a9c4-44cf18048016" name="Default Changelist" comment="" />
+      <created>1564392776600</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1564392776600</updated>
+      <workItem from="1564392779719" duration="9000" />
+      <workItem from="1564399368725" duration="3000" />
+      <workItem from="1564399376110" duration="1000000" />
+      <workItem from="1564484322948" duration="506000" />
+      <workItem from="1564669554523" duration="8515000" />
+      <workItem from="1564683858199" duration="4072000" />
+      <workItem from="1566042381547" duration="706000" />
+      <workItem from="1566043774281" duration="1000" />
+      <workItem from="1566309437595" duration="201000" />
+      <workItem from="1566810339636" duration="1235000" />
+      <workItem from="1566980050342" duration="26000" />
+      <workItem from="1567428725429" duration="378000" />
+      <workItem from="1567510953354" duration="271000" />
+      <workItem from="1568229961568" duration="1907000" />
+      <workItem from="1568238282346" duration="805000" />
+      <workItem from="1570180308545" duration="34000" />
+      <workItem from="1570180359036" duration="1714000" />
+      <workItem from="1570456915681" duration="566000" />
+      <workItem from="1570649830169" duration="594000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
