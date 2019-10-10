@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from 'theme';
+import theme from 'assets/jss/material-dashboard-react/layouts/theme';
 
 function withRoot(Component) {
   function WithRoot(props) {

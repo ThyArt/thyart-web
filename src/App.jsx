@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import LandingLayout from "layout/LandingLayout";
+import LandingLayout from 'layout/LandingLayout';
 
 class App extends Component {
   render() {
     return (
-        <Router>
-          <div>
-            <Switch>
-              <Route exact path="/" component={LandingLayout} />
-            </Switch>
-          </div>
-        </Router>
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/" component={LandingLayout} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }

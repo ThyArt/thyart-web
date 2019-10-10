@@ -21,18 +21,18 @@ function Copyright() {
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: theme.palette.secondary.light
   },
   container: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(8),
-    display: 'flex',
+    display: 'flex'
   },
   iconsWrapper: {
-    height: 120,
+    height: 120
   },
   icons: {
-    display: 'flex',
+    display: 'flex'
   },
   icon: {
     width: 48,
@@ -43,33 +43,33 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.warning.main,
     marginRight: theme.spacing(1),
     '&:hover': {
-      backgroundColor: theme.palette.warning.dark,
-    },
+      backgroundColor: theme.palette.warning.dark
+    }
   },
   list: {
     margin: 0,
     listStyle: 'none',
-    paddingLeft: 0,
+    paddingLeft: 0
   },
   listItem: {
     paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5)
   },
   language: {
     marginTop: theme.spacing(1),
-    width: 150,
-  },
+    width: 150
+  }
 }));
 
 const LANGUAGES = [
   {
     code: 'en-US',
-    name: 'English',
+    name: 'English'
   },
   {
     code: 'fr-FR',
-    name: 'Français',
-  },
+    name: 'Français'
+  }
 ];
 
 export default function AppFooter() {
@@ -120,7 +120,7 @@ export default function AppFooter() {
             <TextField
               select
               SelectProps={{
-                native: true,
+                native: true
               }}
               className={classes.language}
             >
