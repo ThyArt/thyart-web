@@ -19,11 +19,11 @@ const useStyles = makeStyles(theme=>({
         color: theme.palette.text.secondary,
         margin: 'auto',
         maxWidth: 500,
+        height: 420,
 
     },
     media: {
-        height: 140,
-        objectFit: 'cover'
+        height: 140
 
     },
 
@@ -40,8 +40,6 @@ export default function Services() {
                             <CardMedia
                                 component="img"
                                 alt="macbook"
-                                height="25%"
-                                objectFit='cover'
                                 image={require('assets/img/macbook.png')}
                                 title="macbook"
                             />
@@ -62,8 +60,9 @@ export default function Services() {
                     <Card className={classes.card}>
                         <CardActionArea>
                             <CardMedia
-                                className={classes.media}
-                                image="assets/img/macbook.png"
+                                component="img"
+                                alt="macbook"
+                                image={require('assets/img/macbook.png')}
                                 title="macbook"
                             />
                             <CardContent>
