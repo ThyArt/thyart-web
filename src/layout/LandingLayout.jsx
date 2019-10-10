@@ -12,7 +12,6 @@ const switchRoutes = (
       if (prop.layout === '/') {
         return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       }
-      console.log('return null');
       return null;
     })}
   </Switch>
