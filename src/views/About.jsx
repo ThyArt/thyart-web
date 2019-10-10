@@ -6,16 +6,16 @@ import Paper from '@material-ui/core/Paper';
 const styles = makeStyles(theme => ({
   aboutRoot: {
     flexGrow: 1,
-    backgroundColor: '#f4f5f7',
   },
   aboutContainer: {
     width: '100%',
+    margin: '0',
   },
   AboutPaper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
     height: '100%',
+    minWidth: '300px'
   },
   aboutText: {
     fontSize: '26px',
@@ -32,6 +32,7 @@ const styles = makeStyles(theme => ({
   aboutQuotation: {
     fontSize: '30px',
     padding: '5%',
+    marginLeft: '10%',
   },
   aboutQuote: {
     color: '#4A4A4A',
@@ -47,12 +48,12 @@ export default function () {
   return (
       <div className={classes.aboutRoot}>
         <Grid container spacing={10} justify="center" className={classes.aboutContainer}>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Paper className={classes.AboutPaper}>
               <img
                   src={require("assets/img/manage_icon.png")}
                   alt="manage"
-                  height="120"
+                  height="100"
                   width="auto"
                   className={classes.aboutLogo}
               />
@@ -65,12 +66,12 @@ export default function () {
               </p>
             </Paper>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Paper className={classes.AboutPaper}>
               <img
                   src={require("assets/img/suivi_icon.png")}
                   alt="manage"
-                  height="120"
+                  height="100"
                   width="auto"
                   className={classes.aboutLogo}
               />
@@ -83,12 +84,12 @@ export default function () {
               </p>
             </Paper>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Paper className={classes.AboutPaper}>
               <img
                   src={require("assets/img/relation_icon.png")}
                   alt="manage"
-                  height="120"
+                  height="100"
                   width="auto"
                   className={classes.aboutLogo}
               />
