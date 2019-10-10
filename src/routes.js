@@ -1,7 +1,7 @@
 // @material-ui/icons
 import Person from '@material-ui/icons/Person';
-import SignInSide from 'views/SignIn';
-import SignUp from 'views/SignIn';
+import SignIn from 'views/SignIn';
+import SignUp from 'views/SignUp';
 // core components/views for Admin layout
 // core components/views for RTL layout
 
@@ -10,7 +10,7 @@ const landingRoutes = [
     path: 'sign-in',
     name: 'Connection',
     icon: Person,
-    component: SignInSide,
+    component: SignIn,
     layout: '/'
   },
   {
