@@ -19,13 +19,13 @@ const useStyles = makeStyles(theme=>({
         color: theme.palette.text.secondary,
         margin: 'auto',
         maxWidth: 500,
-        height: 420,
-
+        height: 420
     },
-    media: {
-        height: 140
-
+    mediaH: {
     },
+    mediaV: {
+        height: '50px'
+    }
 
 }));
 
@@ -37,7 +37,7 @@ export default function Services() {
                 <Grid item xs={6}>
                     <Card className={classes.card}>
                         <CardActionArea>
-                            <CardMedia
+                            <CardMedia className={classes.mediaH}
                                 component="img"
                                 alt="macbook"
                                 image={require('assets/img/macbook.png')}
@@ -59,10 +59,10 @@ export default function Services() {
                 <Grid item xs={6}>
                     <Card className={classes.card}>
                         <CardActionArea>
-                            <CardMedia
+                            <CardMedia className={classes.mediaV}
                                 component="img"
                                 alt="macbook"
-                                image={require('assets/img/macbook.png')}
+                                image={require('assets/img/iPhone-X-Mockup.png')}
                                 title="macbook"
                             />
                             <CardContent>
