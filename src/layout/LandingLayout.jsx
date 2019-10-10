@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import withRoot from 'withRoot';
 import { Switch, Route } from 'react-router-dom';
 import landingRoutes from 'routes';
