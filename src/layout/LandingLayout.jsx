@@ -29,15 +29,17 @@ function LandingLayout(props) {
     return (
         <div>
             <AppAppBar/>
-            {getRoute() ? (
-                <div className={classes.content}>
-                    <div className={classes.container}>
-                        {switchRoutes}
+            <div className={classes.wrapper}>
+                {getRoute() ? (
+                    <div className={classes.content}>
+                        <div className={classes.container}>
+                            {switchRoutes}
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div className={classes.map}>{switchRoutes}</div>
-            )}
+                ) : (
+                    <div className={classes.map}>{switchRoutes}</div>
+                )}
+            </div>
             <div className={classes.placeholder} />
         </div>
     );

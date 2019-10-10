@@ -8,7 +8,7 @@ const appStyle = theme => ({
   wrapper: {
     position: "relative",
     top: "0",
-    height: "100vh"
+    height: "calc(100vh - 70px)"
   },
   mainPanel: {
     [theme.breakpoints.up("md")]: {
@@ -23,13 +23,15 @@ const appStyle = theme => ({
     overflowScrolling: "touch"
   },
   content: {
-    marginTop: "70px",
+    marginTop: "0px",
     padding: "30px 15px",
-    minHeight: "calc(100vh - 123px)"
+    height: "calc(100vh - 70px)"
   },
-  container,
+  container: {
+    height: '100%'
+  },
   map: {
-    marginTop: "70px"
+    marginTop: "0px"
   }
 });
 
