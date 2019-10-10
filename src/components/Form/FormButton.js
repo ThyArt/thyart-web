@@ -10,7 +10,7 @@ function FormButton(props) {
 
 FormButton.propTypes = {
   disabled: PropTypes.bool,
-  mounted: PropTypes.bool,
+  mounted: PropTypes.bool
 };
 
 export default defer(FormButton);
