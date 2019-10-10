@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 
-
 const useStyles = makeStyles(theme=>({
     root: {
         flexGrow: 1,
@@ -24,6 +23,8 @@ const useStyles = makeStyles(theme=>({
     },
     media: {
         height: 140,
+        objectFit: 'cover'
+
     },
 
 }));
@@ -39,8 +40,9 @@ export default function Services() {
                             <CardMedia
                                 component="img"
                                 alt="macbook"
-                                height="140"
-                                image="assets/img/macbook.png"
+                                height="25%"
+                                objectFit='cover'
+                                image={require('assets/img/macbook.png')}
                                 title="macbook"
                             />
                             <CardContent>
