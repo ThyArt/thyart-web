@@ -4,10 +4,7 @@ import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from 'components/AppBar/AppBar';
 import Toolbar, { styles as toolbarStyles } from 'components/ToolBar/Toolbar';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
-
-const forwardedLink = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
+import Link from 'components/Link/Link';
 
 const styles = theme => ({
   title: {
@@ -46,19 +43,11 @@ function AppAppBar(props) {
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           <div className={classes.left} />
-          <Link
-            component={forwardedLink}
-            variant="h6"
-            underline="none"
-            color="inherit"
-            className={classes.title}
-            to="/"
-          >
+          <Link variant="h6" underline="none" color="inherit" className={classes.title} to="/">
             {'Thy Art'}
           </Link>
           <div className={classes.right}>
             <Link
-              component={forwardedLink}
               color="inherit"
               variant="h6"
               underline="none"
@@ -68,7 +57,6 @@ function AppAppBar(props) {
               {'Sign In'}
             </Link>
             <Link
-              component={forwardedLink}
               variant="h6"
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}

@@ -33,7 +33,7 @@
     "test:ci": "react-scripts test --ci --coverage",
     "test:e2e:ci": "concurrently -k -s first \"yarn start\" \"yarn test:e2e\"",
     "cypress:open": "cypress open",
-    "prettier": "prettier --single-quote es6 --write ./src/**/*.{js,jsx} ./src/*.{js,jsx}"
+    "prettier": "prettier --single-quote es6 --write ./src/**/**/*.{js,jsx} ./src/**/*.{js,jsx} ./src/*.{js,jsx}"
   },
   "eslintConfig": {
     "extends": "react-app"
