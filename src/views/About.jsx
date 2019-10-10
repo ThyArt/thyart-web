@@ -48,7 +48,7 @@ export default function () {
   return (
       <div className={classes.aboutRoot}>
         <Grid container spacing={10} justify="center" className={classes.aboutContainer}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Paper className={classes.AboutPaper}>
               <img
                   src={require("assets/img/manage_icon.png")}
@@ -66,7 +66,7 @@ export default function () {
               </p>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Paper className={classes.AboutPaper}>
               <img
                   src={require("assets/img/suivi_icon.png")}
@@ -84,7 +84,7 @@ export default function () {
               </p>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Paper className={classes.AboutPaper}>
               <img
                   src={require("assets/img/relation_icon.png")}
