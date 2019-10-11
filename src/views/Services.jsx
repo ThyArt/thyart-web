@@ -22,13 +22,16 @@ const useStyles = makeStyles(theme=>({
         height: 420
     },
     mediaH: {
-        height: '250px',
-        width: "auto"
+        display: "block",
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: '100%'
     },
     mediaV: {
-        height: '250px',
-        width: "auto",
-        marginLeft: "170px"
+        display: "block",
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: '30%'
     }
 
 }));
