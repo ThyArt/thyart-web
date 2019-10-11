@@ -22,9 +22,13 @@ const useStyles = makeStyles(theme=>({
         height: 420
     },
     mediaH: {
+        height: '250px',
+        width: "auto"
     },
     mediaV: {
-        height: '50px'
+        height: '250px',
+        width: "auto",
+        marginLeft: "170px"
     }
 
 }));
@@ -61,9 +65,9 @@ export default function Services() {
                         <CardActionArea>
                             <CardMedia className={classes.mediaV}
                                 component="img"
-                                alt="macbook"
+                                alt="Iphone"
                                 image={require('assets/img/iPhone-X-Mockup.png')}
-                                title="macbook"
+                                title="Iphone"
                             />
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="h2">
