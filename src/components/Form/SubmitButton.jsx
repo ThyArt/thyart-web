@@ -9,16 +9,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SubmitButton({ label }) {
+export default function SubmitButton({ label, disabled }) {
   const classes = useStyles();
 
   return (
-    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+    <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      color="primary"
+      className={classes.submit}
+      disabled={disabled}
+    >
       {label}
     </Button>
   );
 }
 
 SubmitButton.prototype = {
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  disabled: PropTypes.boolean
 };

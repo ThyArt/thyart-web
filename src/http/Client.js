@@ -6,7 +6,7 @@ const axios = Axios.create({
   baseURL: `${process.env.REACT_APP_API_ENDPOINT}`,
   responseType: 'json',
   headers: {
-    Accept: 'applicartion/json',
+    Accept: 'application/json',
     'Content-type': 'application/json'
   }
 });

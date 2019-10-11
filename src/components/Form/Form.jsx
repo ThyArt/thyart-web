@@ -47,7 +47,7 @@ const Footer = ({ children }) => {
   return <div className={classes.footer}>{children}</div>;
 };
 
-function Form({ title, children, submitLabel }) {
+function Form({ title, children, submitLabel, onSubmit, disabled }) {
   const classes = useStyles();
 
   const body = findByType(children, Body);
@@ -65,9 +65,9 @@ function Form({ title, children, submitLabel }) {
         <Typography component="h1" variant="h5">
           {title}
         </Typography>
-        <form noValidate className={classes.form}>
+        <form noValidate className={classes.form} onSubmit={onSubmit}>
           <Body {...bodyProps} />
-          <SubmitButton label={submitLabel} />
+          <SubmitButton label={submitLabel} disabled={disabled} />
           <Footer {...footerProps} />
         </form>
       </div>
@@ -86,7 +86,9 @@ Footer.prototype = {
 Form.prototype = {
   children: PropTypes.element,
   title: PropTypes.string.isRequired,
-  submitLabel: PropTypes.string.isRequired
+  submitLabel: PropTypes.string.isRequired,
+  onSubmit: PropTypes.function,
+  disabled: PropTypes.boolean
 };
 
 Form.Body = Body;
