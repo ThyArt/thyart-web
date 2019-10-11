@@ -1,11 +1,10 @@
-import React from 'react'
-import CarouselPage from "components/Carousel/CarouselPage";
+import React from 'react';
+import CarouselPage from 'components/Carousel/CarouselPage';
 
 export default function LandingPage() {
-
-    return (
+  return (
     <div>
-        <CarouselPage/>
+      <CarouselPage />
     </div>
-    );
+  );
 }
