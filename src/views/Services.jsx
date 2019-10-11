@@ -6,6 +6,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import _ from 'lodash'
 
 
 const useStyles = makeStyles(theme=>({
@@ -36,54 +37,67 @@ const useStyles = makeStyles(theme=>({
 
 }));
 
+const macbookDesc = 'Visualiser facilement les données critiques de votre galerie à\n' +
+  '                                    travers une interface intuitive. L\'interface web permet une\n' +
+  '                                    compatibilité avec système windows, Mac et linux.';
+
+const iPhoneDesc = 'La version mobile du site vous permet de consulter les\n' +
+  '                                    informations de votre galerie tout en étant en déplacement';
+
+
+
 export default function Services() {
     const classes = useStyles();
+  const cardsSpec = {
+    macbook: {
+      cardMedia: {
+        className: classes.mediaH,
+        component : "img",
+        alt: "macbook",
+        image: require('assets/img/macbook.png'),
+        title: "macbook"
+      },
+      cardContent: {
+        typoTitle: "Ordinateur",
+        typoText: macbookDesc,
+      }
+    },
+    iphone: {
+        cardMedia: {
+          className: classes.mediaV,
+          component : "img",
+          alt: "iPhone",
+          image: require('assets/img/iPhone-X-Mockup.png'),
+          title: "iPhone"
+        },
+      cardContent: {
+        typoTitle: "Téléphone",
+        typoText: iPhoneDesc,
+      }
+    }
+  };
+
     return (
         <div className={classes.root}>
-            <Grid container spacing={3}>
-                <Grid item xs={6}>
-                    <Card className={classes.card}>
-                        <CardActionArea>
-                            <CardMedia className={classes.mediaH}
-                                component="img"
-                                alt="macbook"
-                                image={require('assets/img/macbook.png')}
-                                title="macbook"
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    Ordinateur
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    Visualiser facilement les données critiques de votre galerie à
-                                    travers une interface intuitive. L'interface web permet une
-                                    compatibilité avec système windows, Mac et linux.
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
-                <Grid item xs={6}>
-                    <Card className={classes.card}>
-                        <CardActionArea>
-                            <CardMedia className={classes.mediaV}
-                                component="img"
-                                alt="Iphone"
-                                image={require('assets/img/iPhone-X-Mockup.png')}
-                                title="Iphone"
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    Téléphone
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    La version mobile du site vous permet de consulter les
-                                    informations de votre galerie tout en étant en déplacement
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
+
+          <Grid container spacing={3}>
+            {_.map(cardsSpec, (item) =>
+              <Grid item xs={6}>
+                <Card className={classes.card}>
+                  <CardActionArea>
+                    <CardMedia {...item.cardMedia} />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {item.cardContent.typoTitle}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        {item.cardContent.typoText}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            )}
             </Grid>
         </div>
     );
