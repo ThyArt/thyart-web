@@ -1,7 +1,8 @@
 import React from 'react';
 import { TextField as BaseTextField } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-export default function TextField({ id, label, name, autoComplete, autofocus, required }) {
+export default function TextField({ id, label, name, autoComplete, autoFocus, required }) {
   return (
     <BaseTextField
       variant="outlined"
@@ -12,7 +13,16 @@ export default function TextField({ id, label, name, autoComplete, autofocus, re
       label={label}
       name={name}
       autoComplete={autoComplete}
-      autoFocus={autofocus}
+      autoFocus={autoFocus}
     />
   );
 }
+
+TextField.prototype = {
+  id: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  autoComplete: PropTypes.string,
+  autoFocus: PropTypes.boolean,
+  required: PropTypes.boolean
+};

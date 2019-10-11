@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import SubmitButton from './SubmitButton';
 import findByType from 'utils/findByType';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -73,6 +74,20 @@ function Form({ title, children, submitLabel }) {
     </Grid>
   );
 }
+
+Body.prototype = {
+  children: PropTypes.element
+};
+
+Footer.prototype = {
+  children: PropTypes.element
+};
+
+Form.prototype = {
+  children: PropTypes.element,
+  title: PropTypes.string.isRequired,
+  submitLabel: PropTypes.string.isRequired
+};
 
 Form.Body = Body;
 Form.Footer = Footer;

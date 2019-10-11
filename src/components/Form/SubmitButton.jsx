@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   submit: {
@@ -17,3 +18,7 @@ export default function SubmitButton({ label }) {
     </Button>
   );
 }
+
+SubmitButton.prototype = {
+  label: PropTypes.string.isRequired
+};
