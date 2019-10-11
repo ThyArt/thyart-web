@@ -106,3 +106,7 @@ yarn-error.log*
 .idea/
 
 *.icloud
+
+cypress/screenshots/All Specs/
+
+cypress/videos/
