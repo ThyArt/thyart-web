@@ -1,5 +1,5 @@
 import useAxios from 'axios-hooks';
-import * as methods from './Methods';
+import * as methods from 'variables/methods';
 
 const SignInHook = () =>
   useAxios(

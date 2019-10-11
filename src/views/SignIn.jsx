@@ -12,6 +12,7 @@ import { validateEmail, validatePassword } from 'utils/validators';
 import SnackBarWrapper from '../components/SnackBarWrapper/SnackBarWrapper';
 import Snackbar from '@material-ui/core/Snackbar';
 import Copyright from 'components/Copyright/Copyright';
+import Cookies from 'universal-cookie';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,10 +31,24 @@ export default function SignIn() {
   const [{ data, error }, execute] = SignInRequest.hook();
   const [email, setEmail] = useState({ value: '', error: false });
   const [password, setPassword] = useState({ value: '', error: false });
+  const [rememberMe, setRememberMe] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, closedByButton: false });
 
   if (error && !snackbar.closedByButton && !snackbar.open)
     setSnackbar({ open: true, closedByButton: false });
+
+  if (data) {
+    const cookie = new Cookies();
+    cookie.set(
+      'accessToken',
+      { access_token: data.access_token, token_type: data.token_type },
+      { path: '/', maxAge: data.expires_in }
+    );
+
+    if (rememberMe) {
+      cookie.set('refreshToken', data.refresh_token, { path: '/' });
+    }
+  }
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -84,7 +99,12 @@ export default function SignIn() {
             onChange={e => onChange(e, setPassword, validatePassword)}
             {...password}
           />
-          <CheckBox label={'Remember me'} value={'remember'} />
+          <CheckBox
+            label={'Remember me'}
+            value={'remember'}
+            checked={rememberMe}
+            onChange={e => setRememberMe(e.target.checked)}
+          />
         </Form.Body>
         <Form.Footer>
           <Grid container>
