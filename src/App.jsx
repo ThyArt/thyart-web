@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import LandingLayout from 'layout/LandingLayout';
 import { Configure } from 'http/Client';
+import DashBoardLayout from 'layout/DashBoardLayout';
 
 Configure();
 
@@ -11,6 +12,7 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
+            <Route path="/dashboard" component={DashBoardLayout} />
             <Route path="/" component={LandingLayout} />
           </Switch>
         </div>
