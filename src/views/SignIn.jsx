@@ -12,7 +12,7 @@ import { validateEmail, validatePassword } from 'utils/validators';
 import SnackBarWrapper from '../components/SnackBarWrapper/SnackBarWrapper';
 import Snackbar from '@material-ui/core/Snackbar';
 import Copyright from 'components/Copyright/Copyright';
-import Cookies from 'universal-cookie';
+import { generateCookie } from 'http/Cookie';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,16 +38,7 @@ export default function SignIn() {
     setSnackbar({ open: true, closedByButton: false });
 
   if (data) {
-    const cookie = new Cookies();
-    cookie.set(
-      'accessToken',
-      { access_token: data.access_token, token_type: data.token_type },
-      { path: '/', maxAge: data.expires_in }
-    );
-
-    if (rememberMe) {
-      cookie.set('refreshToken', data.refresh_token, { path: '/' });
-    }
+    generateCookie(data, rememberMe);
   }
 
   const handleClose = (event, reason) => {
