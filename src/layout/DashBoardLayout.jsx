@@ -7,7 +7,7 @@ import bgImage from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/reactlogo.png';
 import { Switch, Route } from 'react-router-dom';
 import Footer from 'components/Footer/Footer';
-import Redirect from "react-router-dom/es/Redirect";
+import Redirect from 'react-router-dom/es/Redirect';
 
 const useStyles = makeStyles(styles);
 
@@ -19,7 +19,7 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from={'/dashboard'} to={'/dashboard/accueil'}/>
+    <Redirect from={'/dashboard'} to={'/dashboard/accueil'} />
   </Switch>
 );
 
