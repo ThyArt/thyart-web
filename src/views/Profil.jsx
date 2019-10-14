@@ -65,6 +65,7 @@ export default function Profile() {
       <h1> Vos informations : </h1>
       <Grid container spacing={3}>
         <Grid item md={3} sm={5} xs={8}>
+          <!--TODO: get le prenom a la place du paper avec axios-->
           <Paper className={classes.paper}>Prenom</Paper>
         </Grid>
         <Grid item  md={1} sm={3} xs={4}>
@@ -91,6 +92,7 @@ export default function Profile() {
               <Button onClick={() => {setOpenFirstname(false)}} color="primary">
                 Annulez
               </Button>
+              <!--TODO: set le prenom enregistré avec axios-->
               <Button onClick={() => {setOpenFirstname(false)}}  color="primary">
                 Enregistrer
               </Button>
@@ -98,6 +100,9 @@ export default function Profile() {
           </Dialog>
         </Grid>
       </Grid>
+
+      <!--TODO: effectuer les TODO pour les autres grid + mapper si possible-->
+
       <Grid container spacing={3}>
         <Grid item md={3} sm={5} xs={8}>
           <Paper className={classes.paper}>Nom</Paper>
@@ -173,7 +178,7 @@ export default function Profile() {
           <EditIcon/>
         </Button>
         <Dialog open={openPwd} onClose={() => {setOpenPwd(false)}} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Prénom</DialogTitle>
+          <DialogTitle id="form-dialog-title">Mot de passe</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Veuillez entrer votre nouveau mot de passe
