@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { GetCustomers as CustomerRequest } from 'http/Customer';
-import { DeleteCustomer } from 'http/Customer';
 import GridContainer from 'components/Grid/GridContainer';
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -9,7 +8,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Button from "components/CustomButtons/Button";
-import { map } from "lodash";
 
 import ClientDetails from "./ClientDetails";
 import Cookies from 'universal-cookie';
@@ -17,92 +15,75 @@ import Cookies from 'universal-cookie';
 export default function Clients() {
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
+    const [{ data, error }, execute] = CustomerRequest.hook();
     const [table, setTable] = useState(true);
     const [isNew, setIsNew] = useState(true);
     const [clients, setClients] = useState([]);
-    const [selected, setSelected] = useState(-1);
-    const [rowsName] = useState([
-        'Email',
-        'Prénom',
-        'Nom de famille'
+    const [selected, setSelected] = useState(0);
+    const [rowsName, setRowsName] = useState([
+        {key: 'email', name: 'Email'},
+        {key: 'first_name', name: 'Prénom'},
+        {key: 'last_name', name: 'Nom de famille'}
     ]);
-    const [rowsKey, setRowsKey] = useState([
-        'id',
-        'email',
-        'first_name',
-        'last_name'
-    ]);
-    const [key, setKey] = useState(Math.random());
-    var [{ data, loading }, refresh] = CustomerRequest(token.access_token);
-    var dataRequest = data;
-    var [{ response }, execute] = DeleteCustomer.hook(token.access_token);
-    var responseDelete = response;
-    var filteredData;
-    var content;
-    
-    useEffect(() => {
-        refresh(token.access_token);
-    }, []);
 
-    useEffect(() => {
-
-        if (dataRequest)
-        {
-            filteredData = [];
-            var filteredValue;
-            for (var value of dataRequest.data)
-            {
-                var filteredValue = {};
-                for (var key of rowsKey)
-                    filteredValue[key] = value[key];
-                filteredData.push(filteredValue)
-            }
-            setClients(filteredData);
-        }
-        setKey(Math.random());
-    }, [dataRequest]);
-    
-    useEffect(() => {
-        if (responseDelete)
-        {
-            refresh(token.access_token);
-        }
-    }, [responseDelete]);
-    
-    if (table && loading === false) {
-        content = <div>
-            <Button type="button" color="primary" onClick={() => {
-                setTable(false);
-                setIsNew(true);
-                setSelected(-1);
-            }}
-            >
-                Créer un client
-            </Button>
-            <Table header={rowsName} rows={clients} key={key} onDeleteClick={(id) => {
-                DeleteCustomer.execute(execute, id);
-            }}
-            onRowClick={(id) => {
-                setSelected(id);
-                setIsNew(false);
-                setTable(false);    
-            }}/>
-        </div>
+    if (data)
+    {
+        console.log(data);
+        setClients(data);
     }
-    else if (loading === false)
-        content = <ClientDetails isNew={isNew} clientId={selected} returnFunction={() => {
-                refresh(token.access_token);
-                setTable(true);
-                }
-            } 
-        />
+
+    useEffect(() => {CustomerRequest.execute(execute, token)}, []);
+
+    var content;
+
+    if (table) {
+        content =
+            <Paper>
+                <Button type="button" color="primary" onClick={() => {
+                    setTable(false);
+                    setIsNew(true);
+                }}
+                >
+                    Créer un client
+                </Button>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            {rowsName.map(name => (
+                                <TableCell align="right">
+                                    {name.name}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {clients.map(row => (
+                            <TableRow key={row.id}>
+                                {rowsName.map(name => (
+                                    <TableCell
+                                        align="right"
+                                        onClick={() => {
+                                            setSelected(row.id);
+                                            setIsNew(false);
+                                            setTable(false);
+                                        }
+                                        }>
+                                        {row[name.key]}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Paper>
+    }
     else
-        content = <div></div>
+        content = <ClientDetails isNew={isNew} clientId={selected} returnFunction={() => { setTable(true); }} />
 
     return (
         <div>
             <GridContainer>
-                {content}
+                { content }
             </GridContainer>
         </div>
     );

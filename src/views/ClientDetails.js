@@ -1,94 +1,69 @@
 import List from "@material-ui/core/List";
-import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, u} from "react";
 import Button from "components/CustomButtons/Button";
 import ClientForm from "./ClientForm";
+import {makeStyles} from "@material-ui/styles";
 import { GetCustomer as CustomerRequest } from 'http/Customer';
 import Cookies from 'universal-cookie';
 
 function clientInfos(client) {
     return (
-        <Grid container>
-            <Grid item>
-                <List >
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Email: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Téléphone: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Prénom: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Nom de famille: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Pays: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Ville: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Adresse: " />
-                    </ListItem>
-                </List>
-            </Grid>
-            <Grid item>
-                <List>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.email} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.phone} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.first_name} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.last_name} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.country} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.city} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.address} />
-                    </ListItem>
-
-                </List>
-            </Grid>
-        </Grid>
+        <div>
+            <List >
+                <ListItem>
+                    <ListItemText primary="Email: " />
+                    <ListItemText primary={client.email} />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Téléphone: " />
+                    <ListItemText primary={client.phone} />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Prénom: " />
+                    <ListItemText primary={client.first_name} />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Nom de famille: " />
+                    <ListItemText primary={client.last_name} />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Pays: " />
+                    <ListItemText primary={client.country} />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Ville: " />
+                    <ListItemText primary={client.city} />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Adresse: " />
+                    <ListItemText primary={client.address} />
+                </ListItem>
+            </List>
+        </div>
     );
 }
 
 export default function ClientDetails(props) {
     const {isNew, clientId, returnFunction} = props;
     const [modif, setModif] = useState(isNew);
-    const [client, setClient] = useState({
-        id: 0,
-        email:'',
-        phone:'',
-        first_name:'',
-        last_name:'',
-        country:'',
-        city:'',
-        address:''
-    });
+    const [client, setClient] = useState({});
+    const [{ data, error }, execute] = CustomerRequest.hook(clientId);
+    
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
-    var data;
-    if (!isNew)
-        [{data}] = CustomerRequest(token.access_token, clientId);
 
     useEffect(() => {
-        if (!isNew && data)
-            setClient(data.data);
-    }, [data, isNew]);
+        if (!isNew)
+        {
+        CustomerRequest.execute(
+            execute, 
+            token
+            )
+            
+        }
+    }, []);
 
     var content, button, returnButton;
 
@@ -101,7 +76,7 @@ export default function ClientDetails(props) {
         content = 
         <ClientForm
             client={client}
-            returnFunction={()=>{returnFunction()}} 
+            returnFunction={returnFunction} 
             isNew={isNew} 
             />
         if (!isNew) {
@@ -125,13 +100,13 @@ export default function ClientDetails(props) {
     {
         content = clientInfos({
             id: 1,
-            email:'',
-            phone:'',
-            first_name:'',
-            last_name:'',
-            country:'',
-            city:'',
-            address:''
+            email:'tuc.pd@noob.fr',
+            phone:'0765567434',
+            first_name:'lollle',
+            last_name:'test',
+            country:'france',
+            city:'lyon',
+            address:'coyotes'
         });
         button = null;
     }

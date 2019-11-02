@@ -2,62 +2,79 @@ import useAxios from 'axios-hooks';
 import * as methods from 'variables/methods';
 
 
-export const GetCustomers = (token) =>
+const GetCustomersHook = () =>
   useAxios(
     {
       url: 'api/customer/',
-      method: methods.Get,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
-    }
-  );
-
-export const GetCustomer = (token, id) =>
-  useAxios(
-    {
-      url: 'api/customer/' + id,
-      method: methods.Get,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
-    }
-  )
-
-const DeleteCustomerHook = (token) =>
-  useAxios(
-    {
-      method: methods.Delete,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
+      method: methods.Get
     },
     {
       manual: true
     }
   );
 
-const DeleteCustomerExecute = (func, id) =>
-    func({
-      url: 'api/customer/' + id,
-    })
+const GetCustomersExecute = (func, token) =>
+  func({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  });
 
-export const DeleteCustomer = {
-  hook: DeleteCustomerHook,
-  execute: DeleteCustomerExecute
+export const GetCustomers = {
+  hook: GetCustomersHook,
+  execute: GetCustomersExecute
 };
 
-const CreateCustomerHook = () =>
+
+const GetCustomerHook = (id) =>
+  useAxios(
+    {
+      url: 'api/customer/' + id,
+      method: methods.Get
+    },
+    {
+      manual: true
+    }
+  );
+
+const GetCustomerExecute = (func, token) =>
+  func({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  });
+
+export const GetCustomer = {
+  hook: GetCustomerHook,
+  execute: GetCustomerExecute
+};
+
+const CreateCustomerHook = (
+  first_name,
+  last_name,
+  email,
+  phone,
+  address,
+  city,
+  country
+) =>
   useAxios(
     {
       url: 'api/customer/',
-      method: methods.Post
+      method: methods.Post,
+      data: {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        phone: phone,
+        address: address,
+        city: city,
+        country: country
+      } 
     },
     {
       manual: true
@@ -66,29 +83,13 @@ const CreateCustomerHook = () =>
 
 const CreateCustomerExecute = (
   func, 
-  token,
-  first_name,
-  last_name,
-  email,
-  phone,
-  address,
-  city,
-  country
+  token
   ) =>
   func({
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
-    },
-    data: {
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      phone: phone,
-      address: address,
-      city: city,
-      country: country
     }
   });
 
@@ -98,12 +99,28 @@ export const CreateCustomer = {
 };
 
 const ModifyCustomerHook = (
-  id
+  id,
+  first_name,
+  last_name,
+  email,
+  phone,
+  address,
+  city,
+  country
 ) =>
   useAxios(
     {
       url: 'api/customer/' + id,
-      method: methods.Patch
+      method: methods.Patch,
+      data: {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        phone: phone,
+        address: address,
+        city: city,
+        country: country
+      } 
     },
     {
       manual: true
@@ -112,30 +129,14 @@ const ModifyCustomerHook = (
 
 const ModifyCustomerExecute = (
   func, 
-  token,
-  first_name,
-  last_name,
-  email,
-  phone,
-  address,
-  city,
-  country
+  token
   ) =>
   func({
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
-    },
-    data: {
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      phone: phone,
-      address: address,
-      city: city,
-      country: country
-    } 
+    }
   });
 
 export const ModifyCustomer = {
