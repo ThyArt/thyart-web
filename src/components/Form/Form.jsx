@@ -9,17 +9,18 @@ import SubmitButton from './SubmitButton';
 import findByType from 'utils/findByType';
 import PropTypes from 'prop-types';
 
+
 const useStyles = makeStyles(theme => ({
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+   // marginTop: theme.spacing(1)
   },
   avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+  //  margin: theme.spacing(1),
+    //backgroundColor: theme.palette.secondary.main
   },
   paper: {
-    margin: theme.spacing(8, 4),
+  //  margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
