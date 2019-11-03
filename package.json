@@ -8,6 +8,7 @@
     "@material-ui/styles": "4.6.0",
     "axios": "^0.19.0",
     "axios-hooks": "^1.7.2",
+    "classnames": "latest",
     "clsx": "latest",
     "env-cmd": "^10.0.1",
     "eslint-config-airbnb": "^18.0.1",

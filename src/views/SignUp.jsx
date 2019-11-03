@@ -11,6 +11,9 @@ import { validateEmail, validatePassword, validateString } from 'utils/validator
 import { SignIn as SignInRequest, SignUp as SignUpRequest } from 'http/Oauth';
 import { generateCookie } from 'http/Cookie';
 import _ from 'lodash';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,6 +24,16 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center'
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
   }
 }));
 
@@ -120,24 +133,37 @@ export default function SignUp() {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Form title={'Sign Up'} submitLabel={'Sign Up'} disabled={formDisabled} onSubmit={onSubmit}>
-        <Form.Body>
-          {_.map(fields, field => (
-            <TextField key={field.id} name={field.id} {...field} autoFocus required />
-          ))}
-          <CheckBox
-            label={'Remember me'}
-            value={'remember'}
-            checked={rememberMe}
-            onChange={e => setRememberMe(e.target.checked)}
-          />
-        </Form.Body>
-        <Form.Footer>
-          <Box mt={5}>
-            <Copyright />
-          </Box>
-        </Form.Footer>
-      </Form>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Form
+          className={classes.paper}
+          title={'Sign Up'}
+          submitLabel={'Sign Up'}
+          disabled={formDisabled}
+          onSubmit={onSubmit}
+        >
+          <Form.Header>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+          </Form.Header>
+          <Form.Body>
+            {_.map(fields, field => (
+              <TextField key={field.id} name={field.id} {...field} autoFocus required />
+            ))}
+            <CheckBox
+              label={'Remember me'}
+              value={'remember'}
+              checked={rememberMe}
+              onChange={e => setRememberMe(e.target.checked)}
+            />
+          </Form.Body>
+          <Form.Footer>
+            <Box mt={5}>
+              <Copyright />
+            </Box>
+          </Form.Footer>
+        </Form>
+      </Grid>
     </Grid>
   );
 }
