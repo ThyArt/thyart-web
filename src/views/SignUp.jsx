@@ -14,6 +14,8 @@ import _ from 'lodash';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackBarWrapper from 'components/SnackBarWrapper/SnackBarWrapper';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,9 +48,10 @@ export default function SignUp() {
   const [lastName, setLastName] = useState({ value: '', error: false });
   const [username, setUsername] = useState({ value: '', error: false });
   const [rememberMe, setRememberMe] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: null, closedByButton: false });
 
   const [
-    { data: signInData, error: SignInError, loading: SignInLoading },
+    { data: signInData, error: signInError, loading: signInLoading },
     signInExecute
   ] = SignInRequest.hook();
   const [{ data: signUpData, error: signUpError }, signUpExecute] = SignUpRequest();
@@ -75,15 +78,33 @@ export default function SignUp() {
         firstname: firstName.value
       }
     });
+
+    setSnackbar({ open: false, message: null, closedByButton: false });
   };
 
-  if (signUpData && !signInData && !SignInError && !SignInLoading) {
+  if ((signUpError || signInError) && !snackbar.closedByButton && !snackbar.open) {
+    setSnackbar({
+      open: true,
+      message: 'Error while Signing up. Make sure your Email address is not already used.',
+      closedByButton: false
+    });
+  }
+
+  if (signUpData && !signInData && !signInError && !signInLoading) {
     SignInRequest.execute(signInExecute, email.value, password.value);
+    setSnackbar({ open: false, message: null, closedByButton: false });
   }
 
   if (signInData) {
     generateCookie(signInData, rememberMe);
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbar({ open: false, closedByButton: true });
+  };
 
   const fields = [
     {
@@ -164,6 +185,17 @@ export default function SignUp() {
           </Form.Footer>
         </Form>
       </Grid>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <SnackBarWrapper variant="error" message={snackbar.message} onClose={handleClose} />
+      </Snackbar>
     </Grid>
   );
 }
