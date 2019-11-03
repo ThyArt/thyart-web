@@ -8,6 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Button from "components/CustomButtons/Button";
+import { map } from "lodash";
 
 import ClientDetails from "./ClientDetails";
 import Cookies from 'universal-cookie';
@@ -21,18 +22,17 @@ export default function Clients() {
     const [clients, setClients] = useState([]);
     const [selected, setSelected] = useState(0);
     const [rowsName, setRowsName] = useState([
-        {key: 'email', name: 'Email'},
-        {key: 'first_name', name: 'Prénom'},
-        {key: 'last_name', name: 'Nom de famille'}
+        { key: 'email', name: 'Email' },
+        { key: 'first_name', name: 'Prénom' },
+        { key: 'last_name', name: 'Nom de famille' }
     ]);
 
-    if (data)
-    {
+    if (data) {
         console.log(data);
         setClients(data);
     }
 
-    useEffect(() => {CustomerRequest.execute(execute, token)}, []);
+    useEffect(() => { CustomerRequest.execute(execute, token) }, []);
 
     var content;
 
@@ -49,18 +49,19 @@ export default function Clients() {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            {rowsName.map(name => (
-                                <TableCell align="right">
+                            {map(rowsName, (name, index) => (
+                                <TableCell key={index} align="right">
                                     {name.name}
                                 </TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {clients.map(row => (
+                        {map(clients, (row) => (
                             <TableRow key={row.id}>
-                                {rowsName.map(name => (
+                                {map(rowsName, (name, index) => (
                                     <TableCell
+                                        key={index}
                                         align="right"
                                         onClick={() => {
                                             setSelected(row.id);
@@ -83,7 +84,7 @@ export default function Clients() {
     return (
         <div>
             <GridContainer>
-                { content }
+                {content}
             </GridContainer>
         </div>
     );
