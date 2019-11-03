@@ -16,6 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Snackbar from '@material-ui/core/Snackbar';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn() {
+const SignIn = function SignIn({ history }) {
   const classes = useStyles();
   const [{ data, error }, execute] = SignInRequest.hook();
   const [email, setEmail] = useState({ value: '', error: false });
@@ -52,6 +53,7 @@ export default function SignIn() {
 
   if (data) {
     generateCookie(data, rememberMe);
+    history.push('/dashboard');
   }
 
   const handleClose = (event, reason) => {
@@ -153,4 +155,6 @@ export default function SignIn() {
       </Snackbar>
     </Grid>
   );
-}
+};
+
+export default withRouter(SignIn);

@@ -1,5 +1,4 @@
 import Cookies from 'universal-cookie';
-
 export const generateCookie = (
   { access_token, token_type, expires_in, refresh_token },
   rememberMe = false
