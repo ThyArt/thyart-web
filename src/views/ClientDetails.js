@@ -57,11 +57,10 @@ export default function ClientDetails(props) {
     useEffect(() => {
         if (!isNew)
         {
-        CustomerRequest.execute(
-            execute, 
-            token
+            CustomerRequest.execute(
+                execute, 
+                token
             )
-            
         }
     }, []);
 
@@ -76,7 +75,7 @@ export default function ClientDetails(props) {
         content = 
         <ClientForm
             client={client}
-            returnFunction={returnFunction} 
+            returnFunction={()=>{returnFunction()}} 
             isNew={isNew} 
             />
         if (!isNew) {
@@ -100,13 +99,13 @@ export default function ClientDetails(props) {
     {
         content = clientInfos({
             id: 1,
-            email:'tuc.pd@noob.fr',
-            phone:'0765567434',
-            first_name:'lollle',
-            last_name:'test',
-            country:'france',
-            city:'lyon',
-            address:'coyotes'
+            email:'',
+            phone:'',
+            first_name:'',
+            last_name:'',
+            country:'',
+            city:'',
+            address:''
         });
         button = null;
     }
