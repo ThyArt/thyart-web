@@ -53,28 +53,11 @@ export const GetCustomer = {
   execute: GetCustomerExecute
 };
 
-const CreateCustomerHook = (
-  first_name,
-  last_name,
-  email,
-  phone,
-  address,
-  city,
-  country
-) =>
+const CreateCustomerHook = () =>
   useAxios(
     {
       url: 'api/customer/',
-      method: methods.Post,
-      data: {
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        phone: phone,
-        address: address,
-        city: city,
-        country: country
-      } 
+      method: methods.Post
     },
     {
       manual: true
@@ -83,13 +66,29 @@ const CreateCustomerHook = (
 
 const CreateCustomerExecute = (
   func, 
-  token
+  token,
+  first_name,
+  last_name,
+  email,
+  phone,
+  address,
+  city,
+  country
   ) =>
   func({
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
+    },
+    data: {
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      phone: phone,
+      address: address,
+      city: city,
+      country: country
     }
   });
 
@@ -99,28 +98,12 @@ export const CreateCustomer = {
 };
 
 const ModifyCustomerHook = (
-  id,
-  first_name,
-  last_name,
-  email,
-  phone,
-  address,
-  city,
-  country
+  id
 ) =>
   useAxios(
     {
       url: 'api/customer/' + id,
-      method: methods.Patch,
-      data: {
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        phone: phone,
-        address: address,
-        city: city,
-        country: country
-      } 
+      method: methods.Patch
     },
     {
       manual: true
@@ -129,14 +112,30 @@ const ModifyCustomerHook = (
 
 const ModifyCustomerExecute = (
   func, 
-  token
+  token,
+  first_name,
+  last_name,
+  email,
+  phone,
+  address,
+  city,
+  country
   ) =>
   func({
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
-    }
+    },
+    data: {
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      phone: phone,
+      address: address,
+      city: city,
+      country: country
+    } 
   });
 
 export const ModifyCustomer = {
