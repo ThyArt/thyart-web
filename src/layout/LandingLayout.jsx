@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import withRoot from 'withRoot';
 import { Switch, Route } from 'react-router-dom';
 import landingRoutes from 'routes';
@@ -26,7 +26,7 @@ function LandingLayout() {
   };
 
   return (
-    <div>
+    <Fragment>
       <AppAppBar />
       <div className={classes.wrapper}>
         {getRoute() ? (
@@ -38,7 +38,7 @@ function LandingLayout() {
         )}
       </div>
       <div className={classes.placeholder} />
-    </div>
+    </Fragment>
   );
 }
 
