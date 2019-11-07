@@ -32,7 +32,19 @@ export default function Clients() {
         setClients(data);
     }
 
-    useEffect(() => { CustomerRequest.execute(execute, token) }, []);
+    useEffect(() => { 
+        CustomerRequest.execute(execute, token);
+        setClients([{
+            id: 1,
+            email: 'test@test.test',
+            phone:'0663422073',
+            first_name: 'test',
+            last_name: 'test',
+            country: 'test',
+            city: 'test',
+            address: 'test'
+        }]);
+    }, []);
 
     var content;
 
