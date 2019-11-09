@@ -13,13 +13,15 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { map, entries, includes, filter, isEmpty, each } from 'lodash';
 
-export default function( {rows, header, onRowClick, onDeleteClick} ) {
+export default function({ rows, header, onRowClick, onDeleteClick }) {
   const [selected, setSelected] = useState([]);
   const [myRows, setMyRows] = useState(rows);
   const [order, setOrder] = useState('asc');
   let showDelete = true;
 
-  if (onRowClick === undefined) { onRowClick = function(id) {}; }
+  if (onRowClick === undefined) {
+    onRowClick = function(id) {};
+  }
   if (onDeleteClick === undefined) {
     onDeleteClick = function(id) {};
     showDelete = false;
@@ -28,7 +30,11 @@ export default function( {rows, header, onRowClick, onDeleteClick} ) {
   const handleCheckboxClick = (event, id) => {
     event.stopPropagation();
     if (includes(selected, id)) {
-      setSelected(filter(selected, function(elem) { return elem !== id }));
+      setSelected(
+        filter(selected, function(elem) {
+          return elem !== id;
+        })
+      );
     } else {
       setSelected([...selected, id]);
     }
@@ -36,25 +42,25 @@ export default function( {rows, header, onRowClick, onDeleteClick} ) {
 
   const handleSortColumn = index => {
     if (order === 'asc') {
-      setMyRows(myRows.sort(function(a, b) {
-        const arg1 = a[Object.keys(a)[index]];
-        const arg2 = b[Object.keys(b)[index]];
-        if (arg1 < arg2)
-          return -1;
-        if (arg1 > arg2)
-          return 1;
-        return 0;
-      }));
+      setMyRows(
+        myRows.sort(function(a, b) {
+          const arg1 = a[Object.keys(a)[index]];
+          const arg2 = b[Object.keys(b)[index]];
+          if (arg1 < arg2) return -1;
+          if (arg1 > arg2) return 1;
+          return 0;
+        })
+      );
     } else {
-      setMyRows(myRows.sort(function(a, b) {
-        const arg1 = a[Object.keys(a)[index]];
-        const arg2 = b[Object.keys(b)[index]];
-        if (arg1 > arg2)
-          return -1;
-        if (arg1 < arg2)
-          return 1;
-        return 0;
-      }));
+      setMyRows(
+        myRows.sort(function(a, b) {
+          const arg1 = a[Object.keys(a)[index]];
+          const arg2 = b[Object.keys(b)[index]];
+          if (arg1 > arg2) return -1;
+          if (arg1 < arg2) return 1;
+          return 0;
+        })
+      );
     }
     setOrder(order === 'asc' ? 'desc' : 'asc');
   };
@@ -64,10 +70,10 @@ export default function( {rows, header, onRowClick, onDeleteClick} ) {
   };
 
   return (
-    <Fragment>
+    <>
       <Toolbar>
         {selected.length > 0 ? (
-          <Fragment>
+          <>
             <Typography color="secondary" variant="subtitle1">
               {selected.length} séléctionnés
             </Typography>
@@ -78,24 +84,18 @@ export default function( {rows, header, onRowClick, onDeleteClick} ) {
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>
-            )
-              : null
-            }
-          </Fragment>
-        )
-          : null
-        }
+            ) : null}
+          </>
+        ) : null}
       </Toolbar>
 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell padding="checkbox"/>
+            <TableCell padding="checkbox" />
             {map(header, (head, index) => (
-              <TableCell key={'head#' + index} onClick={() => handleSortColumn(index)}>
-                <TableSortLabel direction={order}>
-                  {head}
-                </TableSortLabel>
+              <TableCell key={`head#${index}`} onClick={() => handleSortColumn(index)}>
+                <TableSortLabel direction={order}>{head}</TableSortLabel>
               </TableCell>
             ))}
           </TableRow>
@@ -103,30 +103,20 @@ export default function( {rows, header, onRowClick, onDeleteClick} ) {
 
         <TableBody>
           {map(myRows, (row, index) => (
-            <TableRow
-              hover
-              key={'row#' + index}
-              onClick={() => onRowClick(row.id)}
-              role="checkbox"
-            >
+            <TableRow hover key={`row#${index}`} onClick={() => onRowClick(row.id)} role="checkbox">
               <TableCell padding="checkbox">
                 {isEmpty(row) ? null : (
-                  <Checkbox onClick={event => handleCheckboxClick(event, row.id)}/>
+                  <Checkbox onClick={event => handleCheckboxClick(event, row.id)} />
                 )}
               </TableCell>
               {entries(row).map(([key, value], i) => {
-                if (key === "id") return null;
-                return (
-                  <TableCell key={"cell#" + i}>
-                    {value}
-                  </TableCell>
-                );
+                if (key === 'id') return null;
+                return <TableCell key={`cell#${i}`}>{value}</TableCell>;
               })}
             </TableRow>
           ))}
         </TableBody>
-
       </Table>
-    </Fragment>
+    </>
   );
-};
+}
