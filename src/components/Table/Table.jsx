@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from 'react';
-import Table from '@material-ui/core/Table';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import MTable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -13,7 +14,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { map, entries, includes, filter, isEmpty, each } from 'lodash';
 
-export default function({ rows, header, onRowClick, onDeleteClick }) {
+function Table({ rows, header, onRowClick, onDeleteClick }) {
   const [selected, setSelected] = useState([]);
   const [myRows, setMyRows] = useState(rows);
   const [order, setOrder] = useState('asc');
@@ -89,7 +90,7 @@ export default function({ rows, header, onRowClick, onDeleteClick }) {
         ) : null}
       </Toolbar>
 
-      <Table>
+      <MTable>
         <TableHead>
           <TableRow>
             <TableCell padding="checkbox" />
@@ -116,7 +117,16 @@ export default function({ rows, header, onRowClick, onDeleteClick }) {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </MTable>
     </>
   );
 }
+
+Table.propTypes = {
+  rows: PropTypes.array.isRequired,
+  header: PropTypes.array.isRequired,
+  onRowClick: PropTypes.func,
+  onDeleteClick: PropTypes.func
+};
+
+export default Table;
