@@ -78,8 +78,8 @@ export default function Services() {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        {_.map(cardsSpec, item => (
-          <Grid item xs={6}>
+        {_.map(cardsSpec, (item, index) => (
+          <Grid item xs={6} key={index}>
             <Card className={classes.card}>
               <CardActionArea>
                 <CardMedia {...item.cardMedia} />

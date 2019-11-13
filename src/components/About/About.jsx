@@ -74,8 +74,8 @@ export default function() {
   return (
     <div className={classes.aboutRoot}>
       <Grid container spacing={10} justify="center" className={classes.aboutContainer}>
-        {map(cards, ({ image, alt, title, text }) => (
-          <Grid item xs={12} sm={6} md={6} lg={3}>
+        {map(cards, ({ image, alt, title, text }, index) => (
+          <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
             <Paper className={classes.aboutPaper}>
               <img src={image} alt={alt} height="100" width="auto" className={classes.aboutLogo} />
               <br />
