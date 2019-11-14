@@ -12,14 +12,16 @@ export default function ClientForm(props) {
 
     const [clientId, setClientId] = useState({ value: client.id});
     const [email, setEmail] = useState({ value: client.email, error: false });
-    const [number, setNumber] = useState({ value: client.number, error: false });
-    const [firstname, setFirstname] = useState({ value: client.firstname, error: false });
-    const [lastname, setLastname] = useState({ value: client.lastname, error: false });
+    const [number, setNumber] = useState({ value: client.phone, error: false });
+    const [firstname, setFirstname] = useState({ value: client.first_name, error: false });
+    const [lastname, setLastname] = useState({ value: client.last_name, error: false });
     const [country, setCountry] = useState({ value: client.country, error: false });
     const [city, setCity] = useState({ value: client.city, error: false });
     const [address, setAddress] = useState({ value: client.address, error: false });
-    const [{ dataModify, errorModify }, executeModify] = CustomerModify.hook(clientId);
-    const [{ dataCreate, errorCreate }, executeCreate] = CustomerCreate.hook();
+
+    var [{ data, error }, execute] = CustomerCreate.hook();
+    if (!isNew)
+        [{ data, error }, execute] = CustomerModify.hook(clientId.value);
 
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
@@ -31,8 +33,7 @@ export default function ClientForm(props) {
       state => state.error || !validateString(state.value)
     );
 
-    if (dataModify || errorModify || dataCreate || errorCreate) {
-        console.log('return')
+    if (data || error) {
         returnFunction();
     }
 
@@ -40,9 +41,9 @@ export default function ClientForm(props) {
         event.preventDefault();
 
         if (!isNew)
-            CustomerModify.execute(executeModify, token, firstname, lastname, email, number, address, city, country);
+            CustomerModify.execute(execute, token.access_token, firstname.value, lastname.value, email.value, number.value, address.value, city.value, country.value);
         else
-            CustomerCreate.execute(executeCreate, token, firstname, lastname, email, number, address, city, country);
+            CustomerCreate.execute(execute, token.access_token, firstname.value, lastname.value, email.value, number.value, address.value, city.value, country.value);
     };
 
     const onChange = (e, setFunc, validateFunc) =>
