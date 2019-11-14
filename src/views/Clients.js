@@ -12,18 +12,18 @@ import Cookies from 'universal-cookie';
 export default function Clients() {
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
-    const [{ data, error }, execute] = CustomerRequest.hook();
+    var [{ data, error }, execute] = CustomerRequest.hook();
     const [table, setTable] = useState(true);
     const [isNew, setIsNew] = useState(true);
     const [clients, setClients] = useState([]);
-    const [selected, setSelected] = useState(0);
+    const [selected, setSelected] = useState(-1);
     const [rowsName, setRowsName] = useState([]);
     const [rowsKey, setRowsKey] = useState([]);
-    
-    if (data) {
-        // console.log(data);
-        //setClients(data);
-    }
+    const [receivedData, setReceivedData] = useState(false);
+    const [key, setKey] = useState(Math.random());
+
+    // console.log(token)
+    var content;
 
     useEffect(() => {
         setRowsName([
@@ -36,31 +36,27 @@ export default function Clients() {
             'first_name',
             'last_name'
         ]);
-        setClients([{
-            id: 1,
-            email: 'test@test.test',
-            phone:'0663422073',
-            first_name: 'teste',
-            last_name: 'test',
-            country: 'test',
-            city: 'test',
-            address: 'test'
-        }]);
-        CustomerRequest.execute(execute, token);
-    }, []);
 
-    var content;
+            CustomerRequest.execute(execute, token.access_token);
+    }, []);
+    
+    useEffect(() => {
+        if (data)
+            setClients(data.data);
+        setKey(Math.random());
+    }, [data]);
 
     if (table) {
         content = <div>
             <Button type="button" color="primary" onClick={() => {
-                    setTable(false);
-                    setIsNew(true);
-                }}
+                setTable(false);
+                setIsNew(true);
+                setSelected(-1);
+            }}
             >
                 Créer un client
             </Button>
-            <Table  header={rowsName} rows={clients} keys={rowsKey} onRowClick={(id) => {
+            <Table header={rowsName} rows={clients} key={key} keys={rowsKey} onRowClick={(id) => {
                 setSelected(id);
                 setIsNew(false);
                 setTable(false);    
@@ -68,7 +64,13 @@ export default function Clients() {
         </div>
     }
     else
-        content = <ClientDetails isNew={isNew} clientId={selected} returnFunction={() => { setTable(true); }} />
+        content = <ClientDetails isNew={isNew} clientId={selected} returnFunction={() => {
+                CustomerRequest.execute(execute, token.access_token);
+                setTable(true);
+                setReceivedData(false);
+                }
+            } 
+        />
 
     return (
         <div>

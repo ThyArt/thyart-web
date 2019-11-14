@@ -24,6 +24,17 @@ const SignInExecute = (func, email, password) =>
     }
   });
 
+export const SignUp = () =>
+  useAxios(
+    {
+      url: 'api/user',
+      method: methods.Post
+    },
+    {
+      manual: true
+    }
+  );
+
 export const SignIn = {
   hook: SignInHook,
   execute: SignInExecute

@@ -15,6 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { map, entries, includes, filter, isEmpty, each } from 'lodash';
 
 function Table({ rows, keys, header, onRowClick, onDeleteClick }) {
+
   const [selected, setSelected] = useState([]);
   const [myRows, setMyRows] = useState(rows);
   const [myKeys, setMyKeys] = useState(keys);

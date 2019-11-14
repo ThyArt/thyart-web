@@ -1,10 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import SubmitButton from './SubmitButton';
 import findByType from 'utils/findByType';
 import PropTypes from 'prop-types';
@@ -13,19 +9,8 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles(theme => ({
   form: {
     width: '100%', // Fix IE 11 issue.
-   // marginTop: theme.spacing(1)
-  },
-  avatar: {
-  //  margin: theme.spacing(1),
-    //backgroundColor: theme.palette.secondary.main
-  },
-  paper: {
-  //  margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  footer: {}
+    // marginTop: theme.spacing(1)
+  }
 }));
 
 const useBodyStyles = makeStyles(theme => ({
@@ -34,6 +19,10 @@ const useBodyStyles = makeStyles(theme => ({
 
 const useFooterStyles = makeStyles(theme => ({
   footer: {}
+}));
+
+const useHeaderStyles = makeStyles(theme => ({
+  header: {}
 }));
 
 const Body = ({ children }) => {
@@ -48,7 +37,13 @@ const Footer = ({ children }) => {
   return <div className={classes.footer}>{children}</div>;
 };
 
-function Form({ title, children, submitLabel, onSubmit, disabled }) {
+const Header = ({ children }) => {
+  const classes = useHeaderStyles();
+
+  return <div className={classes.header}>{children}</div>;
+};
+
+function Form({ title, children, submitLabel, onSubmit, disabled, className }) {
   const classes = useStyles();
 
   const body = findByType(children, Body);
@@ -57,22 +52,21 @@ function Form({ title, children, submitLabel, onSubmit, disabled }) {
   const footer = findByType(children, Footer);
   const footerProps = footer ? footer.props : null;
 
+  const header = findByType(children, Header);
+  const headerProps = header ? header.props : null;
+
   return (
-    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          {title}
-        </Typography>
-        <form noValidate className={classes.form} onSubmit={onSubmit}>
-          <Body {...bodyProps} />
-          <SubmitButton label={submitLabel} disabled={disabled} />
-          <Footer {...footerProps} />
-        </form>
-      </div>
-    </Grid>
+    <div className={className}>
+      <Header {...headerProps} />
+      <Typography component="h1" variant="h5">
+        {title}
+      </Typography>
+      <form noValidate className={classes.form} onSubmit={onSubmit}>
+        <Body {...bodyProps} />
+        <SubmitButton label={submitLabel} disabled={disabled} />
+        <Footer {...footerProps} />
+      </form>
+    </div>
   );
 }
 
@@ -81,6 +75,10 @@ Body.prototype = {
 };
 
 Footer.prototype = {
+  children: PropTypes.element
+};
+
+Header.prototype = {
   children: PropTypes.element
 };
 
@@ -94,5 +92,6 @@ Form.prototype = {
 
 Form.Body = Body;
 Form.Footer = Footer;
+Form.Header = Header;
 
 export default Form;
