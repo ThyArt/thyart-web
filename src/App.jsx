@@ -1,24 +1,39 @@
-import React, { Component } from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import LandingLayout from 'layout/LandingLayout';
 import { Configure } from 'http/Client';
 import DashBoardLayout from 'layout/DashBoardLayout';
+import Cookies from 'universal-cookie';
 
-Configure();
+const App = function App() {
+  Configure();
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div>
-          <Switch>
-            <Route path="/dashboard" component={DashBoardLayout} />
-            <Route path="/" component={LandingLayout} />
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
-}
+  return (
+    <Router>
+      <Switch>
+        <Route
+          path="/dashboard"
+          render={props =>
+            new Cookies().get('accessToken') !== undefined ? (
+              <DashBoardLayout {...props} />
+            ) : (
+              <Redirect to={'/'} />
+            )
+          }
+        />
+        <Route
+          path="/"
+          render={props =>
+            new Cookies().get('accessToken') === undefined ? (
+              <LandingLayout {...props} />
+            ) : (
+              <Redirect to={'/dashboard'} />
+            )
+          }
+        />
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;
