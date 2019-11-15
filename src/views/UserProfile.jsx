@@ -11,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { GetCurrentData, UpdateNewData } from 'http/Profile';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,6 +45,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Profile() {
   const classes = useStyles();
+  const [{ data: getData, loading: getLoading }] = GetCurrentData();
+  const [
+    { data: updateData, loading: updateLoading, error: updateError },
+    execute
+  ] = UpdateNewData();
   const [
     {
       open: modalOpen,
