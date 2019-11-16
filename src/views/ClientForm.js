@@ -10,7 +10,7 @@ import _ from 'lodash';
 export default function ClientForm(props) {
     let {client, isNew, returnFunction} = props;
 
-    const [clientId, setClientId] = useState({ value: client.id});
+    const [clientId] = useState({ value: client.id});
     const [email, setEmail] = useState({ value: client.email, error: false });
     const [number, setNumber] = useState({ value: client.phone, error: false });
     const [firstname, setFirstname] = useState({ value: client.first_name, error: false });

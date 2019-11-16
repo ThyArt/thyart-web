@@ -21,7 +21,7 @@ export default function Clients() {
     const [isNew, setIsNew] = useState(true);
     const [clients, setClients] = useState([]);
     const [selected, setSelected] = useState(-1);
-    const [rowsName, setRowsName] = useState([
+    const [rowsName] = useState([
         'Email',
         'Prénom',
         'Nom de famille'
@@ -32,9 +32,9 @@ export default function Clients() {
         'last_name'
     ]);
     const [key, setKey] = useState(Math.random());
-    var [{ data, loading, error }, refresh] = CustomerRequest(token.access_token);
+    var [{ data, loading }, refresh] = CustomerRequest(token.access_token);
     var dataRequest = data;
-    var [{ response, error }, execute] = DeleteCustomer.hook(token.access_token);
+    var [{ response }, execute] = DeleteCustomer.hook(token.access_token);
     var responseDelete = response;
 
     var content;
@@ -47,7 +47,6 @@ export default function Clients() {
 
         if (dataRequest)
         {
-            console.log(responseDelete);
             setClients(dataRequest.data);
         }
         setKey(Math.random());
