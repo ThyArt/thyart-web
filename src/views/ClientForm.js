@@ -66,7 +66,6 @@ export default function ClientForm(props) {
                     required
                     value={email.value}
                     onChange={e => onChange(e, setEmail, validateEmail)}
-
                 />
                 <TextField id="phone" label="Téléphone" name="phone" value={number.value} onChange={e => onChange(e, setNumber, validateNumber)} required />
                 <TextField id="firstname" label="Prénom" name="firstname" value={firstname.value} onChange={e => onChange(e, setFirstname, validateString)} required />
