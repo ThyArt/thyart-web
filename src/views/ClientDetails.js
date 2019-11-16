@@ -2,10 +2,9 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, {useEffect, useState, u} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "components/CustomButtons/Button";
 import ClientForm from "./ClientForm";
-import {makeStyles} from "@material-ui/styles";
 import { GetCustomer as CustomerRequest } from 'http/Customer';
 import Cookies from 'universal-cookie';
 
@@ -82,12 +81,14 @@ export default function ClientDetails(props) {
     });
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
-    const [{ data, error }, refresh] = CustomerRequest(token.access_token, clientId);
+    var data;
+    if (!modif)
+        [{data}] = CustomerRequest(token.access_token, clientId);
 
     useEffect(() => {
-        if (data)
+        if (!modif && data)
             setClient(data.data);
-    }, [data]);
+    }, [data, modif]);
 
     var content, button, returnButton;
 
