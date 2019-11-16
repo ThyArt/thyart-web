@@ -82,13 +82,13 @@ export default function ClientDetails(props) {
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
     var data;
-    if (!modif)
+    if (!isNew)
         [{data}] = CustomerRequest(token.access_token, clientId);
 
     useEffect(() => {
-        if (!modif && data)
+        if (!isNew && data)
             setClient(data.data);
-    }, [data, modif]);
+    }, [data, isNew]);
 
     var content, button, returnButton;
 

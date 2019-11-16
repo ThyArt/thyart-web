@@ -27,6 +27,7 @@ export default function Clients() {
         'Nom de famille'
     ]);
     const [rowsKey, setRowsKey] = useState([
+        'id',
         'email',
         'first_name',
         'last_name'
@@ -36,7 +37,7 @@ export default function Clients() {
     var dataRequest = data;
     var [{ response }, execute] = DeleteCustomer.hook(token.access_token);
     var responseDelete = response;
-
+    var filteredData;
     var content;
     
     useEffect(() => {
@@ -47,7 +48,16 @@ export default function Clients() {
 
         if (dataRequest)
         {
-            setClients(dataRequest.data);
+            filteredData = [];
+            var filteredValue;
+            for (var value of dataRequest.data)
+            {
+                var filteredValue = {};
+                for (var key of rowsKey)
+                    filteredValue[key] = value[key];
+                filteredData.push(filteredValue)
+            }
+            setClients(filteredData);
         }
         setKey(Math.random());
     }, [dataRequest]);
@@ -69,7 +79,7 @@ export default function Clients() {
             >
                 Créer un client
             </Button>
-            <Table header={rowsName} rows={clients} key={key} keys={rowsKey} onDeleteClick={(id) => {
+            <Table header={rowsName} rows={clients} key={key} onDeleteClick={(id) => {
                 DeleteCustomer.execute(execute, id);
             }}
             onRowClick={(id) => {
