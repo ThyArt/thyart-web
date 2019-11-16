@@ -2,6 +2,7 @@
 import Person from '@material-ui/icons/Person';
 import UserProfile from 'views/UserProfile';
 import Calendar from 'views/Calendar';
+import Members from 'views/Members';
 // core components/views for Admin layout
 // core components/views for RTL layout
 
@@ -18,6 +19,13 @@ const dashboardRoutes = [
     name: 'Profil Utilisateur',
     icon: Person,
     component: UserProfile,
+    layout: '/dashboard'
+  },
+  {
+    path: '/membres',
+    name: 'Membres',
+    icon: Person,
+    component: Members,
     layout: '/dashboard'
   }
 ];
