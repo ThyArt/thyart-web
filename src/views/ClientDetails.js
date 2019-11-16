@@ -80,27 +80,14 @@ export default function ClientDetails(props) {
         city:'',
         address:''
     });
-    const [{ data, error }, execute] = CustomerRequest.hook(clientId);
-    const [receivedData, setReceivedData] = useState(false);
-
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
-
-    if (data && !receivedData)
-    {
-        setReceivedData(true);
-        setClient(data.data);
-    }
+    const [{ data, error }, refresh] = CustomerRequest(token.access_token, clientId);
 
     useEffect(() => {
-        if (!isNew)
-        {
-            CustomerRequest.execute(
-                execute, 
-                token.access_token
-            )
-        }
-    }, []);
+        if (data)
+            setClient(data.data);
+    }, [data]);
 
     var content, button, returnButton;
 
