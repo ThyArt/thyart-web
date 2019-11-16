@@ -14,11 +14,9 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { map, entries, includes, filter, isEmpty, each } from 'lodash';
 
-function Table({ rows, keys, header, onRowClick, onDeleteClick }) {
-
+function Table({ rows, header, onRowClick, onDeleteClick }) {
   const [selected, setSelected] = useState([]);
   const [myRows, setMyRows] = useState(rows);
-  const [myKeys, setMyKeys] = useState(keys);
   const [order, setOrder] = useState('asc');
   let showDelete = true;
 
@@ -112,9 +110,10 @@ function Table({ rows, keys, header, onRowClick, onDeleteClick }) {
                   <Checkbox onClick={event => handleCheckboxClick(event, row.id)} />
                 )}
               </TableCell>
-              {map(myKeys, (key, index) => (
-                <TableCell key={`cell#${index}`}>{row[key]}</TableCell>
-              ))}
+              {entries(row).map(([key, value], i) => {
+                if (key === 'id') return null;
+                return <TableCell key={`cell#${i}`}>{value}</TableCell>;
+              })}
             </TableRow>
           ))}
         </TableBody>
