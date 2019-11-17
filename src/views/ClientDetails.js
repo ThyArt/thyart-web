@@ -98,11 +98,11 @@ export default function ClientDetails(props) {
         </Button>
 
     if (modif) {
-        content = 
+        content =
         <ClientForm
             client={client}
-            returnFunction={()=>{returnFunction()}} 
-            isNew={isNew} 
+            returnFunction={()=>{returnFunction()}}
+            isNew={isNew}
             />
         if (!isNew) {
             button = <Button type="button" color="primary" onClick={() => {
