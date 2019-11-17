@@ -6,7 +6,6 @@ import { ModifyCustomer as CustomerModify } from 'http/Customer';
 import Cookies from 'universal-cookie';
 import { validateEmail, validateNumber, validateString } from "../utils/validators"
 import _ from 'lodash';
-import { makeStyles } from '@material-ui/core/styles';
 
 export default function ClientForm(props) {
     let {client, isNew, returnFunction} = props;
@@ -49,7 +48,6 @@ export default function ClientForm(props) {
 
     const onChange = (e, setFunc, validateFunc) =>
         setFunc({ value: e.target.value, error: !validateFunc(e.target.value) });
-
 
     return (
         <Form
