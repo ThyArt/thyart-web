@@ -16,7 +16,7 @@ import GridItem from 'components/Grid/GridItem';
 import { GetCurrentMembers, UpdateRole, CreateMember } from 'http/Members';
 
 export default function Members() {
-  const [{ data: currentData, loading }] = GetCurrentMembers();
+  const [{ data: currentData, loading }, refresh] = GetCurrentMembers();
   const [{ error: errorUpdate }, executeUpdate] = UpdateRole.hook();
   const [{ error: errorCreate }, executeCreate] = CreateMember.hook();
   const [myData, setMyData] = useState([]);
@@ -42,6 +42,22 @@ export default function Members() {
   if ((errorUpdate || errorCreate) && !snackbar.closedByButton && !snackbar.open)
     setSnackbar({ open: true, closedByButton: false });
 
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbar({ open: false, closedByButton: true });
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setUserPassword("");
+    setUserEmail("");
+    setUserFirstName("");
+    setUserLastName("");
+    setUserName("");
+  };
+
   const roleSwitch = (id, role) => {
     if (role === 'admin') return (<Fragment>(C'est vous !)</Fragment>);
     const isAdmin = (role === 'admin' || role === 'gallerist');
@@ -58,13 +74,6 @@ export default function Members() {
     const role = (isAdmin ? 'member' : 'gallerist');
     UpdateRole.execute(executeUpdate, id, role);
     setUpToDate(false);
-  };
-
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSnackbar({ open: false, closedByButton: true });
   };
 
   const createMember = () => {
@@ -92,19 +101,10 @@ export default function Members() {
     };
 
     if (currentData && !upToDate) {
-      formatResult();
+      refresh().then(() => formatResult());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upToDate, currentData, myData]);
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setUserPassword("");
-    setUserEmail("");
-    setUserFirstName("");
-    setUserLastName("");
-    setUserName("");
-  };
+  }, [upToDate, currentData]);
 
   return (
     <Fragment>
