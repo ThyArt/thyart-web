@@ -16,12 +16,9 @@ import GridItem from 'components/Grid/GridItem';
 import { GetCurrentMembers, UpdateRole, CreateMember } from 'http/Members';
 
 export default function Members() {
-  const [{ data: currentData, loading }, refresh] = GetCurrentMembers();
+  const [{ data: currentData }, refresh] = GetCurrentMembers();
   const [{ error: errorUpdate }, executeUpdate] = UpdateRole.hook();
   const [{ error: errorCreate }, executeCreate] = CreateMember.hook();
-  const [myData, setMyData] = useState([]);
-  const [upToDate, setUpToDate] = useState(false);
-  const [key, setKey] = useState(Math.random());
   const [snackbar, setSnackbar] = useState({ open: false, closedByButton: false });
   const [openModal, setOpenModal] = useState(false);
   const [userName, setUserName] = useState("");
@@ -70,41 +67,32 @@ export default function Members() {
     );
   };
 
+  const formatResult = () => {
+    let tmp = [];
+    each(currentData['data'], obj => {
+      tmp.push({
+        id: obj['id'],
+        username: obj['name'],
+        firstname: obj['firstname'],
+        lastname: obj['lastname'],
+        email: obj['email'],
+        role: roleSwitch(obj['id'], obj['role']),
+      });
+    });
+    return (tmp);
+  };
+
   const changeMemberRole = (id, isAdmin) => {
     const role = (isAdmin ? 'member' : 'gallerist');
     UpdateRole.execute(executeUpdate, id, role);
-    setUpToDate(false);
+    refresh();
   };
 
   const createMember = () => {
     CreateMember.execute(executeCreate, userEmail, userFirstName, userLastName, userPassword, userName);
     setOpenModal(false);
-    setUpToDate(false);
+    refresh();
   };
-
-  useEffect(() => {
-    const formatResult = () => {
-      let tmp = [];
-      each(currentData['data'], obj => {
-        tmp.push({
-          id: obj['id'],
-          username: obj['name'],
-          firstname: obj['firstname'],
-          lastname: obj['lastname'],
-          email: obj['email'],
-          role: roleSwitch(obj['id'], obj['role']),
-        });
-      });
-      setMyData(tmp);
-      setUpToDate(true);
-      setKey(Math.random());
-    };
-
-    if (currentData && !upToDate) {
-      refresh().then(() => formatResult());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upToDate, currentData]);
 
   return (
     <Fragment>
@@ -112,8 +100,10 @@ export default function Members() {
         Créer un membre
       </Button>
 
-      <Table header={header} rows={myData} key={key}/>
-      
+      { currentData ?
+        <Table header={header} rows={formatResult()}/>
+        : null }
+
       <Dialog open={openModal} onClose={handleCloseModal}>
         <DialogTitle>Créer un nouveau membre</DialogTitle>
         <DialogContent>
