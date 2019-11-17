@@ -27,11 +27,7 @@ const UpdateRoleHook = () =>
     }
   );
 
-const UpdateRoleExecute = (
-  func,
-  id,
-  role
-) =>
+const UpdateRoleExecute = (func, id, role) =>
   func({
     url: 'api/user/role/' + id,
     data: {
@@ -58,22 +54,16 @@ const CreateMemberHook = () =>
     }
   );
 
-const CreateMemberExecute = (
-  func,
-  email,
-  firstname,
-  lastname,
-  password,
-  name
-) => func({
-  data: {
-    firstname,
-    lastname,
-    name,
-    email,
-    password
-  }
-});
+const CreateMemberExecute = (func, email, firstname, lastname, password, name) =>
+  func({
+    data: {
+      firstname,
+      lastname,
+      name,
+      email,
+      password
+    }
+  });
 
 export const CreateMember = {
   hook: CreateMemberHook,
