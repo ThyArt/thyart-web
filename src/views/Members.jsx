@@ -17,8 +17,8 @@ import { GetCurrentMembers, UpdateRole, CreateMember } from 'http/Members';
 
 export default function Members() {
   const [{ data: currentData }, refresh] = GetCurrentMembers();
-  const [{ error: errorUpdate }, executeUpdate] = UpdateRole.hook();
-  const [{ error: errorCreate }, executeCreate] = CreateMember.hook();
+  const [{ error: errorUpdate, response: responseUpdate }, executeUpdate] = UpdateRole.hook();
+  const [{ error: errorCreate, response: responseCreate }, executeCreate] = CreateMember.hook();
   const [snackbar, setSnackbar] = useState({ open: false, closedByButton: false });
   const [openModal, setOpenModal] = useState(false);
   const [userName, setUserName] = useState("");
@@ -26,6 +26,8 @@ export default function Members() {
   const [userLastName, setUserLastName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [members, setMembers] = useState([]);
+  const [key, setKey] = useState(0);
 
   const header = ["Nom d'utilisateur", "Prénom", "Nom de Famille", "Adresse mail", "Permissions des membres"];
   const modalFields = [
@@ -45,6 +47,26 @@ export default function Members() {
     }
     setSnackbar({ open: false, closedByButton: true });
   };
+
+  useEffect(() => {
+      refresh()
+}, []);
+
+  useEffect(() => {
+
+    if (currentData)
+    {
+      setMembers(currentData.data);
+      setKey(Math.random());
+    }
+}, [currentData]);
+
+useEffect(() => {
+  if (responseUpdate || responseCreate)
+  {
+      refresh();
+  }
+}, [responseUpdate, responseCreate]);
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -69,7 +91,7 @@ export default function Members() {
 
   const formatResult = () => {
     let tmp = [];
-    each(currentData['data'], obj => {
+    each(members, obj => {
       tmp.push({
         id: obj['id'],
         username: obj['name'],
@@ -101,7 +123,7 @@ export default function Members() {
       </Button>
 
       { currentData ?
-        <Table header={header} rows={formatResult()}/>
+        <Table header={header} key={key} rows={formatResult()}/>
         : null }
 
       <Dialog open={openModal} onClose={handleCloseModal}>
