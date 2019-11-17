@@ -41,7 +41,7 @@ const dashboardRoutes = [
   },
   {
     path: '/artworks',
-    name: 'Oeuvre d\'arts',
+    name: "Oeuvre d'arts",
     icon: Brush,
     component: Artworks,
     layout: '/dashboard'
