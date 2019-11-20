@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Form from "../components/Form/Form";
 import TextField from "../components/Form/TextField";
 import { CreateCustomer as CustomerCreate } from 'http/Customer';
@@ -9,9 +9,9 @@ import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default function ClientForm(props) {
-    let {client, isNew, returnFunction} = props;
+    let { client, isNew, returnFunction } = props;
 
-    const [clientId] = useState({ value: client.id});
+    const [clientId] = useState({ value: client.id });
     const [email, setEmail] = useState({ value: client.email, error: false });
     const [number, setNumber] = useState({ value: client.phone, error: false });
     const [firstname, setFirstname] = useState({ value: client.first_name, error: false });
@@ -19,8 +19,22 @@ export default function ClientForm(props) {
     const [country, setCountry] = useState({ value: client.country, error: false });
     const [city, setCity] = useState({ value: client.city, error: false });
     const [address, setAddress] = useState({ value: client.address, error: false });
+    const [title, setTitle] = useState('');
+    const [label, setLabel] = useState('');
 
     var [{ data, error }, execute] = CustomerCreate.hook();
+
+    useEffect(() => {
+        if (!isNew) {
+            setTitle('Modification client');
+            setLabel('Modifier');
+        }
+        else {
+            setTitle('Création client');
+            setLabel('Créer');
+        }
+    }, [isNew]);
+
     if (!isNew)
         [{ data, error }, execute] = CustomerModify.hook(clientId.value);
 
@@ -28,11 +42,11 @@ export default function ClientForm(props) {
     var token = cookie.get('accessToken');
 
     const formDisabled =
-     undefined !==
-    _.find(
-      [email, firstname, lastname, number, country, city, address],
-      state => state.error || !validateString(state.value)
-    );
+        undefined !==
+        _.find(
+            [email, firstname, lastname, number, country, city, address],
+            state => state.error || !validateString(state.value)
+        );
 
     if (data || error) {
         returnFunction();
@@ -53,28 +67,19 @@ export default function ClientForm(props) {
 
     return (
         <Form
-            title={'Client'}
-            submitLabel={'Client'}
+            title={title}
+            submitLabel={label}
             onSubmit={onSubmit}
             disabled={formDisabled}
         >
             <Form.Body>
-                <TextField
-                    id="email"
-                    label="Addresse email"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    required
-                    value={email.value}
-                    onChange={e => onChange(e, setEmail, validateEmail)}
-                />
-                <TextField id="phone" label="Téléphone" name="phone" value={number.value} onChange={e => onChange(e, setNumber, validateNumber)} required />
-                <TextField id="firstname" label="Prénom" name="firstname" value={firstname.value} onChange={e => onChange(e, setFirstname, validateString)} required />
-                <TextField id="lastname" label="Nom de famille" name="lastname" value={lastname.value} onChange={e => onChange(e, setLastname, validateString)} required />
-                <TextField id="country" label="Pays" name="country" value={country.value} onChange={e => onChange(e, setCountry, validateString)} required />
-                <TextField id="city" label="Ville" name="city" value={city.value} onChange={e => onChange(e, setCity, validateString)} required />
-                <TextField id="address" label="Adresse" name="address" value={address.value} onChange={e => onChange(e, setAddress, validateString)} required />
+                <TextField error={email.error} id="email" label="Adresse email" name="email" autoComplete="email" autoFocus required value={email.value} onChange={e => onChange(e, setEmail, validateEmail)} />
+                <TextField error={number.error} id="phone" label="Téléphone" name="phone" value={number.value} onChange={e => onChange(e, setNumber, validateNumber)} required />
+                <TextField error={firstname.error} id="firstname" label="Prénom" name="firstname" value={firstname.value} onChange={e => onChange(e, setFirstname, validateString)} required />
+                <TextField error={lastname.error} id="lastname" label="Nom de famille" name="lastname" value={lastname.value} onChange={e => onChange(e, setLastname, validateString)} required />
+                <TextField error={country.error} id="country" label="Pays" name="country" value={country.value} onChange={e => onChange(e, setCountry, validateString)} required />
+                <TextField error={city.error} id="city" label="Ville" name="city" value={city.value} onChange={e => onChange(e, setCity, validateString)} required />
+                <TextField error={address.error} id="address" label="Adresse" name="address" value={address.value} onChange={e => onChange(e, setAddress, validateString)} required />
             </Form.Body>
         </Form>
     );
