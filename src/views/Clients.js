@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { GetCustomers as CustomerRequest } from 'http/Customer';
 import { DeleteCustomer } from 'http/Customer';
 import GridContainer from 'components/Grid/GridContainer';
-import Paper from "@material-ui/core/Paper";
 import Table from "components/Table/Table";
 import Button from "components/CustomButtons/Button";
-import { map } from "lodash";
 
 import ClientDetails from "./ClientDetails";
 import Cookies from 'universal-cookie';
@@ -22,7 +20,7 @@ export default function Clients() {
         'Prénom',
         'Nom de famille'
     ]);
-    const [rowsKey, setRowsKey] = useState([
+    const [rowsKey] = useState([
         'id',
         'email',
         'first_name',
@@ -33,21 +31,16 @@ export default function Clients() {
     var dataRequest = data;
     var [{ response }, execute] = DeleteCustomer.hook(token.access_token);
     var responseDelete = response;
-    var filteredData;
     var content;
-    
+
     useEffect(() => {
         refresh(token.access_token);
-    }, []);
+    }, [refresh, token.access_token]);
 
     useEffect(() => {
-
-        if (dataRequest)
-        {
-            filteredData = [];
-            var filteredValue;
-            for (var value of dataRequest.data)
-            {
+        if (dataRequest) {
+            var filteredData = [];
+            for (var value of dataRequest.data) {
                 var filteredValue = {};
                 for (var key of rowsKey)
                     filteredValue[key] = value[key];
@@ -56,15 +49,14 @@ export default function Clients() {
             setClients(filteredData);
         }
         setKey(Math.random());
-    }, [dataRequest]);
-    
+    }, [dataRequest, rowsKey]);
+
     useEffect(() => {
-        if (responseDelete)
-        {
+        if (responseDelete) {
             refresh(token.access_token);
         }
-    }, [responseDelete]);
-    
+    }, [responseDelete, refresh, token.access_token]);
+
     if (table && loading === false) {
         content = <div>
             <Button type="button" color="primary" onClick={() => {
@@ -78,19 +70,19 @@ export default function Clients() {
             <Table header={rowsName} rows={clients} key={key} onDeleteClick={(id) => {
                 DeleteCustomer.execute(execute, id);
             }}
-            onRowClick={(id) => {
-                setSelected(id);
-                setIsNew(false);
-                setTable(false);    
-            }}/>
+                onRowClick={(id) => {
+                    setSelected(id);
+                    setIsNew(false);
+                    setTable(false);
+                }} />
         </div>
     }
     else if (loading === false)
         content = <ClientDetails isNew={isNew} clientId={selected} returnFunction={() => {
-                refresh(token.access_token);
-                setTable(true);
-                }
-            } 
+            refresh(token.access_token);
+            setTable(true);
+        }
+        }
         />
     else
         content = <div></div>
@@ -100,6 +92,6 @@ export default function Clients() {
             <GridContainer>
                 {content}
             </GridContainer>
-       </div>
+        </div>
     );
 }

@@ -2,64 +2,36 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Button from "components/CustomButtons/Button";
 import ClientForm from "./ClientForm";
 import { GetCustomer as CustomerRequest } from 'http/Customer';
 import Cookies from 'universal-cookie';
+import { map } from 'lodash';
 
-function clientInfos(client) {
+function clientInfos(fields, client) {
     return (
         <Grid container>
             <Grid item>
                 <List >
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Email: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Téléphone: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Prénom: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Nom de famille: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Pays: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Ville: " />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary="Adresse: " />
-                    </ListItem>
+                    {
+                        map(fields, field => (
+                            <ListItem key={field.key} alignItems="flex-start">
+                                <ListItemText primary={field.name + ': '} />
+                            </ListItem>
+                        ))
+                    }
                 </List>
             </Grid>
             <Grid item>
                 <List>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.email} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.phone} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.first_name} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.last_name} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.country} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.city} />
-                    </ListItem>
-                    <ListItem alignItems="flex-start">
-                        <ListItemText primary={client.address} />
-                    </ListItem>
-
+                    {
+                        map(fields, field => (
+                            <ListItem key={field.key} alignItems="flex-start">
+                                <ListItemText primary={client[field.key]} />
+                            </ListItem>
+                        ))
+                    }
                 </List>
             </Grid>
         </Grid>
@@ -67,23 +39,32 @@ function clientInfos(client) {
 }
 
 export default function ClientDetails(props) {
-    const {isNew, clientId, returnFunction} = props;
+    const { isNew, clientId, returnFunction } = props;
     const [modif, setModif] = useState(isNew);
     const [client, setClient] = useState({
         id: 0,
-        email:'',
-        phone:'',
-        first_name:'',
-        last_name:'',
-        country:'',
-        city:'',
-        address:''
+        email: '',
+        phone: '',
+        first_name: '',
+        last_name: '',
+        country: '',
+        city: '',
+        address: ''
     });
+    const fields = [
+        { name: 'Email', key: 'email' },
+        { name: 'Téléphone', key: 'phone' },
+        { name: 'Prénom', key: 'first_name' },
+        { name: 'Nom de famille', key: 'last_name' },
+        { name: 'Pays', key: 'country' },
+        { name: 'Ville', key: 'city' },
+        { name: 'Adresse', key: 'address' }
+    ];
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
     var data;
     if (!isNew)
-        [{data}] = CustomerRequest(token.access_token, clientId);
+        [{ data }] = CustomerRequest(token.access_token, clientId);
 
     useEffect(() => {
         if (!isNew && data)
@@ -94,15 +75,15 @@ export default function ClientDetails(props) {
 
     returnButton =
         <Button type="button" color="primary" onClick={returnFunction}>
-        Retour
+            Retour
         </Button>
 
     if (modif) {
-        content = 
-        <ClientForm
-            client={client}
-            returnFunction={()=>{returnFunction()}} 
-            isNew={isNew} 
+        content =
+            <ClientForm
+                client={client}
+                returnFunction={() => { returnFunction() }}
+                isNew={isNew}
             />
         if (!isNew) {
             button = <Button type="button" color="primary" onClick={() => {
@@ -112,35 +93,35 @@ export default function ClientDetails(props) {
             </Button>
         }
     }
-    else if (!isNew)
-    {
-        content = clientInfos(client);
+    else if (!isNew) {
+        content = clientInfos(fields, client);
         button = <Button type="button" color="primary" onClick={() => {
             setModif(true);
         }}>
             Modifier
         </Button>
     }
-    else
-    {
-        content = clientInfos({
-            id: 1,
-            email:'',
-            phone:'',
-            first_name:'',
-            last_name:'',
-            country:'',
-            city:'',
-            address:''
-        });
+    else {
+        content = clientInfos(
+            fields,
+            {
+                id: 1,
+                email: '',
+                phone: '',
+                first_name: '',
+                last_name: '',
+                country: '',
+                city: '',
+                address: ''
+            });
         button = null;
     }
 
     return (
         <div>
-            { returnButton }
-            { button }
-            { content }
+            {returnButton}
+            {button}
+            {content}
         </div>
     );
 }
