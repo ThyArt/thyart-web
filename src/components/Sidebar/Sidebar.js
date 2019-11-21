@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { deleteCookies } from 'http/Cookie.js';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,6 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // core components
 import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks.js';
 import RTLNavbarLinks from 'components/Navbars/RTLNavbarLinks.js';
@@ -17,6 +19,10 @@ import RTLNavbarLinks from 'components/Navbars/RTLNavbarLinks.js';
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
 
 const useStyles = makeStyles(styles);
+
+function logout() {
+  deleteCookies().then(() => window.location.href = '/');
+}
 
 export default function Sidebar(props) {
   const classes = useStyles();
@@ -77,6 +83,15 @@ export default function Sidebar(props) {
           </NavLink>
         );
       })}
+      <a href="#" onClick={() => logout()}>
+        <ListItem className={classNames(classes.itemLink, classes.bottomElement)}>
+          <ExitToAppIcon className={classNames(classes.itemIcon, classes.whiteFont)}/>
+          <ListItemText
+            primary="Déconnexion"
+            className={classNames(classes.itemText, classes.whiteFont)}
+            disableTypography={true}/>
+        </ListItem>
+      </a>
     </List>
   );
   let brand = (
