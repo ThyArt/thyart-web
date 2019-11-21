@@ -4,7 +4,7 @@ import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
 import Sidebar from 'components/Sidebar/Sidebar';
 import dashboardRoute from 'routesDashboard';
 import bgImage from 'assets/img/sidebar-2.jpg';
-import logo from 'assets/img/reactlogo.png';
+import logo from 'assets/img/ThyArt_logo.png';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Footer from 'components/Footer/Footer';
 

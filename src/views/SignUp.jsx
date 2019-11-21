@@ -86,7 +86,7 @@ const SignUp = function SignUp({ history }) {
   if ((signUpError || signInError) && !snackbar.closedByButton && !snackbar.open) {
     setSnackbar({
       open: true,
-      message: 'Error while Signing up. Make sure your Email address is not already used.',
+      message: "Erreur lors de l'inscription. Assurez vous que l'adresse email n'est pas déjà utlisée.",
       closedByButton: false
     });
   }
@@ -110,32 +110,32 @@ const SignUp = function SignUp({ history }) {
 
   const fields = [
     {
-      label: 'Username',
+      label: "Nom d'utilisateur",
       id: 'username',
       onChange: e => onChange(e, setUsername, validateString),
       ...username
     },
     {
-      label: 'First name',
+      label: 'Prénom',
       id: 'first_name',
       onChange: e => onChange(e, setFirstName, validateString),
       ...firstName
     },
     {
-      label: 'Last name',
+      label: 'Nom de famille',
       id: 'last_name',
       onChange: e => onChange(e, setLastName, validateString),
       ...lastName
     },
     {
-      label: 'Email Address',
+      label: 'Adresse email',
       id: 'email',
       autoComplete: 'email',
       onChange: e => onChange(e, setEmail, validateEmail),
       ...email
     },
     {
-      label: 'Password',
+      label: 'Mot de passe',
       id: 'password',
       type: 'password',
       autoComplete: 'password',
@@ -143,7 +143,7 @@ const SignUp = function SignUp({ history }) {
       ...password
     },
     {
-      label: 'Password',
+      label: 'Confirmation du mot de passe',
       id: 'password_confirm',
       type: 'password',
       autoComplete: 'password',
@@ -159,8 +159,8 @@ const SignUp = function SignUp({ history }) {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Form
           className={classes.paper}
-          title={'Sign Up'}
-          submitLabel={'Sign Up'}
+          title={'Inscription'}
+          submitLabel={'Inscription'}
           disabled={formDisabled}
           onSubmit={onSubmit}
         >
@@ -174,7 +174,7 @@ const SignUp = function SignUp({ history }) {
               <TextField key={field.id} name={field.id} {...field} autoFocus required />
             ))}
             <CheckBox
-              label={'Remember me'}
+              label={'Se souvenir de moi'}
               value={'remember'}
               checked={rememberMe}
               onChange={e => setRememberMe(e.target.checked)}
