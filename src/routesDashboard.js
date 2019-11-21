@@ -1,5 +1,6 @@
 // @material-ui/icons
 import Person from '@material-ui/icons/Person';
+import GroupIcon from '@material-ui/icons/Group';
 import UserProfile from 'views/UserProfile';
 import Calendar from 'views/Calendar';
 import Members from 'views/Members';
@@ -24,7 +25,7 @@ const dashboardRoutes = [
   {
     path: '/membres',
     name: 'Membres',
-    icon: Person,
+    icon: GroupIcon,
     component: Members,
     layout: '/dashboard'
   }
