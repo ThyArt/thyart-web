@@ -28,30 +28,19 @@ const UpdateNewDataHook = () =>
   );
 const UpdateNewDataExecute = (func, firstname, lastname, email, password) =>
 {
-  if (password) {
-    return (
-      func({
-        url: 'api/user',
-        data: {
-          firstname,
-          lastname,
-          email,
-          password
-        }
-      })
-    );
-  } else {
-    return (
-      func({
-        url: 'api/user',
-        data: {
-          firstname,
-          lastname,
-          email
-        }
-      })
-    );
-  }
+  let to_send = {};
+  let tmp = {firstname, lastname, email, password};
+  Object.keys(tmp).forEach((key) => {
+    if (tmp[key]) {
+      to_send[key] = tmp[key];
+    }
+  });
+  return (
+    func({
+      url: 'api/user',
+      data: to_send
+    })
+  );
 };
 
 export const UpdateNewData = {
