@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { GetCurrentData, UpdateNewData } from 'http/Profile';
+import { validateEmail, validatePassword, validateString } from 'utils/validators';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,6 +46,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function Profile() {
   const classes = useStyles();
+  const [email, setEmail] = useState({ value: '', error: false });
+  const [password, setPassword] = useState({ value: '', error: false });
+  const [firstName, setFirstName] = useState({ value: '', error: false });
+  const [lastName, setLastName] = useState({ value: '', error: false });
+
+
+  const onChange = (e, setFunc, validateFunc) =>
+    setFunc({ value: e.target.value, error: !validateFunc(e.target.value) });
+
   const [{ data: getData, loading: getLoading }] = GetCurrentData();
   const [
     { data: updateData, loading: updateLoading, error: updateError },
@@ -76,32 +86,53 @@ export default function Profile() {
       textType: undefined
     });
 
-    console.log(getData);
+  const onSubmit = event => {
+    event.preventDefault();
+    execute({
+      data: {
+        firstname: firstName.value,
+        lastname: lastName.value,
+        email: email.value,
+        password: password.value
+      }
+    });
 
+      setModal({
+        open: false,
+        title: undefined,
+        stateName: undefined,
+        dialogText: undefined,
+        textType: undefined
+      });
+  };
   const fields = [
     {
       title: 'Prénom',
       stateName: 'firstname',
       dialogText: 'Veuillez entrer votre prénom',
-      textType: 'text'
+      textType: 'text',
+      onChange: e => onChange(e, setFirstName, validateString)
     },
     {
       title: 'Nom',
       stateName: 'lastname',
       dialogText: "Veuillez entrer votre nom d'usage",
-      textType: 'text'
+      textType: 'text',
+      onChange: e => onChange(e, setLastName, validateString)
     },
     {
       title: 'Email',
       stateName: 'email',
       dialogText: 'Veuillez entrer votre email',
-      textType: 'email'
+      textType: 'email',
+      onChange: e => onChange(e, setEmail, validateEmail)
     },
     {
       title: 'Mot de Passe',
       stateName: 'password',
       dialogText: 'Veuillez entrer votre mot de passe',
-      textType: 'password'
+      textType: 'password',
+      onChange: e => onChange(e, setPassword, validatePassword)
     }
   ];
 
@@ -124,7 +155,7 @@ export default function Profile() {
                 setModal({ open: true, ...field });
               }}
             >
-              <EditIcon />
+              <EditIcon/>
             </Button>
             <Dialog open={modalOpen} onClose={closeModal} aria-labelledby="form-dialog">
               <DialogTitle>{modalTitle}</DialogTitle>
@@ -143,7 +174,7 @@ export default function Profile() {
                 <Button onClick={closeModal} color="primary">
                   Annulez
                 </Button>
-                <Button onClick={closeModal} color="primary">
+                <Button onClick={onSubmit} color="primary">
                   Enregistrer
                 </Button>
               </DialogActions>
