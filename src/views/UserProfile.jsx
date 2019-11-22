@@ -76,6 +76,8 @@ export default function Profile() {
       textType: undefined
     });
 
+    console.log(getData);
+
   const fields = [
     {
       title: 'Prénom',
@@ -109,7 +111,7 @@ export default function Profile() {
       {map(fields, field => (
         <Grid container spacing={3} key={field.stateName}>
           <Grid item md={3} sm={5} xs={8}>
-            <Paper className={classes.paper}>{field.title}</Paper>
+            <Paper className={classes.paper}>{(getData) ? (getData.data[field.stateName]) : ('')}</Paper>
           </Grid>
           <Grid item md={1} sm={3} xs={4}>
             <Button
