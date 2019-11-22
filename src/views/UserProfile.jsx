@@ -86,6 +86,7 @@ export default function Profile() {
 
   useEffect(() => {
     refresh();
+    resetFields();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -98,9 +99,18 @@ export default function Profile() {
   useEffect(() => {
     if (updateData) {
       refresh();
+      resetFields();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateData]);
+
+  const resetFields = () => {
+    if (getData) {
+      setEmail(getData['email']);
+      setFirstName(getData['firstname']);
+      setLastName(getData['lastname']);
+    }
+  };
 
   const closeModal = () =>
     setModal({
@@ -117,6 +127,7 @@ export default function Profile() {
     event.preventDefault();
     UpdateNewData.execute(executeUpdate, firstName, lastName, email, password);
     refresh();
+    resetFields();
     closeModal();
   };
 
