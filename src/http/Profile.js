@@ -13,7 +13,7 @@ export const GetCurrentData = () =>
     }
   });
 
-export const UpdateNewData = () =>
+const UpdateNewDataHook = () =>
   useAxios(
     {
       url: 'api/user',
@@ -26,3 +26,35 @@ export const UpdateNewData = () =>
       manual: true
     }
   );
+const UpdateNewDataExecute = (func, firstname, lastname, email, password) =>
+{
+  if (password) {
+    return (
+      func({
+        url: 'api/user',
+        data: {
+          firstname,
+          lastname,
+          email,
+          password
+        }
+      })
+    );
+  } else {
+    return (
+      func({
+        url: 'api/user',
+        data: {
+          firstname,
+          lastname,
+          email
+        }
+      })
+    );
+  }
+};
+
+export const UpdateNewData = {
+  hook: UpdateNewDataHook,
+  execute: UpdateNewDataExecute
+};

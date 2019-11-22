@@ -55,11 +55,11 @@ export default function Profile() {
   const onChange = (e, setFunc, validateFunc) =>
     setFunc({ value: e.target.value, error: !validateFunc(e.target.value) });
 
-  const [{ data: getData, loading: getLoading }] = GetCurrentData();
+  const [{ data: getData, loading: getLoading }, refresh] = GetCurrentData();
   const [
     { data: updateData, loading: updateLoading, error: updateError },
-    execute
-  ] = UpdateNewData();
+    executeUpdate
+  ] = UpdateNewData.hook();
   const [
     {
       open: modalOpen,
@@ -88,23 +88,24 @@ export default function Profile() {
 
   const onSubmit = event => {
     event.preventDefault();
-    execute({
-      data: {
-        firstname: firstName.value,
-        lastname: lastName.value,
-        email: email.value,
-        password: password.value
-      }
-    });
+    UpdateNewData.execute(
+      executeUpdate,
+      firstName,
+      lastName,
+      email,
+      password);
+    refresh();
 
-      setModal({
-        open: false,
-        title: undefined,
-        stateName: undefined,
-        dialogText: undefined,
-        textType: undefined
-      });
+
+    setModal({
+      open: false,
+      title: undefined,
+      stateName: undefined,
+      dialogText: undefined,
+      textType: undefined
+    });
   };
+
   const fields = [
     {
       title: 'Prénom',
