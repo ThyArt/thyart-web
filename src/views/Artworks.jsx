@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { FetchArtworks } from '../http/Artwork';
+import React, { Fragment, useState } from 'react';
+import { FetchArtworks, DeleteArtwork } from 'http/Artwork';
 import { Card } from '@material-ui/core';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
@@ -9,8 +9,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { blueGrey } from '@material-ui/core/colors';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { map } from 'lodash';
+import { map, filter } from 'lodash';
 import Grid from '@material-ui/core/Grid';
+import Menu from 'components/Menu/Menu';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -36,23 +37,54 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Artworks() {
-  const [{ data, loading }] = FetchArtworks();
+  const [{ data: fetchData, loading: fetchLoading, error: fetchError }] = FetchArtworks();
+  const [artworks, setArtworks] = useState([]);
+  const [dirty, setDirty] = useState({ get: true, post: false });
+  const [{ target, artworkId }, setMenuAnchor] = useState({ target: null, artworkId: null });
   const classes = useStyles();
 
-  console.log(data);
+  const { get: getIsDirty } = dirty;
+  const handleDirty = (index, value = true) => setDirty({ ...dirty, [index]: value });
+
+  if (getIsDirty && fetchData && !fetchError && !fetchLoading) {
+    setArtworks(fetchData.data);
+    handleDirty('get', false);
+  }
+
+  const menuItems = [
+    {
+      text: 'supprimer',
+      onClick: () =>
+        DeleteArtwork(artworkId).then(() =>
+          setArtworks(filter(artworks, ({ id }) => id !== artworkId))
+        )
+    }
+  ];
+
   return (
     <Fragment>
-      {loading ? (
+      <Menu
+        anchorEl={target}
+        id={'settings'}
+        onClose={() => setMenuAnchor({ target: null, artworkId: null })}
+        items={menuItems}
+      />
+      {fetchLoading ? (
         <CircularProgress />
       ) : (
         <Grid container spacing={5} justify="flex-start">
-          {map(data.data, artwork => (
+          {map(artworks, artwork => (
             <Grid key={artwork.id} item xs={12} sm={6} md={6} lg={3}>
               <Card className={classes.card}>
                 <CardHeader
                   avatar={<Avatar className={classes.avatar}>{artwork.name[0]}</Avatar>}
                   action={
-                    <IconButton aria-label="settings">
+                    <IconButton
+                      aria-label="settings"
+                      onClick={event =>
+                        setMenuAnchor({ target: event.currentTarget, artworkId: artwork.id })
+                      }
+                    >
                       <MoreVertIcon />
                     </IconButton>
                   }
