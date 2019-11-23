@@ -1,6 +1,7 @@
 // @material-ui/icons
 import Person from '@material-ui/icons/Person';
 import GroupIcon from '@material-ui/icons/Group';
+import MailIcon from '@material-ui/icons/Mail';
 import UserProfile from 'views/UserProfile';
 import Clients from 'views/Clients';
 import Calendar from 'views/Calendar';
@@ -11,6 +12,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EventIcon from '@material-ui/icons/Event';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import Newsletters from 'views/Newsletters';
 // core components/views for Admin layout
 // core components/views for RTL layout
 
@@ -48,6 +50,13 @@ const dashboardRoutes = [
     name: 'Statistiques',
     icon: EqualizerIcon,
     component: Stats,
+    layout: '/dashboard'
+  },
+  {
+    path: '/newletters',
+    name: 'Newsletters',
+    icon: MailIcon,
+    component: Newsletters,
     layout: '/dashboard'
   }
 ];
