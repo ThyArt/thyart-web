@@ -20,7 +20,7 @@ export const deleteCookies = async () => {
   const cookies = new Cookies();
   const cookiesName = cookies.getAll();
 
-  Object.keys(cookiesName).forEach((cookieName) => {
+  Object.keys(cookiesName).forEach(cookieName => {
     cookies.remove(cookieName);
   });
 };

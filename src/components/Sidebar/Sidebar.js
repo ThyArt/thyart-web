@@ -21,7 +21,7 @@ import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.
 const useStyles = makeStyles(styles);
 
 function logout() {
-  deleteCookies().then(() => window.location.href = '/');
+  deleteCookies().then(() => (window.location.href = '/'));
 }
 
 export default function Sidebar(props) {
@@ -85,11 +85,12 @@ export default function Sidebar(props) {
       })}
       <a href="#" onClick={() => logout()}>
         <ListItem className={classNames(classes.itemLink, classes.bottomElement)}>
-          <ExitToAppIcon className={classNames(classes.itemIcon, classes.whiteFont)}/>
+          <ExitToAppIcon className={classNames(classes.itemIcon, classes.whiteFont)} />
           <ListItemText
             primary="Déconnexion"
             className={classNames(classes.itemText, classes.whiteFont)}
-            disableTypography={true}/>
+            disableTypography={true}
+          />
         </ListItem>
       </a>
     </List>
