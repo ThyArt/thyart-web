@@ -13,10 +13,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // core components
-import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks.js';
-import RTLNavbarLinks from 'components/Navbars/RTLNavbarLinks.js';
+import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks';
+import RTLNavbarLinks from 'components/Navbars/RTLNavbarLinks';
 
-import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
+import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle';
 
 const useStyles = makeStyles(styles);
 
@@ -83,7 +83,7 @@ export default function Sidebar(props) {
           </NavLink>
         );
       })}
-      <a href="#" onClick={() => logout()}>
+      <a href="/" onClick={() => logout()}>
         <ListItem className={classNames(classes.itemLink, classes.bottomElement)}>
           <ExitToAppIcon className={classNames(classes.itemIcon, classes.whiteFont)} />
           <ListItemText
