@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { each, map } from 'lodash';
+import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Snackbar from '@material-ui/core/Snackbar';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,9 +14,17 @@ import Button from 'components/CustomButtons/Button';
 import SnackBarWrapper from 'components/SnackBarWrapper/SnackBarWrapper';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
+import Searchbar from 'components/SearchBar/Searchbar';
 import { GetCurrentMembers, UpdateRole, CreateMember } from 'http/Members';
 
+const useStyles = makeStyles(() => ({
+  topDiv: {
+    display: 'flex'
+  }
+}));
+
 export default function Members() {
+  const classes = useStyles();
   const [{ data: currentData }, refresh] = GetCurrentMembers();
   const [{ error: errorUpdate, response: responseUpdate }, executeUpdate] = UpdateRole.hook();
   const [{ error: errorCreate, response: responseCreate }, executeCreate] = CreateMember.hook();
@@ -28,6 +37,7 @@ export default function Members() {
   const [userPassword, setUserPassword] = useState('');
   const [members, setMembers] = useState([]);
   const [key, setKey] = useState(0);
+  const [searchInput, setSearchinput] = useState('');
 
   const header = [
     "Nom d'utilisateur",
@@ -94,7 +104,7 @@ export default function Members() {
       setMembers(currentData.data);
       setKey(Math.random());
     }
-  }, [currentData]);
+  }, [currentData, searchInput]);
 
   useEffect(() => {
     if (responseUpdate || responseCreate) {
@@ -129,17 +139,35 @@ export default function Members() {
     );
   };
 
+  const checkRegex = (array, regex) => {
+    return (regex.test(array['id']) || regex.test(array['name']) || regex.test(array['firstname']) || regex.test(array['lastname']) || regex.test(array['email']));
+  };
+
   const formatResult = () => {
     let tmp = [];
     each(members, obj => {
-      tmp.push({
-        id: obj['id'],
-        username: obj['name'],
-        firstname: obj['firstname'],
-        lastname: obj['lastname'],
-        email: obj['email'],
-        role: roleSwitch(obj['id'], obj['role'])
-      });
+      if (searchInput) {
+        const regex = new RegExp(searchInput);
+        if (checkRegex(obj, regex)) {
+          tmp.push({
+            id: obj['id'],
+            username: obj['name'],
+            firstname: obj['firstname'],
+            lastname: obj['lastname'],
+            email: obj['email'],
+            role: roleSwitch(obj['id'], obj['role'])
+          });
+        }
+      } else {
+        tmp.push({
+          id: obj['id'],
+          username: obj['name'],
+          firstname: obj['firstname'],
+          lastname: obj['lastname'],
+          email: obj['email'],
+          role: roleSwitch(obj['id'], obj['role'])
+        });
+      }
     });
     return tmp;
   };
@@ -163,11 +191,19 @@ export default function Members() {
     refresh();
   };
 
+  const onSearch = input => {
+    setSearchinput(input);
+  };
+
   return (
     <Fragment>
-      <Button type="button" color="primary" onClick={() => setOpenModal(true)}>
-        Créer un membre
-      </Button>
+      <div className={classes.topDiv}>
+        <Button type="button" color="primary" onClick={() => setOpenModal(true)}>
+          Créer un membre
+        </Button>
+
+        <Searchbar onInputChange={onSearch}/>
+      </div>
 
       {currentData ? <Table header={header} key={key} rows={formatResult()} /> : null}
 
