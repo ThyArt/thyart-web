@@ -14,7 +14,7 @@ const App = function App() {
         <Route
           path="/dashboard"
           render={props =>
-            new Cookies().get('accessToken') !== undefined ? (
+            new Cookies().get('accessToken') ? (
               <DashBoardLayout {...props} />
             ) : (
               <Redirect to={'/'} />
@@ -24,7 +24,7 @@ const App = function App() {
         <Route
           path="/"
           render={props =>
-            new Cookies().get('accessToken') === undefined ? (
+            !(new Cookies().get('accessToken')) ? (
               <LandingLayout {...props} />
             ) : (
               <Redirect to={'/dashboard'} />
