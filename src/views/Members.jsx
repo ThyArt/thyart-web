@@ -140,7 +140,13 @@ export default function Members() {
   };
 
   const checkRegex = (array, regex) => {
-    return (regex.test(array['id']) || regex.test(array['name']) || regex.test(array['firstname']) || regex.test(array['lastname']) || regex.test(array['email']));
+    return (
+      regex.test(array['id']) ||
+      regex.test(array['name']) ||
+      regex.test(array['firstname']) ||
+      regex.test(array['lastname']) ||
+      regex.test(array['email'])
+    );
   };
 
   const formatResult = () => {
@@ -202,7 +208,7 @@ export default function Members() {
           Créer un membre
         </Button>
 
-        <Searchbar onInputChange={onSearch}/>
+        <Searchbar onInputChange={onSearch} />
       </div>
 
       {currentData ? <Table header={header} key={key} rows={formatResult()} /> : null}
