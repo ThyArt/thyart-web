@@ -1,39 +1,40 @@
 import useAxios from 'axios-hooks';
-import Cookies from 'universal-cookie';
 import * as methods from 'variables/methods';
 
-const cookies = new Cookies();
-
-export const GetBillings = token =>
-  useAxios({
-    url: 'api/order/',
-    method: methods.Get,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+export const GetBillings = (token) =>
+  useAxios(
+    {
+      url: 'api/order/',
+      method: methods.Get,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      }
     }
-  });
+  );
 
 export const GetBilling = (token, id) =>
-  useAxios({
-    url: 'api/order/' + id,
-    method: methods.Get,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+  useAxios(
+    {
+      url: 'api/order/' + id,
+      method: methods.Get,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      }
     }
-  });
+  )
 
-const DeleteBillingHook = token =>
+const DeleteBillingHook = (token) =>
   useAxios(
     {
       method: methods.Delete,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
       }
     },
     {
@@ -42,11 +43,11 @@ const DeleteBillingHook = token =>
   );
 
 const DeleteBillingExecute = (func, id) =>
-  func({
-    url: 'api/order/' + id
-  });
+    func({
+      url: 'api/order/' + id,
+    })
 
-export const DeleteBillings = {
+export const DeleteBilling = {
   hook: DeleteBillingHook,
   execute: DeleteBillingExecute
 };
@@ -63,7 +64,7 @@ const CreateBillingHook = () =>
   );
 
 const CreateBillingExecute = (
-  func,
+  func, 
   token,
   first_name,
   last_name,
@@ -72,14 +73,13 @@ const CreateBillingExecute = (
   address,
   city,
   country,
-  date,
   artworkId
-) =>
+  ) =>
   func({
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     },
     data: {
       first_name: first_name,
@@ -90,7 +90,8 @@ const CreateBillingExecute = (
       city: city,
       country: country,
       date: date,
-      artwork_id: artworkId
+      price: price,
+      artworkId: artworkId
     }
   });
 
@@ -99,7 +100,9 @@ export const CreateBilling = {
   execute: CreateBillingExecute
 };
 
-const ModifyBillingHook = id =>
+const ModifyBillingHook = (
+  id
+) =>
   useAxios(
     {
       url: 'api/order/' + id,
@@ -111,7 +114,7 @@ const ModifyBillingHook = id =>
   );
 
 const ModifyBillingExecute = (
-  func,
+  func, 
   token,
   first_name,
   last_name,
@@ -120,13 +123,15 @@ const ModifyBillingExecute = (
   address,
   city,
   country,
+  date,
+  price,
   artworkId
-) =>
+  ) =>
   func({
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     },
     data: {
       first_name: first_name,
@@ -136,54 +141,13 @@ const ModifyBillingExecute = (
       address: address,
       city: city,
       country: country,
-      artwork_id: artworkId
-    }
+      date: date,
+      price: price,
+      artworkId: artworkId
+    } 
   });
 
 export const ModifyBilling = {
   hook: ModifyBillingHook,
   execute: ModifyBillingExecute
-};
-
-export const FetchArtworks = () =>
-  useAxios({
-    url: 'api/artwork',
-    method: methods.Get,
-    headers: {
-      Authorization: `Bearer ${cookies.get('accessToken').access_token}`
-    }
-  });
-
-export const FetchExposedArtworks = () =>
-  useAxios({
-    url: 'api/artwork?state=exposed',
-    method: methods.Get,
-    headers: {
-      Authorization: `Bearer ${cookies.get('accessToken').access_token}`
-    }
-  });
-
-const GetArtworkHook = token =>
-  useAxios(
-    {
-      method: methods.Get,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
-      }
-    },
-    {
-      manual: true
-    }
-  );
-
-const GetArtworkExecute = (func, id) =>
-  func({
-    url: 'api/artwork/' + id
-  });
-
-export const GetArtwork = {
-  hook: GetArtworkHook,
-  execute: GetArtworkExecute
 };
