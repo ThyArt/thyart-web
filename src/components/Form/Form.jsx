@@ -1,15 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
-import SubmitButton from './SubmitButton';
 import findByType from 'utils/findByType';
 import PropTypes from 'prop-types';
-
+import SubmitButton from './SubmitButton';
 
 const useStyles = makeStyles(theme => ({
   form: {
-    width: '100%', // Fix IE 11 issue.
-    // marginTop: theme.spacing(1)
+    width: '100%' // Fix IE 11 issue.
+    //marginTop: theme.spacing(1)
   }
 }));
 
