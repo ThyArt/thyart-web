@@ -1,36 +1,41 @@
 import useAxios from 'axios-hooks';
 import * as methods from 'variables/methods';
 
-export const GetCustomers = token =>
-  useAxios({
-    url: 'api/customer/',
-    method: methods.Get,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+
+export const GetCustomers = (token) =>
+  useAxios(
+    {
+      url: 'api/customer/',
+      method: methods.Get,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      }
     }
-  });
+  );
 
 export const GetCustomer = (token, id) =>
-  useAxios({
-    url: 'api/customer/' + id,
-    method: methods.Get,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+  useAxios(
+    {
+      url: 'api/customer/' + id,
+      method: methods.Get,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      }
     }
-  });
+  )
 
-const DeleteCustomerHook = token =>
+const DeleteCustomerHook = (token) =>
   useAxios(
     {
       method: methods.Delete,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
       }
     },
     {
@@ -39,9 +44,9 @@ const DeleteCustomerHook = token =>
   );
 
 const DeleteCustomerExecute = (func, id) =>
-  func({
-    url: 'api/customer/' + id
-  });
+    func({
+      url: 'api/customer/' + id,
+    })
 
 export const DeleteCustomer = {
   hook: DeleteCustomerHook,
@@ -60,7 +65,7 @@ const CreateCustomerHook = () =>
   );
 
 const CreateCustomerExecute = (
-  func,
+  func, 
   token,
   first_name,
   last_name,
@@ -69,12 +74,12 @@ const CreateCustomerExecute = (
   address,
   city,
   country
-) =>
+  ) =>
   func({
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     },
     data: {
       first_name: first_name,
@@ -92,7 +97,9 @@ export const CreateCustomer = {
   execute: CreateCustomerExecute
 };
 
-const ModifyCustomerHook = id =>
+const ModifyCustomerHook = (
+  id
+) =>
   useAxios(
     {
       url: 'api/customer/' + id,
@@ -104,7 +111,7 @@ const ModifyCustomerHook = id =>
   );
 
 const ModifyCustomerExecute = (
-  func,
+  func, 
   token,
   first_name,
   last_name,
@@ -113,12 +120,12 @@ const ModifyCustomerExecute = (
   address,
   city,
   country
-) =>
+  ) =>
   func({
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     },
     data: {
       first_name: first_name,
@@ -128,7 +135,7 @@ const ModifyCustomerExecute = (
       address: address,
       city: city,
       country: country
-    }
+    } 
   });
 
 export const ModifyCustomer = {
