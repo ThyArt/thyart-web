@@ -54,7 +54,7 @@ function AppAppBar(props) {
               className={classes.rightLink}
               to="/sign-in/"
             >
-              {'Sign In'}
+              {'Connexion'}
             </Link>
             <Link
               variant="h6"
@@ -62,7 +62,7 @@ function AppAppBar(props) {
               className={clsx(classes.rightLink, classes.linkSecondary)}
               to="/sign-up/"
             >
-              {'Sign Up'}
+              {'Inscription'}
             </Link>
           </div>
         </Toolbar>

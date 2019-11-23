@@ -81,8 +81,8 @@ const SignIn = function SignIn({ history }) {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Form
           className={classes.paper}
-          title={'Sign In'}
-          submitLabel={'Sign In'}
+          title={'Connexion'}
+          submitLabel={'Connexion'}
           onSubmit={onSubmit}
           disabled={!email.value || !password.value || email.error || password.error}
         >
@@ -94,7 +94,7 @@ const SignIn = function SignIn({ history }) {
           <Form.Body>
             <TextField
               id="email"
-              label="Email Address"
+              label="Adresse email"
               name="email"
               autoComplete="email"
               autoFocus
@@ -104,7 +104,7 @@ const SignIn = function SignIn({ history }) {
             />
             <TextField
               name="password"
-              label="Password"
+              label="Mot de passe"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -113,7 +113,7 @@ const SignIn = function SignIn({ history }) {
               {...password}
             />
             <CheckBox
-              label={'Remember me'}
+              label={'Se souvenir de moi'}
               value={'remember'}
               checked={rememberMe}
               onChange={e => setRememberMe(e.target.checked)}
@@ -123,12 +123,12 @@ const SignIn = function SignIn({ history }) {
             <Grid container>
               <Grid item xs>
                 <Link to="/" variant="body2">
-                  Forgot password?
+                  {"Oubli de votre mot de passe ?"}
                 </Link>
               </Grid>
               <Grid item>
                 <Link to="/sign-up/" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Pas de compte ? Inscrivez-vous"}
                 </Link>
               </Grid>
             </Grid>
@@ -149,7 +149,7 @@ const SignIn = function SignIn({ history }) {
       >
         <SnackBarWrapper
           variant="error"
-          message="Unable to connect. Please verify your email and your password"
+          message="Impossible de vous connecter. Vérifiez votre email et votre mot de passe."
           onClose={handleClose}
         />
       </Snackbar>
