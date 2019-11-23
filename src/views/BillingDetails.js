@@ -4,26 +4,19 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import React, { useEffect, useState } from "react";
 import Button from "components/CustomButtons/Button";
-import BillingForm from "./BillingForm";
+import billingForm from "./billingForm";
 import { GetBilling as BillingRequest } from 'http/Billings';
+import { GetArtwork as ArtworkRequest } from 'http/Artworks';
 import Cookies from 'universal-cookie';
 import { map } from 'lodash';
-import PropTypes from 'prop-types';
 
-function billingInfos(clientFields, artworkFields, client, artwork) {
+function billingInfos(fields, billing) {
     return (
         <Grid container>
             <Grid item>
                 <List >
                     {
-                        map(clientFields, field => (
-                            <ListItem key={field.key} alignItems="flex-start">
-                                <ListItemText primary={field.name + ': '} />
-                            </ListItem>
-                        ))
-                    }
-                    {
-                        map(artworkFields, field => (
+                        map(fields, field => (
                             <ListItem key={field.key} alignItems="flex-start">
                                 <ListItemText primary={field.name + ': '} />
                             </ListItem>
@@ -34,16 +27,9 @@ function billingInfos(clientFields, artworkFields, client, artwork) {
             <Grid item>
                 <List>
                     {
-                        map(clientFields, field => (
+                        map(fields, field => (
                             <ListItem key={field.key} alignItems="flex-start">
-                                <ListItemText primary={client[field.key]} />
-                            </ListItem>
-                        ))
-                    }
-                    {
-                        map(artworkFields, field => (
-                            <ListItem key={field.key} alignItems="flex-start">
-                                <ListItemText primary={artwork[field.key]} />
+                                <ListItemText primary={billing[field.key]} />
                             </ListItem>
                         ))
                     }
@@ -53,54 +39,50 @@ function billingInfos(clientFields, artworkFields, client, artwork) {
     );
 }
 
-export default function BillingDetails(props) {
-    const { isNew, returnFunction } = props;
+export default function billingDetails(props) {
+    const { isNew, billingId, artworkId, returnFunction } = props;
     const [modif, setModif] = useState(isNew);
-    const [billingId, setBillingId] = useState(props.billingId);
-    const cookie = new Cookies();
-    var token = cookie.get('accessToken');
-    let dataBilling;
-    if (!isNew) {
-         [{ data: dataBilling }] = BillingRequest(token.access_token, billingId);
-    }
-    const [client, setClient] = useState({
+    const [billing, setbilling] = useState({
         id: 0,
+        artworkId: 0,
         email: '',
         phone: '',
         first_name: '',
         last_name: '',
         country: '',
         city: '',
-        address: ''
-    });
-    const [artwork, setArtwork] = useState({
-        id: '',
-        name: '',
+        address: '',
         price: '',
-        ref: ''
+        artworkName: ''
     });
-    const clientFields = [
+    const fields = [
         { name: 'Email', key: 'email' },
         { name: 'Téléphone', key: 'phone' },
         { name: 'Prénom', key: 'first_name' },
         { name: 'Nom de famille', key: 'last_name' },
         { name: 'Pays', key: 'country' },
         { name: 'Ville', key: 'city' },
-        { name: 'Adresse', key: 'address' }
-    ];
-    const artworkFields = [
-        { name: "Nom de l'oeuvre", key: 'name' },
+        { name: 'Adresse', key: 'address' },
         { name: "Prix de l'oeuvre", key: 'price' },
-        { name: "Référence de l'oeuvre", key: 'ref' }
+        { name: "Nom de l'oeuvre", key: 'artwork_name' }
     ];
+    const cookie = new Cookies();
+    var token = cookie.get('accessToken');
+    var dataBilling;
+    if (!isNew)
+    {
+        [{ dataBilling }] = BillingRequest(token.access_token, billingId);
+        [{ dataArtwork }] = ArtworkRequest(token.access_token, artworkId);
+    }
 
     useEffect(() => {
-        if (!isNew && dataBilling) {
-            setClient(dataBilling.data.customer);
-            setArtwork(dataBilling.data.artwork);
-            setBillingId(dataBilling.data.id);
+        if (!isNew && dataBilling && dataArtwork)
+        {
+            dataBilling.dataBilling.artwork_name = dataArtwork.name;
+            dataBilling.dataBilling.price = dataArtwork.price;
+            setbilling(dataBilling.dataBilling);
         }
-    }, [dataBilling, isNew]);
+    }, [dataBilling, dataArtwork, isNew]);
 
     var content, button, returnButton;
 
@@ -111,10 +93,8 @@ export default function BillingDetails(props) {
 
     if (modif) {
         content =
-            <BillingForm
-                client={client}
-                artwork={artwork}
-                billingId={billingId}
+            <billingForm
+                billing={billing}
                 returnFunction={() => { returnFunction() }}
                 isNew={isNew}
             />
@@ -127,12 +107,30 @@ export default function BillingDetails(props) {
         }
     }
     else if (!isNew) {
-        content = billingInfos(clientFields, artworkFields, client, artwork);
+        content = billingInfos(fields, billing);
         button = <Button type="button" color="primary" onClick={() => {
             setModif(true);
         }}>
             Modifier
         </Button>
+    }
+    else {
+        content = billingInfos(
+            fields,
+            {
+                id: 1,
+                artworkId: 0,
+                email: '',
+                phone: '',
+                first_name: '',
+                last_name: '',
+                country: '',
+                city: '',
+                address: '',
+                price: '',
+                artworkName: ''
+            });
+        button = null;
     }
 
     return (
@@ -143,8 +141,3 @@ export default function BillingDetails(props) {
         </div>
     );
 }
-
-BillingDetails.propTypes = {
-    isNew: PropTypes.bool,
-    returnFunction: PropTypes.func
-  }
