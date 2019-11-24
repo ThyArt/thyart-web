@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import useAxios from 'axios-hooks';
-import { Get, Delete, Post } from 'variables/methods';
+import { Get, Delete, Post, Patch } from 'variables/methods';
 
 const cookies = new Cookies();
 
@@ -42,3 +42,24 @@ export const AddArtwork = () =>
     },
     { manual: true }
   );
+
+export const PatchArtwork = () => {
+  const [hook, func] = useAxios(
+    {
+      url: artworkUrl,
+      method: Patch,
+      headers: {
+        Authorization: `Bearer ${cookies.get('accessToken').access_token}`
+      }
+    },
+    { manual: true }
+  );
+
+  const execute = (id, data) =>
+    func({
+      url: `${artworkUrl}/${id}`,
+      data: data
+    });
+
+  return [hook, execute];
+};

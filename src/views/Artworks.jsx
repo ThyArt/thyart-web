@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { FetchArtworks, DeleteArtwork, AddArtwork } from 'http/Artwork';
+import { FetchArtworks, DeleteArtwork, AddArtwork, PatchArtwork } from 'http/Artwork';
 import {
   Card,
   CircularProgress,
@@ -17,13 +17,13 @@ import {
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { blueGrey } from '@material-ui/core/colors';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { map, filter, forEach, isEmpty } from 'lodash';
+import { map, filter, forEach, isEmpty, pick, findIndex, slice } from 'lodash';
 import Menu from 'components/Menu/Menu';
 import Button from 'components/CustomButtons/Button';
-import { StateInStock, StateExposed, StateIncoming, StateSold } from 'variables/artwork';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import TextField from 'components/Form/TextField';
+import { StateInStock, StateExposed, StateIncoming, StateSold } from 'variables/artwork';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -67,73 +67,6 @@ export default function Artworks() {
       value: StateSold
     }
   ];
-
-  const [{ data: fetchData, loading: fetchLoading }] = FetchArtworks();
-  const [{ data: deleteData }, deleteArtwork] = DeleteArtwork();
-  const [{ data: createData }, addArtwork] = AddArtwork();
-
-  const classes = useStyles();
-
-  const modalDefault = {
-    open: false,
-    title: '',
-    name: '',
-    price: 0,
-    ref: '',
-    state: StateInStock,
-    onClick: () => {}
-  };
-  const targetDefault = {
-    artwork: null,
-    deleted: false,
-    created: false
-  };
-
-  const [artworks, setArtworks] = useState([]);
-  const [modal, setModal] = useState(modalDefault);
-  const [menuAnchor, setMenuAnchor] = useState(null);
-  const [target, setTarget] = useState(targetDefault);
-
-  const menuItems = [
-    {
-      text: 'supprimer',
-      onClick: () => deleteArtwork(target.artwork.id)
-    }
-  ];
-
-  useEffect(() => setArtworks(fetchData ? fetchData.data : null), [fetchData]);
-  useEffect(() => setTarget(prevState => ({ ...prevState, deleted: Boolean(deleteData) })), [
-    deleteData
-  ]);
-  useEffect(
-    () =>
-      setTarget(({ artwork: prevArtwork, ...rest }) => ({
-        ...rest,
-        artwork: createData ? createData.data : prevArtwork,
-        created: Boolean(createData)
-      })),
-    [createData]
-  );
-
-  useEffect(() => {
-    const functions = {
-      deleted: () =>
-        setArtworks(artworks => filter(artworks, ({ id }) => id !== target.artwork.id)),
-      created: () => setArtworks(artworks => [target.artwork, ...artworks])
-    };
-
-    forEach(functions, (func, key) => {
-      if (target[key]) {
-        func();
-        setMenuAnchor(null);
-        setModal(modalDefault);
-        setTarget(targetDefault);
-      }
-    });
-  }, [target, targetDefault, modalDefault]);
-
-  const { open: modalOpen, title: modalTitle, onClick: onClickModal, ...rest } = modal;
-
   const modalFields = [
     {
       content: "Nom de l'oeuvre",
@@ -161,17 +94,100 @@ export default function Artworks() {
       value: 'price'
     }
   ];
-  const modalCreate = {
-    open: true,
-    title: 'Ajouter une oeuvre',
+
+  const [{ data: fetchData, loading: fetchLoading }] = FetchArtworks();
+  const [{ data: deleteData }, deleteArtwork] = DeleteArtwork();
+  const [{ data: createData }, addArtwork] = AddArtwork();
+  const [{ data: patchData }, patchArtwork] = PatchArtwork();
+
+  const classes = useStyles();
+
+  const modalDefault = {
+    open: false,
+    title: '',
     name: '',
     price: 0,
     ref: '',
     state: StateInStock,
-    onClick: data => {
-      addArtwork({ data: data });
-    }
+    onClick: () => {}
   };
+  const targetDefault = {
+    artwork: null,
+    deleted: false,
+    created: false,
+    updated: false
+  };
+
+  const [artworks, setArtworks] = useState([]);
+  const [modal, setModal] = useState(modalDefault);
+  const [menuAnchor, setMenuAnchor] = useState(null);
+  const [target, setTarget] = useState(targetDefault);
+
+  const menuItems = [
+    {
+      text: 'supprimer',
+      onClick: () => deleteArtwork(target.artwork.id)
+    },
+    {
+      text: 'modifier',
+      onClick: () =>
+        setModal({
+          open: true,
+          title: 'Modifier une oeuvre',
+          ...pick(target.artwork, ['name', 'ref', 'state', 'price']),
+          onClick: data => {
+            patchArtwork(target.artwork.id, data);
+          }
+        })
+    }
+  ];
+
+  useEffect(() => setArtworks(fetchData ? fetchData.data : null), [fetchData]);
+  useEffect(() => setTarget(prevState => ({ ...prevState, deleted: Boolean(deleteData) })), [
+    deleteData
+  ]);
+  useEffect(
+    () =>
+      setTarget(({ artwork: prevArtwork, ...rest }) => ({
+        ...rest,
+        artwork: patchData ? patchData.data : prevArtwork,
+        updated: Boolean(patchData)
+      })),
+    [patchData]
+  );
+  useEffect(
+    () =>
+      setTarget(({ artwork: prevArtwork, ...rest }) => ({
+        ...rest,
+        artwork: createData ? createData.data : prevArtwork,
+        created: Boolean(createData)
+      })),
+    [createData]
+  );
+
+  useEffect(() => {
+    const functions = {
+      deleted: () =>
+        setArtworks(artworks => filter(artworks, ({ id }) => id !== target.artwork.id)),
+      created: () => setArtworks(artworks => [target.artwork, ...artworks]),
+      updated: () =>
+        setArtworks(artworks => {
+          const index = findIndex(artworks, ({ id }) => id === target.artwork.id);
+          return [...slice(artworks, 0, index), target.artwork, ...slice(artworks, index + 1)];
+        })
+    };
+
+    forEach(functions, (func, key) => {
+      if (target[key]) {
+        func();
+        setMenuAnchor(null);
+        setModal(modalDefault);
+        setTarget(targetDefault);
+      }
+    });
+  }, [target, targetDefault, modalDefault]);
+
+  const { open: modalOpen, title: modalTitle, onClick: onClickModal, ...rest } = modal;
 
   return (
     <Fragment>
@@ -215,7 +231,23 @@ export default function Artworks() {
         items={menuItems}
       />
 
-      <Button type="button" color="primary" onClick={() => setModal(modalCreate)}>
+      <Button
+        type="button"
+        color="primary"
+        onClick={() =>
+          setModal({
+            open: true,
+            title: 'Ajouter une oeuvre',
+            name: '',
+            price: 0,
+            ref: '',
+            state: StateInStock,
+            onClick: data => {
+              addArtwork({ data: data });
+            }
+          })
+        }
+      >
         Ajouter une oeuvre
       </Button>
 
