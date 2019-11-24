@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Select({rows, onSelect, multiple, labelName}) {
+function Select({ rows, onSelect, multiple, labelName }) {
   const classes = useStyles();
   const [selected, setSelected] = useState([]);
 
@@ -30,7 +30,7 @@ function Select({rows, onSelect, multiple, labelName}) {
     multiple = false;
   }
   if (!onSelect) {
-    onSelect = function(id) {}
+    onSelect = function (id) { }
   }
   if (!labelName) {
     labelName = "Séléctionnez"
@@ -51,7 +51,7 @@ function Select({rows, onSelect, multiple, labelName}) {
 
   useEffect(() => {
     onSelect(selected);
-  }, [selected]);
+  }, [selected, onSelect]);
 
   return (
     <Fragment>
