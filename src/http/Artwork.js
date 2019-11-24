@@ -1,11 +1,11 @@
 import Cookies from 'universal-cookie';
 import useAxios from 'axios-hooks';
-import { Client } from './Client';
-import { Get, Delete } from 'variables/methods';
+import { Get, Delete, Post } from 'variables/methods';
 
 const cookies = new Cookies();
 
 const artworkUrl = 'api/artwork';
+
 export const FetchArtworks = () =>
   useAxios({
     url: artworkUrl,
@@ -32,3 +32,13 @@ export const DeleteArtwork = () => {
 
   return [hook, execute];
 };
+
+export const AddArtwork = () =>
+  useAxios(
+    {
+      url: artworkUrl,
+      method: Post,
+      headers: { Authorization: `Bearer ${cookies.get('accessToken').access_token}` }
+    },
+    { manual: true }
+  );
