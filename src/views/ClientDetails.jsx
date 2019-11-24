@@ -135,6 +135,6 @@ export default function ClientDetails(props) {
 
 ClientDetails.propTypes = {
   isNew: PropTypes.bool,
-  clientId: PropTypes.string,
+  clientId: PropTypes.number,
   returnFunction: PropTypes.func
 }
