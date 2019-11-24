@@ -15,13 +15,7 @@ function Menu({ className, anchorEl, id, onClose, items }) {
       onClose={onClose}
     >
       {map(items, ({ text, onClick }) => (
-        <MenuItem
-          key={text}
-          text={text}
-          onClick={() => {
-            onClick();
-          }}
-        />
+        <MenuItem key={text} text={text} onClick={onClick} />
       ))}
     </BaseMenu>
   );
