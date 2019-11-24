@@ -96,7 +96,8 @@ export default function Members() {
 
   useEffect(() => {
     refresh();
-  }, [refresh]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (currentData) {
@@ -109,7 +110,8 @@ export default function Members() {
     if (responseUpdate || responseCreate) {
       refresh();
     }
-  }, [responseUpdate, responseCreate, refresh]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseUpdate, responseCreate]);
 
   const handleCloseModal = () => {
     setOpenModal(false);
