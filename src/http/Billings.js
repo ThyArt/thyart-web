@@ -25,7 +25,7 @@ export const GetBilling = (token, id) =>
         Authorization: "Bearer " + token
       }
     }
-  )
+  );
 
 const DeleteBillingHook = (token) =>
   useAxios(
@@ -43,11 +43,11 @@ const DeleteBillingHook = (token) =>
   );
 
 const DeleteBillingExecute = (func, id) =>
-    func({
-      url: 'api/order/' + id,
-    })
+  func({
+    url: 'api/order/' + id
+  })
 
-export const DeleteBilling = {
+export const DeleteBillings = {
   hook: DeleteBillingHook,
   execute: DeleteBillingExecute
 };
@@ -64,7 +64,7 @@ const CreateBillingHook = () =>
   );
 
 const CreateBillingExecute = (
-  func, 
+  func,
   token,
   first_name,
   last_name,
@@ -73,8 +73,9 @@ const CreateBillingExecute = (
   address,
   city,
   country,
+  date,
   artworkId
-  ) =>
+) =>
   func({
     headers: {
       Accept: "application/json",
@@ -90,8 +91,7 @@ const CreateBillingExecute = (
       city: city,
       country: country,
       date: date,
-      price: price,
-      artworkId: artworkId
+      artwork_id: artworkId
     }
   });
 
@@ -114,7 +114,7 @@ const ModifyBillingHook = (
   );
 
 const ModifyBillingExecute = (
-  func, 
+  func,
   token,
   first_name,
   last_name,
@@ -123,10 +123,8 @@ const ModifyBillingExecute = (
   address,
   city,
   country,
-  date,
-  price,
   artworkId
-  ) =>
+) =>
   func({
     headers: {
       Accept: "application/json",
@@ -141,10 +139,8 @@ const ModifyBillingExecute = (
       address: address,
       city: city,
       country: country,
-      date: date,
-      price: price,
-      artworkId: artworkId
-    } 
+      artwork_id: artworkId
+    }
   });
 
 export const ModifyBilling = {
