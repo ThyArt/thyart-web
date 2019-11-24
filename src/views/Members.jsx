@@ -157,7 +157,7 @@ export default function Members() {
     const tmp = [];
     each(members, obj => {
       if (searchInput) {
-        const regex = new RegExp(searchInput);
+        const regex = new RegExp(searchInput, 'i');
         if (checkRegex(obj, regex)) {
           tmp.push({
             id: obj.id,
