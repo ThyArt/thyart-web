@@ -91,13 +91,13 @@ function Searchbar({ onInputChange }) {
           inputProps={{ 'aria-label': 'search' }}
           value={input}
           onChange={handleChange}
-          endAdornment={(
+          endAdornment={
             <InputAdornment position="end">
               <IconButton onClick={clearInput}>
                 <ClearIcon />
               </IconButton>
             </InputAdornment>
-          )}
+          }
         />
       </div>
     </>

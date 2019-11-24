@@ -137,4 +137,4 @@ ClientDetails.propTypes = {
   isNew: PropTypes.bool,
   clientId: PropTypes.number,
   returnFunction: PropTypes.func
-}
+};
