@@ -20,7 +20,6 @@ function Menu({ className, anchorEl, id, onClose, items }) {
           text={text}
           onClick={() => {
             onClick();
-            onClose();
           }}
         />
       ))}

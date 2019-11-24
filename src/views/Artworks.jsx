@@ -1,17 +1,21 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { FetchArtworks, DeleteArtwork } from 'http/Artwork';
-import { Card } from '@material-ui/core';
-import CardHeader from '@material-ui/core/CardHeader';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  Card,
+  CircularProgress,
+  CardMedia,
+  Avatar,
+  IconButton,
+  CardHeader,
+  Grid
+} from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import CardMedia from '@material-ui/core/CardMedia';
 import { blueGrey } from '@material-ui/core/colors';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { map, filter } from 'lodash';
-import Grid from '@material-ui/core/Grid';
 import Menu from 'components/Menu/Menu';
+import Dialog from '@material-ui/core/Dialog';
+import Button from 'components/CustomButtons/Button';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -37,29 +41,32 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Artworks() {
-  const [{ data: fetchData, loading: fetchLoading, error: fetchError }] = FetchArtworks();
-  const [artworks, setArtworks] = useState([]);
-  const [dirty, setDirty] = useState({ get: true, post: false });
-  const [{ target, artworkId }, setMenuAnchor] = useState({ target: null, artworkId: null });
+  const [{ data: fetchData, loading: fetchLoading }] = FetchArtworks();
+  const [{ data: deleteData }, deleteArtwork] = DeleteArtwork();
+
   const classes = useStyles();
 
-  const { get: getIsDirty } = dirty;
-  const handleDirty = (index, value = true) => setDirty({ ...dirty, [index]: value });
-
-  if (getIsDirty && fetchData && !fetchError && !fetchLoading) {
-    setArtworks(fetchData.data);
-    handleDirty('get', false);
-  }
+  const [artworks, setArtworks] = useState([]);
+  const [{ target, artworkId }, setMenuAnchor] = useState({ target: null, artworkId: null });
+  const [modalOpen, setModalOpen] = useState(false);
 
   const menuItems = [
     {
       text: 'supprimer',
-      onClick: () =>
-        DeleteArtwork(artworkId).then(() =>
-          setArtworks(filter(artworks, ({ id }) => id !== artworkId))
-        )
+      onClick: () => deleteArtwork(artworkId)
     }
   ];
+
+  useEffect(() => {
+    setArtworks(fetchData ? fetchData.data : null);
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (deleteData) {
+      setArtworks(filter(artworks, ({ id }) => id !== artworkId));
+      setMenuAnchor({ target: null, artworkId: null });
+    }
+  }, [deleteData]);
 
   return (
     <Fragment>
@@ -69,6 +76,12 @@ export default function Artworks() {
         onClose={() => setMenuAnchor({ target: null, artworkId: null })}
         items={menuItems}
       />
+      <Dialog open={modalOpen} onClose={() => setModalOpen(false)}></Dialog>
+
+      <Button type="button" color="primary" onClick={() => setModalOpen(true)}>
+        Ajouter une oeuvre
+      </Button>
+
       {fetchLoading ? (
         <CircularProgress />
       ) : (
