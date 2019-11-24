@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { validateEmail, validateNumber, validateString } from 'utils/validators';
 import TextField from 'components/Form/TextField';
 import Form from 'components/Form/Form';
+import PropTypes from 'prop-types';
 
 export default function ClientForm(props) {
   const { client, isNew, returnFunction } = props;
@@ -153,4 +154,10 @@ export default function ClientForm(props) {
       </Form.Body>
     </Form>
   );
+}
+
+ClientForm.propTypes = {
+  client: PropTypes.object,
+  isNew: PropTypes.bool,
+  returnFunction: PropTypes.func
 }
