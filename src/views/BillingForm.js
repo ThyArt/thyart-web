@@ -27,7 +27,11 @@ export default function BillingForm(props) {
     const [label, setLabel] = useState('');
 
     var [{ data, error }, execute] = BillingCreate.hook();
-    var [{ data: dataArtworks}] = ArtworkRequest();
+    var [{ data: dataArtworks }, refreshArtworks] = ArtworkRequest();
+
+    useEffect(() => {
+        refreshArtworks();
+    }, []);
 
     useEffect(() => {
         if (!isNew) {
@@ -41,8 +45,7 @@ export default function BillingForm(props) {
     }, [isNew]);
 
     useEffect(() => {
-        if (dataArtworks)
-        {
+        if (dataArtworks) {
             setArtworks(dataArtworks.data);
         }
     }, [dataArtworks]);
@@ -59,7 +62,7 @@ export default function BillingForm(props) {
             [email, firstname, lastname, number, country, city, address],
             state => state.error || !validateString(state.value)
         );
-        
+
     const noArtwork = (artworkId === '');
 
     if (data || error) {
@@ -72,13 +75,13 @@ export default function BillingForm(props) {
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
-      
+
         var yyyy = today.getFullYear();
         if (dd < 10) {
-          dd = "0" + dd;
+            dd = "0" + dd;
         }
         if (mm < 10) {
-          mm = "0" + mm;
+            mm = "0" + mm;
         }
         today = yyyy + "-" + mm + "-" + dd;
 
@@ -93,8 +96,7 @@ export default function BillingForm(props) {
                 city.value,
                 country.value,
                 artworkId);
-        else
-        {
+        else {
             if (artworkId === '')
                 setArtworkId(artwork.id)
             BillingCreate.execute(execute,
@@ -129,15 +131,27 @@ export default function BillingForm(props) {
                 <TextField error={country.error} id="country" label="Pays" name="country" value={country.value} onChange={e => onChange(e, setCountry, validateString)} required />
                 <TextField error={city.error} id="city" label="Ville" name="city" value={city.value} onChange={e => onChange(e, setCity, validateString)} required />
                 <TextField error={address.error} id="address" label="Adresse" name="address" value={address.value} onChange={e => onChange(e, setAddress, validateString)} required />
-                <Select
-                    rows={artworks}
-                    onSelect={(selected) => {
-                        if (selected && selected.length > 0)
-                           setArtworkId(selected[0]);
-                    }}
-                    multiple={false}
-                    labelName="Choisir une Oeuvre"
-                />
+                {
+                    (artworks.length === 0)
+                        ? (<Select
+                            rows={[]}
+                            onSelect={(selected) => {
+                                if (selected && selected.length > 0)
+                                    setArtworkId(selected[0]);
+                            }}
+                            multiple={false}
+                            labelName="Aucune oeuvre disponible"
+                        />)
+                        : (<Select
+                            rows={artworks}
+                            onSelect={(selected) => {
+                                if (selected && selected.length > 0)
+                                    setArtworkId(selected[0]);
+                            }}
+                            multiple={false}
+                            labelName="Oeuvre concernée"
+                        />)
+                }
             </Form.Body>
         </Form>
     );
@@ -146,7 +160,7 @@ export default function BillingForm(props) {
 BillingForm.propTypes = {
     client: PropTypes.object,
     artwork: PropTypes.object,
-    billingId: PropTypes.string,
+    billingId: PropTypes.number,
     isNew: PropTypes.bool,
     returnFunction: PropTypes.func
-  }
+}
