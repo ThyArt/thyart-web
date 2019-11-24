@@ -22,14 +22,14 @@ export const FetchExposedArtworks = () =>
     }
   });
 
-  const GetArtworkHook = (token) =>
+const GetArtworkHook = token =>
   useAxios(
     {
       method: methods.Get,
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
       }
     },
     {
@@ -40,7 +40,7 @@ export const FetchExposedArtworks = () =>
 const GetArtworkExecute = (func, id) =>
   func({
     url: 'api/artwork/' + id
-  })
+  });
 
 export const GetArtwork = {
   hook: GetArtworkHook,
