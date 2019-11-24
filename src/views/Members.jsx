@@ -96,7 +96,6 @@ export default function Members() {
 
   useEffect(() => {
     refresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -110,7 +109,6 @@ export default function Members() {
     if (responseUpdate || responseCreate) {
       refresh();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseUpdate, responseCreate]);
 
   const handleCloseModal = () => {
@@ -122,66 +120,66 @@ export default function Members() {
     setUserName('');
   };
 
+  const changeMemberRole = (id, isAdmin) => {
+    const role = isAdmin ? 'member' : 'gallerist';
+    UpdateRole.execute(executeUpdate, id, role);
+    refresh();
+  };
+
   const roleSwitch = (id, role) => {
-    if (role === 'admin') return <Fragment>(C'est vous !)</Fragment>;
+    if (role === 'admin') return <>(C'est vous !)</>;
     const isAdmin = role === 'admin' || role === 'gallerist';
     return (
-      <Fragment>
+      <>
         Membre
         <Switch
-          id={'checkbox#' + id}
+          id={`checkbox#${id}`}
           checked={isAdmin}
           onChange={() => changeMemberRole(id, isAdmin)}
           color="primary"
         />
         Galeriste
-      </Fragment>
+      </>
     );
   };
 
   const checkRegex = (array, regex) => {
     return (
-      regex.test(array['id']) ||
-      regex.test(array['name']) ||
-      regex.test(array['firstname']) ||
-      regex.test(array['lastname']) ||
-      regex.test(array['email'])
+      regex.test(array.id) ||
+      regex.test(array.name) ||
+      regex.test(array.firstname) ||
+      regex.test(array.lastname) ||
+      regex.test(array.email)
     );
   };
 
   const formatResult = () => {
-    let tmp = [];
+    const tmp = [];
     each(members, obj => {
       if (searchInput) {
         const regex = new RegExp(searchInput);
         if (checkRegex(obj, regex)) {
           tmp.push({
-            id: obj['id'],
-            username: obj['name'],
-            firstname: obj['firstname'],
-            lastname: obj['lastname'],
-            email: obj['email'],
-            role: roleSwitch(obj['id'], obj['role'])
+            id: obj.id,
+            username: obj.name,
+            firstname: obj.firstname,
+            lastname: obj.lastname,
+            email: obj.email,
+            role: roleSwitch(obj.id, obj.role)
           });
         }
       } else {
         tmp.push({
-          id: obj['id'],
-          username: obj['name'],
-          firstname: obj['firstname'],
-          lastname: obj['lastname'],
-          email: obj['email'],
-          role: roleSwitch(obj['id'], obj['role'])
+          id: obj.id,
+          username: obj.name,
+          firstname: obj.firstname,
+          lastname: obj.lastname,
+          email: obj.email,
+          role: roleSwitch(obj.id, obj.role)
         });
       }
     });
     return tmp;
-  };
-
-  const changeMemberRole = (id, isAdmin) => {
-    const role = isAdmin ? 'member' : 'gallerist';
-    UpdateRole.execute(executeUpdate, id, role);
-    refresh();
   };
 
   const createMember = () => {
@@ -202,7 +200,7 @@ export default function Members() {
   };
 
   return (
-    <Fragment>
+    <>
       <div className={classes.topDiv}>
         <Button type="button" color="primary" onClick={() => setOpenModal(true)}>
           Créer un membre
@@ -219,18 +217,18 @@ export default function Members() {
           <GridContainer spacing={3}>
             {map(modalFields, (fields, it) => {
               return (
-                <Fragment key={'field#' + it}>
+                <Fragment key={`field#${it}`}>
                   <GridItem xs={6}>
                     <DialogContentText style={{ marginTop: '10%' }}>
-                      {fields['content']}
+                      {fields.content}
                     </DialogContentText>
                   </GridItem>
                   <GridItem xs={6}>
                     <TextField
-                      label={fields['label']}
-                      type={fields['type']}
-                      value={fields['var']}
-                      onChange={event => fields['handle'](event.target.value)}
+                      label={fields.label}
+                      type={fields.type}
+                      value={fields.var}
+                      onChange={event => fields.handle(event.target.value)}
                     />
                   </GridItem>
                 </Fragment>
@@ -263,6 +261,6 @@ export default function Members() {
           onClose={handleCloseSnackbar}
         />
       </Snackbar>
-    </Fragment>
+    </>
   );
 }

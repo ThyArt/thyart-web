@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -74,12 +74,10 @@ function Searchbar({ onInputChange }) {
 
   useEffect(() => {
     onInputChange(input);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input]);
 
   return (
-    <Fragment>
+    <>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />
@@ -93,16 +91,16 @@ function Searchbar({ onInputChange }) {
           inputProps={{ 'aria-label': 'search' }}
           value={input}
           onChange={handleChange}
-          endAdornment={
+          endAdornment={(
             <InputAdornment position="end">
               <IconButton onClick={clearInput}>
                 <ClearIcon />
               </IconButton>
             </InputAdornment>
-          }
+          )}
         />
       </div>
-    </Fragment>
+    </>
   );
 }
 
