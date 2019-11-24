@@ -86,7 +86,8 @@ const SignUp = function SignUp({ history }) {
   if ((signUpError || signInError) && !snackbar.closedByButton && !snackbar.open) {
     setSnackbar({
       open: true,
-      message: "Erreur lors de l'inscription. Assurez vous que l'adresse email n'est pas déjà utlisée.",
+      message:
+        "Erreur lors de l'inscription. Assurez vous que l'adresse email n'est pas déjà utlisée.",
       closedByButton: false
     });
   }

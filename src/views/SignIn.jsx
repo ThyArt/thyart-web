@@ -123,12 +123,12 @@ const SignIn = function SignIn({ history }) {
             <Grid container>
               <Grid item xs>
                 <Link to="/" variant="body2">
-                  {"Oubli de votre mot de passe ?"}
+                  {'Oubli de votre mot de passe ?'}
                 </Link>
               </Grid>
               <Grid item>
                 <Link to="/sign-up/" variant="body2">
-                  {"Pas de compte ? Inscrivez-vous"}
+                  {'Pas de compte ? Inscrivez-vous'}
                 </Link>
               </Grid>
             </Grid>
