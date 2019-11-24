@@ -2,6 +2,7 @@
 import MailIcon from '@material-ui/icons/Mail';
 import UserProfile from 'views/UserProfile';
 import Clients from 'views/Clients';
+import Billings from 'views/Billings';
 import Calendar from 'views/Calendar';
 import Members from 'views/Members';
 import Stats from 'views/Stats';
@@ -55,6 +56,13 @@ const dashboardRoutes = [
     name: 'Newsletters',
     icon: MailIcon,
     component: Newsletters,
+    layout: '/dashboard'
+  },
+  {
+    path: '/billings',
+    name: 'Factures',
+    icon: Person,
+    component: Billings,
     layout: '/dashboard'
   }
 ];
