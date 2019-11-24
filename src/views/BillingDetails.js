@@ -128,11 +128,7 @@ export default function BillingDetails(props) {
     }
     else if (!isNew) {
         content = billingInfos(clientFields, artworkFields, client, artwork);
-        button = <Button type="button" color="primary" onClick={() => {
-            setModif(true);
-        }}>
-            Modifier
-        </Button>
+        button = <div></div>
     }
 
     return (
