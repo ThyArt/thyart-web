@@ -8,6 +8,7 @@ import { GetCustomer as CustomerRequest } from 'http/Customer';
 import Cookies from 'universal-cookie';
 import { map } from 'lodash';
 import ClientForm from './ClientForm';
+import PropTypes from 'prop-types';
 
 function clientInfos(fields, client) {
   return (
@@ -130,4 +131,10 @@ export default function ClientDetails(props) {
       {content}
     </div>
   );
+}
+
+ClientDetails.propTypes = {
+  isNew: PropTypes.bool,
+  clientId: PropTypes.string,
+  returnFunction: PropTypes.func
 }
