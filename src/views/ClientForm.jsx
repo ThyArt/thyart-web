@@ -150,7 +150,6 @@ export default function ClientForm(props) {
           onChange={e => onChange(e, setAddress, validateString)}
           required
         />
-        />
       </Form.Body>
     </Form>
   );
@@ -160,4 +159,4 @@ ClientForm.propTypes = {
   client: PropTypes.object,
   isNew: PropTypes.bool,
   returnFunction: PropTypes.func
-}
+};
