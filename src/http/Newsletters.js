@@ -28,7 +28,7 @@ const CreateNewsletterExecute = (func) =>
     data: {
       subject: "This is a test",
       description: "Also a test",
-      customer_list: []
+      customer_list: "35"
     }
   });
 
