@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { GetBillingss as BillingsRequest } from 'http/Billings';
-import { GetCustomers as CustomersRequest } from 'http/Customer';
-import { GetExposedArtworks as ArtworksRequest } from 'http/Artworks';
+import { GetBillings as BillingsRequest } from 'http/Billings';
+import { GetCustomers as ClientsRequest } from 'http/Customer';
+import { FetchArtworks as ArtworksRequest } from 'http/Artworks';
 import { DeleteBillings } from 'http/Billings';
 import GridContainer from 'components/Grid/GridContainer';
 import Table from "components/Table/Table";
 import Button from "components/CustomButtons/Button";
-
 import BillingDetails from "./BillingDetails";
 import Cookies from 'universal-cookie';
+import { map } from 'lodash';
 
 export default function Billings() {
     const cookie = new Cookies();
@@ -19,7 +19,6 @@ export default function Billings() {
     const [artworks, setArtworks] = useState([]);
     const [clients, setClients] = useState([]);
     const [selectedBilling, setSelectedBilling] = useState(-1);
-    const [selectedArtwork, setSelectedArtwork] = useState(-1);
     const [rowsName] = useState([
         'Date de la facture',
         'Oeuvre',
@@ -27,8 +26,8 @@ export default function Billings() {
     ]);
     const [rowsKey] = useState([
         'id',
+        'date',
         'artwork',
-        'first_name',
         'name'
     ]);
     const [key, setKey] = useState(Math.random());
@@ -46,27 +45,29 @@ export default function Billings() {
 
     useEffect(() => {
         if (dataClient && dataBilling && dataArtwork) {
+            setClients(dataClient.data);
+            setArtworks(dataArtwork.data);
             var filteredBillings = [];
-            for (var value of dataRequest.data) {
+            map(dataBilling.data, value => {
                 var filteredArtworks = artworks.filter(function (artwork) {
-                    return artwork.artwork_id === value.artwork_id;
+                    return artwork.id === value.artwork_id;
                 });
-                var filteredCustomers = customers.filter(function (customer) {
-                    return customer.id === value.customer_id;
+                var filteredCustomers = clients.filter(function (client) {
+                    return client.id === value.customer_id;
                 });
                 var filteredBilling = {};
+                filteredBilling.id = value.id;
+                filteredBilling.date = value.date;
                 if (filteredArtworks.length > 0)
                     filteredBilling.artwork = filteredArtworks[0].name;
                 if (filteredCustomers.length > 0)
                     filteredBilling.name = filteredCustomers[0].first_name + " " + filteredCustomers[0].last_name;
-                for (var key of rowsKey)
-                    filteredBilling[key] = value[key];
                 filteredBillings.push(filteredBilling)
-            }
+            });
             setBillings(filteredBillings);
         }
         setKey(Math.random());
-    }, [dataClient, dataBilling, dataArtwork, rowsKey]);
+    }, [dataClient, artworks, clients, dataBilling, dataArtwork, rowsKey]);
 
     useEffect(() => {
         if (responseDelete) {
@@ -76,13 +77,12 @@ export default function Billings() {
         }
     }, [responseDelete, refreshBillings, refreshArtworks, refreshClients, token.access_token]);
 
-    if (table && loading === false) {
+    if (table && !loadingBilling && !loadingArtwork && !loadingClient) {
         content = <div>
             <Button type="button" color="primary" onClick={() => {
                 setTable(false);
                 setIsNew(true);
-                setBillingSelected(-1);
-                setArtworkSelected(-1);
+                setSelectedBilling(-1);
             }}
             >
                 Créer un Billing
@@ -92,17 +92,15 @@ export default function Billings() {
             }}
                 onRowClick={(id) => {
                     setSelectedBilling(id);
-                    setSelectedArtwork(artwork_id);
                     setIsNew(false);
                     setTable(false);
                 }} />
         </div>
     }
-    else if (loading === false)
+    else if (!loadingBilling && !loadingArtwork && !loadingClient)
         content = <BillingDetails
             isNew={isNew}
-            BillingId={selectedBilling}
-            artworkId={selectedArtwork}
+            billingId={selectedBilling}
             returnFunction={() => {
                 refreshBillings(token.access_token);
                 refreshArtworks(token.access_token);
