@@ -1,51 +1,54 @@
 import React, { useState, useEffect } from "react";
 import Form from "../components/Form/Form";
 import TextField from "../components/Form/TextField";
-import { GetExposedArtworks as ArtworkRequest } from 'http/Artworks';
-import { CreateBilling as BillingCreate } from 'http/Billing';
-import { ModifyBilling as BillingModify } from 'http/Billing';
+import Select from "../components/Select/Select";
+import { FetchExposedArtworks as ArtworkRequest } from 'http/Artworks';
+import { CreateBilling as BillingCreate } from 'http/Billings';
+import { ModifyBilling as BillingModify } from 'http/Billings';
 import Cookies from 'universal-cookie';
 import { validateEmail, validateNumber, validateString } from "../utils/validators"
 import _ from 'lodash';
-import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
 
-export default function billingForm(props) {
-    let { billing, isNew, returnFunction } = props;
+export default function BillingForm(props) {
+    let { client, artwork, billingId, isNew, returnFunction } = props;
 
-    const [billingId] = useState({ value: billing.id });
-    const [email, setEmail] = useState({ value: billing.email, error: false });
-    const [number, setNumber] = useState({ value: billing.phone, error: false });
-    const [firstname, setFirstname] = useState({ value: billing.first_name, error: false });
-    const [lastname, setLastname] = useState({ value: billing.last_name, error: false });
-    const [country, setCountry] = useState({ value: billing.country, error: false });
-    const [city, setCity] = useState({ value: billing.city, error: false });
-    const [address, setAddress] = useState({ value: billing.address, error: false });
-    const [artworkId, setArtworkId] = useState({ value: billing.artworkId, error: false });
+    const [email, setEmail] = useState({ value: client.email, error: false });
+    const [number, setNumber] = useState({ value: client.phone, error: false });
+    const [firstname, setFirstname] = useState({ value: client.first_name, error: false });
+    const [lastname, setLastname] = useState({ value: client.last_name, error: false });
+    const [country, setCountry] = useState({ value: client.country, error: false });
+    const [city, setCity] = useState({ value: client.city, error: false });
+    const [address, setAddress] = useState({ value: client.address, error: false });
+    const [artworkId, setArtworkId] = useState('');
     const [artworks, setArtworks] = useState([]);
     const [title, setTitle] = useState('');
     const [label, setLabel] = useState('');
 
     var [{ data, error }, execute] = BillingCreate.hook();
-    var [{ data: dataArtworks, error: errorArtworks }, refresh] = ArtworkRequest();
+    var [{ data: dataArtworks}] = ArtworkRequest();
 
     useEffect(() => {
         if (!isNew) {
-            setTitle('Modification billing');
+            setTitle('Modification facture');
             setLabel('Modifier');
         }
         else {
-            setTitle('Création billing');
+            setTitle('Création facture');
             setLabel('Créer');
         }
     }, [isNew]);
 
     useEffect(() => {
-
+        if (dataArtworks)
+        {
+            setArtworks(dataArtworks.data);
+        }
     }, [dataArtworks]);
 
     if (!isNew)
-        [{ data, error }, execute] = BillingModify.hook(billingId.value);
+        [{ data, error }, execute] = BillingModify.hook(billingId);
 
     const cookie = new Cookies();
     var token = cookie.get('accessToken');
@@ -53,9 +56,11 @@ export default function billingForm(props) {
     const formDisabled =
         undefined !==
         _.find(
-            [email, firstname, lastname, number, country, city, address, artworkId],
+            [email, firstname, lastname, number, country, city, address],
             state => state.error || !validateString(state.value)
         );
+        
+    const noArtwork = (artworkId === '');
 
     if (data || error) {
         returnFunction();
@@ -63,6 +68,19 @@ export default function billingForm(props) {
 
     const onSubmit = event => {
         event.preventDefault();
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+      
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+          dd = "0" + dd;
+        }
+        if (mm < 10) {
+          mm = "0" + mm;
+        }
+        today = yyyy + "-" + mm + "-" + dd;
 
         if (!isNew)
             BillingModify.execute(execute,
@@ -74,8 +92,11 @@ export default function billingForm(props) {
                 address.value,
                 city.value,
                 country.value,
-                artworkId.value);
+                artworkId);
         else
+        {
+            if (artworkId === '')
+                setArtworkId(artwork.id)
             BillingCreate.execute(execute,
                 token.access_token,
                 firstname.value,
@@ -85,15 +106,10 @@ export default function billingForm(props) {
                 address.value,
                 city.value,
                 country.value,
-                artworkId.value);
+                today,
+                artworkId);
+        }
     };
-
-    const validateArtwork = id => {
-        if (id != '-1')
-            return true;
-        else
-            return false;
-    }
 
     const onChange = (e, setFunc, validateFunc) =>
         setFunc({ value: e.target.value, error: !validateFunc(e.target.value) });
@@ -103,7 +119,7 @@ export default function billingForm(props) {
             title={title}
             submitLabel={label}
             onSubmit={onSubmit}
-            disabled={formDisabled}
+            disabled={formDisabled || noArtwork}
         >
             <Form.Body>
                 <TextField error={email.error} id="email" label="Adresse email" name="email" autoComplete="email" autoFocus required value={email.value} onChange={e => onChange(e, setEmail, validateEmail)} />
@@ -113,26 +129,24 @@ export default function billingForm(props) {
                 <TextField error={country.error} id="country" label="Pays" name="country" value={country.value} onChange={e => onChange(e, setCountry, validateString)} required />
                 <TextField error={city.error} id="city" label="Ville" name="city" value={city.value} onChange={e => onChange(e, setCity, validateString)} required />
                 <TextField error={address.error} id="address" label="Adresse" name="address" value={address.value} onChange={e => onChange(e, setAddress, validateString)} required />
-                <FormControl className={classes.formControl}>
-                    <InputLabel shrink id="demo-simple-select-placeholder-label-label">
-                        Oeuvre d'art
-                    </InputLabel>
-                    <Select
-                        labelId="demo-simple-select-placeholder-label-label"
-                        id="demo-simple-select-placeholder-label"
-                        value={artworkId.value}
-                        onChange={e => onChange(e, setArtworkId, validateArtwork)}
-                        displayEmpty
-                        className={classes.selectEmpty}
-                    >
-                        {
-                            map(artworks, artwork => (
-                                <MenuItem value={artwork.id}>{artwork.name}</MenuItem>
-                            ))
-                        }
-                    </Select>
-                </FormControl>
+                <Select
+                    rows={artworks}
+                    onSelect={(selected) => {
+                        if (selected && selected.length > 0)
+                           setArtworkId(selected[0]);
+                    }}
+                    multiple={false}
+                    labelName="Choisir une Oeuvre"
+                />
             </Form.Body>
         </Form>
     );
 }
+
+BillingForm.propTypes = {
+    client: PropTypes.object,
+    artwork: PropTypes.object,
+    billingId: PropTypes.string,
+    isNew: PropTypes.bool,
+    returnFunction: PropTypes.func
+  }

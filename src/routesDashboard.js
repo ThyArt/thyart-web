@@ -3,6 +3,7 @@ import Person from '@material-ui/icons/Person';
 import GroupIcon from '@material-ui/icons/Group';
 import UserProfile from 'views/UserProfile';
 import Clients from 'views/Clients';
+import Billings from 'views/Billings';
 import Calendar from 'views/Calendar';
 import Members from 'views/Members';
 // core components/views for Admin layout
@@ -35,6 +36,13 @@ const dashboardRoutes = [
     name: 'Clients',
     icon: Person,
     component: Clients,
+    layout: '/dashboard'
+  },
+  {
+    path: '/billings',
+    name: 'Factures',
+    icon: Person,
+    component: Billings,
     layout: '/dashboard'
   }
 ];

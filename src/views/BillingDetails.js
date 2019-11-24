@@ -4,19 +4,26 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import React, { useEffect, useState } from "react";
 import Button from "components/CustomButtons/Button";
-import billingForm from "./billingForm";
+import BillingForm from "./BillingForm";
 import { GetBilling as BillingRequest } from 'http/Billings';
-import { GetArtwork as ArtworkRequest } from 'http/Artworks';
 import Cookies from 'universal-cookie';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 
-function billingInfos(fields, billing) {
+function billingInfos(clientFields, artworkFields, client, artwork) {
     return (
         <Grid container>
             <Grid item>
                 <List >
                     {
-                        map(fields, field => (
+                        map(clientFields, field => (
+                            <ListItem key={field.key} alignItems="flex-start">
+                                <ListItemText primary={field.name + ': '} />
+                            </ListItem>
+                        ))
+                    }
+                    {
+                        map(artworkFields, field => (
                             <ListItem key={field.key} alignItems="flex-start">
                                 <ListItemText primary={field.name + ': '} />
                             </ListItem>
@@ -27,9 +34,16 @@ function billingInfos(fields, billing) {
             <Grid item>
                 <List>
                     {
-                        map(fields, field => (
+                        map(clientFields, field => (
                             <ListItem key={field.key} alignItems="flex-start">
-                                <ListItemText primary={billing[field.key]} />
+                                <ListItemText primary={client[field.key]} />
+                            </ListItem>
+                        ))
+                    }
+                    {
+                        map(artworkFields, field => (
+                            <ListItem key={field.key} alignItems="flex-start">
+                                <ListItemText primary={artwork[field.key]} />
                             </ListItem>
                         ))
                     }
@@ -39,50 +53,54 @@ function billingInfos(fields, billing) {
     );
 }
 
-export default function billingDetails(props) {
-    const { isNew, billingId, artworkId, returnFunction } = props;
+export default function BillingDetails(props) {
+    const { isNew, returnFunction } = props;
     const [modif, setModif] = useState(isNew);
-    const [billing, setbilling] = useState({
+    const [billingId, setBillingId] = useState(props.billingId);
+    const cookie = new Cookies();
+    var token = cookie.get('accessToken');
+    let dataBilling;
+    if (!isNew) {
+         [{ data: dataBilling }] = BillingRequest(token.access_token, billingId);
+    }
+    const [client, setClient] = useState({
         id: 0,
-        artworkId: 0,
         email: '',
         phone: '',
         first_name: '',
         last_name: '',
         country: '',
         city: '',
-        address: '',
-        price: '',
-        artworkName: ''
+        address: ''
     });
-    const fields = [
+    const [artwork, setArtwork] = useState({
+        id: '',
+        name: '',
+        price: '',
+        ref: ''
+    });
+    const clientFields = [
         { name: 'Email', key: 'email' },
         { name: 'Téléphone', key: 'phone' },
         { name: 'Prénom', key: 'first_name' },
         { name: 'Nom de famille', key: 'last_name' },
         { name: 'Pays', key: 'country' },
         { name: 'Ville', key: 'city' },
-        { name: 'Adresse', key: 'address' },
-        { name: "Prix de l'oeuvre", key: 'price' },
-        { name: "Nom de l'oeuvre", key: 'artwork_name' }
+        { name: 'Adresse', key: 'address' }
     ];
-    const cookie = new Cookies();
-    var token = cookie.get('accessToken');
-    var dataBilling;
-    if (!isNew)
-    {
-        [{ dataBilling }] = BillingRequest(token.access_token, billingId);
-        [{ dataArtwork }] = ArtworkRequest(token.access_token, artworkId);
-    }
+    const artworkFields = [
+        { name: "Nom de l'oeuvre", key: 'name' },
+        { name: "Prix de l'oeuvre", key: 'price' },
+        { name: "Référence de l'oeuvre", key: 'ref' }
+    ];
 
     useEffect(() => {
-        if (!isNew && dataBilling && dataArtwork)
-        {
-            dataBilling.dataBilling.artwork_name = dataArtwork.name;
-            dataBilling.dataBilling.price = dataArtwork.price;
-            setbilling(dataBilling.dataBilling);
+        if (!isNew && dataBilling) {
+            setClient(dataBilling.data.customer);
+            setArtwork(dataBilling.data.artwork);
+            setBillingId(dataBilling.data.id);
         }
-    }, [dataBilling, dataArtwork, isNew]);
+    }, [dataBilling, isNew]);
 
     var content, button, returnButton;
 
@@ -93,8 +111,10 @@ export default function billingDetails(props) {
 
     if (modif) {
         content =
-            <billingForm
-                billing={billing}
+            <BillingForm
+                client={client}
+                artwork={artwork}
+                billingId={billingId}
                 returnFunction={() => { returnFunction() }}
                 isNew={isNew}
             />
@@ -107,30 +127,12 @@ export default function billingDetails(props) {
         }
     }
     else if (!isNew) {
-        content = billingInfos(fields, billing);
+        content = billingInfos(clientFields, artworkFields, client, artwork);
         button = <Button type="button" color="primary" onClick={() => {
             setModif(true);
         }}>
             Modifier
         </Button>
-    }
-    else {
-        content = billingInfos(
-            fields,
-            {
-                id: 1,
-                artworkId: 0,
-                email: '',
-                phone: '',
-                first_name: '',
-                last_name: '',
-                country: '',
-                city: '',
-                address: '',
-                price: '',
-                artworkName: ''
-            });
-        button = null;
     }
 
     return (
@@ -141,3 +143,8 @@ export default function billingDetails(props) {
         </div>
     );
 }
+
+BillingDetails.propTypes = {
+    isNew: PropTypes.bool,
+    returnFunction: PropTypes.func
+  }
