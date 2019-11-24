@@ -44,6 +44,13 @@ const dashboardRoutes = [
     icon: Person,
     component: Billings,
     layout: '/dashboard'
+  },
+  {
+    path: '/billings',
+    name: 'Factures',
+    icon: Person,
+    component: Billings,
+    layout: '/dashboard'
   }
 ];
 
