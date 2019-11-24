@@ -1,40 +1,36 @@
 import useAxios from 'axios-hooks';
 import * as methods from 'variables/methods';
 
-export const GetBillings = (token) =>
-  useAxios(
-    {
-      url: 'api/order/',
-      method: methods.Get,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
+export const GetBillings = token =>
+  useAxios({
+    url: 'api/order/',
+    method: methods.Get,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
     }
-  );
+  });
 
 export const GetBilling = (token, id) =>
-  useAxios(
-    {
-      url: 'api/order/' + id,
-      method: methods.Get,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
+  useAxios({
+    url: 'api/order/' + id,
+    method: methods.Get,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
     }
-  );
+  });
 
-const DeleteBillingHook = (token) =>
+const DeleteBillingHook = token =>
   useAxios(
     {
       method: methods.Delete,
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
       }
     },
     {
@@ -45,7 +41,7 @@ const DeleteBillingHook = (token) =>
 const DeleteBillingExecute = (func, id) =>
   func({
     url: 'api/order/' + id
-  })
+  });
 
 export const DeleteBillings = {
   hook: DeleteBillingHook,
@@ -78,9 +74,9 @@ const CreateBillingExecute = (
 ) =>
   func({
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
     },
     data: {
       first_name: first_name,
@@ -100,9 +96,7 @@ export const CreateBilling = {
   execute: CreateBillingExecute
 };
 
-const ModifyBillingHook = (
-  id
-) =>
+const ModifyBillingHook = id =>
   useAxios(
     {
       url: 'api/order/' + id,
@@ -127,9 +121,9 @@ const ModifyBillingExecute = (
 ) =>
   func({
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
     },
     data: {
       first_name: first_name,
