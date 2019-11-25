@@ -52,10 +52,7 @@ export default function() {
       alt: 'Abonnement',
       title: "L'abonnement",
       price: "150€/mois",
-      text: "Enumération des fonctionnalité",
-      cardContent: {
-        typoTitle: 'Téléphone',
-      }
+      text: "Enumération des fonctionnalité"
     },
     {
       alt: 'Service',
@@ -68,7 +65,7 @@ export default function() {
   return (
     <div className={classes.aboutRoot}>
       <Grid container spacing={10} justify="center" className={classes.aboutContainer}>
-        {map(cards, ({ image, alt, title, price, text }, index) => (
+        {map(cards, ({alt, title, price, text }, index) => (
           <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
             <Paper className={classes.aboutPaper}>
               <br />
