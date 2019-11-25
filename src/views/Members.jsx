@@ -96,7 +96,7 @@ export default function Members() {
 
   useEffect(() => {
     refresh();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (currentData) {
@@ -109,7 +109,7 @@ export default function Members() {
     if (responseUpdate || responseCreate) {
       refresh();
     }
-  }, [responseUpdate, responseCreate]);
+  }, [responseUpdate, responseCreate, refresh]);
 
   const handleCloseModal = () => {
     setOpenModal(false);
