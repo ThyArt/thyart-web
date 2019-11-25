@@ -10,7 +10,7 @@ export default function LandingPage() {
       <CarouselPage />
       <About />
       <Services />
-      <LandingFooter/>
+      <LandingFooter />
     </div>
   );
 }
