@@ -4,6 +4,15 @@ import Cookies from 'universal-cookie';
 
 const cookie = new Cookies();
 
+export const GetAllClients = () =>
+  useAxios({
+    url: 'api/customer',
+    method: methods.Get,
+    headers: {
+      Authorization: `Bearer ${cookie.get('accessToken').access_token}`
+    }
+  });
+
 export const GetAllNewsletters = () =>
   useAxios({
     url: 'api/newsletter',
@@ -32,12 +41,12 @@ const CreateNewsletterHook = () =>
     { manual: true }
   );
 
-const CreateNewsletterExecute = (func) =>
+const CreateNewsletterExecute = (func, subject, description, customer_list) =>
   func({
     data: {
-      subject: "BONJOUR",
-      description: "new test",
-      customer_list: "35"
+      subject,
+      description,
+      customer_list
     }
   });
 

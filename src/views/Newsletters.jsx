@@ -6,7 +6,7 @@ import Searchbar from 'components/SearchBar/Searchbar';
 import NewsletterForm from 'views/NewsletterForm';
 import Snackbar from '@material-ui/core/Snackbar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { GetAllNewsletters, CreateNewsletter, DeleteNewsletter } from 'http/Newsletters';
+import { GetAllNewsletters, DeleteNewsletter } from 'http/Newsletters';
 import { each } from 'lodash';
 import { makeStyles } from '@material-ui/core';
 
@@ -19,7 +19,6 @@ const useStyles = makeStyles(() => ({
 function Newsletters() {
   const classes = useStyles();
   const [{ data: getNewsletters }, refresh] = GetAllNewsletters();
-  const [{ data: responseCreate, error: errorCreate }, createNewsletter] = CreateNewsletter.hook();
   const [{ data: responseDelete, error: errorDelete }, deleteNewsletter] = DeleteNewsletter.hook();
   const [key, setKey] = useState(Math.random());
   const [newsletters, setNewsletters] = useState([]);
@@ -30,7 +29,7 @@ function Newsletters() {
 
   const header = ['Sujet de la newsletter', 'Description', 'Nombre de clients'];
 
-  if ((errorCreate || errorDelete) && !snackbar.closedByButton && !snackbar.open)
+  if ((errorDelete) && !snackbar.closedByButton && !snackbar.open)
     setSnackbar({ open: true, closedByButton: false });
 
   const handleCloseSnackbar = (event, reason) => {
@@ -41,11 +40,11 @@ function Newsletters() {
   };
 
   useEffect(() => {
-    if (responseCreate || responseDelete) {
+    if (responseDelete) {
       refresh();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseCreate, responseDelete]);
+  }, [responseDelete]);
 
   useEffect(() => {
     refresh();
@@ -92,7 +91,8 @@ function Newsletters() {
   };
 
   const handleCreateNewsletter = () => {
-    CreateNewsletter.execute(createNewsletter);
+    setShowForm(true);
+    setId(0);
   };
 
   const handleDeleteNewsletter = (id) => {
@@ -118,7 +118,7 @@ function Newsletters() {
                 Revenir à la liste
               </Button>
 
-              <NewsletterForm id={id}/>
+              { id ? <NewsletterForm id={id}/> : <NewsletterForm/> }
             </Fragment>
           ) : (
             <Fragment>

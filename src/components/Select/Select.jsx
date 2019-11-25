@@ -11,7 +11,6 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
-    maxWidth: 300,
   },
   chips: {
     display: 'flex',
@@ -51,6 +50,7 @@ function Select({rows, onSelect, multiple, labelName}) {
 
   useEffect(() => {
     onSelect(selected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   return (

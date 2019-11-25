@@ -32,7 +32,7 @@ const dashboardRoutes = [
     layout: '/dashboard'
   },
   {
-    path: '/membres',
+    path: '/members',
     name: 'Membres',
     icon: SupervisorAccountIcon,
     component: Members,
