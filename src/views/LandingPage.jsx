@@ -1,6 +1,6 @@
 import React from 'react';
 import CarouselPage from 'components/Carousel/CarouselPage';
-import Services from 'views/Services';
+import Services from 'components/Services/Services';
 import About from 'components/About/About';
 import LandingFooter from 'components/Footer/LandingFooter';
 import Pricing from 'views/Pricing';
