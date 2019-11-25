@@ -22,7 +22,7 @@ export const GetAllNewsletters = () =>
     }
   });
 
-export const GetANewsletters = (id) =>
+export const GetANewsletters = id =>
   useAxios({
     url: 'api/newsletter/' + id,
     method: methods.Get,
@@ -65,8 +65,7 @@ const DeleteNewsletterHook = () =>
     { manual: true }
   );
 
-const DeleteNewsletterExecute = (func, id) =>
-  func({ url: 'api/newsletter/' + id });
+const DeleteNewsletterExecute = (func, id) => func({ url: 'api/newsletter/' + id });
 
 export const DeleteNewsletter = {
   hook: DeleteNewsletterHook,

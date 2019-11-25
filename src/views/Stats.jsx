@@ -7,7 +7,7 @@ import {
   HorizontalGridLines,
   VerticalBarSeries
 } from 'react-vis';
-import { makeStyles, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { GetStats } from 'http/Stats';
 import { each } from 'lodash';
 import Card from '@material-ui/core/Card';
@@ -47,22 +47,24 @@ export default function Stats() {
         { x: 'Mois', y: obj.monthly },
         { x: 'Trimestre', y: obj.trimester },
         { x: 'Semestre', y: obj.semester },
-        { x: 'Année', y: obj.yearly });
+        { x: 'Année', y: obj.yearly }
+      );
     });
-    console.log(tmp);
     return tmp;
   };
   return (
     <Card className={classes.container}>
       <CardHeader title={"Chiffre d'affaire en K€"} />
       <CardContent>
-        {currentData ? <XYPlot xType="ordinal" width={500} height={350} xDistance={100}>
+        {currentData ? (
+          <XYPlot xType="ordinal" width={500} height={350} xDistance={100}>
             <VerticalGridLines />
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-          <VerticalBarSeries data={formatResult()} />
-          </XYPlot> : null}
+            <VerticalBarSeries data={formatResult()} />
+          </XYPlot>
+        ) : null}
       </CardContent>
     </Card>
   );

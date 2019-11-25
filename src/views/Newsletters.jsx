@@ -29,7 +29,7 @@ function Newsletters() {
 
   const header = ['Sujet de la newsletter', 'Description', 'Nombre de clients'];
 
-  if ((errorDelete) && !snackbar.closedByButton && !snackbar.open)
+  if (errorDelete && !snackbar.closedByButton && !snackbar.open)
     setSnackbar({ open: true, closedByButton: false });
 
   const handleCloseSnackbar = (event, reason) => {
@@ -57,11 +57,7 @@ function Newsletters() {
   }, [getNewsletters, searchInput]);
 
   const checkRegex = (array, regex) => {
-    return (
-      regex.test(array.id) ||
-      regex.test(array.subject) ||
-      regex.test(array.description)
-    );
+    return regex.test(array.id) || regex.test(array.subject) || regex.test(array.description);
   };
 
   const formatResult = () => {
@@ -95,11 +91,11 @@ function Newsletters() {
     setId(0);
   };
 
-  const handleDeleteNewsletter = (id) => {
+  const handleDeleteNewsletter = id => {
     DeleteNewsletter.execute(deleteNewsletter, id);
   };
 
-  const handleClickNewsletter = (id) => {
+  const handleClickNewsletter = id => {
     setId(id);
     setShowForm(true);
   };
@@ -110,38 +106,39 @@ function Newsletters() {
 
   return (
     <Fragment>
-      {
-        showForm ?
-          (
-            <Fragment>
-              <Button type="button" color="primary" onClick={handleClickReturn} startIcon={<ArrowBackIcon/>}>
-                Revenir à la liste
-              </Button>
+      {showForm ? (
+        <Fragment>
+          <Button
+            type="button"
+            color="primary"
+            onClick={handleClickReturn}
+            startIcon={<ArrowBackIcon />}
+          >
+            Revenir à la liste
+          </Button>
 
-              { id ? <NewsletterForm id={id}/> : <NewsletterForm/> }
-            </Fragment>
-          ) : (
-            <Fragment>
-              <div className={classes.topDiv}>
-                <Button type="button" color="primary" onClick={handleCreateNewsletter}>
-                  Créer une newsletter
-                </Button>
-                <Searchbar onInputChange={input => setSearchInput(input)} />
-              </div>
+          {id ? <NewsletterForm id={id} /> : <NewsletterForm />}
+        </Fragment>
+      ) : (
+        <Fragment>
+          <div className={classes.topDiv}>
+            <Button type="button" color="primary" onClick={handleCreateNewsletter}>
+              Créer une newsletter
+            </Button>
+            <Searchbar onInputChange={input => setSearchInput(input)} />
+          </div>
 
-              { getNewsletters
-                ? <Table
-                  header={header}
-                  key={key}
-                  rows={formatResult()}
-                  onDeleteClick={handleDeleteNewsletter}
-                  onRowClick={handleClickNewsletter}
-                />
-                : null
-              }
-            </Fragment>
-          )
-      }
+          {getNewsletters ? (
+            <Table
+              header={header}
+              key={key}
+              rows={formatResult()}
+              onDeleteClick={handleDeleteNewsletter}
+              onRowClick={handleClickNewsletter}
+            />
+          ) : null}
+        </Fragment>
+      )}
 
       <Snackbar
         anchorOrigin={{

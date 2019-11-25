@@ -10,18 +10,18 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 120
   },
   chips: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   chip: {
-    margin: 2,
+    margin: 2
   }
 }));
 
-function Select({rows, onSelect, multiple, labelName}) {
+function Select({ rows, onSelect, multiple, labelName }) {
   const classes = useStyles();
   const [selected, setSelected] = useState([]);
 
@@ -29,10 +29,10 @@ function Select({rows, onSelect, multiple, labelName}) {
     multiple = false;
   }
   if (!onSelect) {
-    onSelect = function(id) {}
+    onSelect = function(id) {};
   }
   if (!labelName) {
-    labelName = "Séléctionnez"
+    labelName = 'Séléctionnez';
   }
 
   const handleChange = async event => {
@@ -45,7 +45,7 @@ function Select({rows, onSelect, multiple, labelName}) {
 
   const findByID = id => {
     const found = rows.find(elem => elem.id === id);
-    return (found.name);
+    return found.name;
   };
 
   useEffect(() => {

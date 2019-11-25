@@ -1,6 +1,4 @@
 // @material-ui/icons
-import Person from '@material-ui/icons/Person';
-import GroupIcon from '@material-ui/icons/Group';
 import MailIcon from '@material-ui/icons/Mail';
 import UserProfile from 'views/UserProfile';
 import Clients from 'views/Clients';
@@ -53,7 +51,7 @@ const dashboardRoutes = [
     layout: '/dashboard'
   },
   {
-    path: '/newletters',
+    path: '/newsletters',
     name: 'Newsletters',
     icon: MailIcon,
     component: Newsletters,

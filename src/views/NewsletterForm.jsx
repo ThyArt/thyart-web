@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { each } from 'lodash';
 import { GetANewsletters, GetAllClients, CreateNewsletter } from 'http/Newsletters';
@@ -22,9 +22,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function NewsletterForm({id}) {
+function NewsletterForm({ id }) {
   const classes = useStyles();
-  const [{ data: getNewsletter }] = GetANewsletters(id ? id : 0);
+  const [{ data: getNewsletter }] = GetANewsletters(id || 0);
   const [{ data: getClients }] = GetAllClients();
   const [{ data: responseCreate, error: errorCreate }, createNewsletter] = CreateNewsletter.hook();
   const [subject, setSubject] = useState('');
@@ -33,7 +33,7 @@ function NewsletterForm({id}) {
   const [selectedClients, setSelectedClients] = useState([]);
   const [snackbar, setSnackbar] = useState({ open: false, closedByButton: false });
 
-  if ((errorCreate) && !snackbar.closedByButton && !snackbar.open)
+  if (errorCreate && !snackbar.closedByButton && !snackbar.open)
     setSnackbar({ open: true, closedByButton: false });
 
   const handleCloseSnackbar = (event, reason) => {
@@ -53,7 +53,7 @@ function NewsletterForm({id}) {
       each(getClients.data, client => {
         tmp.push({
           id: client.id,
-          name: client.first_name + " " + client.last_name + " \"" + client.email + "\""
+          name: `${client.first_name} ${client.last_name} "${client.email}"`
         });
       });
       setClients(tmp);
@@ -78,33 +78,44 @@ function NewsletterForm({id}) {
   };
 
   return (
-    <Fragment>
-      <Button type="button" color="primary" onClick={onClickSend} startIcon={<SendIcon/>} className={classes.topRightButton}>
+    <>
+      <Button
+        type="button"
+        color="primary"
+        onClick={onClickSend}
+        startIcon={<SendIcon />}
+        className={classes.topRightButton}
+      >
         Envoyer la newsletter
       </Button>
 
       <GridContainer spacing={3}>
         <GridItem xs={12}>
-          <Select rows={clients} multiple={true} onSelect={ids => setSelectedClients(ids)} className={classes.select}/>
+          <Select
+            rows={clients}
+            multiple
+            onSelect={ids => setSelectedClients(ids)}
+            className={classes.select}
+          />
         </GridItem>
         <GridItem xs={12}>
           <TextField
-            label={"Objet"}
+            label={'Objet'}
             variant="outlined"
             margin="normal"
             fullWidth
-            type={"text"}
+            type={'text'}
             value={subject}
             onChange={event => setSubject(event.target.value)}
           />
         </GridItem>
         <GridItem xs={12}>
           <TextField
-            label={"Contenu de la newsletter"}
+            label={'Contenu de la newsletter'}
             variant="outlined"
             margin="normal"
             fullWidth
-            type={"text"}
+            type={'text'}
             value={description}
             onChange={event => setDescription(event.target.value)}
             multiline
@@ -127,7 +138,7 @@ function NewsletterForm({id}) {
           onClose={handleCloseSnackbar}
         />
       </Snackbar>
-    </Fragment>
+    </>
   );
 }
 
