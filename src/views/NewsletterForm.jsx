@@ -62,7 +62,6 @@ function NewsletterForm({id}) {
 
   useEffect(() => {
     if (getNewsletter || getClients) {
-      console.log(getClients);
       parseData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
