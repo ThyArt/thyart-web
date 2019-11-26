@@ -17,6 +17,7 @@ import {
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { blueGrey } from '@material-ui/core/colors';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { DropzoneArea } from 'material-ui-dropzone';
 import { map, filter, forEach, isEmpty, pick, findIndex, slice } from 'lodash';
 import Menu from 'components/Menu/Menu';
 import Button from 'components/CustomButtons/Button';
@@ -109,6 +110,9 @@ export default function Artworks() {
     price: 0,
     ref: '',
     state: StateInStock,
+    files: [],
+    initialFiles: [],
+    filesModified: false,
     onClick: () => {}
   };
   const targetDefault = {
@@ -135,7 +139,10 @@ export default function Artworks() {
           open: true,
           title: 'Modifier une oeuvre',
           ...pick(target.artwork, ['name', 'ref', 'state', 'price']),
-          onClick: data => {
+          initialFiles: map(target.artwork.images, ({ urls: { origin } }) => origin),
+          files: [],
+          filesModified: false,
+          onClick: (data, image) => {
             patchArtwork(target.artwork.id, data);
           }
         })
@@ -155,15 +162,13 @@ export default function Artworks() {
       })),
     [patchData]
   );
-  useEffect(
-    () =>
-      setTarget(({ artwork: prevArtwork, ...rest }) => ({
-        ...rest,
-        artwork: createData ? createData.data : prevArtwork,
-        created: Boolean(createData)
-      })),
-    [createData]
-  );
+  useEffect(() => {
+    setTarget(({ artwork: prevArtwork, ...rest }) => ({
+      ...rest,
+      artwork: createData ? createData.data : prevArtwork,
+      created: Boolean(createData)
+    }));
+  }, [createData]);
 
   useEffect(() => {
     const functions = {
@@ -187,7 +192,15 @@ export default function Artworks() {
     });
   }, [target, targetDefault, modalDefault]);
 
-  const { open: modalOpen, title: modalTitle, onClick: onClickModal, ...rest } = modal;
+  const {
+    open: modalOpen,
+    title: modalTitle,
+    files,
+    initialFiles,
+    filesModified,
+    onClick: onClickModal,
+    ...rest
+  } = modal;
 
   return (
     <Fragment>
@@ -210,12 +223,19 @@ export default function Artworks() {
               </Fragment>
             ))}
           </GridContainer>
+          <DropzoneArea
+            acceptedFiles={['image/*']}
+            maxFileSize={300000000}
+            filesLimit={5}
+            initialFiles={initialFiles}
+            onChange={files => setModal({ ...modal, files: files, filesModified: true })}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setModal(modalDefault)} color="transparent">
             Annuler
           </Button>
-          <Button onClick={() => onClickModal(rest)} color="primary">
+          <Button onClick={() => onClickModal(rest, files)} color="primary">
             Valider
           </Button>
         </DialogActions>
@@ -242,8 +262,11 @@ export default function Artworks() {
             price: 0,
             ref: '',
             state: StateInStock,
-            onClick: data => {
-              addArtwork({ data: data });
+            files: [],
+            initialFiles: [],
+            filesModified: false,
+            onClick: (data, images) => {
+              addArtwork(data, images);
             }
           })
         }
