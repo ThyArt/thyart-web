@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GetBillings as BillingsRequest } from 'http/Billings';
 import { GetCustomers as ClientsRequest } from 'http/Customer';
-import { FetchArtworks as ArtworksRequest } from 'http/Artworks';
+import { FetchArtworks as ArtworksRequest } from 'http/Billings';
 import { DeleteBillings } from 'http/Billings';
 import GridContainer from 'components/Grid/GridContainer';
 import Table from 'components/Table/Table';
