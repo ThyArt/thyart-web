@@ -191,7 +191,7 @@ export default function BillingForm(props) {
         />
         {artworks.length === 0 ? (
           <Select
-            rows={[{id: '', name: ''}]}
+            rows={[{ id: '', name: '' }]}
             onSelect={selected => {
               if (selected && selected.length > 0) setArtworkId(selected[0]);
             }}
