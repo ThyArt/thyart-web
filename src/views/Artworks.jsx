@@ -7,24 +7,16 @@ import {
   Avatar,
   IconButton,
   CardHeader,
-  Grid,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogContentText,
-  DialogActions
+  Grid
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { blueGrey } from '@material-ui/core/colors';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { DropzoneArea } from 'material-ui-dropzone';
-import { map, filter, forEach, isEmpty, pick, findIndex, slice } from 'lodash';
+import { map, filter, forEach, isEmpty, pick, findIndex, find, slice } from 'lodash';
 import Menu from 'components/Menu/Menu';
 import Button from 'components/CustomButtons/Button';
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
-import TextField from 'components/Form/TextField';
 import { StateInStock, StateExposed, StateIncoming, StateSold } from 'variables/artwork';
+import CreateModal from 'components/Modal/Artwork/CreateModal';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -68,33 +60,6 @@ export default function Artworks() {
       value: StateSold
     }
   ];
-  const modalFields = [
-    {
-      content: "Nom de l'oeuvre",
-      label: 'Nom',
-      type: 'text',
-      value: 'name'
-    },
-    {
-      content: "Réference de l'oeuvre",
-      label: 'ref',
-      type: 'text',
-      value: 'ref'
-    },
-    {
-      content: "Etat actuel de l'oeuvre",
-      label: 'Etat',
-      select: true,
-      value: 'state',
-      items: artworkStates
-    },
-    {
-      content: "Prix de l'oeuvre",
-      label: 'prix',
-      type: 'number',
-      value: 'price'
-    }
-  ];
 
   const [{ data: fetchData, loading: fetchLoading }] = FetchArtworks();
   const [{ data: deleteData }, deleteArtwork] = DeleteArtwork();
@@ -123,9 +88,66 @@ export default function Artworks() {
   };
 
   const [artworks, setArtworks] = useState([]);
-  const [modal, setModal] = useState(modalDefault);
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [target, setTarget] = useState(targetDefault);
+  const [createModal, setCreateModal] = useState({
+    open: false,
+    name: '',
+    price: 0,
+    ref: '',
+    state: StateInStock,
+    files: []
+  });
+
+  const {
+    open: cmopen,
+    name: cmname,
+    price: cmprice,
+    ref: cmref,
+    state: cmstate
+  } = createModal;
+
+  const updateCreateModal = (field, value) => setCreateModal({ ...createModal, [field]: value });
+  const closeCreateModal = () => setCreateModal({
+    open: false,
+    name: '',
+    price: 0,
+    ref: '',
+    state: StateInStock,
+    files: []
+  });
+
+  const createModalFields = [
+    {
+      content: "Nom de l'oeuvre",
+      label: 'Nom',
+      type: 'text',
+      value: cmname,
+      onChange: e => updateCreateModal('name', e.target.value)
+    },
+    {
+      content: "Réference de l'oeuvre",
+      label: 'ref',
+      type: 'text',
+      value: cmref,
+      onChange: e => updateCreateModal('ref', e.target.value)
+    },
+    {
+      content: "Etat actuel de l'oeuvre",
+      label: 'Etat',
+      select: true,
+      value: cmstate,
+      items: artworkStates,
+      onChange: e => updateCreateModal('state', e.target.value)
+    },
+    {
+      content: "Prix de l'oeuvre",
+      label: 'prix',
+      type: 'number',
+      value: cmprice,
+      onChange: e => updateCreateModal('price', e.target.value)
+    }
+  ];
 
   const menuItems = [
     {
@@ -134,18 +156,7 @@ export default function Artworks() {
     },
     {
       text: 'modifier',
-      onClick: () =>
-        setModal({
-          open: true,
-          title: 'Modifier une oeuvre',
-          ...pick(target.artwork, ['name', 'ref', 'state', 'price']),
-          initialFiles: map(target.artwork.images, ({ urls: { origin } }) => origin),
-          files: [],
-          filesModified: false,
-          onClick: (data, image) => {
-            patchArtwork(target.artwork.id, data);
-          }
-        })
+      onClick: () => {}
     }
   ];
 
@@ -186,60 +197,21 @@ export default function Artworks() {
       if (target[key]) {
         func();
         setMenuAnchor(null);
-        setModal(modalDefault);
+        closeCreateModal();
         setTarget(targetDefault);
       }
     });
   }, [target, targetDefault, modalDefault]);
 
-  const {
-    open: modalOpen,
-    title: modalTitle,
-    files,
-    initialFiles,
-    filesModified,
-    onClick: onClickModal,
-    ...rest
-  } = modal;
-
   return (
     <Fragment>
-      <Dialog open={modalOpen} onClose={() => setModal(modalDefault)}>
-        <DialogTitle>{modalTitle}</DialogTitle>
-        <DialogContent>
-          <GridContainer spacing={3}>
-            {map(modalFields, ({ content, value, ...rest }) => (
-              <Fragment key={value}>
-                <GridItem xs={6}>
-                  <DialogContentText style={{ marginTop: '10%' }}>{content}</DialogContentText>
-                </GridItem>
-                <GridItem xs={6}>
-                  <TextField
-                    {...rest}
-                    value={modal[value]}
-                    onChange={e => setModal({ ...modal, [value]: e.target.value })}
-                  />
-                </GridItem>
-              </Fragment>
-            ))}
-          </GridContainer>
-          <DropzoneArea
-            acceptedFiles={['image/*']}
-            maxFileSize={300000000}
-            filesLimit={5}
-            initialFiles={initialFiles}
-            onChange={files => setModal({ ...modal, files: files, filesModified: true })}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setModal(modalDefault)} color="transparent">
-            Annuler
-          </Button>
-          <Button onClick={() => onClickModal(rest, files)} color="primary">
-            Valider
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <CreateModal
+        open={cmopen}
+        textFields={createModalFields}
+        onChangeFiles={files => updateCreateModal('files', files)}
+        onSubmit={() => addArtwork(pick(createModal, ['name', 'ref', 'state', 'price']), createModal.files)}
+        onClose={closeCreateModal}
+      />
 
       <Menu
         anchorEl={menuAnchor}
@@ -254,22 +226,7 @@ export default function Artworks() {
       <Button
         type="button"
         color="primary"
-        onClick={() =>
-          setModal({
-            open: true,
-            title: 'Ajouter une oeuvre',
-            name: '',
-            price: 0,
-            ref: '',
-            state: StateInStock,
-            files: [],
-            initialFiles: [],
-            filesModified: false,
-            onClick: (data, images) => {
-              addArtwork(data, images);
-            }
-          })
-        }
+        onClick={() => updateCreateModal('open', true)}
       >
         Ajouter une oeuvre
       </Button>
