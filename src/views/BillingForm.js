@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from '../components/Form/Form';
 import TextField from '../components/Form/TextField';
 import Select from '../components/Select/Select';
-import { FetchExposedArtworks as ArtworkRequest } from 'http/Artworks';
+import { FetchExposedArtworks as ArtworkRequest } from 'http/Billings';
 import { CreateBilling as BillingCreate } from 'http/Billings';
 import { ModifyBilling as BillingModify } from 'http/Billings';
 import Cookies from 'universal-cookie';
@@ -30,7 +30,7 @@ export default function BillingForm(props) {
 
   useEffect(() => {
     refreshArtworks();
-  }, []);
+  }, [refreshArtworks]);
 
   useEffect(() => {
     if (!isNew) {
@@ -191,7 +191,7 @@ export default function BillingForm(props) {
         />
         {artworks.length === 0 ? (
           <Select
-            rows={[]}
+            rows={[{id: '', name: ''}]}
             onSelect={selected => {
               if (selected && selected.length > 0) setArtworkId(selected[0]);
             }}
