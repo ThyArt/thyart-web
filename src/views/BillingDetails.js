@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 function billingInfos(clientFields, artworkFields, client, artwork) {
   return (
     <>
-      <Paper >
+      <Paper>
         <h2>Client</h2>
         <Grid container>
           <Grid item>
@@ -53,7 +53,6 @@ function billingInfos(clientFields, artworkFields, client, artwork) {
                 <div key={field.key}>
                   <ListItem alignItems="flex-start">
                     <ListItemText primary={field.name + ': '} />
-
                   </ListItem>
                   <Divider />
                 </div>
