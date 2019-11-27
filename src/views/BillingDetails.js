@@ -1,5 +1,7 @@
 import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import React, { useEffect, useState } from 'react';
@@ -12,36 +14,67 @@ import PropTypes from 'prop-types';
 
 function billingInfos(clientFields, artworkFields, client, artwork) {
   return (
-    <Grid container>
-      <Grid item>
-        <List>
-          {map(clientFields, field => (
-            <ListItem key={field.key} alignItems="flex-start">
-              <ListItemText primary={field.name + ': '} />
-            </ListItem>
-          ))}
-          {map(artworkFields, field => (
-            <ListItem key={field.key} alignItems="flex-start">
-              <ListItemText primary={field.name + ': '} />
-            </ListItem>
-          ))}
-        </List>
-      </Grid>
-      <Grid item>
-        <List>
-          {map(clientFields, field => (
-            <ListItem key={field.key} alignItems="flex-start">
-              <ListItemText primary={client[field.key]} />
-            </ListItem>
-          ))}
-          {map(artworkFields, field => (
-            <ListItem key={field.key} alignItems="flex-start">
-              <ListItemText primary={artwork[field.key]} />
-            </ListItem>
-          ))}
-        </List>
-      </Grid>
-    </Grid>
+    <>
+      <Paper >
+        <h2>Client</h2>
+        <Grid container>
+          <Grid item>
+            <List>
+              {map(clientFields, field => (
+                <div key={field.key}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemText primary={field.name + ': '} />
+                  </ListItem>
+                  <Divider />
+                </div>
+              ))}
+            </List>
+          </Grid>
+          <Grid item>
+            <List>
+              {map(clientFields, field => (
+                <div key={field.key}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemText primary={client[field.key]} />
+                  </ListItem>
+                  <Divider />
+                </div>
+              ))}
+            </List>
+          </Grid>
+        </Grid>
+      </Paper>
+      <Paper>
+        <h2>Oeuvre</h2>
+        <Grid container>
+          <Grid item>
+            <List>
+              {map(artworkFields, field => (
+                <div key={field.key}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemText primary={field.name + ': '} />
+
+                  </ListItem>
+                  <Divider />
+                </div>
+              ))}
+            </List>
+          </Grid>
+          <Grid item>
+            <List>
+              {map(artworkFields, field => (
+                <div key={field.key}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemText primary={artwork[field.key]} />
+                  </ListItem>
+                  <Divider />
+                </div>
+              ))}
+            </List>
+          </Grid>
+        </Grid>
+      </Paper>
+    </>
   );
 }
 
