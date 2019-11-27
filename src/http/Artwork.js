@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 import useAxios from 'axios-hooks';
 import { Get, Delete, Post, Patch } from 'variables/methods';
-import { forEach } from 'lodash';
+import { forEach, reduce } from 'lodash';
 
 const cookies = new Cookies();
 
@@ -74,6 +74,35 @@ export const PatchArtwork = () => {
     func({
       url: `${artworkUrl}/${id}`,
       data: data
+    });
+
+  return [hook, execute];
+};
+
+export const AddMedia = () => {
+  const [hook, func] = useAxios(
+    {
+      url: artworkUrl,
+      method: Patch,
+      headers: {
+        Authorization: `Bearer ${cookies.get('accessToken').access_token}`
+      }
+    },
+    { manual: true }
+  );
+
+  const execute = (id, files = []) =>
+    func({
+      method: Post,
+      url: `${artworkUrl}/${id}/image`,
+      data: reduce(
+        files,
+        (carry, file) => {
+          carry.append('images[]', file);
+          return carry;
+        },
+        new FormData()
+      )
     });
 
   return [hook, execute];

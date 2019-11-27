@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { FetchArtworks, DeleteArtwork, AddArtwork, PatchArtwork } from 'http/Artwork';
+import { FetchArtworks, DeleteArtwork, AddArtwork, PatchArtwork, AddMedia } from 'http/Artwork';
 import {
   Card,
   CircularProgress,
@@ -12,11 +12,12 @@ import {
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { blueGrey } from '@material-ui/core/colors';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { map, filter, forEach, isEmpty, pick, findIndex, find, slice } from 'lodash';
+import { map, filter, forEach, isEmpty, pick, findIndex, slice } from 'lodash';
 import Menu from 'components/Menu/Menu';
 import Button from 'components/CustomButtons/Button';
 import { StateInStock, StateExposed, StateIncoming, StateSold } from 'variables/artwork';
 import CreateModal from 'components/Modal/Artwork/CreateModal';
+import UpdateModal from 'components/Modal/Artwork/UpdateModal';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -65,21 +66,11 @@ export default function Artworks() {
   const [{ data: deleteData }, deleteArtwork] = DeleteArtwork();
   const [{ data: createData }, addArtwork] = AddArtwork();
   const [{ data: patchData }, patchArtwork] = PatchArtwork();
+  const [{ data: addMediaData }, addMedia] = AddMedia();
 
+  void addMediaData;
   const classes = useStyles();
 
-  const modalDefault = {
-    open: false,
-    title: '',
-    name: '',
-    price: 0,
-    ref: '',
-    state: StateInStock,
-    files: [],
-    initialFiles: [],
-    filesModified: false,
-    onClick: () => {}
-  };
   const targetDefault = {
     artwork: null,
     deleted: false,
@@ -99,16 +90,7 @@ export default function Artworks() {
     files: []
   });
 
-  const {
-    open: cmopen,
-    name: cmname,
-    price: cmprice,
-    ref: cmref,
-    state: cmstate
-  } = createModal;
-
-  const updateCreateModal = (field, value) => setCreateModal({ ...createModal, [field]: value });
-  const closeCreateModal = () => setCreateModal({
+  const [updateModal, setUpdateModal] = useState({
     open: false,
     name: '',
     price: 0,
@@ -116,6 +98,32 @@ export default function Artworks() {
     state: StateInStock,
     files: []
   });
+
+  const { open: cmopen, name: cmname, price: cmprice, ref: cmref, state: cmstate } = createModal;
+  const { open: umopen, name: umname, price: umprice, ref: umref, state: umstate } = updateModal;
+
+  const updateCreateModal = (field, value) => setCreateModal({ ...createModal, [field]: value });
+  const updateUpdateModal = (field, value) => setUpdateModal({ ...updateModal, [field]: value });
+
+  const closeCreateModal = () =>
+    setCreateModal({
+      open: false,
+      name: '',
+      price: 0,
+      ref: '',
+      state: StateInStock,
+      files: []
+    });
+
+  const closeUpdateModal = () =>
+    setUpdateModal({
+      open: false,
+      name: '',
+      price: 0,
+      ref: '',
+      state: StateInStock,
+      files: []
+    });
 
   const createModalFields = [
     {
@@ -149,6 +157,38 @@ export default function Artworks() {
     }
   ];
 
+  const updateModalFields = [
+    {
+      content: "Nom de l'oeuvre",
+      label: 'Nom',
+      type: 'text',
+      value: umname,
+      onChange: e => updateUpdateModal('name', e.target.value)
+    },
+    {
+      content: "Réference de l'oeuvre",
+      label: 'ref',
+      type: 'text',
+      value: umref,
+      onChange: e => updateUpdateModal('ref', e.target.value)
+    },
+    {
+      content: "Etat actuel de l'oeuvre",
+      label: 'Etat',
+      select: true,
+      value: umstate,
+      items: artworkStates,
+      onChange: e => updateUpdateModal('state', e.target.value)
+    },
+    {
+      content: "Prix de l'oeuvre",
+      label: 'prix',
+      type: 'number',
+      value: umprice,
+      onChange: e => updateUpdateModal('price', e.target.value)
+    }
+  ];
+
   const menuItems = [
     {
       text: 'supprimer',
@@ -156,7 +196,13 @@ export default function Artworks() {
     },
     {
       text: 'modifier',
-      onClick: () => {}
+      onClick: () => {
+        setUpdateModal({
+          open: true,
+          files: [],
+          ...pick(target.artwork, ['name', 'state', 'ref', 'price'])
+        });
+      }
     }
   ];
 
@@ -198,10 +244,11 @@ export default function Artworks() {
         func();
         setMenuAnchor(null);
         closeCreateModal();
+        closeUpdateModal();
         setTarget(targetDefault);
       }
     });
-  }, [target, targetDefault, modalDefault]);
+  }, [target, targetDefault]);
 
   return (
     <Fragment>
@@ -209,8 +256,23 @@ export default function Artworks() {
         open={cmopen}
         textFields={createModalFields}
         onChangeFiles={files => updateCreateModal('files', files)}
-        onSubmit={() => addArtwork(pick(createModal, ['name', 'ref', 'state', 'price']), createModal.files)}
+        onSubmit={() =>
+          addArtwork(pick(createModal, ['name', 'ref', 'state', 'price']), createModal.files)
+        }
         onClose={closeCreateModal}
+      />
+
+      <UpdateModal
+        open={umopen}
+        textFields={updateModalFields}
+        onChangeFiles={files => updateUpdateModal('files', files)}
+        onSubmit={() => {
+          patchArtwork(target.artwork.id, pick(updateModal, ['name', 'ref', 'state', 'price']));
+          if (!isEmpty(updateModal.files)) {
+            addMedia(target.artwork.id, updateModal.files);
+          }
+        }}
+        onClose={closeUpdateModal}
       />
 
       <Menu
@@ -223,11 +285,7 @@ export default function Artworks() {
         items={menuItems}
       />
 
-      <Button
-        type="button"
-        color="primary"
-        onClick={() => updateCreateModal('open', true)}
-      >
+      <Button type="button" color="primary" onClick={() => updateCreateModal('open', true)}>
         Ajouter une oeuvre
       </Button>
 

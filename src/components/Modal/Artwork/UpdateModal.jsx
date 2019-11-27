@@ -8,10 +8,10 @@ import GridContainer from 'components/Grid/GridContainer';
 import TextField from 'components/Form/TextField';
 import PropTypes from 'prop-types'
 
-export default function CreateModal({textFields, onChangeFiles, open, onClose, onSubmit}) {
+export default function UpdateModal({textFields, onChangeFiles, open, onClose, onSubmit}) {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Ajouter une oeuvre</DialogTitle>
+      <DialogTitle>Modifier une oeuvre</DialogTitle>
       <DialogContent>
         <GridContainer spacing={3}>
           {map(textFields, ({ content, ...rest }, key) => (
@@ -44,7 +44,7 @@ export default function CreateModal({textFields, onChangeFiles, open, onClose, o
   );
 }
 
-CreateModal.propTypes = {
+UpdateModal.propTypes = {
   open: PropTypes.bool.isRequired,
   textFields: PropTypes.arrayOf(PropTypes.shape({
     content: PropTypes.string,
