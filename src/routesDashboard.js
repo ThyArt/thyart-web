@@ -5,6 +5,7 @@ import UserProfile from 'views/UserProfile';
 import Clients from 'views/Clients';
 import Calendar from 'views/Calendar';
 import Members from 'views/Members';
+import Stats from 'views/Stats';
 // core components/views for Admin layout
 // core components/views for RTL layout
 
@@ -35,6 +36,13 @@ const dashboardRoutes = [
     name: 'Clients',
     icon: Person,
     component: Clients,
+    layout: '/dashboard'
+  },
+  {
+    path: '/stats',
+    name: 'Statistiques',
+    icon: Person,
+    component: Stats,
     layout: '/dashboard'
   }
 ];
