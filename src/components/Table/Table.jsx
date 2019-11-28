@@ -45,8 +45,8 @@ function Table({ rows, header, onRowClick, onDeleteClick }) {
     if (order === 'asc') {
       setMyRows(
         myRows.sort(function(a, b) {
-          const arg1 = a[Object.keys(a)[index]];
-          const arg2 = b[Object.keys(b)[index]];
+          const arg1 = a[Object.keys(a)[index + 1]];
+          const arg2 = b[Object.keys(b)[index + 1]];
           if (arg1 < arg2) return -1;
           if (arg1 > arg2) return 1;
           return 0;
@@ -55,8 +55,8 @@ function Table({ rows, header, onRowClick, onDeleteClick }) {
     } else {
       setMyRows(
         myRows.sort(function(a, b) {
-          const arg1 = a[Object.keys(a)[index]];
-          const arg2 = b[Object.keys(b)[index]];
+          const arg1 = a[Object.keys(a)[index + 1]];
+          const arg2 = b[Object.keys(b)[index + 1]];
           if (arg1 > arg2) return -1;
           if (arg1 < arg2) return 1;
           return 0;
