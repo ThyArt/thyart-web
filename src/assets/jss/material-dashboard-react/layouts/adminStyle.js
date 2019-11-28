@@ -3,8 +3,7 @@ import { drawerWidth, transition } from 'assets/jss/material-dashboard-react';
 const appStyle = theme => ({
   wrapper: {
     position: 'relative',
-    top: '0',
-    height: '100vh'
+    top: '0'
   },
   mainPanel: {
     [theme.breakpoints.up('md')]: {
