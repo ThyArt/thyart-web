@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { GetCustomers as CustomerRequest, DeleteCustomer } from 'http/Customer';
 
-import GridContainer from 'components/Grid/GridContainer';
 import Table from 'components/Table/Table';
 import Button from 'components/CustomButtons/Button';
 
 import Cookies from 'universal-cookie';
-import ClientDetails from './ClientDetails';
 import { makeStyles } from '@material-ui/core';
+import ClientDetails from './ClientDetails';
 
 const useStyles = makeStyles(() => ({
   topDiv: {

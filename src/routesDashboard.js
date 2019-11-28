@@ -1,10 +1,7 @@
 // @material-ui/icons
 import MailIcon from '@material-ui/icons/Mail';
-import Event from '@material-ui/icons/Event';
 import Person from '@material-ui/icons/Person';
-import GroupIcon from '@material-ui/icons/Group';
 import Brush from '@material-ui/icons/Brush';
-
 import UserProfile from 'views/UserProfile';
 import Clients from 'views/Clients';
 import Billings from 'views/Billings';
@@ -15,7 +12,6 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EventIcon from '@material-ui/icons/Event';
 import ContactsIcon from '@material-ui/icons/Contacts';
-import Person from '@material-ui/icons/Person';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Newsletters from 'views/Newsletters';
 // core components/views for Admin layout
@@ -58,6 +54,7 @@ const dashboardRoutes = [
     component: Billings,
     layout: '/dashboard'
   },
+  {
     path: '/artworks',
     name: "Oeuvre d'arts",
     icon: Brush,
