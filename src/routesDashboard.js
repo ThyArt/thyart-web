@@ -10,6 +10,7 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EventIcon from '@material-ui/icons/Event';
 import ContactsIcon from '@material-ui/icons/Contacts';
+import Person from '@material-ui/icons/Person';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Newsletters from 'views/Newsletters';
 // core components/views for Admin layout
