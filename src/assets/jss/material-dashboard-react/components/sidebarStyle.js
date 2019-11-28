@@ -13,7 +13,7 @@ import {
   grayColor,
   blackColor,
   hexToRgb
-} from 'assets/jss/material-dashboard-react.js';
+} from 'assets/jss/material-dashboard-react';
 
 const sidebarStyle = theme => ({
   drawerPaper: {
@@ -37,7 +37,6 @@ const sidebarStyle = theme => ({
       display: 'block',
       top: '0',
       height: '100vh',
-      right: '0',
       left: 'auto',
       zIndex: '1032',
       visibility: 'visible',
@@ -48,16 +47,6 @@ const sidebarStyle = theme => ({
       paddingLeft: '0',
       transform: `translate3d(${drawerWidth}px, 0, 0)`,
       ...transition
-    }
-  },
-  drawerPaperRTL: {
-    [theme.breakpoints.up('md')]: {
-      left: 'auto !important',
-      right: '0 !important'
-    },
-    [theme.breakpoints.down('sm')]: {
-      left: '0  !important',
-      right: 'auto !important'
     }
   },
   logo: {
@@ -89,9 +78,6 @@ const sidebarStyle = theme => ({
     '&,&:hover': {
       color: whiteColor
     }
-  },
-  logoLinkRTL: {
-    textAlign: 'right'
   },
   logoImage: {
     width: '30px',
@@ -166,20 +152,12 @@ const sidebarStyle = theme => ({
     verticalAlign: 'middle',
     color: 'rgba(' + hexToRgb(whiteColor) + ', 0.8)'
   },
-  itemIconRTL: {
-    marginRight: '3px',
-    marginLeft: '15px',
-    float: 'right'
-  },
   itemText: {
     ...defaultFont,
     margin: '0',
     lineHeight: '30px',
     fontSize: '14px',
     color: whiteColor
-  },
-  itemTextRTL: {
-    textAlign: 'right'
   },
   whiteFont: {
     color: whiteColor
@@ -315,7 +293,7 @@ const sidebarStyle = theme => ({
   menuIcon: {
     position: 'absolute',
     top: '10px',
-    right: '10px',
+    left: '10px',
     zIndex: '10'
   }
 });
