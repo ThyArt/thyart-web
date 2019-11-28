@@ -129,7 +129,7 @@ export default function Members() {
   };
 
   const roleSwitch = (id, role) => {
-    if (role === 'admin') return <>(C'est vous !)</>;
+    if (role === 'admin') return <>Galeriste</>;
     const isAdmin = role === 'admin' || role === 'gallerist';
     return (
       <>
