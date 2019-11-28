@@ -51,7 +51,8 @@ function Select({ rows, onSelect, multiple, labelName }) {
 
   useEffect(() => {
     onSelect(selected);
-  }, [selected, onSelect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   return (
     <Fragment>

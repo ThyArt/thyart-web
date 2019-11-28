@@ -74,7 +74,8 @@ function Searchbar({ onInputChange }) {
 
   useEffect(() => {
     onInputChange(input);
-  }, [input, onInputChange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [input]);
 
   return (
     <>
