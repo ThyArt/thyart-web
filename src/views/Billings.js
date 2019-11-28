@@ -3,16 +3,23 @@ import { GetBillings as BillingsRequest } from 'http/Billings';
 import { GetCustomers as ClientsRequest } from 'http/Customer';
 import { FetchArtworks as ArtworksRequest } from 'http/Billings';
 import { DeleteBillings } from 'http/Billings';
-import GridContainer from 'components/Grid/GridContainer';
 import Table from 'components/Table/Table';
 import Button from 'components/CustomButtons/Button';
 import BillingDetails from './BillingDetails';
 import Cookies from 'universal-cookie';
 import { map } from 'lodash';
 import Searchbar from 'components/SearchBar/Searchbar';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(() => ({
+  topDiv: {
+    display: 'flex'
+  }
+}));
 
 export default function Billings() {
   const cookie = new Cookies();
+  const classes = useStyles();
   var token = cookie.get('accessToken');
   const [table, setTable] = useState(true);
   const [isNew, setIsNew] = useState(true);
@@ -98,19 +105,21 @@ export default function Billings() {
 
   if (table && !loadingBilling && !loadingArtwork && !loadingClient) {
     content = (
-      <div>
-        <Button
-          type="button"
-          color="primary"
-          onClick={() => {
-            setTable(false);
-            setIsNew(true);
-            setSelectedBilling(-1);
-          }}
-        >
-          Créer un Billing
-        </Button>
-        <Searchbar onInputChange={onSearch} />
+      <>
+        <div className={classes.topDiv}>
+          <Button
+            type="button"
+            color="primary"
+            onClick={() => {
+              setTable(false);
+              setIsNew(true);
+              setSelectedBilling(-1);
+            }}
+          >
+            Créer un Billing
+          </Button>
+          <Searchbar onInputChange={onSearch} />
+        </div>
         <Table
           header={rowsName}
           rows={billings}
@@ -124,7 +133,7 @@ export default function Billings() {
             setTable(false);
           }}
         />
-      </div>
+      </>
     );
   } else if (!loadingBilling && !loadingArtwork && !loadingClient)
     content = (
@@ -141,9 +150,5 @@ export default function Billings() {
     );
   else content = <div></div>;
 
-  return (
-    <div>
-      <GridContainer>{content}</GridContainer>
-    </div>
-  );
+  return <div>{content}</div>;
 }

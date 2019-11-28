@@ -7,8 +7,16 @@ import Button from 'components/CustomButtons/Button';
 
 import Cookies from 'universal-cookie';
 import ClientDetails from './ClientDetails';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(() => ({
+  topDiv: {
+    display: 'flex'
+  }
+}));
 
 export default function Clients() {
+  const classes = useStyles();
   const cookie = new Cookies();
   const token = cookie.get('accessToken');
   const [table, setTable] = useState(true);
@@ -50,17 +58,19 @@ export default function Clients() {
   if (table && loading === false) {
     content = (
       <div>
-        <Button
-          type="button"
-          color="primary"
-          onClick={() => {
-            setTable(false);
-            setIsNew(true);
-            setSelected(-1);
-          }}
-        >
-          Créer un client
-        </Button>
+        <div className={classes.topDiv}>
+          <Button
+            type="button"
+            color="primary"
+            onClick={() => {
+              setTable(false);
+              setIsNew(true);
+              setSelected(-1);
+            }}
+          >
+            Créer un client
+          </Button>
+        </div>
         <Table
           header={rowsName}
           rows={clients}
@@ -89,9 +99,5 @@ export default function Clients() {
     );
   else content = <div />;
 
-  return (
-    <div>
-      <GridContainer>{content}</GridContainer>
-    </div>
-  );
+  return <div>{content}</div>;
 }

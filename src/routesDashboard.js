@@ -25,10 +25,10 @@ const dashboardRoutes = [
     layout: '/dashboard'
   },
   {
-    path: '/user',
-    name: 'Profil Utilisateur',
-    icon: AccountCircleIcon,
-    component: UserProfile,
+    path: '/stats',
+    name: 'Statistiques',
+    icon: EqualizerIcon,
+    component: Stats,
     layout: '/dashboard'
   },
   {
@@ -46,10 +46,10 @@ const dashboardRoutes = [
     layout: '/dashboard'
   },
   {
-    path: '/stats',
-    name: 'Statistiques',
-    icon: EqualizerIcon,
-    component: Stats,
+    path: '/billings',
+    name: 'Factures',
+    icon: Person,
+    component: Billings,
     layout: '/dashboard'
   },
   {
@@ -60,10 +60,10 @@ const dashboardRoutes = [
     layout: '/dashboard'
   },
   {
-    path: '/billings',
-    name: 'Factures',
-    icon: Person,
-    component: Billings,
+    path: '/user',
+    name: 'Profil Utilisateur',
+    icon: AccountCircleIcon,
+    component: UserProfile,
     layout: '/dashboard'
   }
 ];
