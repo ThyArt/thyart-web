@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +16,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackBarWrapper from 'components/SnackBarWrapper/SnackBarWrapper';
 import { Card, CardContent } from '@material-ui/core';
 import CardHeader from '@material-ui/core/CardHeader';
-import Form from '../components/Form/Form';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -67,19 +66,21 @@ export default function Profile() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-
   const [{ data: getData }, refresh] = GetCurrentData();
   const [{ data: updateData, error: updateError }, executeUpdate] = UpdateNewData.hook();
   const [snackbar, setSnackbar] = useState({ open: false, closedByButton: false });
-  const [{
-    open: modalOpen,
-    title: modalTitle,
-    dialogText: modalDialogText,
-    textType: modalTextType,
-    stateName: modalStateName,
-    var: modalVar,
-    handler: modalHandler
-  }, setModal] = useState({
+  const [
+    {
+      open: modalOpen,
+      title: modalTitle,
+      dialogText: modalDialogText,
+      textType: modalTextType,
+      stateName: modalStateName,
+      var: modalVar,
+      handler: modalHandler
+    },
+    setModal
+  ] = useState({
     open: false,
     title: '',
     dialogText: '',
@@ -89,7 +90,7 @@ export default function Profile() {
     handler: undefined
   });
 
-  if ((updateError) && !snackbar.closedByButton && !snackbar.open)
+  if (updateError && !snackbar.closedByButton && !snackbar.open)
     setSnackbar({ open: true, closedByButton: false });
 
   const handleCloseSnackbar = (event, reason) => {
@@ -187,12 +188,15 @@ export default function Profile() {
         <CardHeader title={'Informations de compte'} />
         <CardContent>
           {map(fields, (field, it) => (
-            <Grid container spacing={3} key={"Grid#" + it}>
+            <Grid container spacing={3} key={'Grid#' + it}>
               <Grid item md={10}>
-                {(field.textType === "password") ?
-                  <Paper className={classes.paper}>********</Paper> :
-                  <Paper className={classes.paper}>{(getData) ? (getData.data[field.stateName]) : ('')}</Paper>
-                }
+                {field.textType === 'password' ? (
+                  <Paper className={classes.paper}>********</Paper>
+                ) : (
+                  <Paper className={classes.paper}>
+                    {getData ? getData.data[field.stateName] : ''}
+                  </Paper>
+                )}
               </Grid>
               <Grid item md={2} sm={3} xs={4}>
                 <Button
@@ -203,7 +207,7 @@ export default function Profile() {
                     setModal({ open: true, ...field });
                   }}
                 >
-                  <EditIcon/>
+                  <EditIcon />
                 </Button>
               </Grid>
             </Grid>
@@ -212,7 +216,7 @@ export default function Profile() {
       </Card>
 
       <Dialog open={modalOpen} onClose={closeModal} aria-labelledby="form-dialog">
-        <DialogTitle>{modalTitle || "Chargement..."}</DialogTitle>
+        <DialogTitle>{modalTitle || 'Chargement...'}</DialogTitle>
         <DialogContent>
           <DialogContentText>{modalDialogText}</DialogContentText>
           <TextField
@@ -222,7 +226,9 @@ export default function Profile() {
             label={modalTitle}
             type={modalTextType}
             fullWidth
-            onChange={event => {modalHandler(event.target.value)}}
+            onChange={event => {
+              modalHandler(event.target.value);
+            }}
           />
         </DialogContent>
         <DialogActions>
