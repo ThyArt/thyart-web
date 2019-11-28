@@ -21,6 +21,6 @@ export const deleteCookies = async () => {
   const cookiesName = cookies.getAll();
 
   Object.keys(cookiesName).forEach(cookieName => {
-    cookies.remove(cookieName);
+    cookies.remove(cookieName, { path: '/' });
   });
 };
