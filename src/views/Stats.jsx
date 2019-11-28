@@ -1,30 +1,69 @@
-import React from 'react';
-import { XYPlot,
+import React, { useEffect, useState } from 'react';
+import {
+  XYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
-  HorizontalGridLines, VerticalBarSeries} from 'react-vis';
-import { Paper } from '@material-ui/core';
+  HorizontalGridLines,
+  VerticalBarSeries
+} from 'react-vis';
+import { makeStyles, Paper } from '@material-ui/core';
+import { GetStats } from 'http/Stats';
+import { each } from 'lodash';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 
-const data = [
-  { x: 'Jour', y: 10 },
-  { x: 'Semaine', y: 5 },
-  { x: 'Mois', y: 15 },
-  { x: 'Trimestre', y: 15 },
-  { x: 'Semestre', y: 15 },
-  { x: 'Année', y: 15 }
-];
+const useStyle = makeStyles({
+  container: {
+    width: '550px',
+    height: '450px',
+    textAlign: 'center',
+    fontweight: 'bold'
+  }
+});
 
 export default function Stats() {
+  const classes = useStyle();
+  const [stats, setStats] = useState([]);
+  const [{ data: currentData }, refresh] = GetStats();
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  useEffect(() => {
+    if (currentData) {
+      setStats(currentData);
+    }
+  }, [currentData]);
+
+  const formatResult = () => {
+    const tmp = [];
+    each(stats, obj => {
+      tmp.push(
+        { x: 'Jour', y: obj.daily },
+        { x: 'Semaine', y: obj.weekly },
+        { x: 'Mois', y: obj.monthly },
+        { x: 'Trimestre', y: obj.trimester },
+        { x: 'Semestre', y: obj.semester },
+        { x: 'Année', y: obj.yearly });
+    });
+    console.log(tmp);
+    return tmp;
+  };
   return (
-    <Paper>
-      <XYPlot xType="ordinal" width={300} height={300} xDistance={100}>
-        <VerticalGridLines />
-        <HorizontalGridLines />
-        <XAxis />
-        <YAxis />
-        <VerticalBarSeries data={data} />
-      </XYPlot>
-    </Paper>
+    <Card className={classes.container}>
+      <CardHeader title={"Chiffre d'affaire en K€"} />
+      <CardContent>
+        {currentData ? <XYPlot xType="ordinal" width={500} height={350} xDistance={100}>
+            <VerticalGridLines />
+            <HorizontalGridLines />
+            <XAxis />
+            <YAxis />
+          <VerticalBarSeries data={formatResult()} />
+          </XYPlot> : null}
+      </CardContent>
+    </Card>
   );
 }
