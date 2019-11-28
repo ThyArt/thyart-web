@@ -1,35 +1,18 @@
 import React from 'react';
-import { TextField as BaseTextField } from '@material-ui/core';
+import { MenuItem, TextField as BaseTextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
-
-export default function TextField({
-  id,
-  label,
-  name,
-  autoComplete,
-  autoFocus,
-  required,
-  onChange,
-  value,
-  error,
-  type
-}) {
+import { map } from 'lodash';
+export default function TextField({ items = [], select = false, ...rest }) {
   return (
-    <BaseTextField
-      variant="outlined"
-      margin="normal"
-      required={required}
-      fullWidth
-      id={id}
-      label={label}
-      name={name}
-      type={type}
-      autoComplete={autoComplete}
-      autoFocus={autoFocus}
-      onChange={onChange}
-      value={value}
-      error={error}
-    />
+    <BaseTextField variant="outlined" margin="normal" fullWidth select={select} {...rest}>
+      {select
+        ? map(items, ({ key, value }) => (
+            <MenuItem key={value} value={value}>
+              {key}
+            </MenuItem>
+          ))
+        : null}
+    </BaseTextField>
   );
 }
 
@@ -40,8 +23,15 @@ TextField.prototype = {
   autoComplete: PropTypes.string,
   autoFocus: PropTypes.boolean,
   required: PropTypes.boolean,
-  onChange: PropTypes.function,
+  onChange: PropTypes.func,
   value: PropTypes.string,
   error: PropTypes.boolean,
-  type: PropTypes.string
+  type: PropTypes.string,
+  select: PropTypes.boolean,
+  items: PropTypes.arrayOf(
+    PropTypes.exact({
+      key: PropTypes.string,
+      value: PropTypes.string
+    })
+  )
 };
