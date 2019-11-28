@@ -314,7 +314,7 @@ export default function Artworks() {
                 />
                 <CardMedia
                   className={classes.media}
-                  image={!isEmpty(artwork.images) ? artwork.images[0].urls.small : ''}
+                  image={!isEmpty(artwork.images) ? artwork.images[0].urls.large : ''}
                   title={!isEmpty(artwork.images) ? artwork.images[0].name : ''}
                 />
               </Card>
