@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -14,6 +14,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { GetCurrentData, UpdateNewData } from 'http/Profile';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackBarWrapper from 'components/SnackBarWrapper/SnackBarWrapper';
+import { Card, CardContent } from '@material-ui/core';
+import CardHeader from '@material-ui/core/CardHeader';
+import Form from '../components/Form/Form';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +45,18 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     text: 'white'
+  },
+  container: {
+    alignItems: 'center',
+    maxWidth: '500px'
+  },
+  text: {
+    margin: '10px',
+    width: '448px'
+  },
+  save: {
+    margin: '10px',
+    width: '448px'
   }
 }));
 
@@ -167,30 +182,34 @@ export default function Profile() {
   ];
 
   return (
-    <Fragment>
-      <h1> Vos informations : </h1>
-
-      {map(fields, (field, it) => (
-        <Grid container spacing={3} key={"Grid#" + it}>
-          <Grid item md={3} sm={5} xs={8}>
-            {(field.textType === "password") ?
-              <Paper className={classes.paper}>********</Paper> :
-              <Paper className={classes.paper}>{(getData) ? (getData.data[field.stateName]) : ('')}</Paper>
-            }
-          </Grid>
-          <Grid item md={1} sm={3} xs={4}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => {
-                setModal({ open: true, ...field });
-              }}
-            >
-              <EditIcon/>
-            </Button>
-          </Grid>
-        </Grid>
-      ))}
+    <>
+      <Card className={classes.container}>
+        <CardHeader title={'Informations de compte'} />
+        <CardContent>
+          {map(fields, (field, it) => (
+            <Grid container spacing={3} key={"Grid#" + it}>
+              <Grid item md={10}>
+                {(field.textType === "password") ?
+                  <Paper className={classes.paper}>********</Paper> :
+                  <Paper className={classes.paper}>{(getData) ? (getData.data[field.stateName]) : ('')}</Paper>
+                }
+              </Grid>
+              <Grid item md={2} sm={3} xs={4}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size={'large'}
+                  onClick={() => {
+                    setModal({ open: true, ...field });
+                  }}
+                >
+                  <EditIcon/>
+                </Button>
+              </Grid>
+            </Grid>
+          ))}
+        </CardContent>
+      </Card>
 
       <Dialog open={modalOpen} onClose={closeModal} aria-labelledby="form-dialog">
         <DialogTitle>{modalTitle || "Chargement..."}</DialogTitle>
@@ -231,6 +250,6 @@ export default function Profile() {
           onClose={handleCloseSnackbar}
         />
       </Snackbar>
-    </Fragment>
+    </>
   );
 }
