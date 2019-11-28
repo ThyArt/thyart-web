@@ -311,6 +311,12 @@ const sidebarStyle = theme => ({
         hexToRgb(dangerColor[0]) +
         ',.2)'
     }
+  },
+  menuIcon: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    zIndex: '10'
   }
 });
 

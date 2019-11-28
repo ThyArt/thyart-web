@@ -12,6 +12,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MenuIcon from '@material-ui/icons/Menu';
+import Button from '@material-ui/core/Button';
 // core components
 import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks';
 import RTLNavbarLinks from 'components/Navbars/RTLNavbarLinks';
@@ -113,6 +115,9 @@ export default function Sidebar(props) {
   return (
     <div>
       <Hidden mdUp implementation="css">
+        <Button onClick={props.handleDrawerToggle} className={classes.menuIcon} size='large'>
+          <MenuIcon/>
+        </Button>
         <Drawer
           variant="temporary"
           anchor={props.rtlActive ? 'left' : 'right'}
