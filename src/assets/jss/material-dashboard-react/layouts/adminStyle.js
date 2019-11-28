@@ -20,7 +20,9 @@ const appStyle = theme => ({
   },
   content: {
     marginTop: '0px',
-    padding: '30px 15px',
+    paddingTop: '60px',
+    paddingLeft: '15px',
+    paddingRight: '15px',
     height: 'calc(100vh - 110px)'
   },
   container: {
