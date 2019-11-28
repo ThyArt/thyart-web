@@ -4,7 +4,7 @@ const appStyle = theme => ({
   wrapper: {
     position: 'relative',
     top: '0',
-    height: 'calc(100vh - 70px)'
+    height: '100vh'
   },
   mainPanel: {
     [theme.breakpoints.up('md')]: {
