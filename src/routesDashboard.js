@@ -1,7 +1,10 @@
 // @material-ui/icons
 import MailIcon from '@material-ui/icons/Mail';
+import Person from '@material-ui/icons/Person';
+import Brush from '@material-ui/icons/Brush';
 import UserProfile from 'views/UserProfile';
 import Clients from 'views/Clients';
+import Billings from 'views/Billings';
 import Calendar from 'views/Calendar';
 import Members from 'views/Members';
 import Stats from 'views/Stats';
@@ -13,6 +16,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Newsletters from 'views/Newsletters';
 // core components/views for Admin layout
 // core components/views for RTL layout
+import Artworks from 'views/Artworks';
 
 const dashboardRoutes = [
   {
@@ -23,10 +27,10 @@ const dashboardRoutes = [
     layout: '/dashboard'
   },
   {
-    path: '/user',
-    name: 'Profil Utilisateur',
-    icon: AccountCircleIcon,
-    component: UserProfile,
+    path: '/stats',
+    name: 'Statistiques',
+    icon: EqualizerIcon,
+    component: Stats,
     layout: '/dashboard'
   },
   {
@@ -44,10 +48,17 @@ const dashboardRoutes = [
     layout: '/dashboard'
   },
   {
-    path: '/stats',
-    name: 'Statistiques',
-    icon: EqualizerIcon,
-    component: Stats,
+    path: '/billings',
+    name: 'Factures',
+    icon: Person,
+    component: Billings,
+    layout: '/dashboard'
+  },
+  {
+    path: '/artworks',
+    name: "Oeuvre d'arts",
+    icon: Brush,
+    component: Artworks,
     layout: '/dashboard'
   },
   {
@@ -55,6 +66,13 @@ const dashboardRoutes = [
     name: 'Newsletters',
     icon: MailIcon,
     component: Newsletters,
+    layout: '/dashboard'
+  },
+  {
+    path: '/user',
+    name: 'Profil Utilisateur',
+    icon: AccountCircleIcon,
+    component: UserProfile,
     layout: '/dashboard'
   }
 ];
